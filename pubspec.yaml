@@ -1,0 +1,14 @@
+name: galaga
+version: 0.1.0
+authors:
+- Eric J. Smith <eric@codesmithtools.com>
+- ' Cody Smith <cody@ericjsmith.net>'
+description: A galaga game written in Dart.
+homepage: https://github.com/ejsmith/galaga
+dependencies:
+  unittest: any
+  event_stream:
+    git: https://github.com/ejsmith/event_stream.git
+  browser: any
+  dgame:
+    git: https://github.com/ejsmith/dgame.git

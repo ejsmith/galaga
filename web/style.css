@@ -1,0 +1,26 @@
+* { margin:0px; padding:0px; }
+
+@font-face {
+    font-family: 'cinnamoncake';
+    src: url('Fonts/cinnamoncake.ttf');
+}
+
+html, body { font-family:"Verdana"; font-size:14px; background-image: url('images/Pattern.png'); }
+
+a { color:#106AB4; }
+
+#pageWrap { width:960px; margin:0px auto;}
+
+canvas#surface { width:960px; height:600px; margin:0px auto; margin-top:20px; box-shadow:0px 0px 20px #333; vertical-align:middle;}
+
+#highestScore { text-align:center; margin-top:20px; font-size:23px; }
+
+/* iPad [portrait + landscape] */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+	canvas#surface { margin-top: 100px; }
+}
+
+/* iPhone [portrait + landscape] */
+@media only screen and (max-device-width: 480px) {
+	canvas#surface { margin-top: 100px; }
+}
