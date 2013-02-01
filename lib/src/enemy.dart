@@ -168,9 +168,9 @@ class Enemy extends GameEntity<GalagaGame> {
       if (health <= 0) {
         game.Stats[2] += 1;
         
-        game.entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-        game.entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-        game.entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+        game.entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+        game.entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+        game.entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
         
         game.sound.play("cursorSelect2");
         game.removeEntitiesByGroup("levelEnd");

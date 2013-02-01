@@ -98,7 +98,7 @@ class GalagaGame extends Game {
         _waiting++;
       
       if (_waiting == 3) {
-        entities.where((e) => e is Stars).forEach((e) => e.removeFromGame());
+        entities.where((e) => e is Stars).toList().forEach((e) => e.removeFromGame());
         for (int i = 0; i < 50; i++) {
           
           if (colorCount < 7)
@@ -183,7 +183,7 @@ class GalagaGame extends Game {
     createPausedMenu();
     createControlsMenu();
     
-    sound.play("menu", .5, true);
+    //sound.play("menu", .5, true);
     
     state = GalagaGameState.welcome;
     super.start();
@@ -197,9 +197,9 @@ class GalagaGame extends Game {
       if (enemyAmount <= 0) {
         Stats[2] += 1;
         
-        entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+        entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+        entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+        entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
         
         sound.play("cursorSelect2");
         removeEntitiesByGroup("levelEnd");
@@ -230,9 +230,9 @@ class GalagaGame extends Game {
       else if (bonusStage && timer.gameTime <= 0) {
         Stats[2] += 1;
         
-        entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+        entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+        entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+        entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
         
         sound.play("cursorSelect2");
         removeEntitiesByGroup("levelEnd");
@@ -275,7 +275,7 @@ class GalagaGame extends Game {
       star.x = random(-rect.halfWidth, rect.halfWidth);
       star.y = random(-rect.halfHeight, rect.halfHeight);
       
-    } while(entities.where((e) => e is Stars).every((e) => star.collidesWith(e)));
+    } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
     
     addEntity(star);
   }
@@ -294,7 +294,7 @@ class GalagaGame extends Game {
       star.x = random(-rect.halfWidth, rect.halfWidth);
       star.y = -(rect.halfHeight);
       
-    } while(entities.where((e) => e is Stars).every((e) => star.collidesWith(e)));
+    } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
     
     lastStar = timer.gameTime;
     addEntity(star);
@@ -396,7 +396,7 @@ class GalagaGame extends Game {
       powerUp.x = random(-rect.halfWidth + 50, rect.halfWidth - 50);
       powerUp.y = -rect.halfHeight;
       
-    } while(entities.where((e) => e is PowerUp).every((e) => powerUp.collidesWith(e)));
+    } while(entities.where((e) => e is PowerUp).any((e) => powerUp.collidesWith(e)));
     
     lastPowerUp = timer.gameTime;
     addEntity(powerUp);
@@ -413,7 +413,7 @@ class GalagaGame extends Game {
   }
   
   num getEnemyY(String Type) {
-    entities.where((e) => e is Enemy).forEach((e) { 
+    entities.where((e) => e is Enemy).toList().forEach((e) { 
       var enemy = e as Enemy;
       
       if (enemy.type == Type && enemy.isFalling == true) {
@@ -540,9 +540,9 @@ class GalagaGame extends Game {
           if (ship != null)
             ship.removeFromGame();
           
-          entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-          entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-          entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+          entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+          entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+          entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
           
           gameOver();
           state = GalagaGameState.welcome;
@@ -1185,9 +1185,9 @@ class GalagaGame extends Game {
     if (ship != null)
       ship.removeFromGame();
     
-    entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+    entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+    entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+    entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
     
     enemyX = -400;
     enemyY = -165;
@@ -1224,9 +1224,9 @@ class GalagaGame extends Game {
   }
   
   void gameOver() {
-    entities.where((e) => e is PowerUp).forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Bullet).forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Enemy).forEach((e) => e.removeFromGame());
+    entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
+    entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
+    entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
     
     Stats[3] += 1;
     _gameOverEvent.signal();

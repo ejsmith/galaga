@@ -60,7 +60,7 @@ class Bullet extends GameEntity<GalagaGame> {
     }
     
     if (momentum.yVel != 0) {
-      game.entities.where((e) => e is Bullet && collidesWith(e)).forEach((e) {
+      game.entities.where((e) => e is Bullet && collidesWith(e)).toList().forEach((e) {
         if (width > e.width && height > e.height && (e.x != x && e.y != y)) {
           width -= e.width;
           height -= e.height;
@@ -70,7 +70,7 @@ class Bullet extends GameEntity<GalagaGame> {
     }
     
     if (momentum.yVel < 0) {
-      game.entities.where((e) => e is Enemy && collidesWith(e)).forEach((e) {
+      game.entities.where((e) => e is Enemy && collidesWith(e)).toList().forEach((e) {
         var enemy = e as Enemy;
         
         if (width > enemy.width && height > enemy.height) {
@@ -103,7 +103,7 @@ class Bullet extends GameEntity<GalagaGame> {
     }
     
     if (momentum.yVel > 0) {
-      game.entities.where((e) => e is Ship && collidesWith(e)).forEach((e) {
+      game.entities.where((e) => e is Ship && collidesWith(e)).toList().forEach((e) {
         game.ship.lives -= 1;
         
         game._shipHitEvent.signal();
