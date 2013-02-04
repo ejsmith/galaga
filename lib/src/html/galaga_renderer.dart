@@ -56,7 +56,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void bossHit() {
-    game.entities.where((e) => e is Enemy).forEach((e) { 
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
       if (e.type == "Boss") {
         window.setTimeout(() => e.opacity = 0, 25);
         window.setTimeout(() => e.opacity = .2, 75);
@@ -67,7 +67,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void motherShipHit() {
-    game.entities.where((e) => e is Enemy).forEach((e) { 
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
       if (e.type == "MotherShip") {
         window.setTimeout(() => e.opacity = 0, 25);
         window.setTimeout(() => e.opacity = .2, 75);

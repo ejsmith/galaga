@@ -402,24 +402,24 @@ class GalagaGame extends Game {
     addEntity(powerUp);
   }
   
-  num getEnemyX(String Type) {
-    entities.where((e) => e is Enemy).forEach((e) {
-      var enemy = e as Enemy;
-      
-      if (enemy.type == Type && enemy.isFalling == true) {
+  num getEnemyX(String type) {
+    entities.where((e) => e is Enemy).forEach((Enemy e) {
+      if (e.type == type && e.isFalling == true) {
         return e.x;
       }
     });
+    
+    return 0;
   }
   
-  num getEnemyY(String Type) {
-    entities.where((e) => e is Enemy).toList().forEach((e) { 
-      var enemy = e as Enemy;
-      
-      if (enemy.type == Type && enemy.isFalling == true) {
-        return enemy.y;
+  num getEnemyY(String type) {
+    entities.where((e) => e is Enemy).toList().forEach((Enemy e) { 
+      if (e.type == type && e.isFalling == true) {
+        return e.y;
       }
     });
+    
+    return 0;
   }
   
   void createLevelEnd() {
@@ -1240,10 +1240,8 @@ class GalagaGame extends Game {
   
   void switchDirection() {
     goingRight = !goingRight;
-    entities.where((e) => e is Enemy).forEach((e) {
-      var enemy = e as Enemy;
-      
-      if (enemy.type == "Normal") {
+    entities.where((e) => e is Enemy).forEach((Enemy e) {
+      if (e.type == "Normal") {
         e.momentum.xVel *= -1;
         
         if (e.momentum.xVel >= 0)
@@ -1256,13 +1254,12 @@ class GalagaGame extends Game {
   
   bool canEnemyFall() {
     int x = 0;
-    entities.where((e) => e is Enemy).forEach((e) { 
-      var enemy = e as Enemy;
-      
-      if (enemy.type == "Normal" && enemy.isFalling == true) {
+    entities.where((e) => e is Enemy).forEach((Enemy e) { 
+      if (e.type == "Normal" && e.isFalling == true) {
         x++;
       }
     });
+    
     if (x >= 3)
       return false;
     else
@@ -1288,8 +1285,6 @@ class GalagaGame extends Game {
   Stream<EventArgs> get onMotherShipHit => _motherShipEvent.stream;
 }
   
-
-
 class GalagaGameState {
   static final num welcome = 1;
   static final num paused = 2;
