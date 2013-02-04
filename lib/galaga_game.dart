@@ -183,7 +183,9 @@ class GalagaGame extends Game {
     createPausedMenu();
     createControlsMenu();
     
-    //sound.play("menu", .5, true);
+    
+    if (soundEffectsOn)
+      sound.play("menu", .5, true);
     
     state = GalagaGameState.welcome;
     super.start();
@@ -197,9 +199,9 @@ class GalagaGame extends Game {
       if (enemyAmount <= 0) {
         Stats[2] += 1;
         
-        entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+        removeEntitiesByFilter((e) => e is PowerUp);
+        removeEntitiesByFilter((e) => e is Bullet);
+        removeEntitiesByFilter((e) => e is Enemy);
         
         sound.play("cursorSelect2");
         removeEntitiesByGroup("levelEnd");
@@ -230,11 +232,12 @@ class GalagaGame extends Game {
       else if (bonusStage && timer.gameTime <= 0) {
         Stats[2] += 1;
         
-        entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-        entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+        removeEntitiesByFilter((e) => e is PowerUp);
+        removeEntitiesByFilter((e) => e is Bullet);
+        removeEntitiesByFilter((e) => e is Enemy);
         
-        sound.play("cursorSelect2");
+        if (soundEffectsOn)
+          sound.play("cursorSelect2");
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
         
@@ -332,10 +335,8 @@ class GalagaGame extends Game {
   void newMotherShip([num difficulty = 1]) {
     int x = 0;
     
-    entities.where((e) => e is Enemy).forEach((e) {
-      var enemy = e as Enemy;
-      
-      if (enemy.type == "MotherShip") {
+    entities.where((e) => e is Enemy).forEach((Enemy e) {
+      if (e.type == "MotherShip") {
         x++;
       }
     });
@@ -540,9 +541,9 @@ class GalagaGame extends Game {
           if (ship != null)
             ship.removeFromGame();
           
-          entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-          entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-          entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+          removeEntitiesByFilter((e) => e is PowerUp);
+          removeEntitiesByFilter((e) => e is Bullet);
+          removeEntitiesByFilter((e) => e is Enemy);
           
           gameOver();
           state = GalagaGameState.welcome;
@@ -1185,9 +1186,9 @@ class GalagaGame extends Game {
     if (ship != null)
       ship.removeFromGame();
     
-    entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+    removeEntitiesByFilter((e) => e is PowerUp);
+    removeEntitiesByFilter((e) => e is Bullet);
+    removeEntitiesByFilter((e) => e is Enemy);
     
     enemyX = -400;
     enemyY = -165;
@@ -1224,9 +1225,9 @@ class GalagaGame extends Game {
   }
   
   void gameOver() {
-    entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-    entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+    removeEntitiesByFilter((e) => e is PowerUp);
+    removeEntitiesByFilter((e) => e is Bullet);
+    removeEntitiesByFilter((e) => e is Enemy);
     
     Stats[3] += 1;
     _gameOverEvent.signal();
@@ -1267,9 +1268,7 @@ class GalagaGame extends Game {
   }
   
   void removeBullets() {
-    entities.where((e) => e is Bullet).forEach((e) { 
-      e.removeFromGame();
-    });
+    removeEntitiesByFilter((e) => e is Bullet);
   }
   
   final EventStream _gameOverEvent = new EventStream();

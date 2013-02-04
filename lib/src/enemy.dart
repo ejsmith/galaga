@@ -62,6 +62,9 @@ class Enemy extends GameEntity<GalagaGame> {
         game.score += 100 * game.pointMultiplier;
         game.Stats[1] += 1;
         
+        if (random() > .5)
+          game.newBulletPowerUp(x, y);
+        
         removeFromGame();
       }
       
@@ -168,9 +171,9 @@ class Enemy extends GameEntity<GalagaGame> {
       if (health <= 0) {
         game.Stats[2] += 1;
         
-        game.entities.where((e) => e is PowerUp).toList().forEach((e) => e.removeFromGame());
-        game.entities.where((e) => e is Bullet).toList().forEach((e) => e.removeFromGame());
-        game.entities.where((e) => e is Enemy).toList().forEach((e) => e.removeFromGame());
+        game.removeEntitiesByFilter((e) => e is PowerUp);
+        game.removeEntitiesByFilter((e) => e is Bullet);
+        game.removeEntitiesByFilter((e) => e is Enemy);
         
         game.sound.play("cursorSelect2");
         game.removeEntitiesByGroup("levelEnd");
@@ -307,6 +310,9 @@ class Enemy extends GameEntity<GalagaGame> {
         game.score += 1000 * game.pointMultiplier;
         game.Stats[1] += 1;
         
+        if (random() > .5)
+          game.newBulletPowerUp(x, y);
+        
         removeFromGame();
       }
       
@@ -370,6 +376,9 @@ class Enemy extends GameEntity<GalagaGame> {
         game.score += 100 * game.pointMultiplier;
         game.enemyAmount--;
         game.Stats[1] += 1;
+        
+        if (random() > .5)
+          game.newBulletPowerUp(x, y);
         
         removeFromGame();
       }

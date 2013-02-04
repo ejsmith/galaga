@@ -70,10 +70,10 @@ class Bullet extends GameEntity<GalagaGame> {
     }
     
     if (momentum.yVel < 0) {
-      game.entities.where((e) => e is Enemy && collidesWith(e)).toList().forEach((Enemy e) {
-        if (width > e.width && height > e.height) {
-          width -= e.width;
-          height -= e.height;
+      game.entities.where((e) => e is Enemy && collidesWith(e)).toList().forEach((Enemy enemy) {
+        if (width > enemy.width && height > enemy.height) {
+          width -= enemy.width;
+          height -= enemy.height;
         } else
           removeFromGame();
         
@@ -83,20 +83,18 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.soundEffectsOn)
           game.sound.play("enemyHit", .5);
         
-        if (e.type != "MotherShip")
+        if (enemy.type != "MotherShip")
           game._motherShipEvent.signal();
         
-        if (e.type != "Boss") {
-          if (random() > .5)
-            game.newBulletPowerUp(e.x, e.y);
-          
-          e.width -= 8;
-          e.height -= 8;
-          
-          game._bossHitEvent.signal();
+        if (enemy.type != "Boss") { 
+          enemy.width -= 8;
+          enemy.height -= 8;
         }
         
-        e.health--;
+        if (enemy.type == "Boss")
+          game._bossHitEvent.signal();
+        
+        enemy.health--;
       });
     }
     
