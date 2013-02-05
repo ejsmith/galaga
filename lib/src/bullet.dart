@@ -83,7 +83,7 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.soundEffectsOn)
           game.sound.play("enemyHit", .5);
         
-        if (enemy.type != "MotherShip")
+        if (enemy.type == "MotherShip")
           game._motherShipEvent.signal();
         
         if (enemy.type != "Boss") { 
@@ -103,7 +103,6 @@ class Bullet extends GameEntity<GalagaGame> {
         game.ship.lives -= 1;
         
         game._shipHitEvent.signal();
-        game._gameOverEvent.signal();
         
         if (game.soundEffectsOn)
           game.sound.play("shipHit", .5);

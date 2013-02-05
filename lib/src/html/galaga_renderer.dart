@@ -27,11 +27,27 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
+    game.onStatUpdate.listen((e) => updateStats());
+    game.onMotherShipHit.listen((e) => motherShipHit());
   }
   
   void gameOver() {
     bgFade();
+    updateStats();
+  }
+  
+  void shipHit() {
+    bgFade();
     
+    window.setTimeout(() => game.ship.opacity = 0, 25);
+    window.setTimeout(() => game.ship.opacity = .2, 75);
+    window.setTimeout(() => game.ship.opacity = 0, 150);
+    window.setTimeout(() => game.ship.opacity = .2, 225);
+    window.setTimeout(() => game.ship.opacity = 0, 300);
+    window.setTimeout(() => game.ship.opacity = .2, 375);
+  }
+  
+  void updateStats() {
     window.localStorage['win1'] = game.Stats[1].toString();
     window.localStorage['win2'] = game.Stats[2].toString();
     window.localStorage['win3'] = game.Stats[3].toString();
@@ -46,22 +62,15 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win11'] = game.Options[6].toString();
   }
   
-  void shipHit() {
-    window.setTimeout(() => game.ship.opacity = 0, 25);
-    window.setTimeout(() => game.ship.opacity = .2, 75);
-    window.setTimeout(() => game.ship.opacity = 0, 150);
-    window.setTimeout(() => game.ship.opacity = .2, 225);
-    window.setTimeout(() => game.ship.opacity = 0, 300);
-    window.setTimeout(() => game.ship.opacity = .2, 375);
-  }
-  
   void bossHit() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
       if (e.type == "Boss") {
         window.setTimeout(() => e.opacity = 0, 25);
-        window.setTimeout(() => e.opacity = .2, 75);
+        window.setTimeout(() => e.opacity = 1, 75);
         window.setTimeout(() => e.opacity = 0, 150);
-        window.setTimeout(() => e.opacity = .2, 225);
+        window.setTimeout(() => e.opacity = 1, 225);
+        window.setTimeout(() => e.opacity = 0, 300);
+        window.setTimeout(() => e.opacity = 1, 375);
       }
     });
   }
@@ -70,9 +79,11 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
       if (e.type == "MotherShip") {
         window.setTimeout(() => e.opacity = 0, 25);
-        window.setTimeout(() => e.opacity = .2, 75);
+        window.setTimeout(() => e.opacity = 1, 75);
         window.setTimeout(() => e.opacity = 0, 150);
-        window.setTimeout(() => e.opacity = .2, 225);
+        window.setTimeout(() => e.opacity = 1, 225);
+        window.setTimeout(() => e.opacity = 0, 300);
+        window.setTimeout(() => e.opacity = 1, 375);
       }
     });
   }

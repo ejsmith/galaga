@@ -175,7 +175,8 @@ class Enemy extends GameEntity<GalagaGame> {
         game.removeEntitiesByFilter((e) => e is Bullet);
         game.removeEntitiesByFilter((e) => e is Enemy);
         
-        game.sound.play("cursorSelect2");
+        if (game.soundEffectsOn)
+          game.sound.play("cursorSelect2");
         game.removeEntitiesByGroup("levelEnd");
         game.createLevelEnd();
         

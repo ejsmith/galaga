@@ -460,7 +460,7 @@ class GalagaGame extends Game {
         text: "Start Game",
         buttonAction: () {
           newGame();
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect");
         },
@@ -482,7 +482,7 @@ class GalagaGame extends Game {
           
           state = GalagaGameState.stats;
           
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -504,7 +504,7 @@ class GalagaGame extends Game {
           
           state = GalagaGameState.options;
           
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -544,6 +544,8 @@ class GalagaGame extends Game {
           removeEntitiesByFilter((e) => e is PowerUp);
           removeEntitiesByFilter((e) => e is Bullet);
           removeEntitiesByFilter((e) => e is Enemy);
+          
+          _statUpdateEvent.signal();
           
           gameOver();
           state = GalagaGameState.welcome;
@@ -639,7 +641,7 @@ class GalagaGame extends Game {
         text: "Back", 
         buttonAction: () { 
           state = GalagaGameState.welcome;
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -707,6 +709,8 @@ class GalagaGame extends Game {
             Options[1]++;
           }
           
+          _statUpdateEvent.signal();
+          
           state = GalagaGameState.welcome;
           
           removeEntitiesByGroup("options");
@@ -744,6 +748,8 @@ class GalagaGame extends Game {
             Options[2] = 1;
           else
             Options[2]++;
+          
+          _statUpdateEvent.signal();
           
           state = GalagaGameState.welcome;
           
@@ -783,6 +789,8 @@ class GalagaGame extends Game {
           else
             Options[3] += 20;
           
+          _statUpdateEvent.signal();
+          
           state = GalagaGameState.welcome;
           
           removeEntitiesByGroup("options");
@@ -821,6 +829,8 @@ class GalagaGame extends Game {
           else
             Options[4] += 1;
           
+          _statUpdateEvent.signal();
+          
           state = GalagaGameState.welcome;
           
           removeEntitiesByGroup("options");
@@ -858,6 +868,8 @@ class GalagaGame extends Game {
             Options[5] = 1;
           else
             Options[5] += 1;
+          
+          _statUpdateEvent.signal();
           
           state = GalagaGameState.welcome;
           
@@ -902,6 +914,8 @@ class GalagaGame extends Game {
           else
             soundEffectsOn = false;
           
+          _statUpdateEvent.signal();
+          
           state = GalagaGameState.welcome;
           
           removeEntitiesByGroup("options");
@@ -936,7 +950,7 @@ class GalagaGame extends Game {
         text: "Instructions", 
         buttonAction: () { 
           state = GalagaGameState.instructions;
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -954,7 +968,7 @@ class GalagaGame extends Game {
         text: "Back", 
         buttonAction: () { 
           state = GalagaGameState.welcome;
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -1060,7 +1074,7 @@ class GalagaGame extends Game {
         text: "Back", 
         buttonAction: () { 
           state = GalagaGameState.options;
-          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
           if (soundEffectsOn)
             sound.play("cursorSelect2");
         },
@@ -1270,6 +1284,9 @@ class GalagaGame extends Game {
   void removeBullets() {
     removeEntitiesByFilter((e) => e is Bullet);
   }
+  
+  final EventStream _statUpdateEvent = new EventStream();
+  Stream<EventArgs> get onStatUpdate => _statUpdateEvent.stream;
   
   final EventStream _gameOverEvent = new EventStream();
   Stream<EventArgs> get onGameOver => _gameOverEvent.stream;
