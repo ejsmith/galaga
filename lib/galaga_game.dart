@@ -34,7 +34,7 @@ class GalagaGame extends Game {
   num enemyAmount = 33;
   num defaultTimer = 60;
   num level = 1;
-  bool p1Dead, p2Dead;
+  bool p1Dead;
   bool goingRight = true;
   Timer _countdownTimer;
   Timer _waitingTimer;

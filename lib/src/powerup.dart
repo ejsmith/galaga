@@ -88,7 +88,15 @@ class PowerUp extends GameEntity<GalagaGame> {
   
   void SpiralUpdate() {
     game.score += 100 * game.pointMultiplier;
-    game.ship.spiralShot = true;
+    
+    if (game.ship.spiralShot) {
+      game.ship.superSpiral = true;
+      game.ship.spiralShot = false;
+    }
+    if (!game.ship.spiralShot)
+      game.ship.spiralShot = true;
+    
+    
   }
   
 }

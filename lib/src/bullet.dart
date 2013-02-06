@@ -3,6 +3,8 @@ part of galaga_game;
 class Bullet extends GameEntity<GalagaGame> {
   num temp = 0;
   num startX = 0;
+  bool farRight = false;
+  bool farLeft = false;
   bool right = false;
   bool left = false;
   bool straight = false;
@@ -35,6 +37,10 @@ class Bullet extends GameEntity<GalagaGame> {
       momentum.xVel = -40;
     else if (straight)
       momentum.xVel = 0;
+    else if (farLeft)
+      momentum.xVel = -60;
+    else if (farRight)
+      momentum.xVel = 60;
     
     if (width <= 0 || height <= 0) {
       if (momentum.yVel > 0) {
@@ -50,6 +56,12 @@ class Bullet extends GameEntity<GalagaGame> {
     } else if (game.ship.spiralShot && left && startX > (x + (width / 2)) + 25) {
       left = false;
       right = true;
+    } else if (game.ship.spiralShot && farLeft && startX > (x + (width / 2)) + 40) {
+      farLeft = false;
+      farRight = true;
+    } else if (game.ship.spiralShot && farRight && startX > (x + (width / 2)) + 40) {
+      farRight = false;
+      farLeft = true;
     }
     
     if (y < -(game.rect.halfHeight)) {

@@ -8,6 +8,7 @@ class Ship extends GameEntity<GalagaGame> {
   num soundLevel = 0;
   bool isPoweringUp = false;
   bool spiralShot = false;
+  bool superSpiral = false;
   
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
@@ -76,6 +77,13 @@ class Ship extends GameEntity<GalagaGame> {
     if (soundLevel > 1)
       soundLevel = 1;
     
+    if (superSpiral) {
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
+    }
     if (spiralShot) {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
