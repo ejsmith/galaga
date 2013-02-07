@@ -1,8 +1,8 @@
 import "dart:html";
-import "package:galaga/galaga_game.dart";
+import 'package:galaga/galaga_game.dart';
 import 'package:galaga/galaga_html.dart';
-import "package:dgame/dgame.dart";
-import "package:dgame/dgame_html.dart";
+import 'package:dgame/dgame.dart';
+import 'package:dgame/dgame_html.dart';
 
 void main() {
   var sound = new HtmlGameSound();

@@ -170,6 +170,7 @@ class Enemy extends GameEntity<GalagaGame> {
     if (type == "Boss") {
       if (health <= 0) {
         game.Stats[2] += 1;
+        game.newExplosion(x, y);
         
         game.removeEntitiesByFilter((e) => e is PowerUp);
         game.removeEntitiesByFilter((e) => e is Bullet);

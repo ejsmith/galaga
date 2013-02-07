@@ -4,7 +4,7 @@ import "dart:math" as Math;
 import "dart:async";
 import "dart:html";
 import "dart:isolate";
-import "package:dgame/dgame.dart";
+import 'package:dgame/dgame.dart';
 import 'package:event_stream/event_stream.dart';
 
 part "src/ship.dart";
@@ -12,6 +12,7 @@ part "src/enemy.dart";
 part "src/powerup.dart";
 part "src/bullet.dart";
 part "src/stars.dart";
+part "src/particles.dart";
 
 class GalagaGame extends Game {
   num score = 0;
@@ -20,7 +21,6 @@ class GalagaGame extends Game {
   num lastEnemy = 5;
   num lastStar = 0;
   num _state;
-  num w = 0;
   Map<num, num> Stats = new Map<num,num>();
   Map<num, num> Options = new Map<num,num>();
   Map<num, String> Controls = new Map<num,String>();
@@ -271,7 +271,7 @@ class GalagaGame extends Game {
   }
   
   void startStars() {
-    w = random(.5, 3.5);
+    num w = random(.5, 3.5);
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
     
     do {
@@ -283,13 +283,41 @@ class GalagaGame extends Game {
     addEntity(star);
   }
   
+  void newParticle(num x, num y, xVel, yVel) {
+    num w = random(.5, 3.5);
+    
+    Particles particle = new Particles(this, x, y, w, w, colorCount, xVel, yVel);   
+  }
+  
+  void newExplosion(num x, num y) {
+    num xV = 50;
+    num yV = 80;
+    
+    for (int i = 0; i < 4; i++) {
+      newParticle(x, y, xV, yV);
+      yV -= 40;
+    }
+    
+    xV *= -1;
+    yV = 80;
+    for (int i = 0; i < 4; i++) {
+      newParticle(x, y, xV, yV);
+      yV -= 40;
+    }
+    
+    newParticle(x, y, 0, 50);
+    newParticle(x, y, 0, -50);
+    
+    sound.play("bossDead", .5, false);  
+  }
+  
   void newStar() {
     num rand = random(0, 1);
     
     if (rand > .09 || state == GalagaGameState.paused)
       return;
     
-    w = random(.5, 3.5);
+    num w = random(.5, 3.5);
     
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
     
@@ -440,7 +468,7 @@ class GalagaGame extends Game {
   }
   
   void createWelcomeMenu() {
-    _gameOverEvent.signal(EventArgs.empty);
+    _gameOverEvent.signal();
     
     addEntity(new GameText(game: this, 
         x: 0, 
@@ -1296,6 +1324,9 @@ class GalagaGame extends Game {
   
   final EventStream _bossHitEvent = new EventStream();
   Stream<EventArgs> get onBossHit => _bossHitEvent.stream;
+  
+  final EventStream _bossKilledEvent = new EventStream();
+  Stream<EventArgs> get onBossKilled => _bossKilledEvent.stream;
   
   final EventStream _motherShipEvent = new EventStream();
   Stream<EventArgs> get onMotherShipHit => _motherShipEvent.stream;
