@@ -65,6 +65,8 @@ class Enemy extends GameEntity<GalagaGame> {
         if (random() > .5)
           game.newBulletPowerUp(x, y);
         
+        game.newMiniExplosion(x, y);
+        
         removeFromGame();
       }
       
@@ -315,6 +317,8 @@ class Enemy extends GameEntity<GalagaGame> {
         if (random() > .5)
           game.newBulletPowerUp(x, y);
         
+        game.newMiniExplosion(x, y);
+        
         removeFromGame();
       }
       
@@ -381,6 +385,8 @@ class Enemy extends GameEntity<GalagaGame> {
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);
+        
+        game.newMiniExplosion(x, y);
         
         removeFromGame();
       }

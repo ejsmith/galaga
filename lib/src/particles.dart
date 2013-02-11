@@ -1,6 +1,7 @@
 part of galaga_game;
 
 class Particles extends GameEntity {
+  num timeSpawned = 0;
   
   Particles(Game game, num x, num y, num h, num w, num col, num xV, num yV) : super.withPosition(game, x, y, h, w) {
     
@@ -20,6 +21,8 @@ class Particles extends GameEntity {
       color = "255, 102, 153";
     if (col == 7)
       color = "255, 153, 51";
+    
+    timeSpawned = game.timer.gameTime;
     
     momentum.yVel = yV;
     momentum.xVel = xV;

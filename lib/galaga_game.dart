@@ -286,7 +286,9 @@ class GalagaGame extends Game {
   void newParticle(num x, num y, xVel, yVel) {
     num w = random(.5, 3.5);
     
-    Particles particle = new Particles(this, x, y, w, w, colorCount, xVel, yVel);   
+    Particles particle = new Particles(this, x, y, w, w, colorCount, xVel, yVel);
+    
+    addEntity(particle);
   }
   
   void newExplosion(num x, num y) {
@@ -308,7 +310,20 @@ class GalagaGame extends Game {
     newParticle(x, y, 0, 50);
     newParticle(x, y, 0, -50);
     
-    sound.play("bossDead", .5, false);  
+    if (soundEffectsOn)
+      sound.play("explosion", .5, false);  
+  }
+  
+  void newMiniExplosion(num x, num y) {
+    
+    newParticle(x, y, 50, 0);
+    newParticle(x, y, -50, 0);
+    
+    newParticle(x, y, 0, 50);
+    newParticle(x, y, 0, -50);
+    
+    if (soundEffectsOn)
+      sound.play("explosion", .5, false);  
   }
   
   void newStar() {
