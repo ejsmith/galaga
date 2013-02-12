@@ -1,7 +1,8 @@
 part of galaga_game;
 
 class Particles extends GameEntity {
-  num timeSpawned = 0;
+  Timer _deleteTimer;
+  num _waiting = 0;
   
   Particles(Game game, num x, num y, num h, num w, num col, num xV, num yV) : super.withPosition(game, x, y, h, w) {
     
@@ -22,8 +23,6 @@ class Particles extends GameEntity {
     if (col == 7)
       color = "255, 153, 51";
     
-    timeSpawned = game.timer.gameTime;
-    
     momentum.yVel = yV;
     momentum.xVel = xV;
   }
@@ -31,6 +30,16 @@ class Particles extends GameEntity {
   void update() {
     if (game.state == GalagaGameState.paused)
       return;
+    
+    _deleteTimer = new Timer.repeating(1000, (t) {    
+        _waiting++;
+      
+      if (_waiting == 1) {
+        removeFromGame();
+        
+        t.cancel();
+      }
+    });
     
     if (y > game.rect.halfHeight)
       removeFromGame();

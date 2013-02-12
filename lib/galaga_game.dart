@@ -181,8 +181,7 @@ class GalagaGame extends Game {
     createGameOverMenu();
     createStatsMenu();
     createPausedMenu();
-    createControlsMenu();
-    
+    createControlsMenu(); 
     
     if (soundEffectsOn)
       sound.play("menu", .5, true);
@@ -203,7 +202,8 @@ class GalagaGame extends Game {
         removeEntitiesByFilter((e) => e is Bullet);
         removeEntitiesByFilter((e) => e is Enemy);
         
-        sound.play("cursorSelect2");
+        if (soundEffectsOn)
+          sound.play("cursorSelect2");
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
         
@@ -323,7 +323,7 @@ class GalagaGame extends Game {
     newParticle(x, y, 0, -50);
     
     if (soundEffectsOn)
-      sound.play("explosion", .5, false);  
+      sound.play("explosion", .1, false);  
   }
   
   void newStar() {

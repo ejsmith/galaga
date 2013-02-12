@@ -3,13 +3,16 @@ part of galaga_game;
 class Bullet extends GameEntity<GalagaGame> {
   num temp = 0;
   num startX = 0;
+  String Type;
+  Timer _deleteTimer;
+  num _waiting = 0;
   bool farRight = false;
   bool farLeft = false;
   bool right = false;
   bool left = false;
   bool straight = false;
   
-  Bullet(GalagaGame game, num x, num y, String dir, num yVel, num size) : super.withPosition(game, x, y, size, size) {
+  Bullet(GalagaGame game, num x, num y, String dir, num yVel, num size, String type) : super.withPosition(game, x, y, size, size) {
     color = "255, 0, 0";
     momentum.yVel = yVel;
     startX = x;
@@ -20,6 +23,12 @@ class Bullet extends GameEntity<GalagaGame> {
       left = true;
     else if (dir == "straight")
       straight = true;
+    else if (dir == "farLeft")
+      farLeft = true;
+    else if (dir == "farRight")
+      farRight = true;
+    
+    Type = type;
     
     if (size >= 36)
       size = 36;
@@ -30,6 +39,25 @@ class Bullet extends GameEntity<GalagaGame> {
       return;
     
     super.update();
+    
+    if (Type == "exploding") {
+        _deleteTimer = new Timer.repeating(1000, (t) {    
+          _waiting++;
+        
+        if (_waiting == 1) {
+          game.newMiniExplosion(x, y);
+          
+          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
+          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          game.addEntity(new Bullet(game, x, y + 16, "farLeft", random(350,400), random(8,16), "normal"));
+          game.addEntity(new Bullet(game, x, y + 16, "farRight", random(350,400), random(8,16), "normal"));
+          removeFromGame();
+          
+          t.cancel();
+        }
+      });
+    }
     
     if (right)
       momentum.xVel = 40;
