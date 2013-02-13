@@ -266,8 +266,8 @@ class GalagaGame extends Game {
         e.soundReady = true;
     });
     
-    super.update();
     newStar();
+    super.update();
   }
   
   void startStars() {
@@ -295,20 +295,20 @@ class GalagaGame extends Game {
     num xV = 50;
     num yV = 80;
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
       newParticle(x, y, xV, yV);
-      yV -= 40;
+      yV -= 80;
     }
     
     xV *= -1;
     yV = 80;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
       newParticle(x, y, xV, yV);
-      yV -= 40;
+      yV -= 80;
     }
     
-    newParticle(x, y, 0, 50);
-    newParticle(x, y, 0, -50);
+    newParticle(x, y, 0, 100);
+    newParticle(x, y, 0, -100);
     
     if (soundEffectsOn)
       sound.play("explosion", .5, false);  
@@ -391,7 +391,7 @@ class GalagaGame extends Game {
     
     if (rand < .001) {
       Enemy enemy = new Enemy(this, -(rect.halfWidth), -225, difficulty, "MotherShip");
-     
+      
       addEntity(enemy);
     }
   }
@@ -399,18 +399,18 @@ class GalagaGame extends Game {
   void newEnemy([num difficulty = 1]) {
     
     Enemy enemy = new Enemy(this, enemyX, enemyY, difficulty, "Normal");
-   
+    
     enemy.startY = enemyY;
     
     enemyX += 70;
     enemyCount++;
-      
+    
     if (enemyCount > 10) {
      enemyY += 65;
      enemyX = -400;
      enemyCount = 0;
     }
-   
+    
     lastEnemy = timer.gameTime;
     addEntity(enemy);
   }

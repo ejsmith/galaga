@@ -12,7 +12,7 @@ class Bullet extends GameEntity<GalagaGame> {
   bool left = false;
   bool straight = false;
   
-  Bullet(GalagaGame game, num x, num y, String dir, num yVel, num size, String type) : super.withPosition(game, x, y, size, size) {
+  Bullet(GalagaGame game, num x, num y, String dir, num yVel, num size, [String type = "normal"]) : super.withPosition(game, x, y, size, size) {
     color = "255, 0, 0";
     momentum.yVel = yVel;
     startX = x;

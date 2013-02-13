@@ -78,20 +78,20 @@ class Ship extends GameEntity<GalagaGame> {
       soundLevel = 1;
     
     if (superSpiral) {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
     }
     if (spiralShot) {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
       if (game.soundEffectsOn)
         game.sound.play("shipFire", soundLevel);
     } else {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       if (game.soundEffectsOn)
         game.sound.play("shipFire", soundLevel);
     }
