@@ -46,6 +46,8 @@ class GalagaGame extends Game {
   bool tutorial = true;
   num visualLevel = 1;
   Ship ship;
+  num nextId = 1;
+  num targetId = 0;
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameSound sound, GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(sound, input, renderer, loop);
@@ -349,6 +351,9 @@ class GalagaGame extends Game {
   void newBoss() {
     Enemy enemy = new Enemy(this, 0, 0, difficulty, "Boss");
     
+    enemy.idNum = nextId;
+    nextId++;
+    
     addEntity(enemy);
   }
   
@@ -370,7 +375,10 @@ class GalagaGame extends Game {
     
     if (rand < .01) {
       Enemy enemy = new Enemy(this, x, y, difficulty, "Drone");
-     
+      
+      enemy.idNum = nextId;
+      nextId++;
+      
       addEntity(enemy);
     }
   }
@@ -392,6 +400,9 @@ class GalagaGame extends Game {
     if (rand < .001) {
       Enemy enemy = new Enemy(this, -(rect.halfWidth), -225, difficulty, "MotherShip");
       
+      enemy.idNum = nextId;
+      nextId++;
+      
       addEntity(enemy);
     }
   }
@@ -410,6 +421,9 @@ class GalagaGame extends Game {
      enemyX = -400;
      enemyCount = 0;
     }
+    
+    enemy.idNum = nextId;
+    nextId++;
     
     lastEnemy = timer.gameTime;
     addEntity(enemy);
@@ -601,6 +615,40 @@ class GalagaGame extends Game {
         id: "",
         groupId: "paused"));
         
+    disableEntitiesByGroup("paused");
+  }
+  
+  void createLeaderBoardMenu() {
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -160, 
+        text: "Leaderboard",
+        size: 56,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameButton(game: this, 
+        x: -420, 
+        y: -280, 
+        text: "Back", 
+        buttonAction: () { 
+          state = GalagaGameState.welcome;
+          _statUpdateEvent.signal();
+          if (soundEffectsOn)
+            sound.play("cursorSelect2");
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
     disableEntitiesByGroup("paused");
   }
   
@@ -1345,6 +1393,9 @@ class GalagaGame extends Game {
   
   final EventStream _motherShipEvent = new EventStream();
   Stream<EventArgs> get onMotherShipHit => _motherShipEvent.stream;
+  
+  final EventStream _normalHitEvent = new EventStream();
+  Stream<EventArgs> get onNormalHit => _normalHitEvent.stream;
 }
   
 class GalagaGameState {
