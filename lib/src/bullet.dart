@@ -117,22 +117,25 @@ class Bullet extends GameEntity<GalagaGame> {
         } else
           removeFromGame();
         
+        game.targetId = enemy.idNum;
+        
         if (game.ship.bullet < 3)
           game.ship.bullet++;
         
         if (game.soundEffectsOn)
           game.sound.play("enemyHit", .5);
         
-        if (enemy.type == "MotherShip")
+        if (enemy.type == "MotherShip") {
           game._motherShipEvent.signal();
+        } else if (enemy.type == "Boss")
+          game._bossHitEvent.signal();
+        else if (enemy.type == "Normal")
+          game._normalHitEvent.signal();
         
         if (enemy.type != "Boss") { 
           enemy.width -= 8;
           enemy.height -= 8;
         }
-        
-        if (enemy.type == "Boss")
-          game._bossHitEvent.signal();
         
         enemy.health--;
       });
