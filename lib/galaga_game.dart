@@ -153,6 +153,14 @@ class GalagaGame extends Game {
       Stats[4] = 0;
     if (!Stats.containsKey(5))
       Stats[5] = 0;
+    if (!Stats.containsKey(6))
+      Stats[6] = 0;
+    if (!Stats.containsKey(7))
+      Stats[7] = 0;
+    if (!Stats.containsKey(8))
+      Stats[8] = 0;
+    if (!Stats.containsKey(9))
+      Stats[9] = 0;
     
     if (!Options.containsKey(1))
       Options[1] = 3;
@@ -670,6 +678,54 @@ class GalagaGame extends Game {
         x: 0, 
         y: -94, 
         text: "Total Killed: ${Stats[1]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "Groupies Annihilated: ${Stats[1]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "Big Bosses Denominated: ${Stats[1]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "Mother Ships Deflowered: ${Stats[1]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "Powerups Absorbed: ${Stats[1]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,

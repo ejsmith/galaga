@@ -17,6 +17,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Stats[3] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
     game.Stats[4] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
     game.Stats[5] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
+    game.Stats[6] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12']) : 0;
+    game.Stats[7] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
+    game.Stats[8] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
+    game.Stats[9] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
     
     game.Options[1] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 0;
     game.Options[2] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 0;
@@ -55,6 +59,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win3'] = game.Stats[3].toString();
     window.localStorage['win4'] = game.Stats[4].toString();
     window.localStorage['win5'] = game.Stats[5].toString();
+    window.localStorage['win12'] = game.Stats[6].toString();
+    window.localStorage['win13'] = game.Stats[7].toString();
+    window.localStorage['win14'] = game.Stats[8].toString();
+    window.localStorage['win15'] = game.Stats[9].toString();
     
     window.localStorage['win6'] = game.Options[1].toString();
     window.localStorage['win7'] = game.Options[2].toString();
