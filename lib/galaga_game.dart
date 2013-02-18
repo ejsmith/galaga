@@ -21,9 +21,9 @@ class GalagaGame extends Game {
   num lastEnemy = 5;
   num lastStar = 0;
   num _state;
-  Map<num, num> Stats = new Map<num,num>();
-  Map<num, num> Options = new Map<num,num>();
-  Map<num, String> Controls = new Map<num,String>();
+  Map<String, num> Stats = new Map<String,num>();
+  Map<String, num> Options = new Map<String,num>();
+  Map<String, String> Controls = new Map<String,String>();
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -135,7 +135,7 @@ class GalagaGame extends Game {
         }
         state = GalagaGameState.playing;
         timer.timeDecrease = true;
-        timer.gameTime = Options[3];
+        timer.gameTime = Options["time"];
         
         t.cancel();
       }
@@ -143,46 +143,46 @@ class GalagaGame extends Game {
   }
   
   void start() {
-    if (!Stats.containsKey(1))
-      Stats[1] = 0;
-    if (!Stats.containsKey(2))
-      Stats[2] = 0;
-    if (!Stats.containsKey(3))
-      Stats[3] = 0;
-    if (!Stats.containsKey(4))
-      Stats[4] = 0;
-    if (!Stats.containsKey(5))
-      Stats[5] = 0;
-    if (!Stats.containsKey(6))
-      Stats[6] = 0;
-    if (!Stats.containsKey(7))
-      Stats[7] = 0;
-    if (!Stats.containsKey(8))
-      Stats[8] = 0;
-    if (!Stats.containsKey(9))
-      Stats[9] = 0;
+    if (!Stats.containsKey("killed"))
+      Stats["killed"] = 0;
+    if (!Stats.containsKey("wins"))
+      Stats["wins"] = 0;
+    if (!Stats.containsKey("loses"))
+      Stats["loses"] = 0;
+    if (!Stats.containsKey("totalGames"))
+      Stats["totalGames"] = 0;
+    if (!Stats.containsKey("highscore"))
+      Stats["highscore"] = 0;
+    if (!Stats.containsKey("normalKills"))
+      Stats["normalKills"] = 0;
+    if (!Stats.containsKey("bossKills"))
+      Stats["bossKills"] = 0;
+    if (!Stats.containsKey("motherKills"))
+      Stats["motherKills"] = 0;
+    if (!Stats.containsKey("powerups"))
+      Stats["powerups"] = 0;
     
-    if (!Options.containsKey(1))
-      Options[1] = 3;
-    if (!Options.containsKey(2))
-      Options[2] = 3;
-    if (!Options.containsKey(3))
-      Options[3] = 60;
-    if (!Options.containsKey(4))
-      Options[4] = 1;
-    if (!Options.containsKey(5))
-      Options[5] = 1;
-    if (!Options.containsKey(6))
-      Options[6] = 1;
+    if (!Options.containsKey("startLives"))
+      Options["startLives"] = 3;
+    if (!Options.containsKey("bulletCap"))
+      Options["bulletCap"] = 3;
+    if (!Options.containsKey("time"))
+      Options["time"] = 60;
+    if (!Options.containsKey("difficulty"))
+      Options["difficulty"] = 1;
+    if (!Options.containsKey("powerups"))
+      Options["powerups"] = 1;
+    if (!Options.containsKey("soundeffects"))
+      Options["soundeffects"] = 1;
     
-    if (!Controls.containsKey(1))
-      Controls[1] = "left";
-    if (!Controls.containsKey(2))
-      Controls[2] = "right";
-    if (!Controls.containsKey(3))
-      Controls[3] = "space";
+    if (!Controls.containsKey("left"))
+      Controls["left"] = "left";
+    if (!Controls.containsKey("right"))
+      Controls["right"] = "right";
+    if (!Controls.containsKey("fire"))
+      Controls["fire"] = "space";
     
-    if (Options[6] == 1)
+    if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
     else
       soundEffectsOn = false;
@@ -206,7 +206,7 @@ class GalagaGame extends Game {
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
       
       if (enemyAmount <= 0) {
-        Stats[2] += 1;
+        Stats["wins"] += 1;
         
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
@@ -226,21 +226,21 @@ class GalagaGame extends Game {
         visualLevel++;
       }
       
-      if (state == GalagaGameState.playing && Options[5] == 1)
+      if (state == GalagaGameState.playing && Options["soundeffects"] == 1)
         newPowerUp();
       
       if (state == GalagaGameState.playing)
         newMotherShip();
       
-      if (score > Stats[5]) {
+      if (score > Stats["highscore"]) {
         highScore = score;
-        Stats[5] = highScore;
+        Stats["highscore"] = highScore;
       }
       
       if (timer.gameTime <= 0 && !bonusStage)
         gameOver();
       else if (bonusStage && timer.gameTime <= 0) {
-        Stats[2] += 1;
+        Stats["wins"] += 1;
         
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
@@ -677,7 +677,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -94, 
-        text: "Total Killed: ${Stats[1]}",
+        text: "Total Killed: ${Stats["killed"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -689,7 +689,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -94, 
-        text: "Groupies Annihilated: ${Stats[1]}",
+        text: "Groupies Annihilated: ${Stats["normalKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -701,7 +701,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -94, 
-        text: "Big Bosses Denominated: ${Stats[1]}",
+        text: "Big Bosses Denominated: ${Stats["bossKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -713,7 +713,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -94, 
-        text: "Mother Ships Deflowered: ${Stats[1]}",
+        text: "Mother Ships Deflowered: ${Stats["motherKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -725,7 +725,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -94, 
-        text: "Powerups Absorbed: ${Stats[1]}",
+        text: "Powerups Absorbed: ${Stats["powerups"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -737,7 +737,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -49, 
-        text: "Total Wins: ${Stats[2]}",
+        text: "Total Wins: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -749,7 +749,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -10, 
-        text: "Total Loses: ${Stats[3]}",
+        text: "Total Loses: ${Stats["loses"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -761,7 +761,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: 29, 
-        text: "Total Games: ${Stats[4]}",
+        text: "Total Games: ${Stats["totalGames"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -773,7 +773,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: 63, 
-        text: "High Score: ${Stats[5]}",
+        text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -846,14 +846,14 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 120, 
         y: -60, 
-        text: "${Options[1]}", 
+        text: "${Options["startLives"]}", 
         buttonAction: (){
           
-          if (Options[1] >= 10) {
-            Options[1] = 1;
+          if (Options["startLives"] >= 10) {
+            Options["startLives"] = 1;
           }
           else {
-            Options[1]++;
+            Options["startLives"]++;
           }
           
           _statUpdateEvent.signal();
@@ -888,13 +888,13 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 120, 
         y: -30, 
-        text: "${Options[2]}", 
+        text: "${Options["bulletCap"]}", 
         buttonAction: () {
           
-          if (Options[2] >= 10)
-            Options[2] = 1;
+          if (Options["bulletCap"] >= 10)
+            Options["bulletCap"] = 1;
           else
-            Options[2]++;
+            Options["bulletCap"]++;
           
           _statUpdateEvent.signal();
           
@@ -928,13 +928,13 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 120, 
         y: 0, 
-        text: "${Options[3]}", 
+        text: "${Options["time"]}", 
         buttonAction: () {
           
-          if (Options[3] >= 180)
-            Options[3] = 0;
+          if (Options["time"] >= 180)
+            Options["time"] = 0;
           else
-            Options[3] += 20;
+            Options["time"] += 20;
           
           _statUpdateEvent.signal();
           
@@ -968,13 +968,13 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 120, 
         y: 30, 
-        text: "${Options[4]}", 
+        text: "${Options["difficulty"]}", 
         buttonAction: () {
           
-          if (Options[4] >= 5)
-            Options[4] = 1;
+          if (Options["difficulty"] >= 5)
+            Options["difficulty"] = 1;
           else
-            Options[4] += 1;
+            Options["difficulty"] += 1;
           
           _statUpdateEvent.signal();
           
@@ -1008,13 +1008,13 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 150, 
         y: -94, 
-        text: Options[5] == 1 ? "True" : "False",
+        text: Options["powerups"] == 1 ? "True" : "False",
         buttonAction: () {
           
-          if (Options[5] >= 2)
-            Options[5] = 1;
+          if (Options["powerups"] >= 2)
+            Options["powerups"] = 1;
           else
-            Options[5] += 1;
+            Options["powerups"] += 1;
           
           _statUpdateEvent.signal();
           
@@ -1048,15 +1048,15 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this, 
         x: 170, 
         y: 60, 
-        text: Options[6] == 1 ? "True" : "False",
+        text: Options["soundeffects"] == 1 ? "True" : "False",
         buttonAction: () {
           
-          if (Options[6] >= 2)
-            Options[6] = 1;
+          if (Options["soundeffects"] >= 2)
+            Options["soundeffects"] = 1;
           else
-            Options[6] += 1;
+            Options["soundeffects"] += 1;
           
-          if (Options[6] == 1)
+          if (Options["soundeffects"] == 1)
             soundEffectsOn = true;
           else
             soundEffectsOn = false;
@@ -1301,11 +1301,11 @@ class GalagaGame extends Game {
   }
   
   void resetStats() {
-    Stats[1] = 0;
-    Stats[2] = 0;
-    Stats[3] = 0;
-    Stats[4] = 0;
-    Stats[5] = 0;
+    Stats["killed"] = 0;
+    Stats["wins"] = 0;
+    Stats["loses"] = 0;
+    Stats["totalGames"] = 0;
+    Stats["highscore"] = 0;
     
     state = GalagaGameState.welcome;
     
@@ -1316,11 +1316,11 @@ class GalagaGame extends Game {
   }
   
   void resetOptions() {
-    Options[1] = 3;
-    Options[2] = 3;
-    Options[3] = 60;
-    Options[4] = 1;
-    Options[5] = 1;
+    Options["startLives"] = 3;
+    Options["bulletCap"] = 3;
+    Options["time"] = 60;
+    Options["difficulty"] = 1;
+    Options["soundeffects"] = 1;
     
     state = GalagaGameState.welcome;
     
@@ -1377,12 +1377,12 @@ class GalagaGame extends Game {
     p1Dead = false;
     
     ship.spiralShot = true;
-    ship.lives = Options[1];
+    ship.lives = Options["startLives"];
     
-    Stats[4] += 1;
+    Stats["totalGames"] += 1;
     state = GalagaGameState.playing;
     timer.timeDecrease = true;
-    timer.gameTime = Options[3];
+    timer.gameTime = Options["time"];
   }
   
   void gameOver() {
@@ -1390,7 +1390,7 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
     
-    Stats[3] += 1;
+    Stats["loses"] += 1;
     _gameOverEvent.signal();
     if (soundEffectsOn)
       sound.play("cursorSelect2");
