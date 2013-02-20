@@ -132,7 +132,7 @@ class Bullet extends GameEntity<GalagaGame> {
         else if (enemy.type == "Normal")
           game._normalHitEvent.signal();
         
-        if (enemy.type != "Boss") { 
+        if (enemy.type != "Boss") {
           enemy.width -= 8;
           enemy.height -= 8;
         }

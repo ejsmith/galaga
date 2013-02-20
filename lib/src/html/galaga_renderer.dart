@@ -12,18 +12,22 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void init() {
-    game.Stats[1] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
-    game.Stats[2] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
-    game.Stats[3] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
-    game.Stats[4] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
-    game.Stats[5] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
+    game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
+    game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
+    game.Stats["loses"] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
+    game.Stats["totalGames"] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
+    game.Stats["highscore"] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
+    game.Stats["normalKills"] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12']) : 0;
+    game.Stats["bossKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
+    game.Stats["motherKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
+    game.Stats["powerups"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
     
-    game.Options[1] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 0;
-    game.Options[2] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 0;
-    game.Options[3] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 0;
-    game.Options[4] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 0;
-    game.Options[5] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 0;
-    game.Options[6] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 0;
+    game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 0;
+    game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 0;
+    game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 0;
+    game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 0;
+    game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 0;
+    game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 0;
     
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
@@ -50,18 +54,22 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void updateStats() {
-    window.localStorage['win1'] = game.Stats[1].toString();
-    window.localStorage['win2'] = game.Stats[2].toString();
-    window.localStorage['win3'] = game.Stats[3].toString();
-    window.localStorage['win4'] = game.Stats[4].toString();
-    window.localStorage['win5'] = game.Stats[5].toString();
+    window.localStorage['win1'] = game.Stats["killed"].toString();
+    window.localStorage['win2'] = game.Stats["wins"].toString();
+    window.localStorage['win3'] = game.Stats["loses"].toString();
+    window.localStorage['win4'] = game.Stats["totalGames"].toString();
+    window.localStorage['win5'] = game.Stats["highscore"].toString();
+    window.localStorage['win12'] = game.Stats["normalKills"].toString();
+    window.localStorage['win13'] = game.Stats["bossKills"].toString();
+    window.localStorage['win14'] = game.Stats["motherKills"].toString();
+    window.localStorage['win15'] = game.Stats["powerups"].toString();
     
-    window.localStorage['win6'] = game.Options[1].toString();
-    window.localStorage['win7'] = game.Options[2].toString();
-    window.localStorage['win8'] = game.Options[3].toString();
-    window.localStorage['win9'] = game.Options[4].toString();
-    window.localStorage['win10'] = game.Options[5].toString();
-    window.localStorage['win11'] = game.Options[6].toString();
+    window.localStorage['win6'] = game.Options["startLives"].toString();
+    window.localStorage['win7'] = game.Options["bulletCap"].toString();
+    window.localStorage['win8'] = game.Options["time"].toString();
+    window.localStorage['win9'] = game.Options["difficulty"].toString();
+    window.localStorage['win10'] = game.Options["powerups"].toString();
+    window.localStorage['win11'] = game.Options["soundeffects"].toString();
   }
   
   void bossHit() {
@@ -150,7 +158,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void drawHighScore() {
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
-    ctx.fillText("High Score: ${game.Stats[5]} ", 225, -(game.rect.halfHeight - 30));
+    ctx.fillText("High Score: ${game.Stats["highscore"]} ", 225, -(game.rect.halfHeight - 30));
   }
   
   void bgFade() {

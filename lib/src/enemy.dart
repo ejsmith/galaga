@@ -61,7 +61,7 @@ class Enemy extends GameEntity<GalagaGame> {
     if (type == "Drone") {
       if (health <= 0) {
         game.score += 100 * game.pointMultiplier;
-        game.Stats[1] += 1;
+        game.Stats["killed"] += 1;
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);
@@ -182,7 +182,7 @@ class Enemy extends GameEntity<GalagaGame> {
     
     if (type == "Boss") {
       if (health <= 0) {
-        game.Stats[2] += 1;
+        game.Stats["wins"] += 1;
         game.newExplosion(x, y);
         
         game.removeEntitiesByFilter((e) => e is PowerUp);
@@ -213,7 +213,7 @@ class Enemy extends GameEntity<GalagaGame> {
         }
         
         game.score += 10000 * game.pointMultiplier;
-        game.Stats[1] += 1;
+        game.Stats["killed"] += 1;
         
         game.bonusStage = false;
         
@@ -332,7 +332,7 @@ class Enemy extends GameEntity<GalagaGame> {
       
       if (health <= 0) {
         game.score += 1000 * game.pointMultiplier;
-        game.Stats[1] += 1;
+        game.Stats["killed"] += 1;
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);
@@ -410,7 +410,7 @@ class Enemy extends GameEntity<GalagaGame> {
       if (health <= 0) {
         game.score += 100 * game.pointMultiplier;
         game.enemyAmount--;
-        game.Stats[1] += 1;
+        game.Stats["killed"] += 1;
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);

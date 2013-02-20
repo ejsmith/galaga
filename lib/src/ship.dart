@@ -13,7 +13,7 @@ class Ship extends GameEntity<GalagaGame> {
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
     
-    maxBullet = this.game.Options[2];
+    maxBullet = this.game.Options["wins"];
     bullet = maxBullet;
   }
   
@@ -30,7 +30,7 @@ class Ship extends GameEntity<GalagaGame> {
     }
     
     if (lives <= 0) {
-      game.Stats[3] += 1;
+      game.Stats["loses"] += 1;
       game.p1Dead = true;
       
       removeFromGame();
