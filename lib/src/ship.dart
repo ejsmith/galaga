@@ -13,7 +13,7 @@ class Ship extends GameEntity<GalagaGame> {
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
     
-    maxBullet = this.game.Options["wins"];
+    maxBullet = this.game.Options["bulletCap"];
     bullet = maxBullet;
   }
   

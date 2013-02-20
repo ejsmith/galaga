@@ -66,6 +66,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("options");
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("levelEnd");
+    disableEntitiesByGroup("leaders");
     
     if (_state == GalagaGameState.welcome)
       enableEntitiesByGroup("welcome");
@@ -81,6 +82,8 @@ class GalagaGame extends Game {
       enableEntitiesByGroup("instructions");
     else if (_state == GalagaGameState.levelEnd)
       enableEntitiesByGroup("levelEnd");
+    else if (_state == GalagaGameState.leaderboard)
+      enableEntitiesByGroup("leaders");
     
   }
   
@@ -96,6 +99,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("paused");
     disableEntitiesByGroup("options");
     disableEntitiesByGroup("instructions");
+    disableEntitiesByGroup("leaders");
     
     _waitingTimer = new Timer.repeating(1000, (t) {    
         _waiting++;
@@ -213,7 +217,8 @@ class GalagaGame extends Game {
     createGameOverMenu();
     createStatsMenu();
     createPausedMenu();
-    createControlsMenu(); 
+    createControlsMenu();
+    createLeaderBoardMenu();
     
     if (soundEffectsOn)
       sound.play("menu", .5, true);
@@ -257,7 +262,10 @@ class GalagaGame extends Game {
       if (score > Stats["highscore"]) {
         highScore = score;
         Stats["highscore"] = highScore;
+        Highscores[1] = Stats["highscore"];
       }
+      
+      Highscores[1] = Stats["highscore"];
       
       if (timer.gameTime <= 0 && !bonusStage)
         gameOver();
@@ -611,7 +619,7 @@ class GalagaGame extends Game {
           removeEntitiesByGroup("leaders");
           createLeaderBoardMenu();
           
-          state = GalagaGameState.options;
+          state = GalagaGameState.leaderboard;
           
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -673,7 +681,7 @@ class GalagaGame extends Game {
   void createLeaderBoardMenu() {
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -160, 
+        y: -240, 
         text: "Leaderboard",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -684,10 +692,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: -190, 
         text: "1: ${Highscores[1]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -696,10 +704,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: -150, 
         text: "2: ${Highscores[2]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -708,10 +716,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: -110, 
         text: "3: ${Highscores[3]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -720,10 +728,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: -70, 
         text: "4: ${Highscores[4]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -732,10 +740,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: -30, 
         text: "5: ${Highscores[5]}",
-        size: 36,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -744,10 +752,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: 10, 
         text: "6: ${Highscores[6]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -756,10 +764,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: 50, 
         text: "7: ${Highscores[7]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -768,10 +776,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: 90, 
         text: "8: ${Highscores[8]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -780,10 +788,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: 130, 
         text: "9: ${Highscores[9]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -792,10 +800,10 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -145, 
+        y: 170, 
         text: "10: ${Highscores[10]}",
-        size: 28,
+        size: 42,
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
@@ -1626,4 +1634,5 @@ class GalagaGameState {
   static final num options = 6;
   static final num instructions = 7;
   static final num levelEnd = 8;
+  static final num leaderboard = 9;
 }

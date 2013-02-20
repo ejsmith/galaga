@@ -29,6 +29,17 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 0;
     game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 0;
     
+    game.Highscores[1] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
+    game.Highscores[2] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
+    game.Highscores[3] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
+    game.Highscores[4] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
+    game.Highscores[5] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
+    game.Highscores[6] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
+    game.Highscores[7] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
+    game.Highscores[8] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
+    game.Highscores[9] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
+    game.Highscores[10] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
+    
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
     game.onStatUpdate.listen((e) => updateStats());
