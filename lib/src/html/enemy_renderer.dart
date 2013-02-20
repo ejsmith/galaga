@@ -7,7 +7,7 @@ class EnemyRenderer extends DefaultCanvasEntityRenderer<Enemy> {
     super.render(e);
     
     gr.ctx.fillStyle = "rgba(0, 0, 0, .5)";
-    gr.ctx.font = "24px Verdana";
+    gr.ctx.font = "36px Verdana";
     
     switch (e.type) {
       case 'Boss':      
