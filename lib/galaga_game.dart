@@ -24,6 +24,7 @@ class GalagaGame extends Game {
   Map<String, num> Stats = new Map<String,num>();
   Map<String, num> Options = new Map<String,num>();
   Map<String, String> Controls = new Map<String,String>();
+  Map<num, num> Highscores = new Map<num, num>();
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -181,6 +182,27 @@ class GalagaGame extends Game {
       Controls["right"] = "right";
     if (!Controls.containsKey("fire"))
       Controls["fire"] = "space";
+    
+    if (!Highscores.containsKey(1))
+      Highscores[1] = 0;
+    if (!Highscores.containsKey(2))
+      Highscores[2] = 0;
+    if (!Highscores.containsKey(3))
+      Highscores[3] = 0;
+    if (!Highscores.containsKey(4))
+      Highscores[4] = 0;
+    if (!Highscores.containsKey(5))
+      Highscores[5] = 0;
+    if (!Highscores.containsKey(6))
+      Highscores[6] = 0;
+    if (!Highscores.containsKey(7))
+      Highscores[7] = 0;
+    if (!Highscores.containsKey(8))
+      Highscores[8] = 0;
+    if (!Highscores.containsKey(9))
+      Highscores[9] = 0;
+    if (!Highscores.containsKey(10))
+      Highscores[10] = 0;
     
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -581,6 +603,28 @@ class GalagaGame extends Game {
         id: "",
         groupId: "welcome"));
     
+    addEntity(new GameButton(game: this, 
+        x: 0, 
+        y: 82, 
+        text: "Leaderboard", 
+        buttonAction: () {
+          removeEntitiesByGroup("leaders");
+          createLeaderBoardMenu();
+          
+          state = GalagaGameState.options;
+          
+          _statUpdateEvent.signal();
+          if (soundEffectsOn)
+            sound.play("cursorSelect2");
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "welcome"));
+    
     disableEntitiesByGroup("welcome");
   }
   
@@ -637,7 +681,127 @@ class GalagaGame extends Game {
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
-        groupId: "stats"));
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "1: ${Highscores[1]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "2: ${Highscores[2]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "3: ${Highscores[3]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "4: ${Highscores[4]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "5: ${Highscores[5]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "6: ${Highscores[6]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "7: ${Highscores[7]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "8: ${Highscores[8]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "9: ${Highscores[9]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -94, 
+        text: "10: ${Highscores[10]}",
+        size: 28,
+        font: "cinnamoncake, Verdana",
+        centered: false,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
     
     addEntity(new GameButton(game: this, 
         x: -420, 
@@ -655,13 +819,12 @@ class GalagaGame extends Game {
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
-        groupId: "stats"));
+        groupId: "leaders"));
     
-    disableEntitiesByGroup("paused");
+    disableEntitiesByGroup("leaders");
   }
   
   void createStatsMenu() {
-    
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -160, 
