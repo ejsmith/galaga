@@ -41,7 +41,7 @@ class Bullet extends GameEntity<GalagaGame> {
     super.update();
     
     if (Type == "exploding") {
-        _deleteTimer = new Timer.repeating(1000, (t) {    
+        _deleteTimer = new Timer.repeating(const Duration(milliseconds: 1000), (t) {    
           _waiting++;
         
         if (_waiting == 1) {

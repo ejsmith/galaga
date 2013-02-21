@@ -101,7 +101,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("leaders");
     
-    _waitingTimer = new Timer.repeating(1000, (t) {    
+    _waitingTimer = new Timer.repeating(const Duration(milliseconds: 1000), (t) {    
         _waiting++;
       
       if (_waiting == 3) {
@@ -421,7 +421,7 @@ class GalagaGame extends Game {
     }
   }
   
-  void newMotherShip([num difficulty = 1]) {
+  void newMotherShip({num difficulty: 1}) {
     int x = 0;
     
     entities.where((e) => e is Enemy).forEach((Enemy e) {
