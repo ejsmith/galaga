@@ -10,6 +10,9 @@ class Enemy extends GameEntity<GalagaGame> {
   num bossDifficulty = 1;
   num health = 1;
   num bossHealth = 100;
+  num maxHp = 1;
+  num bossMaxHp = 100;
+  bool belowHalfHp = false;
   num idNum = 1;
   
   
@@ -49,6 +52,9 @@ class Enemy extends GameEntity<GalagaGame> {
       health = bossDifficulty;
     }
     
+    maxHp = health;
+    bossMaxHp = bossHealth;
+    
     bossDifficulty = game.level / 3;
     
     startY = y;
@@ -57,6 +63,10 @@ class Enemy extends GameEntity<GalagaGame> {
   void update() {
     if (game.state == GalagaGameState.paused || game.state == GalagaGameState.gameOver || game.state == GalagaGameState.welcome)
       return;
+    
+    if (health < (maxHp / 2) || bossHealth < (bossMaxHp / 2)) {
+      belowHalfHp = true;
+    }
     
     if (type == "Drone") {
       if (health <= 0) {
@@ -249,75 +259,143 @@ class Enemy extends GameEntity<GalagaGame> {
       if (x < -(game.rect.halfWidth) + 72)
         momentum.xVel *= -1;
       
-      if (bossDifficulty == 1) {
-        if (random() <= .01) {
-          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
-          if (game.soundEffectsOn)
-            game.sound.play("enemyFire", .3);
-        }
-        
-      } else if (bossDifficulty == 2) {
-        if (random() <= .03) {
-          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
-          if (game.soundEffectsOn)
-            game.sound.play("enemyFire", .3);
-        }
-        
-      } else if (bossDifficulty == 3) {
-        if (random() <= .07) {
+      if (belowHalfHp) {
+        if (bossDifficulty == 1) {
+          if(random() <= .1) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "exploding"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 2) {
+          if(random() <= .1) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "exploding"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 3) {
+          if (random() <= .07) {
+            if (random() <= .1) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            } else if(random() <= .1) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 4) {
           if (random() <= .1) {
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
-          } else if(random() <= .1) {
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            if (random() <= .3) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            } else if(random() <= .3) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
           }
-          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
-          if (game.soundEffectsOn)
-            game.sound.play("enemyFire", .3);
-        }
-        
-      } else if (bossDifficulty == 4) {
-        if (random() <= .1) {
-          if (random() <= .3) {
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
-          } else if(random() <= .3) {
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+          
+        } else if (bossDifficulty == 5) {
+          if (random() <= .2) {
+            if (random() <= .5) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }  else if(random() <= .5) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
           }
-          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
-          if (game.soundEffectsOn)
-            game.sound.play("enemyFire", .3);
         }
-        
-      } else if (bossDifficulty == 5) {
-        if (random() <= .2) {
-          if (random() <= .5) {
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
-          }  else if(random() <= .5) {
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+      } else {
+        if (bossDifficulty == 1) {
+          if (random() <= .01) {
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
           }
-          game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
-          if (game.soundEffectsOn)
-            game.sound.play("enemyFire", .3);
+          
+        } else if (bossDifficulty == 2) {
+          if (random() <= .03) {
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 3) {
+          if (random() <= .07) {
+            if (random() <= .1) {
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
+            } else if(random() <= .1) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 4) {
+          if (random() <= .1) {
+            if (random() <= .3) {
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
+            } else if(random() <= .3) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
+        } else if (bossDifficulty == 5) {
+          if (random() <= .2) {
+            if (random() <= .5) {
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(42,54)));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(42,54)));
+            }  else if(random() <= .5) {
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "exploding"));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "exploding"));
+            }
+            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+            if (game.soundEffectsOn)
+              game.sound.play("enemyFire", .3);
+          }
+          
         }
-        
       }
       
       if (random() <= .5)

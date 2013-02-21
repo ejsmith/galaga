@@ -259,14 +259,6 @@ class GalagaGame extends Game {
       if (state == GalagaGameState.playing)
         newMotherShip();
       
-      if (score > Stats["highscore"]) {
-        highScore = score;
-        Stats["highscore"] = highScore;
-        Highscores[1] = Stats["highscore"];
-      }
-      
-      Highscores[1] = Stats["highscore"];
-      
       if (timer.gameTime <= 0 && !bonusStage)
         gameOver();
       else if (bonusStage && timer.gameTime <= 0) {
@@ -1561,6 +1553,8 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
     
+    updateLeaderboard();
+    
     Stats["loses"] += 1;
     _gameOverEvent.signal();
     if (soundEffectsOn)
@@ -1601,6 +1595,25 @@ class GalagaGame extends Game {
   
   void removeBullets() {
     removeEntitiesByFilter((e) => e is Bullet);
+  }
+  
+  void updateLeaderboard() {
+    Map<num, num> tempMap = new Map<num, num>();
+    for (int k = 1; k < 11; k++) {
+      tempMap[k] = Highscores[k];
+    }
+    
+    for (int i = 1; i <= 10; i++) {
+      if (score > Highscores[i]) {
+        for (int j = i + 1; j < 10; j++) {
+          Highscores[j] = tempMap[j - 1];
+        }
+        
+        Highscores[i] = score;
+        Stats["highScore"] = Highscores[i];
+        break;
+      }
+    } 
   }
   
   final EventStream _statUpdateEvent = new EventStream();
