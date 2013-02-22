@@ -25,6 +25,7 @@ class GalagaGame extends Game {
   Map<String, num> Options = new Map<String,num>();
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
+  Map<num, bool> RankSelect = new Map<num, bool>();
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -207,6 +208,25 @@ class GalagaGame extends Game {
       Highscores[9] = 0;
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
+    
+    if (!RankSelect.containsKey(1))
+      RankSelect[1] = true;
+    if (!RankSelect.containsKey(2))
+      RankSelect[2] = false;
+    if (!RankSelect.containsKey(3))
+      RankSelect[3] = false;
+    if (!RankSelect.containsKey(4))
+      RankSelect[4] = false;
+    if (!RankSelect.containsKey(5))
+      RankSelect[5] = false;
+    if (!RankSelect.containsKey(6))
+      RankSelect[6] = false;
+    if (!RankSelect.containsKey(7))
+      RankSelect[7] = false;
+    if (!RankSelect.containsKey(8))
+      RankSelect[8] = false;
+    if (!RankSelect.containsKey(9))
+      RankSelect[9] = false;
     
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -826,8 +846,8 @@ class GalagaGame extends Game {
   
   void createStatsMenu() {
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -160, 
+        x:  0, 
+        y: -280, 
         text: "Statistics",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -838,110 +858,218 @@ class GalagaGame extends Game {
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -400, 
+        y: -200, 
         text: "Total Killed: ${Stats["killed"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -400, 
+        y: -155, 
         text: "Groupies Annihilated: ${Stats["normalKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -400, 
+        y: -110, 
         text: "Big Bosses Denominated: ${Stats["bossKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -400, 
+        y: -65, 
         text: "Mother Ships Deflowered: ${Stats["motherKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -94, 
+        x: -400, 
+        y: -20, 
         text: "Powerups Absorbed: ${Stats["powerups"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -49, 
+        x: -400, 
+        y: 25, 
         text: "Total Wins: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -10, 
+        x: -400, 
+        y: 70, 
         text: "Total Loses: ${Stats["loses"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 29, 
+        x: -400, 
+        y: 115, 
         text: "Total Games: ${Stats["totalGames"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 63, 
+        x: -400, 
+        y: 160, 
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: -200, 
+        text: "Jew",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[1] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: -155, 
+        text: "Jewish Priest",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[2] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: -110, 
+        text: "Amish Mastermind",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[3] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: -65, 
+        text: "Road Warrior",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[4] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: -20, 
+        text: "Space Recruit",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[5] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: 25, 
+        text: "Space Cadet",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[6] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: 70, 
+        text: "Space Captain",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[7] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: 115, 
+        text: "Overlord of the Galaxy",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[8] == true ? .8 : .4,
+        id: "",
+        groupId: "stats"));
+    
+    addEntity(new GameText(game: this, 
+        x: 100, 
+        y: 160, 
+        text: "Overlord of the Universe",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: RankSelect[9] == true ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -965,7 +1093,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameButton(game: this, 
         x: 0, 
-        y: 105, 
+        y: 225, 
         text: "RESET", 
         buttonAction: () => resetStats(),
         size: 36,
