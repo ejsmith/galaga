@@ -40,7 +40,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Highscores[9] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
     game.Highscores[10] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
     
-    game.RankSelect[1] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : false;
+    game.RankSelect[1] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : true;
     game.RankSelect[2] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : false;
     game.RankSelect[3] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win28']) : false;
     game.RankSelect[4] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win29']) : false;
