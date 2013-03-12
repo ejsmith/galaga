@@ -25,7 +25,7 @@ class GalagaGame extends Game {
   Map<String, num> Options = new Map<String,num>();
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
-  Map<num, bool> RankSelect = new Map<num, bool>();
+  Map<num, num> RankSelect = new Map<num, num>();
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -210,28 +210,30 @@ class GalagaGame extends Game {
       Highscores[10] = 0;
     
     if (!RankSelect.containsKey(1))
-      RankSelect[1] = true;
+      RankSelect[1] = 1;
     if (!RankSelect.containsKey(2))
-      RankSelect[2] = false;
+      RankSelect[2] = 0;
     if (!RankSelect.containsKey(3))
-      RankSelect[3] = false;
+      RankSelect[3] = 0;
     if (!RankSelect.containsKey(4))
-      RankSelect[4] = false;
+      RankSelect[4] = 0;
     if (!RankSelect.containsKey(5))
-      RankSelect[5] = false;
+      RankSelect[5] = 0;
     if (!RankSelect.containsKey(6))
-      RankSelect[6] = false;
+      RankSelect[6] = 0;
     if (!RankSelect.containsKey(7))
-      RankSelect[7] = false;
+      RankSelect[7] = 0;
     if (!RankSelect.containsKey(8))
-      RankSelect[8] = false;
+      RankSelect[8] = 0;
     if (!RankSelect.containsKey(9))
-      RankSelect[9] = false;
+      RankSelect[9] = 0;
     
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
     else
       soundEffectsOn = false;
+    
+    resetStats();
     
     createWelcomeMenu();
     createGameOverMenu();
@@ -973,7 +975,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[1] == true ? .8 : .4,
+        opacity: RankSelect[1] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -985,7 +987,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[2] == true ? .8 : .4,
+        opacity: RankSelect[2] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -997,7 +999,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[3] == true ? .8 : .4,
+        opacity: RankSelect[3] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1009,7 +1011,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[4] == true ? .8 : .4,
+        opacity: RankSelect[4] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1021,7 +1023,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[5] == true ? .8 : .4,
+        opacity: RankSelect[5] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1033,7 +1035,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[6] == true ? .8 : .4,
+        opacity: RankSelect[6] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1045,7 +1047,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[7] == true ? .8 : .4,
+        opacity: RankSelect[7] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1057,7 +1059,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[8] == true ? .8 : .4,
+        opacity: RankSelect[8] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1069,7 +1071,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  false,
         color: "255, 255, 255",
-        opacity: RankSelect[9] == true ? .8 : .4,
+        opacity: RankSelect[9] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
