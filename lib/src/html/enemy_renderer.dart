@@ -11,7 +11,7 @@ class EnemyRenderer extends DefaultCanvasEntityRenderer<Enemy> {
     
     switch (e.type) {
       case 'Boss':      
-        gr.ctx.fillText("${e.health}", e.x - 8, e.y + 8);
+        gr.ctx.fillText("${e.health}", e.x - 30, e.y + 8);
         break;
     }
   }

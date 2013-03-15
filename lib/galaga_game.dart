@@ -299,7 +299,7 @@ class GalagaGame extends Game {
         
         waiting = 1;
         
-        if (tutorial == false)
+        //if (tutorial == false)
           level++;
         
         visualLevel++;
@@ -536,7 +536,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -97, 
-        text: visualLevel == bonusCheck ? "Level ${visualLevel} Complete!" : "Prepare for Bonus Stage!",
+        text: visualLevel != bonusCheck ? "Level ${visualLevel} Complete!" : "Prepare for Bonus Stage!",
         size: 56,
         font: "cinnamoncake, Verdana",
         centered: true,
@@ -1650,8 +1650,8 @@ class GalagaGame extends Game {
     
     bonusCheck = 3;
     bonusStage = false;
-    visualLevel = 2;
-    level = 2;
+    visualLevel = 1;
+    level = 1;
     score = 0;
     pointMultiplier = 1;
     
