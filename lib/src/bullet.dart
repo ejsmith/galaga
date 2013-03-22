@@ -123,7 +123,7 @@ class Bullet extends GameEntity<GalagaGame> {
           game.ship.bullet++;
         
         if (game.soundEffectsOn)
-          game.sound.play("enemyHit", .5);
+          game.enemyHit.play(game.enemyHit.Sound, game.enemyHit.Id, game.enemyHit.Volume, game.enemyHit.Looping);
         
         if (enemy.type == "MotherShip") {
           game._motherShipEvent.signal();
@@ -148,7 +148,7 @@ class Bullet extends GameEntity<GalagaGame> {
         game._shipHitEvent.signal();
         
         if (game.soundEffectsOn)
-          game.sound.play("shipHit", .5);
+          game.shipHit.play(game.shipHit.Sound, game.shipHit.Id, game.shipHit.Volume, game.shipHit.Looping);
         
         game.removeBullets();
         

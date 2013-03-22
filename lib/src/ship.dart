@@ -89,11 +89,11 @@ class Ship extends GameEntity<GalagaGame> {
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
       if (game.soundEffectsOn)
-        game.sound.play("shipFire", soundLevel);
+        game.shipFire.play(game.shipFire.Sound, game.shipFire.Id, game.shipFire.Volume, game.shipFire.Looping);
     } else {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       if (game.soundEffectsOn)
-        game.sound.play("shipFire", soundLevel);
+        game.shipFire.play(game.shipFire.Sound, game.shipFire.Id, game.shipFire.Volume, game.shipFire.Looping);
     }
     
     if (bullet > 0)

@@ -10,7 +10,7 @@ void main() {
   var renderer = new GalagaRenderer("surface");
   var loop  = new HtmlGameLoop();
 
-  var game = new GalagaGame.withServices(sound, input, renderer, loop);
+  var game = new GalagaGame.withServices(input, renderer, loop);
   //game.sound.enabled = false;
   Game.debugMode = false;
   game.start();  
