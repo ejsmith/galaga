@@ -63,6 +63,18 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     updateStats();
   }
   
+  void subtleBgFade() {
+    game.bgStyle = "rgba(0, 0, 0, 0.84)";
+    
+    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
+    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
+    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
+    new Timer(const Duration(milliseconds: 100), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
+    new Timer(const Duration(milliseconds: 125), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
+    new Timer(const Duration(milliseconds: 150), () => game.bgStyle = "rgba(0, 0, 0, 0.84)");
+    new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.85)");
+  }
+  
   void shipHit() {
     bgFade();
     
@@ -72,6 +84,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     new Timer(const Duration(milliseconds: 225), () => game.ship.opacity = .2);
     new Timer(const Duration(milliseconds: 300), () => game.ship.opacity = 0);
     new Timer(const Duration(milliseconds: 375), () => game.ship.opacity = .2);
+    
+    subtleBgFade();
   }
   
   void updateStats() {
@@ -119,6 +133,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       if (e.type == "Boss" && e.idNum == game.targetId) {
         new Timer(const Duration(milliseconds: 25), () => e.opacity = 0);
         new Timer(const Duration(milliseconds: 75), () => e.opacity = 1);
+        
+        subtleBgFade();
       }
     });
   }
@@ -132,6 +148,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         new Timer(const Duration(milliseconds: 225), () => e.opacity = 1);
         new Timer(const Duration(milliseconds: 300), () => e.opacity = 0);
         new Timer(const Duration(milliseconds: 375), () => e.opacity = 1);
+        
+        subtleBgFade();
       }
     });
   }
@@ -143,6 +161,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         new Timer(const Duration(milliseconds: 75), () => e.opacity = 1);
         new Timer(const Duration(milliseconds: 150), () => e.opacity = 0);
         new Timer(const Duration(milliseconds: 225), () => e.opacity = 1);
+        
+        subtleBgFade();
       }
     });
   }

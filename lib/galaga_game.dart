@@ -50,20 +50,20 @@ class GalagaGame extends Game {
   Ship ship;
   num nextId = 1;
   num targetId = 0;
-  GameSound menuSong = new GameSound("Menu", "menu", 1.0, false);
-  GameSound optionSong = new GameSound("Options", "options", 1.0, true);
-  GameSound gameStart = new GameSound("GameStart", "gamestart", 1.0, false);
-  GameSound gameSong = new GameSound("Game", "gamesong", 1.0, true);
-  GameSound cursorMove = new GameSound("cursorMove", "cursorMove", .3, false);
-  GameSound cursorSelect = new GameSound("cursorSelect", "cursorSelect", .3, false);
-  GameSound cursorSelect2 = new GameSound("cursorSelect2", "cursorSelect2", .3, false);
-  GameSound enemyFire = new GameSound("enemyFire", "enemyFire", .3, false);
-  GameSound enemyHit = new GameSound("enemyHit", "enemyHit", .3, false);
-  GameSound explosion = new GameSound("explosion", "explosion", .3, false);
-  GameSound motherShipFire = new GameSound("mothershipfire", "mothershipfire", .3, false);
-  GameSound shipFire = new GameSound("shipFire", "shipFire", .3, false);
-  GameSound shipHit = new GameSound("shipHit", "shipHit", .3, false);
-  GameSound powerUp = new GameSound("powerUp", "powerUp", .3, false);
+  GameSound menuSong = new GameSound("Menu", 1.0, false);
+  GameSound optionSong = new GameSound("Options", 1.0, true);
+  GameSound gameStart = new GameSound("GameStart", 1.0, false);
+  GameSound gameSong = new GameSound("Game", 1.0, true);
+  GameSound cursorMove = new GameSound("cursorMove", .3, false);
+  GameSound cursorSelect = new GameSound("cursorSelect", .3, false);
+  GameSound cursorSelect2 = new GameSound("cursorSelect2", .3, false);
+  GameSound enemyFire = new GameSound("enemyFire", .3, false);
+  GameSound enemyHit = new GameSound("enemyHit", .3, false);
+  GameSound explosion = new GameSound("explosion", .3, false);
+  GameSound motherShipFire = new GameSound("mothershipfire", .3, false);
+  GameSound shipFire = new GameSound("shipFire", .3, false);
+  GameSound shipHit = new GameSound("shipHit", .3, false);
+  GameSound powerUp = new GameSound("powerUp", .3, false);
  
 
   GalagaGame(Rectangle rect) : super(rect);
@@ -117,7 +117,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("leaders");
     
-    _waitingTimer = new Timer.repeating(const Duration(milliseconds: 1000), (t) {    
+    _waitingTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {    
         _waiting++;
       
       if (_waiting == 3) {
@@ -258,7 +258,7 @@ class GalagaGame extends Game {
     createLeaderBoardMenu();
     
     if (soundEffectsOn)
-      menuSong.play(menuSong.Sound, menuSong.Id, menuSong.Volume, menuSong.Looping);
+      menuSong.play(menuSong.Sound, menuSong.Volume, menuSong.Looping);
     
     menuSong.remove();
     
@@ -282,7 +282,7 @@ class GalagaGame extends Game {
         removeEntitiesByFilter((e) => e is Enemy);
         
         if (soundEffectsOn)
-          cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+          cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
         
@@ -311,7 +311,7 @@ class GalagaGame extends Game {
         removeEntitiesByFilter((e) => e is Enemy);
         
         if (soundEffectsOn)
-          cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+          cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
         
@@ -334,7 +334,7 @@ class GalagaGame extends Game {
     entities.where((e) => e is GameButton).forEach((e) { 
       if (e.opacity == 1.0 && e.isHighlighted && e.soundReady) {
         if (soundEffectsOn)
-          cursorMove.play(cursorMove.Sound, cursorMove.Id, cursorMove.Volume, cursorMove.Looping);
+          cursorMove.play(cursorMove.Sound, cursorMove.Volume, cursorMove.Looping);
         e.soundReady = false;
       } else if (e.opacity < 1.0)
         e.soundReady = true;
@@ -385,7 +385,7 @@ class GalagaGame extends Game {
     newParticle(x, y, 0, -100);
     
     if (soundEffectsOn)
-      explosion.play(explosion.Sound, explosion.Id, explosion.Volume, explosion.Looping);
+      explosion.play(explosion.Sound, explosion.Volume, explosion.Looping);
   }
   
   void newMiniExplosion(num x, num y) {
@@ -397,7 +397,7 @@ class GalagaGame extends Game {
     newParticle(x, y, 0, -50);
     
     if (soundEffectsOn)
-      explosion.play(explosion.Sound, explosion.Id, explosion.Volume, explosion.Looping);
+      explosion.play(explosion.Sound, explosion.Volume, explosion.Looping);
   }
   
   void newStar() {
@@ -591,7 +591,7 @@ class GalagaGame extends Game {
           newGame();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect.play(cursorSelect.Sound, cursorSelect.Id, cursorSelect.Volume, cursorSelect.Looping);
+            cursorSelect.play(cursorSelect.Sound, cursorSelect.Volume, cursorSelect.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -613,7 +613,7 @@ class GalagaGame extends Game {
           
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -635,7 +635,7 @@ class GalagaGame extends Game {
           
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -657,7 +657,7 @@ class GalagaGame extends Game {
           
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -853,7 +853,7 @@ class GalagaGame extends Game {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1103,7 +1103,7 @@ class GalagaGame extends Game {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1416,7 +1416,7 @@ class GalagaGame extends Game {
           state = GalagaGameState.instructions;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1434,7 +1434,7 @@ class GalagaGame extends Game {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1540,7 +1540,7 @@ class GalagaGame extends Game {
           state = GalagaGameState.options;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
-            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+            cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         },
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1712,7 +1712,7 @@ class GalagaGame extends Game {
     Stats["loses"] += 1;
     _gameOverEvent.signal();
     if (soundEffectsOn)
-      cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Id, cursorSelect2.Volume, cursorSelect2.Looping);
+      cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
     removeEntitiesByGroup("gameOver");
     createGameOverMenu();
     

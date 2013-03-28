@@ -41,7 +41,7 @@ class Bullet extends GameEntity<GalagaGame> {
     super.update();
     
     if (Type == "exploding") {
-        _deleteTimer = new Timer.repeating(const Duration(milliseconds: 1000), (t) {    
+        _deleteTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {    
           _waiting++;
         
         if (_waiting == 1) {
@@ -123,7 +123,7 @@ class Bullet extends GameEntity<GalagaGame> {
           game.ship.bullet++;
         
         if (game.soundEffectsOn)
-          game.enemyHit.play(game.enemyHit.Sound, game.enemyHit.Id, game.enemyHit.Volume, game.enemyHit.Looping);
+          game.enemyHit.play(game.enemyHit.Sound, game.enemyHit.Volume, game.enemyHit.Looping);
         
         if (enemy.type == "MotherShip") {
           game._motherShipEvent.signal();
@@ -148,7 +148,7 @@ class Bullet extends GameEntity<GalagaGame> {
         game._shipHitEvent.signal();
         
         if (game.soundEffectsOn)
-          game.shipHit.play(game.shipHit.Sound, game.shipHit.Id, game.shipHit.Volume, game.shipHit.Looping);
+          game.shipHit.play(game.shipHit.Sound, game.shipHit.Volume, game.shipHit.Looping);
         
         game.removeBullets();
         

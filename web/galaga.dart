@@ -5,7 +5,7 @@ import 'package:dgame/dgame.dart';
 import 'package:dgame/dgame_html.dart';
 
 void main() {
-  var sound = new HtmlGameSound();
+  var sound = new HtmlGameSound("");
   var input = new HtmlGameInput();
   var renderer = new GalagaRenderer("surface");
   var loop  = new HtmlGameLoop();
