@@ -40,15 +40,15 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Highscores[9] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
     game.Highscores[10] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
     
-    game.RankSelect[1] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
-    game.RankSelect[2] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : 0;
-    game.RankSelect[3] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win28']) : 0;
-    game.RankSelect[4] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win29']) : 0;
-    game.RankSelect[5] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win30']) : 0;
-    game.RankSelect[6] = window.localStorage.containsKey('win31') ? int.parse(window.localStorage['win31']) : 0;
-    game.RankSelect[7] = window.localStorage.containsKey('win32') ? int.parse(window.localStorage['win32']) : 0;
-    game.RankSelect[8] = window.localStorage.containsKey('win33') ? int.parse(window.localStorage['win33']) : 0;
-    game.RankSelect[9] = window.localStorage.containsKey('win34') ? int.parse(window.localStorage['win34']) : 0;
+//    game.RankSelect[1] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
+//    game.RankSelect[2] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : 0;
+//    game.RankSelect[3] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win28']) : 0;
+//    game.RankSelect[4] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win29']) : 0;
+//    game.RankSelect[5] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win30']) : 0;
+//    game.RankSelect[6] = window.localStorage.containsKey('win31') ? int.parse(window.localStorage['win31']) : 0;
+//    game.RankSelect[7] = window.localStorage.containsKey('win32') ? int.parse(window.localStorage['win32']) : 0;
+//    game.RankSelect[8] = window.localStorage.containsKey('win33') ? int.parse(window.localStorage['win33']) : 0;
+//    game.RankSelect[9] = window.localStorage.containsKey('win34') ? int.parse(window.localStorage['win34']) : 0;
     
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
