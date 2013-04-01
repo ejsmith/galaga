@@ -25,7 +25,7 @@ class GalagaGame extends Game {
   Map<String, num> Options = new Map<String,num>();
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
-  Map<num, num> RankSelect = new Map<num, num>();
+  num rank = 1;
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -223,25 +223,6 @@ class GalagaGame extends Game {
       Highscores[9] = 0;
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
-    
-    if (!RankSelect.containsKey(1))
-      RankSelect[1] = 1;
-    if (!RankSelect.containsKey(2))
-      RankSelect[2] = 0;
-    if (!RankSelect.containsKey(3))
-      RankSelect[3] = 0;
-    if (!RankSelect.containsKey(4))
-      RankSelect[4] = 0;
-    if (!RankSelect.containsKey(5))
-      RankSelect[5] = 0;
-    if (!RankSelect.containsKey(6))
-      RankSelect[6] = 0;
-    if (!RankSelect.containsKey(7))
-      RankSelect[7] = 0;
-    if (!RankSelect.containsKey(8))
-      RankSelect[8] = 0;
-    if (!RankSelect.containsKey(9))
-      RankSelect[9] = 0;
     
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -570,6 +551,114 @@ class GalagaGame extends Game {
   
   void createWelcomeMenu() {
     _gameOverEvent.signal();
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Jew",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 1 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Jewish Priest",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 2 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Amish Mastermind",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 3 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Road Warrior",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  false,
+        color: "255, 255, 255",
+        opacity: rank == 4 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Space Recruit",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 5 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Space Cadet",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 6 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Space Captain",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 7 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Overlord of the Galaxy",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 8 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: Overlord of the Universe",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 9 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
     
     addEntity(new GameText(game: this, 
         x: 0, 
@@ -984,114 +1073,6 @@ class GalagaGame extends Game {
         centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -200, 
-        text: "Jew",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[1] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -155, 
-        text: "Jewish Priest",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[2] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -110, 
-        text: "Amish Mastermind",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[3] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -65, 
-        text: "Road Warrior",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[4] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -20, 
-        text: "Space Recruit",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[5] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: 25, 
-        text: "Space Cadet",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[6] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: 70, 
-        text: "Space Captain",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[7] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: 115, 
-        text: "Overlord of the Galaxy",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[8] == 1 ? .8 : .4,
-        id: "",
-        groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 100, 
-        y: 160, 
-        text: "Overlord of the Universe",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  false,
-        color: "255, 255, 255",
-        opacity: RankSelect[9] == 1 ? .8 : .4,
         id: "",
         groupId: "stats"));
     
@@ -1693,7 +1674,7 @@ class GalagaGame extends Game {
     addEntity(ship);
     p1Dead = false;
     
-    ship.spiralShot = true;
+    ship.spiralShot = false;
     ship.lives = Options["startLives"];
     
     Stats["totalGames"] += 1;
