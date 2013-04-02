@@ -53,6 +53,17 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     updateStats();
   }
   
+  void drawShip() {
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.lineWidth = 3;
+    ImageElement img = new ImageElement();
+    img.src = '../web/images/Ship.png';
+    
+    ctx.beginPath();
+    ctx.drawImage(img, 0, 0);
+    ctx.stroke();
+  }
+  
   void subtleBgFade() {
     game.bgStyle = "rgba(0, 0, 0, 0.84)";
     
@@ -164,6 +175,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void drawBeforeCtxRestore() {
     
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
+      drawShip();
       drawTime();
       drawScore();
       drawHighScore();
