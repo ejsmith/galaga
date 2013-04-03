@@ -71,7 +71,7 @@ class PowerUp extends GameEntity<GalagaGame> {
           game.ship.lives++;
           break;
         case 'bulletPower':
-          game.ship.bulletPower += 1;
+          game.score += 100;
           break;
       }
       

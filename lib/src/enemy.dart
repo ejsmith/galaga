@@ -22,6 +22,7 @@ class Enemy extends GameEntity<GalagaGame> {
     
     type = Type;
     difficulty = diff;
+    opacity = 0.0;
     
     if (type == "Normal")
       color = "255, 0, 255";

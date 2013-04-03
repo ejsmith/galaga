@@ -1692,6 +1692,7 @@ class GalagaGame extends Game {
     
     Stats["loses"] += 1;
     _gameOverEvent.signal();
+    _statUpdateEvent.signal();
     if (soundEffectsOn)
       cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
     removeEntitiesByGroup("gameOver");

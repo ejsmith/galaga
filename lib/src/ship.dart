@@ -21,8 +21,9 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.paused || game.state == GalagaGameState.gameOver || game.state == GalagaGameState.welcome)
       return;
      
-    width = 10 * lives;
-    height = 10 * lives;
+    width = 32;
+    height = 32;
+    opacity = 0.0;
     
     if (width > 36 || height > 36) {
       width = 36;
