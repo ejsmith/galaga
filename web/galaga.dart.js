@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -4571,25 +4571,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5108,7 +5093,7 @@ $$.GameTimer = {"": "Object;gameTime,wallLastTimestamp,fps,fpsSampleRate,timeDec
   }
 };
 
-$$.CanvasGameRenderer = {"": "GameRenderer;targetId@",
+$$.CanvasGameRenderer = {"": "GameRenderer;targetId?,ctx<",
   getRenderer$1: function(e) {
     if (typeof e === "object" && e !== null && !!e.$isGameText)
       return this.textRenderer;
@@ -5489,7 +5474,7 @@ $$.EventStream = {"": "Object;_controller",
 
 $$.EventArgs = {"": "Object;"};
 
-$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,RankSelect<,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId?,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   shipHit$0: function() {
     return this.shipHit.call$0();
   },
@@ -5604,25 +5589,6 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
       t2.$indexSet(t2, 9, 0);
     if (!t2.containsKey$1(t2, 10))
       t2.$indexSet(t2, 10, 0);
-    t2 = this.RankSelect;
-    if (!t2.containsKey$1(t2, 1))
-      t2.$indexSet(t2, 1, 1);
-    if (!t2.containsKey$1(t2, 2))
-      t2.$indexSet(t2, 2, 0);
-    if (!t2.containsKey$1(t2, 3))
-      t2.$indexSet(t2, 3, 0);
-    if (!t2.containsKey$1(t2, 4))
-      t2.$indexSet(t2, 4, 0);
-    if (!t2.containsKey$1(t2, 5))
-      t2.$indexSet(t2, 5, 0);
-    if (!t2.containsKey$1(t2, 6))
-      t2.$indexSet(t2, 6, 0);
-    if (!t2.containsKey$1(t2, 7))
-      t2.$indexSet(t2, 7, 0);
-    if (!t2.containsKey$1(t2, 8))
-      t2.$indexSet(t2, 8, 0);
-    if (!t2.containsKey$1(t2, 9))
-      t2.$indexSet(t2, 9, 0);
     if ($.$eq(t1.$index(t1, "soundeffects"), 1) === true)
       this.soundEffectsOn = true;
     else
@@ -5860,8 +5826,28 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("levelEnd");
   },
   createWelcomeMenu$0: function() {
+    var t1, t2;
     this._gameOverEvent.signal$0();
-    var t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 56, "Welcome to Galaga!", 0, -97);
+    t1 = this.rank;
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 1 ? 0.8 : 0, 36, "You're a: Jew", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 2 ? 0.8 : 0, 36, "You're a: Jewish Priest", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 3 ? 0.8 : 0, 36, "You're a: Amish Mastermind", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 4 ? 0.8 : 0, 36, "You're a: Road Warrior", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 5 ? 0.8 : 0, 36, "You're a: Space Recruit", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 6 ? 0.8 : 0, 36, "You're a: Space Cadet", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 7 ? 0.8 : 0, 36, "You're a: Space Captain", 0, -275);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 8 ? 0.8 : 0, 36, "You're a: Overlord of the Galaxy", 0, -275);
+    this.entities.push(t2);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 9 ? 0.8 : 0, 36, "You're a: Overlord of the Universe", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 56, "Welcome to Galaga!", 0, -97);
     this.entities.push(t1);
     t1 = $.GameButton$(new $.GalagaGame_createWelcomeMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 36, "Start Game", 0, -31);
     this.entities.push(t1);
@@ -5932,29 +5918,10 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t2);
     t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "High Score: " + $.S(t1.$index(t1, "highscore")), -400, 160);
     this.entities.push(t2);
-    t1 = this.RankSelect;
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 1), 1) === true ? 0.8 : 0.4, 36, "Jew", 100, -200);
+    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Back", -420, -280);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 2), 1) === true ? 0.8 : 0.4, 36, "Jewish Priest", 100, -155);
+    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "RESET", 0, 225);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 3), 1) === true ? 0.8 : 0.4, 36, "Amish Mastermind", 100, -110);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 4), 1) === true ? 0.8 : 0.4, 36, "Road Warrior", 100, -65);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 5), 1) === true ? 0.8 : 0.4, 36, "Space Recruit", 100, -20);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 6), 1) === true ? 0.8 : 0.4, 36, "Space Cadet", 100, 25);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 7), 1) === true ? 0.8 : 0.4, 36, "Space Captain", 100, 70);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 8), 1) === true ? 0.8 : 0.4, 36, "Overlord of the Galaxy", 100, 115);
-    this.entities.push(t2);
-    t1 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", $.$eq(t1.$index(t1, 9), 1) === true ? 0.8 : 0.4, 36, "Overlord of the Universe", 100, 160);
-    this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Back", -420, -280);
-    this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "RESET", 0, 225);
-    this.entities.push(t1);
     this.disableEntitiesByGroup$1("stats");
   },
   createOptionsMenu$0: function() {
@@ -6079,8 +6046,8 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.enemyAmount = 33;
     this.bonusCheck = 3;
     this.bonusStage = false;
-    this.visualLevel = 1;
-    this.level = 1;
+    this.visualLevel = 2;
+    this.level = 2;
     this.score = 0;
     this.pointMultiplier = 1;
     if (this.level >= this.bonusCheck) {
@@ -6113,6 +6080,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     var t1 = this.Stats;
     t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
     this._gameOverEvent.signal$0();
+    this._statUpdateEvent.signal$0();
     if (this.soundEffectsOn) {
       t1 = this.cursorSelect2;
       t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
@@ -6831,23 +6799,23 @@ $$.Bullet = {"": "GameEntity;temp,startX,Type,_deleteTimer,_waiting@,farRight,fa
       }
       this._removeFromGame = true;
     }
-    if (this.game.get$ship().spiralShot && this.right === true && $.$lt$n(this.startX, $.$sub$n($.$sub$n(this.get$x(this), $.$div$n(this.get$width(this), 2)), 25)) === true) {
+    if (this.game.get$ship().get$spiralShot() && this.right === true && $.$lt$n(this.startX, $.$sub$n($.$sub$n(this.get$x(this), $.$div$n(this.get$width(this), 2)), 25)) === true) {
       this.right = false;
       this.left = true;
-    } else if (this.game.get$ship().spiralShot && this.left === true && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 25)) === true) {
+    } else if (this.game.get$ship().get$spiralShot() && this.left === true && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 25)) === true) {
       this.left = false;
       this.right = true;
-    } else if (this.game.get$ship().spiralShot && this.farLeft && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
+    } else if (this.game.get$ship().get$spiralShot() && this.farLeft && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
       this.farLeft = false;
       this.farRight = true;
-    } else if (this.game.get$ship().spiralShot && this.farRight && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
+    } else if (this.game.get$ship().get$spiralShot() && this.farRight && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
       this.farRight = false;
       this.farLeft = true;
     }
     if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight()) === true) {
-      if ($.$lt$n(this.game.get$ship().bullet, 3) === true) {
+      if ($.$lt$n(this.game.get$ship().get$bullet(), 3) === true) {
         t1 = this.game.get$ship();
-        t1.bullet = $.$add$ns(t1.bullet, 1);
+        t1.set$bullet($.$add$ns(t1.get$bullet(), 1));
       }
       this._removeFromGame = true;
     }
@@ -6953,9 +6921,9 @@ $$.Bullet_update_anon3 = {"": "Closure;this_4",
       t1.set$_removeFromGame(true);
     t2 = enemy.get$idNum();
     t1.get$game().set$targetId(t2);
-    if ($.$lt$n(t1.get$game().get$ship().bullet, 3) === true) {
+    if ($.$lt$n(t1.get$game().get$ship().get$bullet(), 3) === true) {
       t2 = t1.get$game().get$ship();
-      t2.bullet = $.$add$ns(t2.bullet, 1);
+      t2.set$bullet($.$add$ns(t2.get$bullet(), 1));
     }
     if (t1.get$game().get$soundEffectsOn()) {
       t2 = t1.get$game().get$enemyHit();
@@ -6986,19 +6954,19 @@ $$.Bullet_update_anon5 = {"": "Closure;this_6",
     var t1, t2;
     t1 = this.this_6;
     t2 = t1.get$game().get$ship();
-    t2.lives = $.$sub$n(t2.lives, 1);
+    t2.set$lives($.$sub$n(t2.get$lives(), 1));
     t1.get$game().get$_shipHitEvent().signal$0();
     if (t1.get$game().get$soundEffectsOn())
       $.play$3$x(t1.get$game().get$shipHit(), t1.get$game().get$shipHit().get$Sound(), t1.get$game().get$shipHit().get$Volume(), t1.get$game().get$shipHit().get$Looping());
     t1.get$game().removeBullets$0();
-    t2 = t1.get$game().get$ship().maxBullet;
-    t1.get$game().get$ship().bullet = t2;
+    t2 = t1.get$game().get$ship().get$maxBullet();
+    t1.get$game().get$ship().set$bullet(t2);
   }
 };
 
 $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficulty@,bossDifficulty,health@,bossHealth,maxHp,bossMaxHp,belowHalfHp,idNum<,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
-    var t1, t2, t3;
+    var t1, t2;
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
     if (this.health < this.maxHp / 2 || this.bossHealth < this.bossMaxHp / 2)
@@ -7456,16 +7424,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
       }
       t1 = this.difficulty;
       if (t1 === 1) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.01) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
@@ -7475,16 +7434,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 2) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.03) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
@@ -7494,16 +7444,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 3) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.07) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.1) {
@@ -7524,16 +7465,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 4) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.1) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.3) {
@@ -7553,17 +7485,8 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
             t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
         }
-      } else if (t1 === 5) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.2) {
+      } else if (t1 === 5)
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.5) {
@@ -7583,7 +7506,6 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
             t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
         }
-      }
     }
     if (this.type === "Normal") {
       if ($.random(0, 1, false) < 0.0002)
@@ -7629,22 +7551,13 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
         this.game.get$_gameOverEvent().signal$0();
         this._removeFromGame = true;
         t1 = this.game.get$ship();
-        t1.lives = $.$sub$n(t1.lives, 1);
+        t1.set$lives($.$sub$n(t1.get$lives(), 1));
       }
       if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth()) === true)
         this.game.gameOver$0();
       t1 = this.difficulty;
       if (t1 === 1) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.01) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
@@ -7654,16 +7567,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 2) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.03) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
@@ -7673,16 +7577,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 3) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.07) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.1) {
@@ -7703,16 +7598,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           }
         }
       } else if (t1 === 4) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.1) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.3) {
@@ -7732,17 +7618,8 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
             t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
         }
-      } else if (t1 === 5) {
-        t1 = $.$add$ns(this.get$x(this), 16);
-        t2 = this.game.get$ship();
-        if ($.$ge$n(t1, t2.get$x(t2)) === true) {
-          t1 = $.$sub$n(this.get$x(this), 16);
-          t2 = this.game.get$ship();
-          t3 = $.$le$n(t1, t2.get$x(t2)) === true;
-          t1 = t3;
-        } else
-          t1 = false;
-        if (t1 && $.random(0, 1, false) <= 0.2) {
+      } else if (t1 === 5)
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
           t1 = this.game;
           t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.5) {
@@ -7762,7 +7639,6 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
             t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
         }
-      }
     }
     $.GameEntity.prototype.update$0.call(this);
   },
@@ -7771,6 +7647,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
     this.creationTime = game.timer.gameTime;
     this.type = Type;
     this.difficulty = diff;
+    this.opacity = 0;
     if (this.type === "Normal")
       this.color = "255, 0, 255";
     if (this.type === "MotherShip")
@@ -7839,7 +7716,7 @@ $$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,boss<,mothership<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -7902,6 +7779,35 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     this.bgFade$0();
     this.updateStats$0();
   },
+  drawDrone$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawDrone_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawDrone_anon0(this));
+  },
+  drawMotherShip$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMotherShip_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawMotherShip_anon0(this));
+  },
+  drawShip$0: function() {
+    var t1, t2, t3, t4, t5;
+    $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
+    $.set$lineWidth$x(this.ctx, 3);
+    $.beginPath$0$x(this.ctx);
+    t1 = this.ctx;
+    t2 = this.ship;
+    t3 = this.get$game().get$ship();
+    t4 = $.$sub$n(t3.get$x(t3), 22);
+    t5 = this.get$game().get$ship();
+    $.drawImageScaled$5$x(t1, t2, t4, $.$sub$n(t5.get$y(t5), 25), 42, 42);
+    $.stroke$0$x(this.ctx);
+  },
+  drawBoss$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBoss_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawBoss_anon0(this));
+  },
+  drawEnemy$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemy_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawEnemy_anon0(this));
+  },
   subtleBgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.84)";
     $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon(this));
@@ -7926,7 +7832,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     return new $.BoundClosure$0(this, "shipHit$0");
   },
   updateStats$0: function() {
-    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35;
+    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26;
     t1 = window.localStorage;
     t2 = this.get$game().get$Stats();
     $.$indexSet$ax(t1, "win1", $.toString$0(t2.$index(t2, "killed")));
@@ -8002,45 +7908,12 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     t1 = window.localStorage;
     t26 = this.get$game().get$Highscores();
     $.$indexSet$ax(t1, "win25", $.toString$0(t26.$index(t26, 10)));
-    t1 = window.localStorage;
-    t27 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win26", $.toString$0(t27.$index(t27, 1)));
-    t1 = window.localStorage;
-    t28 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win27", $.toString$0(t28.$index(t28, 2)));
-    t1 = window.localStorage;
-    t29 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win28", $.toString$0(t29.$index(t29, 3)));
-    t1 = window.localStorage;
-    t30 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win29", $.toString$0(t30.$index(t30, 4)));
-    t1 = window.localStorage;
-    t31 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win30", $.toString$0(t31.$index(t31, 5)));
-    t1 = window.localStorage;
-    t32 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win31", $.toString$0(t32.$index(t32, 6)));
-    t1 = window.localStorage;
-    t33 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win32", $.toString$0(t33.$index(t33, 7)));
-    t1 = window.localStorage;
-    t34 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win33", $.toString$0(t34.$index(t34, 8)));
-    t1 = window.localStorage;
-    t35 = this.get$game().get$RankSelect();
-    $.$indexSet$ax(t1, "win34", $.toString$0(t35.$index(t35, 9)));
   },
   bossHit$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_bossHit_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_bossHit_anon0(this));
   },
   motherShipHit$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_motherShipHit_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_motherShipHit_anon0(this));
   },
   normalShipHit$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_normalShipHit_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_normalShipHit_anon0(this));
   },
   getRenderer$1: function(e) {
     var t1, t2, t3;
@@ -8069,6 +7942,12 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     } else
       t1 = true;
     if (t1) {
+      if (!this.shipFlicker)
+        this.drawShip$0();
+      this.drawEnemy$0();
+      this.drawBoss$0();
+      this.drawDrone$0();
+      this.drawMotherShip$0();
       this.drawTime$0();
       this.drawScore$0();
       this.drawHighScore$0();
@@ -8122,6 +8001,10 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   GalagaRenderer$1: function(targetId) {
     this.powerUpRenderer = $.PowerUpRenderer$(this);
     this.enemyRenderer = $.EnemyRenderer$(this);
+    $.set$src$x(this.ship, "../web/images/Ship.png");
+    $.set$src$x(this.enemy, "../web/images/enemy.png");
+    $.set$src$x(this.boss, "../web/images/boss.png");
+    $.set$src$x(this.mothership, "../web/images/mothership.png");
   }
 };
 
@@ -8161,6 +8044,90 @@ $$.GalagaRenderer_init_anon3 = {"": "Closure;this_4",
 $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     return this.this_5.normalShipHit$0();
+  }
+};
+
+$$.GalagaRenderer_drawDrone_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_drawDrone_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "Drone") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$enemy(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 12, 12);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawMotherShip_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_drawMotherShip_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "MotherShip") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$mothership(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawBoss_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_drawBoss_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "Boss") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$boss(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 72, 72);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawEnemy_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_drawEnemy_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "Normal") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$enemy(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      $.stroke$0$x(t2.get$ctx());
+    }
   }
 };
 
@@ -8215,181 +8182,43 @@ $$.GalagaRenderer_subtleBgFade_anon5 = {"": "Closure;this_6",
 
 $$.GalagaRenderer_shipHit_anon = {"": "Closure;this_0",
   call$0: function() {
-    this.this_0.get$game().get$ship().opacity = 0;
-    return 0;
+    this.this_0.set$shipFlicker(true);
+    return true;
   }
 };
 
 $$.GalagaRenderer_shipHit_anon0 = {"": "Closure;this_1",
   call$0: function() {
-    this.this_1.get$game().get$ship().opacity = 0.2;
-    return 0.2;
+    this.this_1.set$shipFlicker(false);
+    return false;
   }
 };
 
 $$.GalagaRenderer_shipHit_anon1 = {"": "Closure;this_2",
   call$0: function() {
-    this.this_2.get$game().get$ship().opacity = 0;
-    return 0;
+    this.this_2.set$shipFlicker(true);
+    return true;
   }
 };
 
 $$.GalagaRenderer_shipHit_anon2 = {"": "Closure;this_3",
   call$0: function() {
-    this.this_3.get$game().get$ship().opacity = 0.2;
-    return 0.2;
+    this.this_3.set$shipFlicker(false);
+    return false;
   }
 };
 
 $$.GalagaRenderer_shipHit_anon3 = {"": "Closure;this_4",
   call$0: function() {
-    this.this_4.get$game().get$ship().opacity = 0;
-    return 0;
+    this.this_4.set$shipFlicker(true);
+    return true;
   }
 };
 
 $$.GalagaRenderer_shipHit_anon4 = {"": "Closure;this_5",
   call$0: function() {
-    this.this_5.get$game().get$ship().opacity = 0.2;
-    return 0.2;
-  }
-};
-
-$$.GalagaRenderer_bossHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_bossHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "Boss") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bossHit__anon(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_bossHit__anon0(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_bossHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    $.set$opacity$x(this.e_1, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_bossHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    $.set$opacity$x(this.e_2, 1);
-    return 1;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "MotherShip") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_motherShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_motherShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_motherShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_motherShipHit__anon2(e));
-      $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_motherShipHit__anon3(e));
-      $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_motherShipHit__anon4(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    $.set$opacity$x(this.e_1, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    $.set$opacity$x(this.e_2, 1);
-    return 1;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon1 = {"": "Closure;e_3",
-  call$0: function() {
-    $.set$opacity$x(this.e_3, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon2 = {"": "Closure;e_4",
-  call$0: function() {
-    $.set$opacity$x(this.e_4, 1);
-    return 1;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon3 = {"": "Closure;e_5",
-  call$0: function() {
-    $.set$opacity$x(this.e_5, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon4 = {"": "Closure;e_6",
-  call$0: function() {
-    $.set$opacity$x(this.e_6, 1);
-    return 1;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "Normal") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_normalShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_normalShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_normalShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_normalShipHit__anon2(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    $.set$opacity$x(this.e_1, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    $.set$opacity$x(this.e_2, 1);
-    return 1;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon1 = {"": "Closure;e_3",
-  call$0: function() {
-    $.set$opacity$x(this.e_3, 0);
-    return 0;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon2 = {"": "Closure;e_4",
-  call$0: function() {
-    $.set$opacity$x(this.e_4, 1);
-    return 1;
+    this.this_5.set$shipFlicker(false);
+    return false;
   }
 };
 
@@ -8546,17 +8375,16 @@ $$.Particles_update_anon = {"": "Closure;this_0",
 
 $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
-    var t1, t2, t3;
+    var t1, t2;
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
     if (this.type === "bulletPower") {
-      t1 = this.game.get$ship();
-      t2 = $.$gt$n(t1.get$x(t1), this.get$x(this));
-      t3 = this.momentum;
-      if (t2 === true)
-        t3.xVel = 40;
+      t1 = $.$gt$n($.get$x$x(this.game.get$ship()), this.get$x(this));
+      t2 = this.momentum;
+      if (t1 === true)
+        t2.xVel = 40;
       else
-        t3.xVel = -40;
+        t2.xVel = -40;
     }
     if (this.collidesWith$1(this.game.get$ship())) {
       switch (this.type) {
@@ -8569,15 +8397,15 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
           break;
         case "BulletIncrease":
           t1 = this.game.get$ship();
-          t1.maxBullet = $.$add$ns(t1.maxBullet, 1);
+          t1.set$maxBullet($.$add$ns(t1.get$maxBullet(), 1));
           break;
         case "ExtraLife":
           t1 = this.game.get$ship();
-          t1.lives = $.$add$ns(t1.lives, 1);
+          t1.set$lives($.$add$ns(t1.get$lives(), 1));
           break;
         case "bulletPower":
-          t1 = this.game.get$ship();
-          t1.bulletPower = t1.bulletPower + 1;
+          t1 = this.game;
+          t1.set$score(t1.get$score() + 100);
           break;
       }
       t1 = this.game;
@@ -8595,13 +8423,13 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
     var t1 = this.game;
     t1.set$score(t1.get$score() + 100 * t1.get$pointMultiplier());
     t1 = this.game.get$ship();
-    if (t1.spiralShot) {
-      t1.superSpiral = true;
-      this.game.get$ship().spiralShot = false;
+    if (t1.get$spiralShot()) {
+      t1.set$superSpiral(true);
+      this.game.get$ship().set$spiralShot(false);
     }
     t1 = this.game.get$ship();
-    if (!t1.spiralShot)
-      t1.spiralShot = true;
+    if (!t1.get$spiralShot())
+      t1.set$spiralShot(true);
   },
   PowerUp$4: function(game, x, y, Type) {
     var rType, rColor;
@@ -8641,25 +8469,19 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
   $isPowerUp: true
 };
 
-$$.Ship = {"": "GameEntity;bulletPower,bullet,maxBullet,lives,soundLevel,isPoweringUp,spiralShot,superSpiral,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPoweringUp,spiralShot@,superSpiral?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
-    var t1, t2;
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
-    t1 = this.lives;
-    if (typeof t1 !== "number")
-      throw $.iae(t1);
-    this.set$width(this, 10 * t1);
-    t2 = this.lives;
-    if (typeof t2 !== "number")
-      throw $.iae(t2);
-    this.set$height(this, 10 * t2);
+    this.set$width(this, 32);
+    this.set$height(this, 32);
+    this.opacity = 0;
     if ($.$gt$n(this.get$width(this), 36) === true || $.$gt$n(this.get$height(this), 36) === true) {
       this.set$width(this, 36);
       this.set$height(this, 36);
     }
     if ($.$le$n(this.lives, 0) === true) {
-      t1 = this.game.get$Stats();
+      var t1 = this.game.get$Stats();
       t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
       this.game.set$p1Dead(true);
       this._removeFromGame = true;
@@ -8684,37 +8506,38 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet,maxBullet,lives,soundLevel,isPower
     $.GameEntity.prototype.update$0.call(this);
   },
   fire$0: function() {
-    var t1, t2;
-    this.soundLevel = this.bulletPower * 0.02;
+    var t1, t2, t3;
+    t1 = this.bulletPower;
+    this.soundLevel = t1 * 0.02;
     if (this.soundLevel > 1)
       this.soundLevel = 1;
     if (this.superSpiral) {
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
     }
-    t1 = this.spiralShot;
-    t2 = this.game;
-    if (t1) {
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
+    t2 = this.spiralShot;
+    t3 = this.game;
+    if (t2) {
+      t3.addEntity$1($.Bullet$(t3, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
+      t2 = this.game;
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();
         t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
       }
     } else {
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
+      t3.addEntity$1($.Bullet$(t3, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();
@@ -10236,6 +10059,17 @@ $._ElementCssClassSet$ = function(_element) {
   return new $._ElementCssClassSet(_element);
 };
 
+$.ImageElement_ImageElement = function(height, src, width) {
+  var e = $.$$dom_createElement$1$x(document, "img");
+  if (src != null)
+    $.set$src$x(e, src);
+  if (width != null)
+    $.set$width$x(e, width);
+  if (height != null)
+    $.set$height$x(e, height);
+  return e;
+};
+
 $._ChildNodeListLazy$ = function(_this) {
   return new $._ChildNodeListLazy(_this);
 };
@@ -10439,7 +10273,7 @@ $.EventArgs$ = function() {
 };
 
 $.GalagaGame$withServices = function(input, renderer, loop) {
-  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   t1.Game$withServices$3(input, renderer, loop);
   return t1;
 };
@@ -10463,7 +10297,7 @@ $.EnemyRenderer$ = function(gr) {
 };
 
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, null, null, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
@@ -10721,6 +10555,9 @@ $.closePath$0$x = function(receiver) {
 $.containsKey$1$x = function(receiver, a0) {
   return $.getInterceptor$x(receiver).containsKey$1(receiver, a0);
 };
+$.drawImageScaled$5$x = function(receiver, a0, a1, a2, a3, a4) {
+  return $.getInterceptor$x(receiver).drawImageScaled$5(receiver, a0, a1, a2, a3, a4);
+};
 $.fillRect$4$x = function(receiver, a0, a1, a2, a3) {
   return $.getInterceptor$x(receiver).fillRect$4(receiver, a0, a1, a2, a3);
 };
@@ -10871,17 +10708,26 @@ $.set$fillStyle$x = function(receiver, value) {
 $.set$font$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$font(receiver, value);
 };
+$.set$height$x = function(receiver, value) {
+  return $.getInterceptor$x(receiver).set$height(receiver, value);
+};
 $.set$id$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$id(receiver, value);
 };
 $.set$keyCode$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$keyCode(receiver, value);
 };
+$.set$lineWidth$x = function(receiver, value) {
+  return $.getInterceptor$x(receiver).set$lineWidth(receiver, value);
+};
 $.set$loop$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$loop(receiver, value);
 };
 $.set$opacity$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$opacity(receiver, value);
+};
+$.set$src$x = function(receiver, value) {
+  return $.getInterceptor$x(receiver).set$src(receiver, value);
 };
 $.set$state$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$state(receiver, value);
@@ -10891,6 +10737,9 @@ $.set$strokeStyle$x = function(receiver, value) {
 };
 $.set$volume$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$volume(receiver, value);
+};
+$.set$width$x = function(receiver, value) {
+  return $.getInterceptor$x(receiver).set$width(receiver, value);
 };
 $.split$1$s = function(receiver, a0) {
   return $.getInterceptor$s(receiver).split$1(receiver, a0);
@@ -11143,7 +10992,7 @@ $.$defineNativeClass("HTMLCanvasElement", {"": "height%,width%",
   }
 });
 
-$.$defineNativeClass("CanvasRenderingContext2D", {"": "fillStyle},font%,strokeStyle}",
+$.$defineNativeClass("CanvasRenderingContext2D", {"": "fillStyle},font%,lineWidth},strokeStyle}",
   $$dom_arc$6: function(receiver, x, y, radius, startAngle, endAngle, anticlockwise) {
     return receiver.arc(x,y,radius,startAngle,endAngle,anticlockwise);
   },
@@ -11200,6 +11049,9 @@ $.$defineNativeClass("CanvasRenderingContext2D", {"": "fillStyle},font%,strokeSt
   },
   arc$6: function(receiver, x, y, radius, startAngle, endAngle, anticlockwise) {
     this.$$dom_arc$6(receiver, x, y, radius, startAngle, endAngle, anticlockwise);
+  },
+  drawImageScaled$5: function(receiver, source, destX, destY, destWidth, destHeight) {
+    return receiver.drawImage(source,destX,destY,destWidth,destHeight);
   }
 });
 

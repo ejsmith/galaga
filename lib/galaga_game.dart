@@ -1655,8 +1655,8 @@ class GalagaGame extends Game {
     
     bonusCheck = 3;
     bonusStage = false;
-    visualLevel = 1;
-    level = 1;
+    visualLevel = 2;
+    level = 2;
     score = 0;
     pointMultiplier = 1;
     
@@ -1674,7 +1674,7 @@ class GalagaGame extends Game {
     addEntity(ship);
     p1Dead = false;
     
-    ship.spiralShot = false;
+    ship.spiralShot = true;
     ship.lives = Options["startLives"];
     
     Stats["totalGames"] += 1;
