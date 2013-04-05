@@ -9,6 +9,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement enemy = new ImageElement();
   ImageElement boss = new ImageElement();
   ImageElement mothership = new ImageElement();
+  ImageElement bosshp = new ImageElement();
   
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -20,6 +21,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     enemy.src = '../web/images/enemy.png';
     boss.src = '../web/images/boss.png';
     mothership.src = '../web/images/mothership.png';
+    bosshp.src = '../web/images/bosshp.png';
   }
   
   void init() {
@@ -64,9 +66,18 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     updateStats();
   }
   
+  void drawShip() {
+    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+    ctx.lineWidth = 3;
+    
+    ctx.beginPath();
+    ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
+    ctx.stroke();
+  }
+  
   void drawDrone() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "Drone") {
+      if (e.type == "Drone" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
@@ -79,7 +90,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawMotherShip() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "MotherShip") {
+      if (e.type == "MotherShip" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
@@ -90,23 +101,15 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
   
-  void drawShip() {
-    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-    ctx.lineWidth = 3;
-    
-    ctx.beginPath();
-    ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
-    ctx.stroke();
-  }
-  
   void drawBoss() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "Boss") {
+      if (e.type == "Boss" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
         ctx.beginPath();
         ctx.drawImageScaled(boss, e.x - 22, e.y - 25, 72, 72);
+        ctx.drawImageScaled(bosshp, 0, 0, 100, 20);
         ctx.stroke();
       }
     });
@@ -114,7 +117,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawEnemy() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "Normal") {
+      if (e.type == "Normal" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
@@ -181,42 +184,42 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void bossHit() {
-//    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-//      if (e.type == "Boss" && e.idNum == game.targetId) {
-//        new Timer(const Duration(milliseconds: 25), () => e.opacity = 0);
-//        new Timer(const Duration(milliseconds: 75), () => e.opacity = 1);
-//        
-//        subtleBgFade();
-//      }
-//    });
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
+      if (e.type == "Boss" && e.idNum == game.targetId) {
+        new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
+        
+        subtleBgFade();
+      }
+    });
   }
   
   void motherShipHit() {
-//    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
-//      if (e.type == "MotherShip" && e.idNum == game.targetId) {
-//        new Timer(const Duration(milliseconds: 25), () => e.opacity = 0);
-//        new Timer(const Duration(milliseconds: 75), () => e.opacity = 1);
-//        new Timer(const Duration(milliseconds: 150), () => e.opacity = 0);
-//        new Timer(const Duration(milliseconds: 225), () => e.opacity = 1);
-//        new Timer(const Duration(milliseconds: 300), () => e.opacity = 0);
-//        new Timer(const Duration(milliseconds: 375), () => e.opacity = 1);
-//        
-//        subtleBgFade();
-//      }
-//    });
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
+      if (e.type == "MotherShip" && e.idNum == game.targetId) {
+        new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
+        new Timer(const Duration(milliseconds: 150), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 225), () => e.flicker = false);
+        new Timer(const Duration(milliseconds: 300), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 375), () => e.flicker = false);
+        
+        subtleBgFade();
+      }
+    });
   }
   
   void normalShipHit() {
-//    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
-//      if (e.type == "Normal" && e.idNum == game.targetId) {
-//        new Timer(const Duration(milliseconds: 25), () => enemyFlicker = true);
-//        new Timer(const Duration(milliseconds: 75), () => enemyFlicker = false);
-//        new Timer(const Duration(milliseconds: 150), () => enemyFlicker = true);
-//        new Timer(const Duration(milliseconds: 225), () => enemyFlicker = false);
-//        
-//        subtleBgFade();
-//      }
-//    });
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
+      if (e.type == "Normal" && e.idNum == game.targetId) {
+        new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
+        new Timer(const Duration(milliseconds: 150), () => e.flicker = true);
+        new Timer(const Duration(milliseconds: 225), () => e.flicker = false);
+        
+        subtleBgFade();
+      }
+    });
   }
   
   GameEntityRenderer getRenderer(GameEntity e) {
@@ -234,9 +237,9 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void drawBeforeCtxRestore() {
-    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
+    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {    
       if (!shipFlicker)
-        drawShip();  
+        drawShip();
       drawEnemy();
       drawBoss();
       drawDrone();

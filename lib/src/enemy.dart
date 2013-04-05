@@ -13,6 +13,7 @@ class Enemy extends GameEntity<GalagaGame> {
   num maxHp = 1;
   num bossMaxHp = 100;
   bool belowHalfHp = false;
+  bool flicker = false;
   num idNum = 1;
   
   
