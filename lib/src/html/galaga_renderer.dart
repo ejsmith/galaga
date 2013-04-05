@@ -103,13 +103,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawBoss() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "Boss" && e.flicker == false) {
+      if (e.type == "Boss") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
         ctx.beginPath();
-        ctx.drawImageScaled(boss, e.x - 22, e.y - 25, 72, 72);
-        ctx.drawImageScaled(bosshp, 0, 0, 100, 20);
+        if (e.flicker == false)
+          ctx.drawImageScaled(boss, e.x - 22, e.y - 25, 72, 72);
+        ctx.drawImageScaled(bosshp, -300, -250, e.health * 6, 12);
         ctx.stroke();
       }
     });

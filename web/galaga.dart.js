@@ -4571,25 +4571,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -7731,7 +7716,7 @@ $$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,boss<,mothership<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,boss<,mothership<,bosshp<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -7794,14 +7779,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     this.bgFade$0();
     this.updateStats$0();
   },
-  drawDrone$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawDrone_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawDrone_anon0(this));
-  },
-  drawMotherShip$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMotherShip_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawMotherShip_anon0(this));
-  },
   drawShip$0: function() {
     var t1, t2, t3, t4, t5;
     $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
@@ -7814,6 +7791,14 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     t5 = this.get$game().get$ship();
     $.drawImageScaled$5$x(t1, t2, t4, $.$sub$n(t5.get$y(t5), 25), 42, 42);
     $.stroke$0$x(this.ctx);
+  },
+  drawDrone$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawDrone_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawDrone_anon0(this));
+  },
+  drawMotherShip$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMotherShip_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawMotherShip_anon0(this));
   },
   drawBoss$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBoss_anon());
@@ -8026,6 +8011,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     $.set$src$x(this.enemy, "../web/images/enemy.png");
     $.set$src$x(this.boss, "../web/images/boss.png");
     $.set$src$x(this.mothership, "../web/images/mothership.png");
+    $.set$src$x(this.bosshp, "../web/images/bosshp.png");
   }
 };
 
@@ -8120,12 +8106,14 @@ $$.GalagaRenderer_drawBoss_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     var t1, t2;
     t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "Boss") === true && !e.get$flicker()) {
+    if ($.$eq(t1.get$type(e), "Boss") === true) {
       t2 = this.this_0;
       $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t2.get$ctx(), 3);
       $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$boss(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 72, 72);
+      if (!e.get$flicker())
+        $.drawImageScaled$5$x(t2.get$ctx(), t2.get$boss(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 72, 72);
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$bosshp(), -300, -250, e.get$health() * 6, 12);
       $.stroke$0$x(t2.get$ctx());
     }
   }
@@ -10456,7 +10444,7 @@ $.EnemyRenderer$ = function(gr) {
 };
 
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
