@@ -1701,6 +1701,12 @@ class GalagaGame extends Game {
     state = GalagaGameState.gameOver;
   }
   
+  void resetPowerups() {
+     ship.spiralShot = false;
+     ship.superSpiral = false;
+     ship.bulletPower = 8;
+  }
+  
   void switchDirection() {
     goingRight = !goingRight;
     entities.where((e) => e is Enemy).forEach((Enemy e) {

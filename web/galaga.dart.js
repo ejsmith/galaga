@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
+    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
   }
 };
 
@@ -6089,6 +6089,11 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.createGameOverMenu$0();
     this.set$state(this, 4);
   },
+  resetPowerups$0: function() {
+    this.ship.spiralShot = false;
+    this.ship.superSpiral = false;
+    this.ship.bulletPower = 8;
+  },
   switchDirection$0: function() {
     this.goingRight = !this.goingRight;
     var t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_switchDirection_anon());
@@ -6805,12 +6810,18 @@ $$.Bullet = {"": "GameEntity;temp,startX,Type,_deleteTimer,_waiting@,farRight,fa
     } else if (this.game.get$ship().get$spiralShot() && this.left === true && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 25)) === true) {
       this.left = false;
       this.right = true;
-    } else if (this.game.get$ship().get$spiralShot() && this.farLeft && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
-      this.farLeft = false;
-      this.farRight = true;
-    } else if (this.game.get$ship().get$spiralShot() && this.farRight && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
-      this.farRight = false;
-      this.farLeft = true;
+    } else {
+      t1 = this.game.get$ship();
+      if (t1.get$spiralShot() && t1.get$superSpiral() && this.farLeft && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
+        this.farLeft = false;
+        this.farRight = true;
+      } else {
+        t1 = this.game.get$ship();
+        if (t1.get$spiralShot() && t1.get$superSpiral() && this.farRight && $.$gt$n(this.startX, $.$add$ns($.$add$ns(this.get$x(this), $.$div$n(this.get$width(this), 2)), 40)) === true) {
+          this.farRight = false;
+          this.farLeft = true;
+        }
+      }
     }
     if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight()) === true) {
       if ($.$lt$n(this.game.get$ship().get$bullet(), 3) === true) {
@@ -6896,6 +6907,8 @@ $$.Bullet_update_anon1 = {"": "Closure;this_2",
       t2.set$width(t1, $.$sub$n(t2.get$width(t1), t3.get$width(e)));
       t2 = $.getInterceptor$x(t1);
       t2.set$height(t1, $.$sub$n(t2.get$height(t1), t3.get$height(e)));
+      t2 = t1.get$game().get$ship();
+      t2.set$bullet($.$add$ns(t2.get$bullet(), 1));
       e.removeFromGame$0();
     }
   }
@@ -6958,6 +6971,7 @@ $$.Bullet_update_anon5 = {"": "Closure;this_6",
     t1.get$game().get$_shipHitEvent().signal$0();
     if (t1.get$game().get$soundEffectsOn())
       $.play$3$x(t1.get$game().get$shipHit(), t1.get$game().get$shipHit().get$Sound(), t1.get$game().get$shipHit().get$Volume(), t1.get$game().get$shipHit().get$Looping());
+    t1.get$game().resetPowerups$0();
     t1.get$game().removeBullets$0();
     t2 = t1.get$game().get$ship().get$maxBullet();
     t1.get$game().get$ship().set$bullet(t2);
@@ -7643,6 +7657,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
     $.GameEntity.prototype.update$0.call(this);
   },
   Enemy$5: function(game, x, y, diff, Type) {
+    var t1;
     $.random(0, 1, false);
     this.creationTime = game.timer.gameTime;
     this.type = Type;
@@ -7660,8 +7675,11 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
       this.momentum.xVel = 0;
     if (this.type === "Drone")
       this.momentum.xVel = 80;
-    if (this.type === "Normal")
-      this.health = this.difficulty;
+    if (this.type === "Normal") {
+      t1 = this.difficulty;
+      if (t1 <= 2)
+        this.health = t1;
+    }
     if (this.type === "MotherShip")
       this.health = 3;
     if (this.type === "Boss") {
@@ -8616,7 +8634,7 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
   $isPowerUp: true
 };
 
-$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPoweringUp,spiralShot@,superSpiral?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPoweringUp,spiralShot@,superSpiral@,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
@@ -8653,38 +8671,37 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPo
     $.GameEntity.prototype.update$0.call(this);
   },
   fire$0: function() {
-    var t1, t2, t3;
-    t1 = this.bulletPower;
-    this.soundLevel = t1 * 0.02;
+    var t1, t2;
+    this.soundLevel = this.bulletPower * 0.02;
     if (this.soundLevel > 1)
       this.soundLevel = 1;
     if (this.superSpiral) {
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
     }
-    t2 = this.spiralShot;
-    t3 = this.game;
-    if (t2) {
-      t3.addEntity$1($.Bullet$(t3, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "right", -350, t1, "normal"));
-      t2 = this.game;
-      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "left", -350, t1, "normal"));
+    t1 = this.spiralShot;
+    t2 = this.game;
+    if (t1) {
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
+      t1 = this.game;
+      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();
         t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
       }
     } else {
-      t3.addEntity$1($.Bullet$(t3, this.get$x(this), this.get$y(this), "straight", -350, t1, "normal"));
+      t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();

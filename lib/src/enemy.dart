@@ -39,8 +39,11 @@ class Enemy extends GameEntity<GalagaGame> {
     if (type == "Drone")
       momentum.xVel = 80;
     
-    if (type == "Normal")
-      health = difficulty;
+    if (type == "Normal") {
+      if (difficulty <= 2)
+        health = difficulty;
+    }
+    
     if (type == "MotherShip")
       health = 3;
     if (type == "Boss") {

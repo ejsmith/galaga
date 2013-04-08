@@ -84,10 +84,10 @@ class Bullet extends GameEntity<GalagaGame> {
     } else if (game.ship.spiralShot && left && startX > (x + (width / 2)) + 25) {
       left = false;
       right = true;
-    } else if (game.ship.spiralShot && farLeft && startX > (x + (width / 2)) + 40) {
+    } else if (game.ship.spiralShot && game.ship.superSpiral && farLeft && startX > (x + (width / 2)) + 40) {
       farLeft = false;
       farRight = true;
-    } else if (game.ship.spiralShot && farRight && startX > (x + (width / 2)) + 40) {
+    } else if (game.ship.spiralShot && game.ship.superSpiral && farRight && startX > (x + (width / 2)) + 40) {
       farRight = false;
       farLeft = true;
     }
@@ -104,6 +104,7 @@ class Bullet extends GameEntity<GalagaGame> {
         if (width > e.width && height > e.height && (e.x != x && e.y != y)) {
           width -= e.width;
           height -= e.height;
+          game.ship.bullet++;
           e.removeFromGame();
         }
       });
@@ -150,6 +151,7 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.soundEffectsOn)
           game.shipHit.play(game.shipHit.Sound, game.shipHit.Volume, game.shipHit.Looping);
         
+        game.resetPowerups();
         game.removeBullets();
         
         game.ship.bullet = game.ship.maxBullet;
