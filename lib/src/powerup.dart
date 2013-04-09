@@ -42,6 +42,8 @@ class PowerUp extends GameEntity<GalagaGame> {
       }
     }
     
+    opacity = 0.0;
+    
     momentum.yVel = 65;
   }
   

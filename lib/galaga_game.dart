@@ -489,16 +489,9 @@ class GalagaGame extends Game {
   }
   
   void newPowerUp() {
-    if (random() >= .1)
-      return;
+    num rand = random(0, 1);
     
-    if (entities.where((e) => e is PowerUp).length >= 5)
-      return;
-    
-    if (timer.gameTime < 5)
-      return;
-    
-    if (lastPowerUp + 5 >= timer.gameTime)
+    if (rand > .001)
       return;
     
     PowerUp powerUp = new PowerUp(this, 0, 0);

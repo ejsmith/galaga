@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -5791,21 +5791,14 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(powerUp);
   },
   newPowerUp$0: function() {
-    var t1, powerUp;
-    if ($.random(0, 1, false) >= 0.1)
-      return;
-    t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_newPowerUp_anon());
-    if (t1.get$length(t1) >= 5)
-      return;
-    if ($.$lt$n(this.timer.gameTime, 5) === true)
-      return;
-    if ($.$ge$n($.$add$ns(this.lastPowerUp, 5), this.timer.gameTime) === true)
+    var powerUp, t1;
+    if ($.random(0, 1, false) > 0.001)
       return;
     powerUp = $.PowerUp$(this, 0, 0, null);
     do {
       powerUp.set$x(powerUp, $.random(-this.rect.get$halfWidth() + 50, this.rect.get$halfWidth() - 50, false));
       powerUp.set$y(powerUp, -this.rect.get$halfHeight());
-    } while (t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_newPowerUp_anon0()), t1.any$1(t1, new $.GalagaGame_newPowerUp_anon1(powerUp)));
+    } while (t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_newPowerUp_anon()), t1.any$1(t1, new $.GalagaGame_newPowerUp_anon0(powerUp)));
     this.lastPowerUp = this.timer.gameTime;
     this.entities.push(powerUp);
   },
@@ -6331,13 +6324,7 @@ $$.GalagaGame_newPowerUp_anon = {"": "Closure;",
   }
 };
 
-$$.GalagaGame_newPowerUp_anon0 = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isPowerUp;
-  }
-};
-
-$$.GalagaGame_newPowerUp_anon1 = {"": "Closure;powerUp_0",
+$$.GalagaGame_newPowerUp_anon0 = {"": "Closure;powerUp_0",
   call$1: function(e) {
     return this.powerUp_0.collidesWith$1(e);
   }
@@ -7734,7 +7721,7 @@ $$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,boss<,mothership<,bosshp<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -7796,6 +7783,26 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   gameOver$0: function() {
     this.bgFade$0();
     this.updateStats$0();
+  },
+  drawSpreadUp$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawSpreadUp_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawSpreadUp_anon0(this));
+  },
+  drawLifeUp$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawLifeUp_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawLifeUp_anon0(this));
+  },
+  drawMultiplierUp$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMultiplierUp_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawMultiplierUp_anon0(this));
+  },
+  drawBulletUp$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBulletUp_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawBulletUp_anon0(this));
+  },
+  drawCoin$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawCoin_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawCoin_anon0(this));
   },
   drawShip$0: function() {
     var t1, t2, t3, t4, t5;
@@ -7968,6 +7975,11 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     if (t1) {
       if (!this.shipFlicker)
         this.drawShip$0();
+      this.drawCoin$0();
+      this.drawLifeUp$0();
+      this.drawSpreadUp$0();
+      this.drawMultiplierUp$0();
+      this.drawBulletUp$0();
       this.drawEnemy$0();
       this.drawBoss$0();
       this.drawDrone$0();
@@ -8030,6 +8042,11 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     $.set$src$x(this.boss, "../web/images/boss.png");
     $.set$src$x(this.mothership, "../web/images/mothership.png");
     $.set$src$x(this.bosshp, "../web/images/bosshp.png");
+    $.set$src$x(this.spreadup, "../web/images/powerup1.png");
+    $.set$src$x(this.lifeup, "../web/images/powerup2.png");
+    $.set$src$x(this.multiplierup, "../web/images/powerup3.png");
+    $.set$src$x(this.bulletup, "../web/images/powerup4.png");
+    $.set$src$x(this.coin, "../web/images/coin.png");
   }
 };
 
@@ -8069,6 +8086,111 @@ $$.GalagaRenderer_init_anon3 = {"": "Closure;this_4",
 $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     return this.this_5.normalShipHit$0();
+  }
+};
+
+$$.GalagaRenderer_drawSpreadUp_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isPowerUp;
+  }
+};
+
+$$.GalagaRenderer_drawSpreadUp_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "SpiralShot") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$spreadup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawLifeUp_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isPowerUp;
+  }
+};
+
+$$.GalagaRenderer_drawLifeUp_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "ExtraLife") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$lifeup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawMultiplierUp_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isPowerUp;
+  }
+};
+
+$$.GalagaRenderer_drawMultiplierUp_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "Multiplier") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$multiplierup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawBulletUp_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isPowerUp;
+  }
+};
+
+$$.GalagaRenderer_drawBulletUp_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "BulletIncrease") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$bulletup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
+      $.stroke$0$x(t2.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawCoin_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isPowerUp;
+  }
+};
+
+$$.GalagaRenderer_drawCoin_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "bulletPower") === true) {
+      t2 = this.this_0;
+      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t2.get$ctx(), 3);
+      $.beginPath$0$x(t2.get$ctx());
+      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$coin(), $.$sub$n(t1.get$x(e), 8), $.$sub$n(t1.get$y(e), 8), 12, 12);
+      $.stroke$0$x(t2.get$ctx());
+    }
   }
 };
 
@@ -8629,6 +8751,7 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
         this.set$height(this, 12);
       }
     }
+    this.opacity = 0;
     this.momentum.yVel = 65;
   },
   $isPowerUp: true
@@ -10461,7 +10584,7 @@ $.EnemyRenderer$ = function(gr) {
 };
 
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
