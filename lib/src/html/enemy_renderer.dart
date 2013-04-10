@@ -10,9 +10,7 @@ class EnemyRenderer extends DefaultCanvasEntityRenderer<Enemy> {
     gr.ctx.font = "36px Verdana";
     
     switch (e.type) {
-      case 'Boss':      
-        gr.ctx.fillText("${e.health}", e.x - 30, e.y + 8);
-        break;
+      
     }
   }
 }

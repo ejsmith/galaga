@@ -15,6 +15,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement multiplierup = new ImageElement();
   ImageElement bulletup = new ImageElement();
   ImageElement coin = new ImageElement();
+  ImageElement shipbullet = new ImageElement();
+  ImageElement enemybullet = new ImageElement();
   
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -32,6 +34,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     multiplierup.src = '../web/images/powerup3.png';
     bulletup.src = '../web/images/powerup4.png';
     coin.src = '../web/images/coin.png';
+    shipbullet.src = '../web/images/BulletUp.png';
+    enemybullet.src = '../web/images/BulletDown.png';
   }
   
   void init() {
@@ -74,6 +78,32 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void gameOver() {
     bgFade();
     updateStats();
+  }
+  
+  void drawShipBullet() {
+    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
+      if (e.momentum.yVel < 0) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+        
+        ctx.beginPath();
+        ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
+        ctx.stroke();
+      }
+    });
+  }
+  
+  void drawEnemyBullet() {
+    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
+      if (e.momentum.yVel > 0) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+        
+        ctx.beginPath();
+        ctx.drawImageScaled(enemybullet, e.x - 8, e.y - 8, 16, 16);
+        ctx.stroke();
+      }
+    });
   }
   
   void drawSpreadUp() {
@@ -314,8 +344,11 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawBeforeCtxRestore() {
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {    
+      drawLives();
       if (!shipFlicker)
         drawShip();
+      drawShipBullet();
+      drawEnemyBullet();
       drawCoin();
       drawLifeUp();
       drawSpreadUp();
@@ -328,7 +361,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       drawTime();
       drawScore();
       drawHighScore();
-      drawLives();
       drawLevel();
     }
     super.drawBeforeCtxRestore();
@@ -347,9 +379,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void drawLives() {
-    ctx.fillStyle = "rgba(255, 255, 255, 1)";
-    ctx.font = "32px cinnamoncake, Verdana";
-    ctx.fillText("Lives: ${game.ship.lives} ", -475, (game.rect.halfHeight - 5));
+    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+    ctx.lineWidth = 3;
+    
+    ctx.beginPath();
+    for (num i = 0; i < game.ship.lives; i++) {
+      ctx.drawImageScaled(ship, -475 + (45 * i), (game.rect.halfHeight - 45), 36, 36);
+    }
+    ctx.stroke();
   }
   
   void drawScore() {

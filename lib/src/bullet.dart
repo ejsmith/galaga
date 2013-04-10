@@ -30,6 +30,8 @@ class Bullet extends GameEntity<GalagaGame> {
     
     Type = type;
     
+    opacity = 0.0;
+    
     if (size >= 36)
       size = 36;
   }

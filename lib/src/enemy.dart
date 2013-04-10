@@ -192,6 +192,12 @@ class Enemy extends GameEntity<GalagaGame> {
           if (game.soundEffectsOn)
             game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
+    } else {
+      if (random() <= .01) {
+        game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16)));
+        if (game.soundEffectsOn)
+          game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
+      }
     }
   }
     
@@ -399,8 +405,15 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
             if (game.soundEffectsOn)
               game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
+          } else {
+            if (random() <= .01) {
+              game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42)));
+              game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42)));
+              game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42)));
+              if (game.soundEffectsOn)
+                game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
+            }
           }
-          
         }
       }
       
