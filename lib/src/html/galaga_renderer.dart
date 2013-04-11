@@ -7,6 +7,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   EnemyRenderer enemyRenderer;
   ImageElement ship = new ImageElement();
   ImageElement enemy = new ImageElement();
+  ImageElement enemy2 = new ImageElement();
   ImageElement boss = new ImageElement();
   ImageElement mothership = new ImageElement();
   ImageElement bosshp = new ImageElement();
@@ -26,6 +27,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     enemyRenderer = new EnemyRenderer(this);
     ship.src = '../web/images/Ship.png';
     enemy.src = '../web/images/enemy.png';
+    enemy2.src = '../web/images/enemy2.png';
     boss.src = '../web/images/boss.png';
     mothership.src = '../web/images/mothership.png';
     bosshp.src = '../web/images/bosshp.png';
@@ -228,7 +230,11 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.lineWidth = 3;
         
         ctx.beginPath();
-        ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 42, 42);
+        if (e.enemyType > .5)
+          ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 42, 42);
+        else {
+          ctx.drawImageScaled(enemy2, e.x - 22, e.y - 25, 36, 36);
+        }
         ctx.stroke();
       }
     });

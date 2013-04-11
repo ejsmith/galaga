@@ -14,6 +14,7 @@ class Enemy extends GameEntity<GalagaGame> {
   num bossMaxHp = 100;
   bool belowHalfHp = false;
   bool flicker = false;
+  num enemyType = 0;
   num idNum = 1;
   
   
@@ -24,6 +25,8 @@ class Enemy extends GameEntity<GalagaGame> {
     type = Type;
     difficulty = diff;
     opacity = 0.0;
+    
+    enemyType = random(0, 1);
     
     if (type == "Normal")
       color = "255, 0, 255";

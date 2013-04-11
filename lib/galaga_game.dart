@@ -803,7 +803,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.8,
         id: "",
         groupId: "leaders"));
     
@@ -928,6 +928,19 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameButton(game: this, 
+        x: 0, 
+        y: 250, 
+        text: "RESET", 
+        buttonAction: () => resetLeaderBoard(),
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+    
+    addEntity(new GameButton(game: this, 
         x: -420, 
         y: -280, 
         text: "Back", 
@@ -957,113 +970,113 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.8,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: -200, 
         text: "Total Killed: ${Stats["killed"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: -155, 
         text: "Groupies Annihilated: ${Stats["normalKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: -110, 
         text: "Big Bosses Denominated: ${Stats["bossKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: -65, 
         text: "Mother Ships Deflowered: ${Stats["motherKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: -20, 
         text: "Powerups Absorbed: ${Stats["powerups"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: 25, 
         text: "Total Wins: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: 70, 
         text: "Total Loses: ${Stats["loses"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: 115, 
         text: "Total Games: ${Stats["totalGames"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "stats"));
     
     addEntity(new GameText(game: this, 
-        x: -400, 
+        x: 0, 
         y: 160, 
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
@@ -1589,6 +1602,26 @@ class GalagaGame extends Game {
         groupId: "gameOver"));
     
     disableEntitiesByGroup("gameOver");
+  }
+  
+  void resetLeaderBoard() {
+    Highscores[1] = 0;
+    Highscores[2] = 0;
+    Highscores[3] = 0;
+    Highscores[4] = 0;
+    Highscores[5] = 0;
+    Highscores[6] = 0;
+    Highscores[7] = 0;
+    Highscores[8] = 0;
+    Highscores[9] = 0;
+    Highscores[10] = 0;
+    
+    state = GalagaGameState.welcome;
+    
+    removeEntitiesByGroup("leaders");
+    createLeaderBoardMenu();
+    
+    state = GalagaGameState.leaderboard;
   }
   
   void resetStats() {
