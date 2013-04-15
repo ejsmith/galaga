@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -4571,10 +4571,25 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var nextPosition, t1;
-    nextPosition = this._position + 1;
+    var t1, nextPosition;
+    t1 = this._position;
+    if (typeof t1 !== "number")
+      return this.moveNext$0$bailout(1, t1);
+    nextPosition = t1 + 1;
     t1 = this._length;
     if (nextPosition < t1) {
+      this._current = $.$index$asx(this._array, nextPosition);
+      this._position = nextPosition;
+      return true;
+    }
+    this._current = null;
+    this._position = t1;
+    return false;
+  },
+  moveNext$0$bailout: function(state0, t1) {
+    var nextPosition = $.$add$ns(t1, 1);
+    t1 = this._length;
+    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5593,7 +5608,6 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
       this.soundEffectsOn = true;
     else
       this.soundEffectsOn = false;
-    this.resetStats$0();
     this.createWelcomeMenu$0();
     this.createGameOverMenu$0();
     this.createStatsMenu$0();
@@ -5819,26 +5833,45 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("levelEnd");
   },
   createWelcomeMenu$0: function() {
-    var t1, t2;
     this._gameOverEvent.signal$0();
-    t1 = this.rank;
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 1 ? 0.8 : 0, 36, "You're a: Jew", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 2 ? 0.8 : 0, 36, "You're a: Jewish Priest", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 3 ? 0.8 : 0, 36, "You're a: Amish Mastermind", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 4 ? 0.8 : 0, 36, "You're a: Road Warrior", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 5 ? 0.8 : 0, 36, "You're a: Space Recruit", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 6 ? 0.8 : 0, 36, "You're a: Space Cadet", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 7 ? 0.8 : 0, 36, "You're a: Space Captain", 0, -275);
-    this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 8 ? 0.8 : 0, 36, "You're a: Overlord of the Galaxy", 0, -275);
-    this.entities.push(t2);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", t1 === 9 ? 0.8 : 0, 36, "You're a: Overlord of the Universe", 0, -275);
+    var t1 = this.Highscores;
+    if ($.$le$n(t1.$index(t1, 1), 5000) === true && $.$ge$n(t1.$index(t1, 1), 0) === true)
+      this.rank = 1;
+    if ($.$le$n(t1.$index(t1, 1), 10000) === true && $.$ge$n(t1.$index(t1, 1), 5001) === true)
+      this.rank = 2;
+    if ($.$le$n(t1.$index(t1, 1), 15000) === true && $.$ge$n(t1.$index(t1, 1), 10001) === true)
+      this.rank = 3;
+    if ($.$le$n(t1.$index(t1, 1), 20000) === true && $.$ge$n(t1.$index(t1, 1), 15001) === true)
+      this.rank = 4;
+    if ($.$le$n(t1.$index(t1, 1), 25000) === true && $.$ge$n(t1.$index(t1, 1), 20001) === true)
+      this.rank = 5;
+    if ($.$le$n(t1.$index(t1, 1), 30000) === true && $.$ge$n(t1.$index(t1, 1), 25001) === true)
+      this.rank = 6;
+    if ($.$le$n(t1.$index(t1, 1), 35000) === true && $.$ge$n(t1.$index(t1, 1), 30000) === true)
+      this.rank = 7;
+    if ($.$le$n(t1.$index(t1, 1), 40000) === true && $.$ge$n(t1.$index(t1, 1), 35000) === true)
+      this.rank = 8;
+    if ($.$le$n(t1.$index(t1, 1), 45000) === true && $.$ge$n(t1.$index(t1, 1), 40000) === true)
+      this.rank = 9;
+    if ($.$le$n(t1.$index(t1, 1), 50000) === true && $.$ge$n(t1.$index(t1, 1), 45000) === true)
+      this.rank = 10;
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 1 ? 0.8 : 0, 36, "You're a: Jew", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 2 ? 0.8 : 0, 36, "You're a: Jewish Priest", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 3 ? 0.8 : 0, 36, "You're a: Amish Mastermind", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 4 ? 0.8 : 0, 36, "You're a: Road Warrior", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 5 ? 0.8 : 0, 36, "You're a: Space Recruit", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 6 ? 0.8 : 0, 36, "You're a: Space Cadet", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 7 ? 0.8 : 0, 36, "You're a: Space Captain", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 8 ? 0.8 : 0, 36, "You're a: Overlord of the Galaxy", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 9 ? 0.8 : 0, 36, "You're a: Overlord of the Universe", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 56, "Welcome to Galaga!", 0, -97);
     this.entities.push(t1);
@@ -5969,14 +6002,6 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Mouse swipe", 0, -94);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Left Mouse Button", 0, -45);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "'S' PowerUp = You shoot 3 shots in 3 different directions, which move in a spiral formation.", 0, 0);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "'x2' PowerUp = Multiplies your score additions by 2.", 0, 45);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "'+' PowerUp = Increases the amount of bullets you can fire by 1.", 0, 90);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "'Life' PowerUp = Increases your total lives by 1.", 0, 135);
     this.entities.push(t1);
     t1 = $.GameButton$(new $.GalagaGame_createControlsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.4, 36, "Back", 0, 180);
     this.entities.push(t1);
@@ -6142,6 +6167,8 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
         t2.$indexSet(t2, "highScore", t1.$index(t1, i));
         break;
       }
+    t2 = this.Stats;
+    t2.$indexSet(t2, "highscore", t1.$index(t1, 1));
   },
   get$onStatUpdate: function() {
     var t1 = this._statUpdateEvent;
@@ -8381,7 +8408,7 @@ $$.GalagaRenderer_drawEnemy_anon0 = {"": "Closure;this_0",
       if (t3 > 0.5)
         $.drawImageScaled$5$x(t4, t2.get$enemy(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
       else
-        $.drawImageScaled$5$x(t4, t2.get$enemy2(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+        $.drawImageScaled$5$x(t4, t2.get$enemy2(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 36, 36);
       $.stroke$0$x(t2.get$ctx());
     }
   }

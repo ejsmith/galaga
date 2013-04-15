@@ -13,5 +13,5 @@ void main() {
   var game = new GalagaGame.withServices(input, renderer, loop);
   //game.sound.enabled = false;
   Game.debugMode = false;
-  game.start();  
+  game.start();
 }

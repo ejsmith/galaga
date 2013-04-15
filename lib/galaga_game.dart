@@ -229,8 +229,6 @@ class GalagaGame extends Game {
     else
       soundEffectsOn = false;
     
-    resetStats();
-    
     createWelcomeMenu();
     createGameOverMenu();
     createStatsMenu();
@@ -544,6 +542,27 @@ class GalagaGame extends Game {
   
   void createWelcomeMenu() {
     _gameOverEvent.signal();
+    
+    if (Highscores[1] <= 5000 && Highscores[1] >= 0)
+      rank = 1;
+    if (Highscores[1] <= 10000 && Highscores[1] >= 5001)
+      rank = 2;
+    if (Highscores[1] <= 15000 && Highscores[1] >= 10001)
+      rank = 3;
+    if (Highscores[1] <= 20000 && Highscores[1] >= 15001)
+      rank = 4;
+    if (Highscores[1] <= 25000 && Highscores[1] >= 20001)
+      rank = 5;
+    if (Highscores[1] <= 30000 && Highscores[1] >= 25001)
+      rank = 6;
+    if (Highscores[1] <= 35000 && Highscores[1] >= 30000)
+      rank = 7;
+    if (Highscores[1] <= 40000 && Highscores[1] >= 35000)
+      rank = 8;
+    if (Highscores[1] <= 45000 && Highscores[1] >= 40000)
+      rank = 9;
+    if (Highscores[1] <= 50000 && Highscores[1] >= 45000)
+      rank = 10;
     
     addEntity(new GameText(game: this, 
         x: 0, 
@@ -1471,54 +1490,6 @@ class GalagaGame extends Game {
         id: "",
         groupId: "instructions"));
     
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 0, 
-        text: "'S' PowerUp = You shoot 3 shots in 3 different directions, which move in a spiral formation.",
-        size: 24,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.6,
-        id: "",
-        groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 45, 
-        text: "'x2' PowerUp = Multiplies your score additions by 2.",
-        size: 24,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.6,
-        id: "",
-        groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 90, 
-        text: "'+' PowerUp = Increases the amount of bullets you can fire by 1.",
-        size: 24,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.6,
-        id: "",
-        groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 135, 
-        text: "'Life' PowerUp = Increases your total lives by 1.",
-        size: 24,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.6,
-        id: "",
-        groupId: "instructions"));
-    
     addEntity(new GameButton(game: this, 
         x: 0, 
         y: 180, 
@@ -1781,7 +1752,9 @@ class GalagaGame extends Game {
         Stats["highScore"] = Highscores[i];
         break;
       }
-    } 
+    }
+    
+    Stats["highscore"] = Highscores[1];
   }
   
   final EventStream _statUpdateEvent = new EventStream();
