@@ -130,10 +130,11 @@ class Bullet extends GameEntity<GalagaGame> {
         
         if (enemy.type == "MotherShip") {
           game._motherShipEvent.signal();
-        } else if (enemy.type == "Boss")
+        } else if (enemy.type == "Boss") {
           game._bossHitEvent.signal();
-        else if (enemy.type == "Normal")
+        } else if (enemy.type == "Normal") {
           game._normalHitEvent.signal();
+        }
         
         if (enemy.type != "Boss") {
           enemy.width -= 8;

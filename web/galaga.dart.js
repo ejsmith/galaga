@@ -5997,13 +5997,25 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("options");
   },
   createControlsMenu$0: function() {
-    var t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 56, "Instructions", 0, -160);
+    var t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 56, "Instructions", 0, -225);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Mouse swipe", 0, -94);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Mouse swipe", 0, -145);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Left Mouse Button", 0, -45);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Left Mouse Button", 0, -96);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createControlsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.4, 36, "Back", 0, 180);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 24, "Powerups:", 0, -47);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire Flower: Spread shot upgrade.", 0, 2);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Energy Canister: Extra life.", 0, 51);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Apple: Multiplier times two.", 0, 100);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Energy Ball: Extra bullet", 0, 149);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Coin: Plus 100 points.", 0, 198);
+    this.entities.push(t1);
+    t1 = $.GameButton$(new $.GalagaGame_createControlsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.4, 36, "Back", -420, -280);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("instructions");
   },
@@ -6042,6 +6054,10 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1.$indexSet(t1, "loses", 0);
     t1.$indexSet(t1, "totalGames", 0);
     t1.$indexSet(t1, "highscore", 0);
+    t1.$indexSet(t1, "normalKills", 0);
+    t1.$indexSet(t1, "bossKills", 0);
+    t1.$indexSet(t1, "motherKills", 0);
+    t1.$indexSet(t1, "powerups", 0);
     this.set$state(this, 1);
     this.removeEntitiesByGroup$1("stats");
     this.createStatsMenu$0();
@@ -7215,6 +7231,8 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
         t1.set$score(t1.get$score() + 10000 * t1.get$pointMultiplier());
         t1 = this.game.get$Stats();
         t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "bossKills", $.$add$ns(t1.$index(t1, "bossKills"), 1));
         this.game.set$bonusStage(false);
         this._removeFromGame = true;
       }
@@ -7492,6 +7510,8 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
         t1.set$score(t1.get$score() + 1000 * t1.get$pointMultiplier());
         t1 = this.game.get$Stats();
         t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "motherKills", $.$add$ns(t1.$index(t1, "motherKills"), 1));
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
         this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
@@ -7592,6 +7612,8 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
         t1.set$enemyAmount(t1.get$enemyAmount() - 1);
         t1 = this.game.get$Stats();
         t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "normalKills", $.$add$ns(t1.$index(t1, "normalKills"), 1));
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
         this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
@@ -8811,22 +8833,32 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
       switch (this.type) {
         case "SpiralShot":
           this.SpiralUpdate$0();
+          t1 = this.game.get$Stats();
+          t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
         case "Multiplier":
           t1 = this.game;
           t1.set$pointMultiplier(t1.get$pointMultiplier() * 2);
+          t1 = this.game.get$Stats();
+          t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
         case "BulletIncrease":
           t1 = this.game.get$ship();
           t1.set$maxBullet($.$add$ns(t1.get$maxBullet(), 1));
+          t1 = this.game.get$Stats();
+          t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
         case "ExtraLife":
           t1 = this.game.get$ship();
           t1.set$lives($.$add$ns(t1.get$lives(), 1));
+          t1 = this.game.get$Stats();
+          t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
         case "bulletPower":
           t1 = this.game;
           t1.set$score(t1.get$score() + 100);
+          t1 = this.game.get$Stats();
+          t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
       }
       t1 = this.game;

@@ -1456,7 +1456,7 @@ class GalagaGame extends Game {
   void createControlsMenu() {
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -160, 
+        y: -225, 
         text: "Instructions",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -1468,7 +1468,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -94, 
+        y: -145, 
         text: "Move left/right: Mouse swipe",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1480,7 +1480,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -45, 
+        y: -96, 
         text: "Fire: Left Mouse Button",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1490,9 +1490,81 @@ class GalagaGame extends Game {
         id: "",
         groupId: "instructions"));
     
-    addEntity(new GameButton(game: this, 
+    addEntity(new GameText(game: this, 
         x: 0, 
-        y: 180, 
+        y: -47, 
+        text: "Powerups:",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 2, 
+        text: "Fire Flower: Spread shot upgrade.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 51, 
+        text: "Energy Canister: Extra life.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 100, 
+        text: "Apple: Multiplier times two.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 149, 
+        text: "Energy Ball: Extra bullet",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 198, 
+        text: "Coin: Plus 100 points.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameButton(game: this, 
+        x: -420, 
+        y: -280,  
         text: "Back", 
         buttonAction: () { 
           state = GalagaGameState.options;
@@ -1601,6 +1673,10 @@ class GalagaGame extends Game {
     Stats["loses"] = 0;
     Stats["totalGames"] = 0;
     Stats["highscore"] = 0;
+    Stats["normalKills"] = 0;
+    Stats["bossKills"] = 0;
+    Stats["motherKills"] = 0;
+    Stats["powerups"] = 0;
     
     state = GalagaGameState.welcome;
     

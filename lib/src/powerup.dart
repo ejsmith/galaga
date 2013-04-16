@@ -62,18 +62,23 @@ class PowerUp extends GameEntity<GalagaGame> {
       switch (type) {
         case 'SpiralShot':
           SpiralUpdate();
+          game.Stats["powerups"] += 1;
           break;
         case 'Multiplier':
           game.pointMultiplier *= 2;
+          game.Stats["powerups"] += 1;
           break;
         case 'BulletIncrease':
           game.ship.maxBullet++;
+          game.Stats["powerups"] += 1;
           break;
         case 'ExtraLife':
           game.ship.lives++;
+          game.Stats["powerups"] += 1;
           break;
         case 'bulletPower':
           game.score += 100;
+          game.Stats["powerups"] += 1;
           break;
       }
       

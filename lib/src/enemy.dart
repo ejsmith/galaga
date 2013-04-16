@@ -239,6 +239,7 @@ class Enemy extends GameEntity<GalagaGame> {
         
         game.score += 10000 * game.pointMultiplier;
         game.Stats["killed"] += 1;
+        game.Stats["bossKills"] += 1;
         
         game.bonusStage = false;
         
@@ -433,6 +434,7 @@ class Enemy extends GameEntity<GalagaGame> {
       if (health <= 0) {
         game.score += 1000 * game.pointMultiplier;
         game.Stats["killed"] += 1;
+        game.Stats["motherKills"] += 1;
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);
@@ -511,6 +513,7 @@ class Enemy extends GameEntity<GalagaGame> {
         game.score += 100 * game.pointMultiplier;
         game.enemyAmount--;
         game.Stats["killed"] += 1;
+        game.Stats["normalKills"] += 1;
         
         if (random() > .5)
           game.newBulletPowerUp(x, y);
