@@ -13,6 +13,7 @@ part "src/powerup.dart";
 part "src/bullet.dart";
 part "src/stars.dart";
 part "src/particles.dart";
+part "src/bouncingBall.dart";
 
 class GalagaGame extends Game {
   num score = 0;
@@ -408,6 +409,12 @@ class GalagaGame extends Game {
     addEntity(enemy);
   }
   
+  void newBouncer(num sprite) {
+    bouncingBall bouncer = new bouncingBall(this, 0, 0, 36, 36, sprite);
+    
+    addEntity(bouncer);
+  }
+  
   void newBossDrone(num x, num y) {
     int x = 0;
     
@@ -555,14 +562,20 @@ class GalagaGame extends Game {
       rank = 5;
     if (Highscores[1] <= 30000 && Highscores[1] >= 25001)
       rank = 6;
-    if (Highscores[1] <= 35000 && Highscores[1] >= 30000)
+    if (Highscores[1] <= 35000 && Highscores[1] >= 30001)
       rank = 7;
-    if (Highscores[1] <= 40000 && Highscores[1] >= 35000)
+    if (Highscores[1] <= 40000 && Highscores[1] >= 35001)
       rank = 8;
-    if (Highscores[1] <= 45000 && Highscores[1] >= 40000)
+    if (Highscores[1] <= 45000 && Highscores[1] >= 40001)
       rank = 9;
-    if (Highscores[1] <= 50000 && Highscores[1] >= 45000)
+    if (Highscores[1] <= 50000 && Highscores[1] >= 45001)
       rank = 10;
+    if (Highscores[1] <= 55000 && Highscores[1] >= 50001)
+      rank = 11;
+    if (Highscores[1] <= 60000 && Highscores[1] >= 55001)
+      rank = 12;
+    if (Highscores[1] >= 100000)
+      rank = 13;
     
     addEntity(new GameText(game: this, 
         x: 0, 
@@ -651,7 +664,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: Overlord of the Galaxy",
+        text: "You're a: The Overlord of the Galaxy",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -663,12 +676,60 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: Overlord of the Universe",
+        text: "You're a: The President of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
         opacity: rank == 9 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: The Supreme Commander of the Universe",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 10 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: The Overlord of the Universe",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 11 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're a: The Overseer of the Multi-verse",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 12 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: -275, 
+        text: "You're: Pablo Manrequez De Montoya De La Qruez the Third",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 13 ? .8 : 0,
         id: "",
         groupId: "welcome"));
     
@@ -1419,6 +1480,10 @@ class GalagaGame extends Game {
         y: -280, 
         text: "Instructions", 
         buttonAction: () { 
+          newBouncer(1);
+          newBouncer(2);
+          newBouncer(3);
+          newBouncer(4);
           state = GalagaGameState.instructions;
           _statUpdateEvent.signal();
           if (soundEffectsOn)

@@ -82,6 +82,25 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     updateStats();
   }
   
+  void drawBouncer() {
+    game.entities.where((e) => e is bouncingBall).forEach((bouncingBall e) {
+      ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+      ctx.lineWidth = 3;
+      
+      ctx.beginPath();
+      if (e.Sprite == 1)
+        ctx.drawImageScaled(spreadup, e.x - 22, e.y - 25, 42, 42);
+      else if(e.Sprite == 2)
+        ctx.drawImageScaled(lifeup, e.x - 22, e.y - 25, 36, 36);
+      else if(e.Sprite == 3)
+        ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
+      else if(e.Sprite == 4)
+        ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
+      
+      ctx.stroke();
+    });
+  }
+  
   void drawShipBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel < 0) {
@@ -349,6 +368,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void drawBeforeCtxRestore() {
+    drawBouncer();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {    
       drawLives();
       if (!shipFlicker)

@@ -4571,25 +4571,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5749,6 +5734,10 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.nextId = this.nextId + 1;
     this.entities.push(enemy);
   },
+  newBouncer$1: function(sprite) {
+    var bouncer = $.bouncingBall$(this, 0, 0, 36, 36, sprite);
+    this.entities.push(bouncer);
+  },
   newBossDrone$2: function(x, y) {
     var t1, t2, enemy;
     t1 = {};
@@ -5847,14 +5836,20 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
       this.rank = 5;
     if ($.$le$n(t1.$index(t1, 1), 30000) === true && $.$ge$n(t1.$index(t1, 1), 25001) === true)
       this.rank = 6;
-    if ($.$le$n(t1.$index(t1, 1), 35000) === true && $.$ge$n(t1.$index(t1, 1), 30000) === true)
+    if ($.$le$n(t1.$index(t1, 1), 35000) === true && $.$ge$n(t1.$index(t1, 1), 30001) === true)
       this.rank = 7;
-    if ($.$le$n(t1.$index(t1, 1), 40000) === true && $.$ge$n(t1.$index(t1, 1), 35000) === true)
+    if ($.$le$n(t1.$index(t1, 1), 40000) === true && $.$ge$n(t1.$index(t1, 1), 35001) === true)
       this.rank = 8;
-    if ($.$le$n(t1.$index(t1, 1), 45000) === true && $.$ge$n(t1.$index(t1, 1), 40000) === true)
+    if ($.$le$n(t1.$index(t1, 1), 45000) === true && $.$ge$n(t1.$index(t1, 1), 40001) === true)
       this.rank = 9;
-    if ($.$le$n(t1.$index(t1, 1), 50000) === true && $.$ge$n(t1.$index(t1, 1), 45000) === true)
+    if ($.$le$n(t1.$index(t1, 1), 50000) === true && $.$ge$n(t1.$index(t1, 1), 45001) === true)
       this.rank = 10;
+    if ($.$le$n(t1.$index(t1, 1), 55000) === true && $.$ge$n(t1.$index(t1, 1), 50001) === true)
+      this.rank = 11;
+    if ($.$le$n(t1.$index(t1, 1), 60000) === true && $.$ge$n(t1.$index(t1, 1), 55001) === true)
+      this.rank = 12;
+    if ($.$ge$n(t1.$index(t1, 1), 100000) === true)
+      this.rank = 13;
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 1 ? 0.8 : 0, 36, "You're a: Jew", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 2 ? 0.8 : 0, 36, "You're a: Jewish Priest", 0, -275);
@@ -5869,9 +5864,17 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 7 ? 0.8 : 0, 36, "You're a: Space Captain", 0, -275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 8 ? 0.8 : 0, 36, "You're a: Overlord of the Galaxy", 0, -275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 8 ? 0.8 : 0, 36, "You're a: The Overlord of the Galaxy", 0, -275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 9 ? 0.8 : 0, 36, "You're a: Overlord of the Universe", 0, -275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 9 ? 0.8 : 0, 36, "You're a: The President of the Universe", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 10 ? 0.8 : 0, 36, "You're a: The Supreme Commander of the Universe", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 11 ? 0.8 : 0, 36, "You're a: The Overlord of the Universe", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 12 ? 0.8 : 0, 36, "You're a: The Overseer of the Multi-verse", 0, -275);
+    this.entities.push(t1);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 13 ? 0.8 : 0, 36, "You're: Pablo Manrequez De Montoya De La Qruez the Third", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 56, "Welcome to Galaga!", 0, -97);
     this.entities.push(t1);
@@ -6680,6 +6683,10 @@ $$.GalagaGame_createOptionsMenu_anon5 = {"": "Closure;this_6",
 $$.GalagaGame_createOptionsMenu_anon6 = {"": "Closure;this_7",
   call$0: function() {
     var t1 = this.this_7;
+    t1.newBouncer$1(1);
+    t1.newBouncer$1(2);
+    t1.newBouncer$1(3);
+    t1.newBouncer$1(4);
     $.set$state$x(t1, 7);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
@@ -6833,6 +6840,40 @@ $$.GalagaGame_removeBullets_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isBullet;
   }
+};
+
+$$.bouncingBall = {"": "GameEntity;Sprite<,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+  update$0: function() {
+    if ($.$eq($.get$state$x(this.game), 7) !== true)
+      this._removeFromGame = true;
+    if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight()) === true) {
+      var t1 = this.momentum;
+      t1.yVel = $.$mul$n(t1.yVel, -1);
+    }
+    if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight()) === true) {
+      t1 = this.momentum;
+      t1.yVel = $.$mul$n(t1.yVel, -1);
+    }
+    if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth()) === true) {
+      t1 = this.momentum;
+      t1.xVel = $.$mul$n(t1.xVel, -1);
+    }
+    if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth()) === true) {
+      t1 = this.momentum;
+      t1.xVel = $.$mul$n(t1.xVel, -1);
+    }
+    $.GameEntity.prototype.update$0.call(this);
+  },
+  bouncingBall$6: function(game, x, y, h, w, sprite) {
+    var t1;
+    this.Sprite = sprite;
+    this.opacity = 0;
+    t1 = $.random(-200, 200, false);
+    this.momentum.yVel = t1;
+    t1 = $.random(-200, 200, false);
+    this.momentum.xVel = t1;
+  },
+  $isbouncingBall: true
 };
 
 $$.Bullet = {"": "GameEntity;temp,startX,Type,_deleteTimer,_waiting@,farRight,farLeft,right,left,straight,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
@@ -7876,6 +7917,10 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     this.bgFade$0();
     this.updateStats$0();
   },
+  drawBouncer$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBouncer_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawBouncer_anon0(this));
+  },
   drawShipBullet$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawShipBullet_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_drawShipBullet_anon0(this));
@@ -8065,6 +8110,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   },
   drawBeforeCtxRestore$0: function() {
     var t1, t2;
+    this.drawBouncer$0();
     t1 = this.get$game();
     if (t1.get$state(t1) !== 3) {
       t1 = this.get$game();
@@ -8195,6 +8241,37 @@ $$.GalagaRenderer_init_anon3 = {"": "Closure;this_4",
 $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     return this.this_5.normalShipHit$0();
+  }
+};
+
+$$.GalagaRenderer_drawBouncer_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isbouncingBall;
+  }
+};
+
+$$.GalagaRenderer_drawBouncer_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = this.this_0;
+    $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+    $.set$lineWidth$x(t1.get$ctx(), 3);
+    $.beginPath$0$x(t1.get$ctx());
+    t2 = e.get$Sprite();
+    if (t2 === 1) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$spreadup(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 25), 42, 42);
+    } else if (t2 === 2) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$lifeup(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 25), 36, 36);
+    } else if (t2 === 3) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$multiplierup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    } else if (t2 === 4) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bulletup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    }
+    $.stroke$0$x(t1.get$ctx());
   }
 };
 
@@ -9014,7 +9091,7 @@ $$.Stars = {"": "GameEntity;game,_x,_y,_width,_height,isHighlighted,soundReady,i
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true)
       return;
-    if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfWidth()) === true)
+    if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight()) === true)
       this._removeFromGame = true;
     $.GameEntity.prototype.update$0.call(this);
   },
@@ -10728,6 +10805,13 @@ $.EventArgs$ = function() {
 $.GalagaGame$withServices = function(input, renderer, loop) {
   var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   t1.Game$withServices$3(input, renderer, loop);
+  return t1;
+};
+
+$.bouncingBall$ = function(game, x, y, h, w, sprite) {
+  var t1 = new $.bouncingBall(0, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  t1.GameEntity$withPosition$7(game, x, y, h, w, null, null);
+  t1.bouncingBall$6(game, x, y, h, w, sprite);
   return t1;
 };
 

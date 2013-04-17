@@ -28,7 +28,7 @@ class Stars extends GameEntity {
     if (game.state == GalagaGameState.paused)
       return;
     
-    if (y > game.rect.halfWidth)
+    if (y > game.rect.halfHeight)
       removeFromGame();
     
     super.update();
