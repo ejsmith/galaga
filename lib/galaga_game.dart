@@ -412,6 +412,11 @@ class GalagaGame extends Game {
   void newBouncer(num sprite) {
     bouncingBall bouncer = new bouncingBall(this, 0, 0, 36, 36, sprite);
     
+    if (sprite == 5) {
+      bouncer.height = 12;
+      bouncer.width = 12;
+    }
+      
     addEntity(bouncer);
   }
   
@@ -664,7 +669,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: The Overlord of the Galaxy",
+        text: "You're: The Overlord of the Galaxy",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -676,7 +681,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: The President of the Universe",
+        text: "You're: The President of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -688,7 +693,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: The Supreme Commander of the Universe",
+        text: "You're: The Supreme Commander of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -700,7 +705,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: The Overlord of the Universe",
+        text: "You're: The Overlord of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -712,7 +717,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -275, 
-        text: "You're a: The Overseer of the Multi-verse",
+        text: "You're: The Overseer of the Multi-verse",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1484,6 +1489,7 @@ class GalagaGame extends Game {
           newBouncer(2);
           newBouncer(3);
           newBouncer(4);
+          newBouncer(5);
           state = GalagaGameState.instructions;
           _statUpdateEvent.signal();
           if (soundEffectsOn)

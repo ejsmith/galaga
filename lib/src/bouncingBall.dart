@@ -16,19 +16,19 @@ class bouncingBall extends GameEntity {
     if (game.state != GalagaGameState.instructions)
       removeFromGame();
     
-    if (y > game.rect.halfHeight) {
+    if (y > game.rect.halfHeight - (height / 2)) {
       momentum.yVel *= -1;
     }
     
-    if (y < -(game.rect.halfHeight)) {
+    if (y < -(game.rect.halfHeight) + (height / 2)) {
       momentum.yVel *= -1;
     }
     
-    if (x > game.rect.halfWidth) {
+    if (x > game.rect.halfWidth - (width / 2)) {
       momentum.xVel *= -1;
     }
     
-    if (x < -(game.rect.halfWidth)) {
+    if (x < -(game.rect.halfWidth) + (width / 2)) {
       momentum.xVel *= -1;
     }
     
