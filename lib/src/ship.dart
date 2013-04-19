@@ -65,11 +65,18 @@ class Ship extends GameEntity<GalagaGame> {
       if (game.input.click != null)
         fire();
       
+      if (game.input.keyCode == 32)
+        superFire();
+        
 //      if (isPoweringUp)
 //        bulletPower += .25;
     }
     
     super.update();
+  }
+  
+  void superFire() {
+    game.addEntity(new Bullet(game, x, y, "super", -350, bulletPower));
   }
   
   void fire() {

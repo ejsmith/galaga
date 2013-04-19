@@ -254,6 +254,9 @@ class GalagaGame extends Game {
       if (input.keyCode == 27)
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
       
+//      if (state == GalagaGameState.paused) {
+//        timer.paused = true;
+//      }
       if (enemyAmount <= 0) {
         Stats["wins"] += 1;
         

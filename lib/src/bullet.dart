@@ -34,6 +34,11 @@ class Bullet extends GameEntity<GalagaGame> {
     
     if (size >= 36)
       size = 36;
+    
+    if (type == "super") {
+      width = 64;
+      height = 32;
+    }
   }
   
   void update() {
@@ -117,7 +122,7 @@ class Bullet extends GameEntity<GalagaGame> {
         if (width > enemy.width && height > enemy.height) {
           width -= enemy.width;
           height -= enemy.height;
-        } else
+        } else if (Type != "super")
           removeFromGame();
         
         game.targetId = enemy.idNum;
