@@ -77,7 +77,7 @@ class PowerUp extends GameEntity<GalagaGame> {
           game.Stats["powerups"] += 1;
           break;
         case 'bulletPower':
-          game.score += 100;
+          game.score += 100 * game.pointMultiplier;
           game.Stats["powerups"] += 1;
           break;
       }

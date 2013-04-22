@@ -19,6 +19,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement shipbullet = new ImageElement();
   ImageElement enemybullet = new ImageElement();
   ImageElement superBullet = new ImageElement();
+  ImageElement bossSuperBullet = new ImageElement();
   
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -40,6 +41,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     shipbullet.src = '../web/images/BulletUp.png';
     enemybullet.src = '../web/images/BulletDown.png';
     superBullet.src = '../web/images/SuperAttack.png';
+    bossSuperBullet.src = '../web/images/bossShot.png';
   }
   
   void init() {
@@ -87,6 +89,19 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void drawSuperBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel < 0) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+        
+        ctx.beginPath();
+        ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
+        ctx.stroke();
+      }
+    });
+  }
+  
+  void drawBossSuperBullet() {
+    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
+      if (e.momentum.yVel > 0) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
