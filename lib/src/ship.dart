@@ -6,6 +6,8 @@ class Ship extends GameEntity<GalagaGame> {
   num maxBullet = 3;
   num lives = 3;
   num soundLevel = 0;
+  num chargedLevel = 0;
+  num superCharged = 0;
   bool isPoweringUp = false;
   bool spiralShot = false;
   bool superSpiral = false;
@@ -58,25 +60,33 @@ class Ship extends GameEntity<GalagaGame> {
     if (x - 16 < -(game.rect.halfWidth))
       x = -(game.rect.halfWidth) + 16;
     
+    if (chargedLevel >= 15) {
+      superCharged++;
+      chargedLevel = 0;
+    }
+    
     if (bullet > 0) {
 //      if (game.input.mouseDown)
 //        isPoweringUp = true;
       
       if (game.input.click != null)
         fire();
-      
-      if (game.input.keyCode == 32)
-        superFire();
         
 //      if (isPoweringUp)
 //        bulletPower += .25;
     }
     
+    if (superCharged > 0) 
+      if (game.input.keyCode == 32) {
+        superFire();
+        superCharged--;
+      }
+    
     super.update();
   }
   
   void superFire() {
-    game.addEntity(new Bullet(game, x, y, "super", -350, bulletPower));
+    game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "super"));
   }
   
   void fire() {

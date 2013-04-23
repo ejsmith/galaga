@@ -982,6 +982,12 @@ $$.JSArray = {"": "Object;",
     $.checkGrowable(receiver, "add");
     receiver.push(value);
   },
+  removeAt$1: function(receiver, index) {
+    if (index < 0 || index >= receiver.length)
+      throw $.$$throw($.RangeError$value(index));
+    $.checkGrowable(receiver, "removeAt");
+    return receiver.splice(index, 1)[0];
+  },
   removeLast$0: function(receiver) {
     $.checkGrowable(receiver, "removeLast");
     if (receiver.length === 0)
@@ -1032,25 +1038,6 @@ $$.JSArray = {"": "Object;",
   sublist$1: function($receiver, start) {
     return this.sublist$2($receiver, start, null);
   },
-  removeRange$2: function(receiver, start, $length) {
-    var receiverLength, t1, t2;
-    $.checkGrowable(receiver, "removeRange");
-    if ($length === 0)
-      return;
-    $.checkNull(start);
-    $.checkNull($length);
-    if ($length < 0)
-      throw $.$$throw($.ArgumentError$($length));
-    receiverLength = receiver.length;
-    if (start < 0 || start >= receiverLength)
-      throw $.$$throw($.RangeError$value(start));
-    t1 = start + $length;
-    if (t1 > receiverLength)
-      throw $.$$throw($.RangeError$value(t1));
-    t2 = receiverLength - $length;
-    $.Arrays_copy(receiver, t1, receiver, start, t2 - start);
-    this.set$length(receiver, t2);
-  },
   setRange$4: function(receiver, start, $length, from, startFrom) {
     $.checkMutable(receiver, "set range");
     $.IterableMixinWorkaround_setRangeList(receiver, start, $length, from, startFrom);
@@ -1074,8 +1061,6 @@ $$.JSArray = {"": "Object;",
     return receiver.length;
   },
   set$length: function(receiver, newLength) {
-    if (!(typeof newLength === "number" && Math.floor(newLength) === newLength))
-      throw $.$$throw($.ArgumentError$(newLength));
     if (newLength < 0)
       throw $.$$throw($.RangeError$value(newLength));
     $.checkGrowable(receiver, "set length");
@@ -1946,6 +1931,14 @@ $$._FutureWrapper = {"": "Object;_future",
 };
 
 $$.Stream = {"": "Object;",
+  get$isBroadcast: function() {
+    return false;
+  },
+  asBroadcastStream$0: function() {
+    if (this.get$isBroadcast() === true)
+      return this;
+    return $._SingleStreamMultiplexer$(this);
+  },
   get$length: function(_) {
     var t1, future, t2, t3;
     t1 = {};
@@ -1983,7 +1976,7 @@ $$.StreamController = {"": "StreamSink;stream",
   }
 };
 
-$$._MultiControllerStream = {"": "_MultiStreamImpl;_subscriptionHandler,_pauseHandler,_nextLink,_previousLink,_state,_pendingEvents",
+$$._SingleControllerStream = {"": "_SingleStreamImpl;_subscriptionHandler,_pauseHandler,_subscriber,_state,_pendingEvents",
   _subscriptionHandler$0: function() {
     return this._subscriptionHandler.call$0();
   },
@@ -2034,6 +2027,9 @@ $$._StreamImpl = {"": "Stream;_state@",
   listen$1: function(onData) {
     return this.listen$4$onDone$onError$unsubscribeOnError(onData, null, null, null);
   },
+  listen$3$onDone$onError: function(onData, onDone, onError) {
+    return this.listen$4$onDone$onError$unsubscribeOnError(onData, onDone, onError, null);
+  },
   _liblib1$_add$1: function(value) {
     if (this.get$_liblib1$_isClosed())
       throw $.$$throw($.StateError$("Sending on closed stream"));
@@ -2046,6 +2042,42 @@ $$._StreamImpl = {"": "Stream;_state@",
     else
       this._sendData$1(value);
     this._handlePendingEvents$0();
+  },
+  get$_liblib1$_add: function() {
+    return new $.BoundClosure$1(this, "_liblib1$_add$1");
+  },
+  _addError$1: function(error) {
+    if (this.get$_liblib1$_isClosed())
+      throw $.$$throw($.StateError$("Sending on closed stream"));
+    if (!this.get$_mayFireState()) {
+      this._addPendingEvent$1($._DelayedError$(error));
+      return;
+    }
+    if (this.get$_hasPendingEvent())
+      this._addPendingEvent$1($._DelayedError$(error));
+    else
+      this._sendError$1(error);
+    this._handlePendingEvents$0();
+  },
+  get$_addError: function() {
+    return new $.BoundClosure$1(this, "_addError$1");
+  },
+  _close$0: function() {
+    if (this.get$_liblib1$_isClosed())
+      return;
+    this._state = $.$or$n(this._state, 1);
+    if (!this.get$_mayFireState()) {
+      this._addPendingEvent$1($.CONSTANT29);
+      return;
+    }
+    if (this.get$_hasPendingEvent()) {
+      this._addPendingEvent$1($._DelayedDone$());
+      this._handlePendingEvents$0();
+    } else
+      this._sendDone$0();
+  },
+  get$_close: function() {
+    return new $.BoundClosure$0(this, "_close$0");
   },
   get$_liblib1$_isClosed: function() {
     return $.$and$n(this._state, 1) !== 0;
@@ -2170,7 +2202,7 @@ $$._StreamImpl = {"": "Stream;_state@",
     for (; true; wasPaused = isPaused, hadSubscribers = hasSubscribers) {
       hasSubscribers = this.get$_hasSubscribers();
       isPaused = this.get$_isInputPaused();
-      if (hadSubscribers !== hasSubscribers)
+      if (!$.$eq(hadSubscribers, hasSubscribers))
         this._onSubscriptionStateChange$0();
       else if ($.$eq(isPaused, wasPaused) !== true)
         this._onPauseStateChange$0();
@@ -2210,14 +2242,20 @@ $$._StreamImpl = {"": "Stream;_state@",
     } while (events.get$isEmpty(events) !== true);
   },
   _sendData$1: function(value) {
-    if (!this.get$_hasSubscribers())
+    if (this.get$_hasSubscribers() !== true)
       return;
     this._forEachSubscriber$1(new $._StreamImpl__sendData_anon(value));
   },
   _sendError$1: function(error) {
-    if (!this.get$_hasSubscribers())
+    if (this.get$_hasSubscribers() !== true)
       return;
     this._forEachSubscriber$1(new $._StreamImpl__sendError_anon(error));
+  },
+  _sendDone$0: function() {
+    this._state = $.$or$n(this._state, 2);
+    if (this.get$_hasSubscribers() !== true)
+      return;
+    this._forEachSubscriber$1(new $._StreamImpl__sendDone_anon(this));
   }
 };
 
@@ -2267,7 +2305,78 @@ $$._StreamImpl__sendError_anon = {"": "Closure;error_0",
   }
 };
 
+$$._StreamImpl__sendDone_anon = {"": "Closure;this_0",
+  call$1: function(subscriber) {
+    var e, e0, s, exception, t1;
+    this.this_0._cancel$1(subscriber);
+    try {
+      subscriber._sendDone$0();
+    } catch (exception) {
+      t1 = $.unwrapException(exception);
+      if (typeof t1 === "object" && t1 !== null && !!t1.$isAsyncError) {
+        e = t1;
+        e.throwDelayed$0();
+      } else {
+        e0 = t1;
+        s = $.getTraceFromException(exception);
+        $.AsyncError$(e0, s).throwDelayed$0();
+      }
+    }
+
+  }
+};
+
+$$._SingleStreamImpl = {"": "_StreamImpl;",
+  get$_hasSubscribers: function() {
+    return this._subscriber != null;
+  },
+  _createSubscription$4: function(onData, onError, onDone, unsubscribeOnError) {
+    return $._StreamSubscriptionImpl$(this, onData, onError, onDone, unsubscribeOnError);
+  },
+  _addListener$1: function(subscription) {
+    if (this.get$_hasSubscribers() === true)
+      throw $.$$throw($.StateError$("Stream already has subscriber."));
+    this._updatePauseCount$1(-1);
+    this._subscriber = subscription;
+    subscription._setSubscribed$1(0);
+    if (this.get$_isInactive()) {
+      this._checkCallbacks$2(false, true);
+      if (this.get$_isPaused() !== true && this.get$_hasPendingEvent())
+        this._pendingEvents.schedule$1(this);
+    }
+  },
+  _cancel$1: function(subscriber) {
+    var t1, resumeCount;
+    t1 = this._subscriber;
+    if (t1 == null ? subscriber != null : t1 !== subscriber)
+      return;
+    this._subscriber = null;
+    resumeCount = subscriber._setUnsubscribed$0();
+    t1 = -resumeCount;
+    this._updatePauseCount$1(this.get$_isComplete() ? t1 : t1 + 1);
+    if (this.get$_isInactive()) {
+      this._checkCallbacks$2(true, resumeCount > 0);
+      if (this.get$_isPaused() !== true && this.get$_hasPendingEvent())
+        this._pendingEvents.schedule$1(this);
+    }
+  },
+  _forEachSubscriber$1: function(action) {
+    var wasInputPaused, subscription;
+    wasInputPaused = this.get$_isInputPaused();
+    subscription = this._subscriber;
+    this._startFiring$0();
+    action.call$1(subscription);
+    this._endFiring$1(wasInputPaused);
+  },
+  _SingleStreamImpl$0: function() {
+    this._updatePauseCount$1(1);
+  }
+};
+
 $$._MultiStreamImpl = {"": "_StreamImpl;_nextLink@,_previousLink@",
+  get$isBroadcast: function() {
+    return true;
+  },
   get$_hasSubscribers: function() {
     return !$._InternalLinkList_isEmpty(this);
   },
@@ -2304,8 +2413,9 @@ $$._MultiStreamImpl = {"": "_StreamImpl;_nextLink@,_previousLink@",
     }
   },
   _cancel$1: function(listener) {
-    var wasInputPaused;
-    if (listener === listener._nextLink)
+    var t1, wasInputPaused;
+    t1 = listener.get$_nextLink();
+    if (listener == null ? t1 == null : listener === t1)
       return;
     if (this.get$_isFiring())
       if (listener._needsEvent$1(this.get$_currentEventIdBit()))
@@ -2372,6 +2482,9 @@ $$._StreamSubscriptionImpl = {"": "_StreamListener;_unsubscribeOnError,_liblib1$
   _onError$1: function(arg0) {
     return this._onError.call$1(arg0);
   },
+  _onDone$0: function() {
+    return this._onDone.call$0();
+  },
   _sendData$1: function(data) {
     this._liblib1$_onData$1(data);
   },
@@ -2379,6 +2492,9 @@ $$._StreamSubscriptionImpl = {"": "_StreamListener;_unsubscribeOnError,_liblib1$
     this._onError$1(error);
     if (this._unsubscribeOnError)
       this._source._cancel$1(this);
+  },
+  _sendDone$0: function() {
+    this._onDone$0();
   },
   cancel$0: function() {
     this._source._cancel$1(this);
@@ -2396,6 +2512,24 @@ $$._DelayedEvent = {"": "Object;next@"};
 $$._DelayedData = {"": "_DelayedEvent;value,next",
   perform$1: function(stream) {
     stream._sendData$1(this.value);
+  }
+};
+
+$$._DelayedError = {"": "_DelayedEvent;error>,next",
+  perform$1: function(stream) {
+    stream._sendError$1(this.error);
+  }
+};
+
+$$._DelayedDone = {"": "Object;",
+  perform$1: function(stream) {
+    stream._sendDone$0();
+  },
+  get$next: function() {
+    return;
+  },
+  set$next: function(_) {
+    throw $.$$throw($.StateError$("No events after a done."));
   }
 };
 
@@ -2549,6 +2683,23 @@ $$._DoneSubscription__delayDone_anon = {"": "Closure;this_0",
     var t1 = this.this_0;
     if (t1.get$_handler() != null)
       t1._handler$0();
+  }
+};
+
+$$._SingleStreamMultiplexer = {"": "_MultiStreamImpl;_source,_subscription,_nextLink,_previousLink,_state,_pendingEvents",
+  _onSubscriptionStateChange$0: function() {
+    var t1, t2;
+    if (this.get$_hasSubscribers()) {
+      t1 = this.get$_liblib1$_add();
+      t2 = this.get$_addError();
+      this._subscription = this._source.listen$3$onDone$onError(t1, this.get$_close(), t2);
+    } else {
+      t1 = this._subscription;
+      if (t1 == null)
+        return;
+      t1.cancel$0();
+      this._subscription = null;
+    }
   }
 };
 
@@ -4438,11 +4589,17 @@ $$.CssClassSet_addAll_anon = {"": "Closure;iterable_0",
 };
 
 $$._EventStream = {"": "Stream;_target,_eventType,_useCapture",
+  get$isBroadcast: function() {
+    return true;
+  },
   listen$4$onDone$onError$unsubscribeOnError: function(onData, onDone, onError, unsubscribeOnError) {
     return $._EventStreamSubscription$(this._target, this._eventType, onData, this._useCapture);
   },
   listen$1: function(onData) {
     return this.listen$4$onDone$onError$unsubscribeOnError(onData, null, null, null);
+  },
+  listen$3$onDone$onError: function(onData, onDone, onError) {
+    return this.listen$4$onDone$onError$unsubscribeOnError(onData, onDone, onError, null);
   }
 };
 
@@ -4571,10 +4728,25 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var nextPosition, t1;
-    nextPosition = this._position + 1;
+    var t1, nextPosition;
+    t1 = this._position;
+    if (typeof t1 !== "number")
+      return this.moveNext$0$bailout(1, t1);
+    nextPosition = t1 + 1;
     t1 = this._length;
     if (nextPosition < t1) {
+      this._current = $.$index$asx(this._array, nextPosition);
+      this._position = nextPosition;
+      return true;
+    }
+    this._current = null;
+    this._position = t1;
+    return false;
+  },
+  moveNext$0$bailout: function(state0, t1) {
+    var nextPosition = $.$add$ns(t1, 1);
+    t1 = this._length;
+    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -4790,7 +4962,7 @@ $$.Game = {"": "Object;entities<,timer<,clockTick@,rect>,input<,renderer<,loop',
       if (i >= t1.length)
         throw $.ioore(i);
       if (t1[i].get$_removeFromGame())
-        $.JSArray_methods.removeRange$2(t1, i, 1);
+        $.JSArray_methods.removeAt$1(t1, i);
     }
   },
   Game$withServices$3: function(input, renderer, loop) {
@@ -5074,22 +5246,24 @@ $$.GameText = {"": "GameEntity;text>,centered,font>,size>,game,_x,_y,_width,_hei
   $isGameText: true
 };
 
-$$.GameTimer = {"": "Object;gameTime,wallLastTimestamp,fps,fpsSampleRate,timeDecrease",
+$$.GameTimer = {"": "Object;gameTime,wallLastTimestamp,fps,fpsSampleRate,timeDecrease,paused",
   tick$0: function() {
     var wallCurrent, wallDelta, t1, gameDelta, t2;
-    wallCurrent = $.DateTime$_now().millisecondsSinceEpoch;
-    wallDelta = $.$div$n($.$sub$n(wallCurrent, this.wallLastTimestamp), 1000);
-    this.wallLastTimestamp = wallCurrent;
-    t1 = this.fps;
-    this.fps = t1 + (1 / wallDelta - t1) / this.fpsSampleRate;
-    gameDelta = $.min(wallDelta, 0.05);
-    t1 = this.timeDecrease;
-    t2 = this.gameTime;
-    if (!t1)
-      this.gameTime = $.$add$ns(t2, gameDelta);
-    else
-      this.gameTime = $.$sub$n(t2, gameDelta);
-    return gameDelta;
+    if (!this.paused) {
+      wallCurrent = $.DateTime$_now().millisecondsSinceEpoch;
+      wallDelta = $.$div$n($.$sub$n(wallCurrent, this.wallLastTimestamp), 1000);
+      this.wallLastTimestamp = wallCurrent;
+      t1 = this.fps;
+      this.fps = t1 + (1 / wallDelta - t1) / this.fpsSampleRate;
+      gameDelta = $.min(wallDelta, 0.05);
+      t1 = this.timeDecrease;
+      t2 = this.gameTime;
+      if (!t1)
+        this.gameTime = $.$add$ns(t2, gameDelta);
+      else
+        this.gameTime = $.$sub$n(t2, gameDelta);
+      return gameDelta;
+    }
   }
 };
 
@@ -5135,7 +5309,7 @@ $$.CanvasGameRenderer = {"": "GameRenderer;targetId@,ctx<",
   CanvasGameRenderer$1: function(targetId) {
     var t1, clientRect, t2, t3;
     this.canvas = $.query("#" + $.S(this.targetId));
-    this.ctx = $.getContext$1$x(this.canvas, "2d");
+    this.ctx = $.get$context2d$x(this.canvas);
     t1 = this.ctx.canvas;
     this.rect = $.Rectangle$(0, 0, t1.width, t1.height);
     clientRect = $.getBoundingClientRect$0$x(this.ctx.canvas);
@@ -5457,7 +5631,7 @@ $$.Vector = {"": "Object;x*,y>"};
 
 $$.EventStream = {"": "Object;_controller",
   get$stream: function(_) {
-    return this._controller.stream;
+    return this._controller.stream.asBroadcastStream$0();
   },
   signal$1: function(value) {
     var t1, t2;
@@ -6106,8 +6280,8 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.enemyAmount = 33;
     this.bonusCheck = 3;
     this.bonusStage = false;
-    this.visualLevel = 2;
-    this.level = 2;
+    this.visualLevel = 1;
+    this.level = 1;
     this.score = 0;
     this.pointMultiplier = 1;
     if (this.level >= this.bonusCheck) {
@@ -6121,7 +6295,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = this.ship;
     this.entities.push(t1);
     this.p1Dead = false;
-    this.ship.spiralShot = true;
+    this.ship.spiralShot = false;
     t1 = this.Options;
     t2 = t1.$index(t1, "startLives");
     this.ship.lives = t2;
@@ -6881,7 +7055,7 @@ $$.bouncingBall = {"": "GameEntity;Sprite<,game,_x,_y,_width,_height,isHighlight
   $isbouncingBall: true
 };
 
-$$.Bullet = {"": "GameEntity;temp,startX,Type,_deleteTimer,_waiting@,farRight,farLeft,right,left,straight,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Bullet = {"": "GameEntity;temp,startX,Type<,_deleteTimer,_waiting@,farRight,farLeft,right,left,straight,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
@@ -6962,6 +7136,10 @@ $$.Bullet = {"": "GameEntity;temp,startX,Type,_deleteTimer,_waiting@,farRight,fa
     this.opacity = 0;
     if (size >= 36)
       ;
+    if (type === "super") {
+      this.set$width(this, 64);
+      this.set$height(this, 32);
+    }
   },
   $isBullet: true
 };
@@ -7032,7 +7210,7 @@ $$.Bullet_update_anon3 = {"": "Closure;this_4",
       t2.set$width(t1, $.$sub$n(t2.get$width(t1), t3.get$width(enemy)));
       t2 = $.getInterceptor$x(t1);
       t2.set$height(t1, $.$sub$n(t2.get$height(t1), t3.get$height(enemy)));
-    } else
+    } else if (t1.get$Type() !== "super")
       t1.set$_removeFromGame(true);
     t2 = enemy.get$idNum();
     t1.get$game().set$targetId(t2);
@@ -7859,7 +8037,7 @@ $$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -7921,6 +8099,10 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   gameOver$0: function() {
     this.bgFade$0();
     this.updateStats$0();
+  },
+  drawSuperBullet$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawSuperBullet_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawSuperBullet_anon0(this));
   },
   drawBouncer$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBouncer_anon());
@@ -8128,6 +8310,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
       if (!this.shipFlicker)
         this.drawShip$0();
       this.drawShipBullet$0();
+      this.drawSuperBullet$0();
       this.drawEnemyBullet$0();
       this.drawCoin$0();
       this.drawLifeUp$0();
@@ -8207,6 +8390,8 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     $.set$src$x(this.coin, "../web/images/coin.png");
     $.set$src$x(this.shipbullet, "../web/images/BulletUp.png");
     $.set$src$x(this.enemybullet, "../web/images/BulletDown.png");
+    $.set$src$x(this.superBullet, "../web/images/SuperAttack.png");
+    $.set$src$x(this.bossSuperBullet, "../web/images/bossShot.png");
   }
 };
 
@@ -8246,6 +8431,27 @@ $$.GalagaRenderer_init_anon3 = {"": "Closure;this_4",
 $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     return this.this_5.normalShipHit$0();
+  }
+};
+
+$$.GalagaRenderer_drawSuperBullet_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isBullet;
+  }
+};
+
+$$.GalagaRenderer_drawSuperBullet_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$superBullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 64, 32);
+      $.stroke$0$x(t1.get$ctx());
+    }
   }
 };
 
@@ -8292,7 +8498,7 @@ $$.GalagaRenderer_drawShipBullet_anon = {"": "Closure;",
 $$.GalagaRenderer_drawShipBullet_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     var t1, t2;
-    if ($.$lt$n(e.get$momentum().yVel, 0) === true) {
+    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
@@ -8313,7 +8519,7 @@ $$.GalagaRenderer_drawEnemyBullet_anon = {"": "Closure;",
 $$.GalagaRenderer_drawEnemyBullet_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     var t1, t2;
-    if ($.$gt$n(e.get$momentum().yVel, 0) === true) {
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
@@ -8941,7 +9147,9 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
           break;
         case "bulletPower":
           t1 = this.game;
-          t1.set$score(t1.get$score() + 100);
+          t1.set$score(t1.get$score() + 100 * t1.get$pointMultiplier());
+          t1 = this.game.get$ship();
+          t1.set$chargedLevel(t1.get$chargedLevel() + 1);
           t1 = this.game.get$Stats();
           t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           break;
@@ -9008,7 +9216,7 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
   $isPowerUp: true
 };
 
-$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPoweringUp,spiralShot@,superSpiral@,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,superSpiral@,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
@@ -9039,9 +9247,19 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,isPo
       this.set$x(this, $.get$rect$x(this.game).get$halfWidth() - 16);
     if ($.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true)
       this.set$x(this, -$.get$rect$x(this.game).get$halfWidth() + 16);
+    if (this.chargedLevel >= 15) {
+      this.superCharged = this.superCharged + 1;
+      this.chargedLevel = 0;
+    }
     if ($.$gt$n(this.bullet, 0) === true)
       if ($.get$click$x(this.game.get$input()) != null)
         this.fire$0();
+    if (this.superCharged > 0)
+      if ($.get$keyCode$x(this.game.get$input()) === 32) {
+        t1 = this.game;
+        t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "super"));
+        this.superCharged = this.superCharged - 1;
+      }
     $.GameEntity.prototype.update$0.call(this);
   },
   fire$0: function() {
@@ -10088,7 +10306,7 @@ $.dynamicBind = function(obj, $name, methods, $arguments) {
   } else
     method = null;
   if (method == null)
-    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT29));
+    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT30));
   if (method == null)
     (function(){throw new TypeError($name + " is not a function");})();
   else {
@@ -10128,7 +10346,7 @@ $.dynamicFunction = function($name) {
   if (f != null && !!f.methods)
     return f.methods;
   methods = {};
-  dartMethod = Object.getPrototypeOf($.CONSTANT29)[$name];
+  dartMethod = Object.getPrototypeOf($.CONSTANT30)[$name];
   if (dartMethod != null)
     methods["Object"] = dartMethod;
   bind = function() {return $.dynamicBind.call$4(this, $name, methods, Array.prototype.slice.call(arguments));};
@@ -10261,13 +10479,13 @@ $._FutureWrapper$ = function(_future) {
   return new $._FutureWrapper(_future);
 };
 
-$.StreamController$broadcast = function(onPauseStateChange, onSubscriptionStateChange) {
-  return new $.StreamController($._MultiControllerStream$(onSubscriptionStateChange, onPauseStateChange));
+$.StreamController$ = function(onPauseStateChange, onSubscriptionStateChange) {
+  return new $.StreamController($._SingleControllerStream$(onSubscriptionStateChange, onPauseStateChange));
 };
 
-$._MultiControllerStream$ = function(_subscriptionHandler, _pauseHandler) {
-  var t1 = new $._MultiControllerStream(_subscriptionHandler, _pauseHandler, null, null, 0, null);
-  t1._MultiStreamImpl$0();
+$._SingleControllerStream$ = function(_subscriptionHandler, _pauseHandler) {
+  var t1 = new $._SingleControllerStream(_subscriptionHandler, _pauseHandler, null, 0, null);
+  t1._SingleStreamImpl$0();
   return t1;
 };
 
@@ -10289,6 +10507,14 @@ $._nullDoneHandler = function() {
 
 $._DelayedData$ = function(value) {
   return new $._DelayedData(value, null);
+};
+
+$._DelayedError$ = function(error) {
+  return new $._DelayedError(error, null);
+};
+
+$._DelayedDone$ = function() {
+  return new $._DelayedDone();
 };
 
 $._InternalLink_unlink = function(element) {
@@ -10323,6 +10549,12 @@ $._StreamImplEvents$ = function() {
 $._DoneSubscription$ = function(_handler) {
   var t1 = new $._DoneSubscription(_handler, null, 0);
   t1._DoneSubscription$1(_handler);
+  return t1;
+};
+
+$._SingleStreamMultiplexer$ = function(_source) {
+  var t1 = new $._SingleStreamMultiplexer(_source, null, null, null, 0, null);
+  t1._MultiStreamImpl$0();
   return t1;
 };
 
@@ -10752,7 +10984,7 @@ $.GameText$ = function(centered, color, font, game, groupId, id, opacity, size, 
 };
 
 $.GameTimer$ = function() {
-  return new $.GameTimer(0, 0, 0, 60, false);
+  return new $.GameTimer(0, 0, 0, 60, false, false);
 };
 
 $.DefaultCanvasEntityRenderer$ = function(gr) {
@@ -10803,7 +11035,7 @@ $.Vector$ = function(x, y) {
 };
 
 $.EventStream$ = function() {
-  return new $.EventStream($.StreamController$broadcast(null, null));
+  return new $.EventStream($.StreamController$(null, null));
 };
 
 $.EventArgs$ = function() {
@@ -10842,7 +11074,7 @@ $.EnemyRenderer$ = function(gr) {
 };
 
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
@@ -10867,7 +11099,7 @@ $.PowerUp$ = function(game, x, y, Type) {
 };
 
 $.Ship$ = function(game, x, y) {
-  var t1 = new $.Ship(8, 3, 3, 3, 0, false, false, false, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Ship(8, 3, 3, 3, 0, 0, 0, false, false, false, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, 36, 36, null, null);
   t1.Ship$3(game, x, y);
   return t1;
@@ -10926,7 +11158,7 @@ Isolate.makeConstantList = function(list) {
   return list;
 };
 $.CONSTANT3 = Isolate.makeConstantList([]);
-$.CONSTANT29 = new $.Object();
+$.CONSTANT30 = new $.Object();
 $.CONSTANT1 = new $._NullKey();
 $.CONSTANT24 = new $.Duration(100000);
 $.CONSTANT23 = new $.Duration(375000);
@@ -10959,6 +11191,7 @@ $.CONSTANT5 = new $.CloseToken();
 $.CONSTANT18 = new $.Duration(25000);
 $.JSInt_methods = $.JSInt.prototype;
 $.CONSTANT21 = new $.Duration(225000);
+$.CONSTANT29 = new $._DelayedDone();
 $.JSArray_methods = $.JSArray.prototype;
 $.CONSTANT22 = new $.Duration(300000);
 $.CONSTANT0 = new $._DeadEntry();
@@ -11127,6 +11360,9 @@ $.get$classes$x = function(receiver) {
 $.get$click$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$click(receiver);
 };
+$.get$context2d$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$context2d(receiver);
+};
 $.get$error$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$error(receiver);
 };
@@ -11198,9 +11434,6 @@ $.get$y$x = function(receiver) {
 };
 $.getBoundingClientRect$0$x = function(receiver) {
   return $.getInterceptor$x(receiver).getBoundingClientRect$0(receiver);
-};
-$.getContext$1$x = function(receiver, a0) {
-  return $.getInterceptor$x(receiver).getContext$1(receiver, a0);
 };
 $.measureText$1$x = function(receiver, a0) {
   return $.getInterceptor$x(receiver).measureText$1(receiver, a0);
@@ -11534,6 +11767,9 @@ $.$defineNativeClass("HTMLCanvasElement", {"": "height%,width%",
   },
   _getContext_2$1: function(receiver, contextId) {
     return receiver.getContext(contextId);
+  },
+  get$context2d: function(receiver) {
+    return this.getContext$1(receiver, "2d");
   }
 });
 

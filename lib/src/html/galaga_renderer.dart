@@ -88,7 +88,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawSuperBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
-      if (e.momentum.yVel < 0) {
+      if (e.momentum.yVel < 0 && e.Type == "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
         
@@ -106,7 +106,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.lineWidth = 3;
         
         ctx.beginPath();
-        ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
+        ctx.drawImageScaled(bossSuperBullet, e.x - 72, e.y - 8, 64, 64);
         ctx.stroke();
       }
     });

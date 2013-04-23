@@ -78,6 +78,7 @@ class PowerUp extends GameEntity<GalagaGame> {
           break;
         case 'bulletPower':
           game.score += 100 * game.pointMultiplier;
+          game.ship.chargedLevel++;
           game.Stats["powerups"] += 1;
           break;
       }
@@ -102,8 +103,6 @@ class PowerUp extends GameEntity<GalagaGame> {
     }
     if (!game.ship.spiralShot)
       game.ship.spiralShot = true;
-    
-    
   }
   
 }
