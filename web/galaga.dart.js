@@ -5910,9 +5910,21 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
   },
   newBouncer$1: function(sprite) {
     var bouncer = $.bouncingBall$(this, 0, 0, 36, 36, sprite);
+    if (sprite === 1) {
+      bouncer.set$height(bouncer, 42);
+      bouncer.set$width(bouncer, 42);
+    }
     if (sprite === 5) {
       bouncer.set$height(bouncer, 12);
       bouncer.set$width(bouncer, 12);
+    }
+    if (sprite === 8) {
+      bouncer.set$height(bouncer, 42);
+      bouncer.set$width(bouncer, 42);
+    }
+    if (sprite === 10) {
+      bouncer.set$height(bouncer, 72);
+      bouncer.set$width(bouncer, 72);
     }
     this.entities.push(bouncer);
   },
@@ -6078,25 +6090,25 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 56, "Leaderboard", 0, -240);
     this.entities.push(t1);
     t1 = this.Highscores;
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t1.$index(t1, 1)), -145, -190);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t1.$index(t1, 1)), 0, -190);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "2: " + $.S(t1.$index(t1, 2)), -145, -150);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "2: " + $.S(t1.$index(t1, 2)), 0, -150);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "3: " + $.S(t1.$index(t1, 3)), -145, -110);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "3: " + $.S(t1.$index(t1, 3)), 0, -110);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "4: " + $.S(t1.$index(t1, 4)), -145, -70);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "4: " + $.S(t1.$index(t1, 4)), 0, -70);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "5: " + $.S(t1.$index(t1, 5)), -145, -30);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "5: " + $.S(t1.$index(t1, 5)), 0, -30);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "6: " + $.S(t1.$index(t1, 6)), -145, 10);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "6: " + $.S(t1.$index(t1, 6)), 0, 10);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "7: " + $.S(t1.$index(t1, 7)), -145, 50);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "7: " + $.S(t1.$index(t1, 7)), 0, 50);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "8: " + $.S(t1.$index(t1, 8)), -145, 90);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "8: " + $.S(t1.$index(t1, 8)), 0, 90);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "9: " + $.S(t1.$index(t1, 9)), -145, 130);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "9: " + $.S(t1.$index(t1, 9)), 0, 130);
     this.entities.push(t2);
-    t2 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "10: " + $.S(t1.$index(t1, 10)), -145, 170);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "10: " + $.S(t1.$index(t1, 10)), 0, 170);
     this.entities.push(t2);
     t2 = $.GameButton$(new $.GalagaGame_createLeaderBoardMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 36, "RESET", 0, 250);
     this.entities.push(t2);
@@ -6283,7 +6295,11 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.visualLevel = 1;
     this.level = 1;
     this.score = 0;
-    this.pointMultiplier = 1;
+    t1 = this.Options;
+    t2 = t1.$index(t1, "time");
+    if (typeof t2 !== "number")
+      throw $.iae(t2);
+    this.pointMultiplier = 60 / t2;
     if (this.level >= this.bonusCheck) {
       this.bonusStage = true;
       this.bonusCheck = this.bonusCheck + 3;
@@ -6292,11 +6308,10 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     for (i = 0; i < 33; ++i)
       this.newEnemy$0();
     this.ship = $.Ship$(this, 0, this.rect.get$halfHeight() - 30);
-    t1 = this.ship;
-    this.entities.push(t1);
+    t2 = this.ship;
+    this.entities.push(t2);
     this.p1Dead = false;
     this.ship.spiralShot = false;
-    t1 = this.Options;
     t2 = t1.$index(t1, "startLives");
     this.ship.lives = t2;
     t2 = this.Stats;
@@ -6866,6 +6881,11 @@ $$.GalagaGame_createOptionsMenu_anon6 = {"": "Closure;this_7",
     t1.newBouncer$1(3);
     t1.newBouncer$1(4);
     t1.newBouncer$1(5);
+    t1.newBouncer$1(6);
+    t1.newBouncer$1(7);
+    t1.newBouncer$1(8);
+    t1.newBouncer$1(9);
+    t1.newBouncer$1(10);
     $.set$state$x(t1, 7);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
@@ -8484,6 +8504,21 @@ $$.GalagaRenderer_drawBouncer_anon0 = {"": "Closure;this_0",
     } else if (t2 === 5) {
       t2 = $.getInterceptor$x(e);
       $.drawImageScaled$5$x(t1.get$ctx(), t1.get$coin(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 12, 12);
+    } else if (t2 === 6) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$ship(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 25), 42, 42);
+    } else if (t2 === 7) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 42, 42);
+    } else if (t2 === 8) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$mothership(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 22), 42, 42);
+    } else if (t2 === 9) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy2(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    } else if (t2 === 10) {
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$boss(), $.$sub$n(t2.get$x(e), 42), $.$sub$n(t2.get$y(e), 42), 72, 72);
     }
     $.stroke$0$x(t1.get$ctx());
   }

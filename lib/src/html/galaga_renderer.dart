@@ -128,6 +128,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
       else if(e.Sprite == 5)
         ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
+      else if(e.Sprite == 6)
+        ctx.drawImageScaled(ship, e.x - 22, e.y - 25, 42, 42);
+      else if(e.Sprite == 7)
+        ctx.drawImageScaled(enemy, e.x - 20, e.y - 20, 42, 42);
+      else if(e.Sprite == 8)
+        ctx.drawImageScaled(mothership, e.x - 22, e.y - 22, 42, 42);
+      else if(e.Sprite == 9)
+        ctx.drawImageScaled(enemy2, e.x - 20, e.y - 20, 36, 36);
+      else if(e.Sprite == 10)
+        ctx.drawImageScaled(boss, e.x - 42, e.y - 42, 72, 72);
       
       ctx.stroke();
     });
