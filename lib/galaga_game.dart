@@ -909,7 +909,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -190, 
+        y: -175, 
         text: "1: ${Highscores[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -921,7 +921,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -150, 
+        y: -135, 
         text: "2: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -933,7 +933,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -110, 
+        y: -95, 
         text: "3: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -945,7 +945,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -70, 
+        y: -55, 
         text: "4: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -957,7 +957,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: -30, 
+        y: -15, 
         text: "5: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -969,7 +969,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 10, 
+        y: 25, 
         text: "6: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -981,7 +981,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 50, 
+        y: 65, 
         text: "7: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -993,7 +993,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 90, 
+        y: 105, 
         text: "8: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1005,7 +1005,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 130, 
+        y: 145, 
         text: "9: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1017,7 +1017,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 170, 
+        y: 185, 
         text: "10: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1584,6 +1584,18 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -47, 
+        text: "SpaceBar: Shoots a super bullet if you have a total of 15 charges or more.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "instructions"));
+    
+    addEntity(new GameText(game: this, 
+        x: 0, 
+        y: 2, 
         text: "Powerups:",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1595,7 +1607,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 2, 
+        y: 51, 
         text: "Fire Flower: Spread shot upgrade.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1607,7 +1619,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 51, 
+        y: 100, 
         text: "Energy Canister: Extra life.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1619,7 +1631,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 100, 
+        y: 149, 
         text: "Apple: Multiplier times two.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1631,7 +1643,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 149, 
+        y: 198, 
         text: "Energy Ball: Extra bullet",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1643,7 +1655,7 @@ class GalagaGame extends Game {
     
     addEntity(new GameText(game: this, 
         x: 0, 
-        y: 198, 
+        y: 247, 
         text: "Coin: Plus 100 points.",
         size: 24,
         font: "cinnamoncake, Verdana",
