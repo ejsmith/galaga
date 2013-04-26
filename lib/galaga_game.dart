@@ -26,6 +26,7 @@ class GalagaGame extends Game {
   Map<String, num> Options = new Map<String,num>();
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
+  Map<num, String> HighscoresRank = new Map<num, String>();
   num rank = 1;
   num pointMultiplier = 1;
   num enemyX = -400;
@@ -224,6 +225,27 @@ class GalagaGame extends Game {
       Highscores[9] = 0;
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
+    
+    if (!HighscoresRank.containsKey(1))
+      HighscoresRank[1] = "Jew";
+    if (!HighscoresRank.containsKey(2))
+      HighscoresRank[2] = "Jew";
+    if (!HighscoresRank.containsKey(3))
+      HighscoresRank[3] = "Jew";
+    if (!HighscoresRank.containsKey(4))
+      HighscoresRank[4] = "Jew";
+    if (!HighscoresRank.containsKey(5))
+      HighscoresRank[5] = "Jew";
+    if (!HighscoresRank.containsKey(6))
+      HighscoresRank[6] = "Jew";
+    if (!HighscoresRank.containsKey(7))
+      HighscoresRank[7] = "Jew";
+    if (!HighscoresRank.containsKey(8))
+      HighscoresRank[8] = "Jew";
+    if (!HighscoresRank.containsKey(9))
+      HighscoresRank[9] = "Jew";
+    if (!HighscoresRank.containsKey(10))
+      HighscoresRank[10] = "Jew";
     
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -639,7 +661,7 @@ class GalagaGame extends Game {
         text: "You're a: Road Warrior",
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: rank == 4 ? .8 : 0,
         id: "",
@@ -895,6 +917,35 @@ class GalagaGame extends Game {
   }
   
   void createLeaderBoardMenu() {
+    for (int i = 0; i < 10; i++) {
+      if (Highscores[i] <= 5000 && Highscores[i] >= 0)
+        HighscoresRank[i] = "Jew";
+      if (Highscores[i] <= 10000 && Highscores[i] >= 5001)
+        HighscoresRank[i] = "Jewish Priest";
+      if (Highscores[i] <= 15000 && Highscores[i] >= 10001)
+        HighscoresRank[i] = "Amish Mastermind";
+      if (Highscores[i] <= 20000 && Highscores[i] >= 15001)
+        HighscoresRank[i] = "Road Warrior";
+      if (Highscores[i] <= 25000 && Highscores[i] >= 20001)
+        HighscoresRank[i] = "Space Recruit";
+      if (Highscores[i] <= 30000 && Highscores[i] >= 25001)
+        HighscoresRank[i] = "Space Cadet";
+      if (Highscores[i] <= 35000 && Highscores[i] >= 30001)
+        HighscoresRank[i] = "Space Captain";
+      if (Highscores[i] <= 40000 && Highscores[i] >= 35001)
+        HighscoresRank[i] = "Overlord of the Galaxy";
+      if (Highscores[i] <= 45000 && Highscores[i] >= 40001)
+        HighscoresRank[i] = "President of the Universe";
+      if (Highscores[i] <= 50000 && Highscores[i] >= 45001)
+        HighscoresRank[i] = "Supreme Comander of the Universe";
+      if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
+        HighscoresRank[i] = "Overlord of the Universe";
+      if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
+        HighscoresRank[i] = "Overlord of the Multi-verse";
+      if (Highscores[i] >= 100000)
+        HighscoresRank[i] = "Pablo Manrequez De Montoya De La Qruez the Third";
+    }
+    
     addEntity(new GameText(game: this, 
         x: 0, 
         y: -240, 
@@ -908,120 +959,120 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: -175, 
         text: "1: ${Highscores[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: -135, 
         text: "2: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: -95, 
         text: "3: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: -55, 
         text: "4: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: -15, 
         text: "5: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: 25, 
         text: "6: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: 65, 
         text: "7: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: 105, 
         text: "8: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: 145, 
         text: "9: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 0, 
+        x: -100, 
         y: 185, 
         text: "10: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
@@ -1034,7 +1085,7 @@ class GalagaGame extends Game {
         buttonAction: () => resetLeaderBoard(),
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  true,
+        centered:  false,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",

@@ -236,13 +236,22 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
   
+  void drawChargeBar() {
+    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+    ctx.lineWidth = 3;
+    
+    ctx.beginPath();
+    ctx.drawImageScaled(chargeBar, -300, -224, game.ship.chargedLevel * 15, 12);
+    ctx.stroke();
+  }
+  
   void drawShip() {
     ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     ctx.lineWidth = 3;
     
     ctx.beginPath();
     ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
-    ctx.drawImageScaled(chargeBar, -300, -224, game.ship.chargedLevel * 15, 12);
+    drawChargeBar();
     ctx.stroke();
   }
   
