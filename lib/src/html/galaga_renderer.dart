@@ -477,9 +477,11 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void drawHighScore() {
+    num textX = 225;
+    
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
-    ctx.fillText("High Score: ${game.Stats["highscore"]} ", 225, -(game.rect.halfHeight - 30));
+    ctx.fillText("High Score: ${game.Stats["highscore"]} ", textX, -(game.rect.halfHeight - 30));
   }
   
   void bgFade() {
