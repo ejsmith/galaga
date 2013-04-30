@@ -5798,7 +5798,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     $.Game.prototype.start$0.call(this, this);
   },
   update$0: function() {
-    var t1, t2;
+    var t1, t2, t3;
     if (this.get$state(this) === 3 || this.get$state(this) === 2) {
       this.score = $.ceil$0$nx(this.score);
       if (this.input.keyCode === 27)
@@ -5821,20 +5821,22 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
           this.level = this.level + 1;
         this.visualLevel = this.visualLevel + 1;
       }
+      t1 = this.Stats;
+      if ($.$gt$n(this.score, t1.$index(t1, "highscore")) === true)
+        t1.$indexSet(t1, "highscore", this.score);
       if (this.get$state(this) === 3) {
-        t1 = this.Options;
-        t2 = $.$eq(t1.$index(t1, "soundeffects"), 1) === true;
-        t1 = t2;
+        t2 = this.Options;
+        t3 = $.$eq(t2.$index(t2, "soundeffects"), 1) === true;
+        t2 = t3;
       } else
-        t1 = false;
-      if (t1)
+        t2 = false;
+      if (t2)
         this.newPowerUp$0();
       if (this.get$state(this) === 3)
         this.newMotherShip$0();
       if ($.$le$n(this.timer.gameTime, 0) === true && !this.bonusStage)
         this.gameOver$0();
       else if (this.bonusStage && $.$le$n(this.timer.gameTime, 0) === true) {
-        t1 = this.Stats;
         t1.$indexSet(t1, "wins", $.$add$ns(t1.$index(t1, "wins"), 1));
         this.removeEntitiesByFilter$1(new $.GalagaGame_update_anon2());
         this.removeEntitiesByFilter$1(new $.GalagaGame_update_anon3());
@@ -6133,47 +6135,47 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     }
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 56, "Leaderboard", 0, -240);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t2.$index(t2, 1)), -100, -175);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t2.$index(t2, 1)), -145, -175);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 1)), 100, -175);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "2: " + $.S(t2.$index(t2, 2)), -100, -135);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "2: " + $.S(t2.$index(t2, 2)), -145, -135);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 2)), 100, -135);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "3: " + $.S(t2.$index(t2, 3)), -100, -95);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "3: " + $.S(t2.$index(t2, 3)), -145, -95);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 3)), 100, -95);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "4: " + $.S(t2.$index(t2, 4)), -100, -55);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "4: " + $.S(t2.$index(t2, 4)), -145, -55);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 4)), 100, -55);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "5: " + $.S(t2.$index(t2, 5)), -100, -15);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "5: " + $.S(t2.$index(t2, 5)), -145, -15);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 5)), 100, -15);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "6: " + $.S(t2.$index(t2, 6)), -100, 25);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "6: " + $.S(t2.$index(t2, 6)), -145, 25);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 6)), 100, 25);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "7: " + $.S(t2.$index(t2, 7)), -100, 65);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "7: " + $.S(t2.$index(t2, 7)), -145, 65);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 7)), 100, 65);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "8: " + $.S(t2.$index(t2, 8)), -100, 105);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "8: " + $.S(t2.$index(t2, 8)), -145, 105);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 8)), 100, 105);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "9: " + $.S(t2.$index(t2, 9)), -100, 145);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "9: " + $.S(t2.$index(t2, 9)), -145, 145);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 9)), 100, 145);
     this.entities.push(t3);
-    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "10: " + $.S(t2.$index(t2, 10)), -100, 185);
+    t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "10: " + $.S(t2.$index(t2, 10)), -145, 185);
     this.entities.push(t3);
     t3 = $.GameText$(false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 10)), 100, 185);
     this.entities.push(t3);
-    t3 = $.GameButton$(new $.GalagaGame_createLeaderBoardMenu_anon(this), false, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 36, "RESET", 0, 250);
+    t3 = $.GameButton$(new $.GalagaGame_createLeaderBoardMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 36, "RESET", 0, 250);
     this.entities.push(t3);
     t3 = $.GameButton$(new $.GalagaGame_createLeaderBoardMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 36, "Back", -420, -280);
     this.entities.push(t3);
@@ -6334,7 +6336,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.set$state(this, 6);
   },
   newGame$0: function() {
-    var t1, i, t2;
+    var t1, i, t2, t3;
     t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_newGame_anon());
     t1.forEach$1(t1, new $.GalagaGame_newGame_anon0());
     for (i = 0; i < 50; ++i) {
@@ -6364,7 +6366,10 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t2 = t1.$index(t1, "time");
     if (typeof t2 !== "number")
       throw $.iae(t2);
-    this.pointMultiplier = 60 / t2;
+    t3 = t1.$index(t1, "difficulty");
+    if (typeof t3 !== "number")
+      throw $.iae(t3);
+    this.pointMultiplier = 60 / t2 + t3;
     if (this.level >= this.bonusCheck) {
       this.bonusStage = true;
       this.bonusCheck = this.bonusCheck + 3;
@@ -8433,8 +8438,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   },
   drawLives$0: function() {
     var i, t1, t2;
-    $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
-    $.set$lineWidth$x(this.ctx, 3);
     $.beginPath$0$x(this.ctx);
     for (i = 0; t1 = $.JSNumber_methods.$lt(i, this.get$game().get$ship().lives), t2 = this.ctx, t1; ++i)
       $.drawImageScaled$5$x(t2, this.ship, -475 + 45 * i, this.get$game().rect.get$halfHeight() - 45, 36, 36);
@@ -8446,12 +8449,14 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     $.fillText$3$x(this.ctx, "Score: " + $.S(this.get$game().get$score()) + " ", -475, -(this.get$game().rect.get$halfHeight() - 30));
   },
   drawHighScore$0: function() {
-    var t1, t2;
+    var t1, t2, t3, t4;
+    t1 = this.get$game().get$Stats();
+    t2 = $.$div$n(t1.$index(t1, "highscore"), 10000);
     $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
     $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
-    t1 = this.ctx;
-    t2 = this.get$game().get$Stats();
-    $.fillText$3$x(t1, "High Score: " + $.S(t2.$index(t2, "highscore")) + " ", 225, -(this.get$game().rect.get$halfHeight() - 30));
+    t3 = this.ctx;
+    t4 = this.get$game().get$Stats();
+    $.fillText$3$x(t3, "High Score: " + $.S(t4.$index(t4, "highscore")) + " ", 225 - t2, -(this.get$game().rect.get$halfHeight() - 30));
   },
   bgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.8)";

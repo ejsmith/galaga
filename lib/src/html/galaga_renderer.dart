@@ -460,9 +460,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
   
   void drawLives() {
-    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-    ctx.lineWidth = 3;
-    
     ctx.beginPath();
     for (num i = 0; i < game.ship.lives; i++) {
       ctx.drawImageScaled(ship, -475 + (45 * i), (game.rect.halfHeight - 45), 36, 36);
@@ -478,6 +475,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawHighScore() {
     num textX = 225;
+    
+    textX = textX - (game.Stats["highscore"] / 10000);
     
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";

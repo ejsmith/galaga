@@ -301,6 +301,9 @@ class GalagaGame extends Game {
         visualLevel++;
       }
       
+      if (score > Stats["highscore"])
+        Stats["highscore"] = score;
+      
       if (state == GalagaGameState.playing && Options["soundeffects"] == 1)
         newPowerUp();
       
@@ -944,7 +947,7 @@ class GalagaGame extends Game {
       if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
         HighscoresRank[i] = "Overlord of the Multi-verse";
       if (Highscores[i] >= 100000)
-        HighscoresRank[i] = "Pablo Manrequez De Montoya De La Qruez the Third";
+        HighscoresRank[i] = "Pablo";
     }
     
     addEntity(new GameText(game: this, 
@@ -960,7 +963,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: -175, 
         text: "1: ${Highscores[1]}",
         size: 42,
@@ -972,8 +975,8 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
-        y: -175, 
+        x: 100,
+        y: -175,
         text: "${HighscoresRank[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -984,7 +987,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: -135, 
         text: "2: ${Highscores[2]}",
         size: 42,
@@ -995,7 +998,7 @@ class GalagaGame extends Game {
         id: "",
         groupId: "leaders"));
     
-    addEntity(new GameText(game: this, 
+    addEntity(new GameText(game: this,
         x: 100, 
         y: -135, 
         text: "${HighscoresRank[2]}",
@@ -1007,8 +1010,8 @@ class GalagaGame extends Game {
         id: "",
         groupId: "leaders"));
     
-    addEntity(new GameText(game: this, 
-        x: -100, 
+    addEntity(new GameText(game: this,
+        x: -145,
         y: -95, 
         text: "3: ${Highscores[3]}",
         size: 42,
@@ -1019,7 +1022,7 @@ class GalagaGame extends Game {
         id: "",
         groupId: "leaders"));
     
-    addEntity(new GameText(game: this, 
+    addEntity(new GameText(game: this,
         x: 100, 
         y: -95, 
         text: "${HighscoresRank[3]}",
@@ -1031,8 +1034,8 @@ class GalagaGame extends Game {
         id: "",
         groupId: "leaders"));
     
-    addEntity(new GameText(game: this, 
-        x: -100, 
+    addEntity(new GameText(game: this,
+        x: -145, 
         y: -55, 
         text: "4: ${Highscores[4]}",
         size: 42,
@@ -1056,7 +1059,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: -15, 
         text: "5: ${Highscores[5]}",
         size: 42,
@@ -1080,7 +1083,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: 25, 
         text: "6: ${Highscores[6]}",
         size: 42,
@@ -1104,7 +1107,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: 65, 
         text: "7: ${Highscores[7]}",
         size: 42,
@@ -1128,7 +1131,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: 105, 
         text: "8: ${Highscores[8]}",
         size: 42,
@@ -1152,7 +1155,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: 145, 
         text: "9: ${Highscores[9]}",
         size: 42,
@@ -1176,7 +1179,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: -100, 
+        x: -145, 
         y: 185, 
         text: "10: ${Highscores[10]}",
         size: 42,
@@ -1206,7 +1209,7 @@ class GalagaGame extends Game {
         buttonAction: () => resetLeaderBoard(),
         size: 36,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
