@@ -475,8 +475,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   
   void drawHighScore() {
     num textX = 225;
+    int digits = 0;
+    num tempHigh = game.Stats["highscore"];
     
-    textX = textX - (game.Stats["highscore"] / 10000);
+    while (tempHigh != 0) { 
+      tempHigh /= 10; 
+      digits++;
+    }
+    
+    textX = textX - digits / 10;
+    //textX = textX - (game.Stats["highscore"] / 10000);
     
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";

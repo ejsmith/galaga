@@ -922,32 +922,34 @@ class GalagaGame extends Game {
   
   void createLeaderBoardMenu() {
     for (int i = 1; i < 11; i++) {
-      if (Highscores[i] <= 5000 && Highscores[i] >= 0)
+      if (Highscores[i] <= 0)
+        HighscoresRank[i] = "";
+      else if (Highscores[i] <= 5000 && Highscores[i] > 0)
         HighscoresRank[i] = "Jew";
-      if (Highscores[i] <= 10000 && Highscores[i] >= 5001)
+      else if (Highscores[i] <= 10000 && Highscores[i] >= 5001)
         HighscoresRank[i] = "Jewish Priest";
-      if (Highscores[i] <= 15000 && Highscores[i] >= 10001)
+      else if (Highscores[i] <= 15000 && Highscores[i] >= 10001)
         HighscoresRank[i] = "Amish Mastermind";
-      if (Highscores[i] <= 20000 && Highscores[i] >= 15001)
+      else if (Highscores[i] <= 20000 && Highscores[i] >= 15001)
         HighscoresRank[i] = "Road Warrior";
-      if (Highscores[i] <= 25000 && Highscores[i] >= 20001)
+      else if (Highscores[i] <= 25000 && Highscores[i] >= 20001)
         HighscoresRank[i] = "Space Recruit";
-      if (Highscores[i] <= 30000 && Highscores[i] >= 25001)
+      else if (Highscores[i] <= 30000 && Highscores[i] >= 25001)
         HighscoresRank[i] = "Space Cadet";
-      if (Highscores[i] <= 35000 && Highscores[i] >= 30001)
+      else if (Highscores[i] <= 35000 && Highscores[i] >= 30001)
         HighscoresRank[i] = "Space Captain";
-      if (Highscores[i] <= 40000 && Highscores[i] >= 35001)
+      else if (Highscores[i] <= 40000 && Highscores[i] >= 35001)
         HighscoresRank[i] = "Overlord of the Galaxy";
-      if (Highscores[i] <= 45000 && Highscores[i] >= 40001)
+      else if (Highscores[i] <= 45000 && Highscores[i] >= 40001)
         HighscoresRank[i] = "President of the Universe";
-      if (Highscores[i] <= 50000 && Highscores[i] >= 45001)
+      else if (Highscores[i] <= 50000 && Highscores[i] >= 45001)
         HighscoresRank[i] = "Supreme Comander of the Universe";
-      if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
+      else if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
         HighscoresRank[i] = "Overlord of the Universe";
-      if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
+      else if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
         HighscoresRank[i] = "Overlord of the Multi-verse";
-      if (Highscores[i] >= 100000)
-        HighscoresRank[i] = "Pablo";
+      else if (Highscores[i] >= 100000)
+        HighscoresRank[i] = "Pablo Manrequez";
     }
     
     addEntity(new GameText(game: this, 
@@ -975,7 +977,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100,
+        x: 50,
         y: -175,
         text: "${HighscoresRank[1]}",
         size: 42,
@@ -999,7 +1001,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this,
-        x: 100, 
+        x: 50, 
         y: -135, 
         text: "${HighscoresRank[2]}",
         size: 42,
@@ -1023,7 +1025,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this,
-        x: 100, 
+        x: 50, 
         y: -95, 
         text: "${HighscoresRank[3]}",
         size: 42,
@@ -1047,7 +1049,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: -55, 
         text: "${HighscoresRank[4]}",
         size: 42,
@@ -1071,7 +1073,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: -15, 
         text: "${HighscoresRank[5]}",
         size: 42,
@@ -1095,7 +1097,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: 25, 
         text: "${HighscoresRank[6]}",
         size: 42,
@@ -1119,7 +1121,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: 65, 
         text: "${HighscoresRank[7]}",
         size: 42,
@@ -1143,7 +1145,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: 105, 
         text: "${HighscoresRank[8]}",
         size: 42,
@@ -1167,7 +1169,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: 145, 
         text: "${HighscoresRank[9]}",
         size: 42,
@@ -1191,7 +1193,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
     
     addEntity(new GameText(game: this, 
-        x: 100, 
+        x: 50, 
         y: 185, 
         text: "${HighscoresRank[10]}",
         size: 42,
