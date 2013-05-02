@@ -2,7 +2,7 @@ part of galaga_html;
 
 class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   num timeLeft = 0;
-  
+
   PowerUpRenderer powerUpRenderer;
   EnemyRenderer enemyRenderer;
   ImageElement ship = new ImageElement();
@@ -21,10 +21,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement superBullet = new ImageElement();
   ImageElement bossSuperBullet = new ImageElement();
   ImageElement chargeBar = new ImageElement();
-  
+
   bool enemyFlicker = false;
   bool shipFlicker = false;
-  
+
   GalagaRenderer(String targetId) : super(targetId) {
     powerUpRenderer = new PowerUpRenderer(this);
     enemyRenderer = new EnemyRenderer(this);
@@ -45,7 +45,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     bossSuperBullet.src = '../web/images/bossShot.png';
     chargeBar.src = '../web/images/chargeBar.png';
   }
-  
+
   void init() {
     game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
     game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
@@ -56,14 +56,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Stats["bossKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
     game.Stats["motherKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
     game.Stats["powerups"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
-    
+
     game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 3;
     game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 3;
     game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 60;
     game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 1;
     game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 1;
     game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 1;
-    
+
     game.Highscores[1] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
     game.Highscores[2] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
     game.Highscores[3] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
@@ -74,7 +74,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Highscores[8] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
     game.Highscores[9] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
     game.Highscores[10] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
-    
+
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
     game.onStatUpdate.listen((e) => updateStats());
@@ -82,43 +82,43 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.onBossHit.listen((e) => bossHit());
     game.onNormalHit.listen((e) => normalShipHit());
   }
-  
+
   void gameOver() {
     bgFade();
     updateStats();
   }
-  
+
   void drawSuperBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel < 0 && e.Type == "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawBossSuperBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel > 0) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(bossSuperBullet, e.x - 72, e.y - 8, 64, 64);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawBouncer() {
     game.entities.where((e) => e is bouncingBall).forEach((bouncingBall e) {
       ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
       ctx.lineWidth = 3;
-      
+
       ctx.beginPath();
       if (e.Sprite == 1)
         ctx.drawImageScaled(spreadup, e.x - 22, e.y - 25, 42, 42);
@@ -140,153 +140,153 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(enemy2, e.x - 20, e.y - 20, 36, 36);
       else if(e.Sprite == 10)
         ctx.drawImageScaled(boss, e.x - 42, e.y - 42, 72, 72);
-      
+
       ctx.stroke();
     });
   }
-  
+
   void drawShipBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel < 0 && e.Type != "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawEnemyBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
       if (e.momentum.yVel > 0 && e.Type != "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(enemybullet, e.x - 8, e.y - 8, 16, 16);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawSpreadUp() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
       if (e.type == "SpiralShot") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(spreadup, e.x - 20, e.y - 20, 36, 36);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawLifeUp() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
       if (e.type == "ExtraLife") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(lifeup, e.x - 20, e.y - 20, 36, 36);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawMultiplierUp() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
       if (e.type == "Multiplier") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawBulletUp() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
       if (e.type == "BulletIncrease") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawCoin() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
       if (e.type == "bulletPower") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawChargeBar() {
     ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     ctx.lineWidth = 3;
-    
+
     ctx.beginPath();
     ctx.drawImageScaled(chargeBar, -300, -224, game.ship.chargedLevel * 15, 12);
     ctx.stroke();
   }
-  
+
   void drawShip() {
     ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     ctx.lineWidth = 3;
-    
+
     ctx.beginPath();
     ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
     drawChargeBar();
     ctx.stroke();
   }
-  
+
   void drawDrone() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Drone" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 12, 12);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawMotherShip() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "MotherShip" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         ctx.drawImageScaled(mothership, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
       }
     });
   }
-  
+
   void drawBoss() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Boss") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         if (e.flicker == false)
           ctx.drawImageScaled(boss, e.x - 22, e.y - 25, 72, 72);
@@ -295,13 +295,13 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       }
     });
   }
-  
+
   void drawEnemy() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Normal" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
-        
+
         ctx.beginPath();
         if (e.enemyType > .5)
           ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 42, 42);
@@ -312,10 +312,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       }
     });
   }
-  
+
   void subtleBgFade() {
     game.bgStyle = "rgba(0, 0, 0, 0.84)";
-    
+
     new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
     new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
     new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
@@ -324,20 +324,20 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     new Timer(const Duration(milliseconds: 150), () => game.bgStyle = "rgba(0, 0, 0, 0.84)");
     new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.85)");
   }
-  
+
   void shipHit() {
     bgFade();
-    
+
     new Timer(const Duration(milliseconds: 25), () => shipFlicker = true);
     new Timer(const Duration(milliseconds: 75), () => shipFlicker = false);
     new Timer(const Duration(milliseconds: 150), () => shipFlicker = true);
     new Timer(const Duration(milliseconds: 225), () => shipFlicker = false);
     new Timer(const Duration(milliseconds: 300), () => shipFlicker = true);
     new Timer(const Duration(milliseconds: 375), () => shipFlicker = false);
-    
+
     subtleBgFade();
   }
-  
+
   void updateStats() {
     window.localStorage['win1'] = game.Stats["killed"].toString();
     window.localStorage['win2'] = game.Stats["wins"].toString();
@@ -348,14 +348,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win13'] = game.Stats["bossKills"].toString();
     window.localStorage['win14'] = game.Stats["motherKills"].toString();
     window.localStorage['win15'] = game.Stats["powerups"].toString();
-    
+
     window.localStorage['win6'] = game.Options["startLives"].toString();
     window.localStorage['win7'] = game.Options["bulletCap"].toString();
     window.localStorage['win8'] = game.Options["time"].toString();
     window.localStorage['win9'] = game.Options["difficulty"].toString();
     window.localStorage['win10'] = game.Options["powerups"].toString();
     window.localStorage['win11'] = game.Options["soundeffects"].toString();
-    
+
     window.localStorage['win16'] = game.Highscores[1].toString();
     window.localStorage['win17'] = game.Highscores[2].toString();
     window.localStorage['win18'] = game.Highscores[3].toString();
@@ -367,20 +367,20 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win24'] = game.Highscores[9].toString();
     window.localStorage['win25'] = game.Highscores[10].toString();
   }
-  
+
   void bossHit() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Boss" && e.idNum == game.targetId) {
         new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
         new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
-        
+
         subtleBgFade();
       }
     });
   }
-  
+
   void motherShipHit() {
-    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "MotherShip" && e.idNum == game.targetId) {
         new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
         new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
@@ -388,42 +388,43 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         new Timer(const Duration(milliseconds: 225), () => e.flicker = false);
         new Timer(const Duration(milliseconds: 300), () => e.flicker = true);
         new Timer(const Duration(milliseconds: 375), () => e.flicker = false);
-        
+
         subtleBgFade();
       }
     });
   }
-  
+
   void normalShipHit() {
-    game.entities.where((e) => e is Enemy).forEach((Enemy e) { 
+    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Normal" && e.idNum == game.targetId) {
         new Timer(const Duration(milliseconds: 25), () => e.flicker = true);
         new Timer(const Duration(milliseconds: 75), () => e.flicker = false);
         new Timer(const Duration(milliseconds: 150), () => e.flicker = true);
         new Timer(const Duration(milliseconds: 225), () => e.flicker = false);
-        
+
         subtleBgFade();
       }
     });
   }
-  
+
   GameEntityRenderer getRenderer(GameEntity e) {
-    
+
     if (e is Enemy && game.state == GalagaGameState.gameOver)
       return null;
-    
+
     if (e is PowerUp)
       return powerUpRenderer;
-    
+
     if (e is Enemy)
       return enemyRenderer;
-    
+
     return super.getRenderer(e);
   }
-  
+
   void drawBeforeCtxRestore() {
     drawBouncer();
-    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {    
+    drawCountDown();
+    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
       drawLives();
       if (!shipFlicker)
         drawShip();
@@ -446,19 +447,19 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     }
     super.drawBeforeCtxRestore();
   }
-  
+
   void drawLevel() {
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("Level: ${game.level}", 375, (game.rect.halfHeight - 5));
   }
-  
+
   void drawTime() {
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("Time: ${game.timer.gameTime.round()} ", -100, -(game.rect.halfHeight - 30));
   }
-  
+
   void drawLives() {
     ctx.beginPath();
     for (num i = 0; i < game.ship.lives; i++) {
@@ -466,31 +467,39 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     }
     ctx.stroke();
   }
-  
+
   void drawScore() {
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("Score: ${game.score} ", -475, -(game.rect.halfHeight - 30));
   }
-  
+
+  void drawCountDown() {
+    if (game.state == GalagaGameState.levelEnd) {
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.font = "52px cinnamoncake, Verdana";
+    ctx.fillText("${game.waiting}", 0, 0);
+    }
+  }
+
   void drawHighScore() {
     num textX = 225;
     int digits = 0;
     num tempHigh = game.Stats["highscore"];
-    
-    while (tempHigh != 0) { 
-      tempHigh /= 10; 
+
+    while (tempHigh != 0) {
+      tempHigh /= 10;
       digits++;
     }
-    
+
     textX = textX - digits / 10;
     //textX = textX - (game.Stats["highscore"] / 10000);
-    
+
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("High Score: ${game.Stats["highscore"]} ", textX, -(game.rect.halfHeight - 30));
   }
-  
+
   void bgFade() {
     game.bgStyle = "rgba(0, 0, 0, 0.8)";
     new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.75)");

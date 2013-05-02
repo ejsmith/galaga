@@ -1350,7 +1350,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 25,
-        text: "Total Wins: ${Stats["wins"]}",
+        text: "Total Completed Levels: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
