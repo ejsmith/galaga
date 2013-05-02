@@ -1,11 +1,11 @@
 part of galaga_game;
 
 class Stars extends GameEntity {
-  
+
   Stars(Game game, num x, num y, num h, num w, num col) : super.withPosition(game, x, y, h, w) {
-    
+
     opacity = random(.5, 1);
-    
+
     if (col == 1)
       color = "204, 0, 51";
     if (col == 2)
@@ -20,17 +20,17 @@ class Stars extends GameEntity {
       color = "255, 102, 153";
     if (col == 7)
       color = "255, 153, 51";
-    
+
     momentum.yVel = random(50, 75);
   }
-  
+
   void update() {
     if (game.state == GalagaGameState.paused)
       return;
-    
+
     if (y > game.rect.halfHeight)
       removeFromGame();
-    
+
     super.update();
   }
 }

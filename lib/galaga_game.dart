@@ -4,8 +4,8 @@ import "dart:math" as Math;
 import "dart:async";
 import "dart:html";
 import "dart:isolate";
-import 'package:dgame/dgame.dart';
-import 'package:event_stream/event_stream.dart';
+import "package:dgame/dgame.dart";
+import "package:event_stream/event_stream.dart";
 
 part "src/ship.dart";
 part "src/enemy.dart";
@@ -66,16 +66,16 @@ class GalagaGame extends Game {
   GameSound shipFire = new GameSound("shipFire", .3, false);
   GameSound shipHit = new GameSound("shipHit", .3, false);
   GameSound powerUp = new GameSound("powerUp", .3, false);
- 
+
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(input, renderer, loop);
-  
+
   num get state => _state;
   set state(num value) {
     if (_state == value)
       return;
-    
+
     _state = value;
     disableEntitiesByGroup("welcome");
     disableEntitiesByGroup("gameOver");
@@ -85,7 +85,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("levelEnd");
     disableEntitiesByGroup("leaders");
-    
+
     if (_state == GalagaGameState.welcome)
       enableEntitiesByGroup("welcome");
     else if (_state == GalagaGameState.gameOver)
@@ -102,15 +102,15 @@ class GalagaGame extends Game {
       enableEntitiesByGroup("levelEnd");
     else if (_state == GalagaGameState.leaderboard)
       enableEntitiesByGroup("leaders");
-    
+
   }
-  
+
   num get waiting => _waiting;
   set waiting(num value) {
     _waiting = value;
     if (_waitingTimer != null)
       _waitingTimer.cancel();
-    
+
     disableEntitiesByGroup("welcome");
     disableEntitiesByGroup("gameOver");
     disableEntitiesByGroup("stats");
@@ -118,29 +118,29 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("options");
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("leaders");
-    
-    _waitingTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {    
+
+    _waitingTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {
         _waiting++;
-      
+
       if (_waiting == 3) {
         entities.where((e) => e is Stars).toList().forEach((e) => e.removeFromGame());
         for (int i = 0; i < 50; i++) {
-          
+
           if (colorCount < 7)
             colorCount++;
           else if (colorCount >= 7)
             colorCount = 1;
-          
+
           startStars();
         }
-        
+
         enemyX = -400;
         enemyY = -165;
         enemyAmount = 33;
-        
+
         if (difficulty < 5)
           difficulty++;
-        
+
         if (visualLevel >= bonusCheck) {
           bonusStage = true;
           tutorial = false;
@@ -148,10 +148,10 @@ class GalagaGame extends Game {
         } else {
           bonusStage = false;
         }
-        
+
         if (bonusStage == true) {
           newBoss();
-          
+
         } else {
           for (int i = 0; i < 33; i++)
             newEnemy(difficulty);
@@ -159,12 +159,12 @@ class GalagaGame extends Game {
         state = GalagaGameState.playing;
         timer.timeDecrease = true;
         timer.gameTime = Options["time"];
-        
+
         t.cancel();
       }
     });
   }
-  
+
   void start() {
     if (!Stats.containsKey("killed"))
       Stats["killed"] = 0;
@@ -184,7 +184,7 @@ class GalagaGame extends Game {
       Stats["motherKills"] = 0;
     if (!Stats.containsKey("powerups"))
       Stats["powerups"] = 0;
-    
+
     if (!Options.containsKey("startLives"))
       Options["startLives"] = 3;
     if (!Options.containsKey("bulletCap"))
@@ -197,14 +197,14 @@ class GalagaGame extends Game {
       Options["powerups"] = 1;
     if (!Options.containsKey("soundeffects"))
       Options["soundeffects"] = 1;
-    
+
     if (!Controls.containsKey("left"))
       Controls["left"] = "left";
     if (!Controls.containsKey("right"))
       Controls["right"] = "right";
     if (!Controls.containsKey("fire"))
       Controls["fire"] = "space";
-    
+
     if (!Highscores.containsKey(1))
       Highscores[1] = 0;
     if (!Highscores.containsKey(2))
@@ -225,7 +225,7 @@ class GalagaGame extends Game {
       Highscores[9] = 0;
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
-    
+
     if (!HighscoresRank.containsKey(1))
       HighscoresRank[1] = "Jew";
     if (!HighscoresRank.containsKey(2))
@@ -246,101 +246,101 @@ class GalagaGame extends Game {
       HighscoresRank[9] = "Jew";
     if (!HighscoresRank.containsKey(10))
       HighscoresRank[10] = "Jew";
-    
+
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
     else
       soundEffectsOn = false;
-    
+
     createWelcomeMenu();
     createGameOverMenu();
     createStatsMenu();
     createPausedMenu();
     createControlsMenu();
     createLeaderBoardMenu();
-    
+
     if (soundEffectsOn)
       menuSong.play(menuSong.Sound, menuSong.Volume, menuSong.Looping);
-    
+
     menuSong.remove();
-    
+
     // update pubsec
-    
-    
+
+
     state = GalagaGameState.welcome;
     super.start();
   }
-  
+
   void update() {
     if (state == GalagaGameState.playing || state == GalagaGameState.paused) {
       score = score.ceil();
       if (input.keyCode == 27)
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
-      
+
 //      if (state == GalagaGameState.paused) {
 //        timer.paused = true;
 //      }
       if (enemyAmount <= 0) {
         Stats["wins"] += 1;
-        
+
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
         removeEntitiesByFilter((e) => e is Enemy);
-        
+
         if (soundEffectsOn)
           cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
-        
+
         state = GalagaGameState.levelEnd;
-        
+
         waiting = 1;
         if (tutorial == false)
           level++;
-        
+
         visualLevel++;
       }
-      
+
       if (score > Stats["highscore"])
         Stats["highscore"] = score;
-      
+
       if (state == GalagaGameState.playing && Options["soundeffects"] == 1)
         newPowerUp();
-      
+
       if (state == GalagaGameState.playing)
         newMotherShip();
-      
+
       if (timer.gameTime <= 0 && !bonusStage)
         gameOver();
       else if (bonusStage && timer.gameTime <= 0) {
         Stats["wins"] += 1;
-        
+
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
         removeEntitiesByFilter((e) => e is Enemy);
-        
+
         if (soundEffectsOn)
           cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
-        
+
         state = GalagaGameState.levelEnd;
-        
+
         waiting = 1;
-        
+
         //if (tutorial == false)
           level++;
-        
+
         visualLevel++;
       }
     }
-    
+
     if (colorCount < 7)
       colorCount++;
     else if (colorCount >= 7)
       colorCount = 1;
-    
-    entities.where((e) => e is GameButton).forEach((e) { 
+
+    entities.where((e) => e is GameButton).forEach((e) {
       if (e.opacity == 1.0 && e.isHighlighted && e.soundReady) {
         if (soundEffectsOn)
           cursorMove.play(cursorMove.Sound, cursorMove.Volume, cursorMove.Looping);
@@ -348,99 +348,99 @@ class GalagaGame extends Game {
       } else if (e.opacity < 1.0)
         e.soundReady = true;
     });
-    
+
     newStar();
     super.update();
   }
-  
+
   void startStars() {
     num w = random(.5, 3.5);
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
-    
+
     do {
       star.x = random(-rect.halfWidth, rect.halfWidth);
       star.y = random(-rect.halfHeight, rect.halfHeight);
-      
+
     } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
-    
+
     addEntity(star);
   }
-  
+
   void newParticle(num x, num y, xVel, yVel) {
     num w = random(.5, 3.5);
-    
+
     Particles particle = new Particles(this, x, y, w, w, colorCount, xVel, yVel);
-    
+
     addEntity(particle);
   }
-  
+
   void newExplosion(num x, num y) {
     num xV = 50;
     num yV = 80;
-    
+
     for (int i = 0; i < 3; i++) {
       newParticle(x, y, xV, yV);
       yV -= 80;
     }
-    
+
     xV *= -1;
     yV = 80;
     for (int i = 0; i < 3; i++) {
       newParticle(x, y, xV, yV);
       yV -= 80;
     }
-    
+
     newParticle(x, y, 0, 100);
     newParticle(x, y, 0, -100);
-    
+
     if (soundEffectsOn)
       explosion.play(explosion.Sound, explosion.Volume, explosion.Looping);
   }
-  
+
   void newMiniExplosion(num x, num y) {
-    
+
     newParticle(x, y, 50, 0);
     newParticle(x, y, -50, 0);
-    
+
     newParticle(x, y, 0, 50);
     newParticle(x, y, 0, -50);
-    
+
     if (soundEffectsOn)
       explosion.play(explosion.Sound, explosion.Volume, explosion.Looping);
   }
-  
+
   void newStar() {
     num rand = random(0, 1);
-    
+
     if (rand > .09 || state == GalagaGameState.paused)
       return;
-    
+
     num w = random(.5, 3.5);
-    
+
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
-    
+
     do {
       star.x = random(-rect.halfWidth, rect.halfWidth);
       star.y = -(rect.halfHeight);
-      
+
     } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
-    
+
     lastStar = timer.gameTime;
     addEntity(star);
   }
-  
+
   void newBoss() {
     Enemy enemy = new Enemy(this, 0, 0, difficulty, "Boss");
-    
+
     enemy.idNum = nextId;
     nextId++;
-    
+
     addEntity(enemy);
   }
-  
+
   void newBouncer(num sprite) {
     bouncingBall bouncer = new bouncingBall(this, 0, 0, 36, 36, sprite);
-    
+
     if (sprite == 1) {
       bouncer.height = 42;
       bouncer.width = 42;
@@ -457,130 +457,130 @@ class GalagaGame extends Game {
       bouncer.height = 72;
       bouncer.width = 72;
     }
-      
+
     addEntity(bouncer);
   }
-  
+
   void newBossDrone(num x, num y) {
     int x = 0;
-    
+
     entities.where((e) => e is Enemy).forEach((e) {
       var enemy = e as Enemy;
-      
+
       if (enemy.type == "Drone") {
         x++;
       }
     });
-    
+
     if (x >= 6)
       return;
-    
+
     num rand = random(0, 1);
-    
+
     if (rand < .01) {
       Enemy enemy = new Enemy(this, x, y, difficulty, "Drone");
-      
+
       enemy.idNum = nextId;
       nextId++;
-      
+
       addEntity(enemy);
     }
   }
-  
+
   void newMotherShip({num difficulty: 1}) {
     int x = 0;
-    
+
     entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "MotherShip") {
         x++;
       }
     });
-    
+
     if (x >=2)
       return;
-    
+
     num rand = random(0, 1);
-    
+
     if (rand < .001) {
       Enemy enemy = new Enemy(this, -(rect.halfWidth), -225, difficulty, "MotherShip");
-      
+
       enemy.idNum = nextId;
       nextId++;
-      
+
       addEntity(enemy);
     }
   }
-  
+
   void newEnemy([num difficulty = 1]) {
-    
+
     Enemy enemy = new Enemy(this, enemyX, enemyY, difficulty, "Normal");
-    
+
     enemy.startY = enemyY;
-    
+
     enemyX += 70;
     enemyCount++;
-    
+
     if (enemyCount > 10) {
      enemyY += 65;
      enemyX = -400;
      enemyCount = 0;
     }
-    
+
     enemy.idNum = nextId;
     nextId++;
-    
+
     lastEnemy = timer.gameTime;
     addEntity(enemy);
   }
-  
+
   void newBulletPowerUp(num x, num y) {
     PowerUp powerUp = new PowerUp(this, x, y, "bulletPower");
-    
+
     addEntity(powerUp);
   }
-  
+
   void newPowerUp() {
     num rand = random(0, 1);
-    
+
     if (rand > .001)
       return;
-    
+
     PowerUp powerUp = new PowerUp(this, 0, 0);
-    
+
     do {
       powerUp.x = random(-rect.halfWidth + 50, rect.halfWidth - 50);
       powerUp.y = -rect.halfHeight;
-      
+
     } while(entities.where((e) => e is PowerUp).any((e) => powerUp.collidesWith(e)));
-    
+
     lastPowerUp = timer.gameTime;
     addEntity(powerUp);
   }
-  
+
   num getEnemyX(String type) {
     entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == type && e.isFalling == true) {
         return e.x;
       }
     });
-    
+
     return 0;
   }
-  
+
   num getEnemyY(String type) {
-    entities.where((e) => e is Enemy).toList().forEach((Enemy e) { 
+    entities.where((e) => e is Enemy).toList().forEach((Enemy e) {
       if (e.type == type && e.isFalling == true) {
         return e.y;
       }
     });
-    
+
     return 0;
   }
-  
+
   void createLevelEnd() {
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -97, 
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -97,
         text: visualLevel != bonusCheck ? "Level ${visualLevel} Complete!" : "Prepare for Bonus Stage!",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -589,13 +589,13 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "levelEnd"));
-    
+
     disableEntitiesByGroup("levelEnd");
   }
-  
+
   void createWelcomeMenu() {
     _gameOverEvent.signal();
-    
+
     if (Highscores[1] <= 5000 && Highscores[1] >= 0)
       rank = 1;
     if (Highscores[1] <= 10000 && Highscores[1] >= 5001)
@@ -622,10 +622,10 @@ class GalagaGame extends Game {
       rank = 12;
     if (Highscores[1] >= 100000)
       rank = 13;
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Jew",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -634,10 +634,10 @@ class GalagaGame extends Game {
         opacity: rank == 1 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Jewish Priest",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -646,10 +646,10 @@ class GalagaGame extends Game {
         opacity: rank == 2 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Amish Mastermind",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -658,10 +658,10 @@ class GalagaGame extends Game {
         opacity: rank == 3 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Road Warrior",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -670,10 +670,10 @@ class GalagaGame extends Game {
         opacity: rank == 4 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Space Recruit",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -682,10 +682,10 @@ class GalagaGame extends Game {
         opacity: rank == 5 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Space Cadet",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -694,10 +694,10 @@ class GalagaGame extends Game {
         opacity: rank == 6 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're a: Space Captain",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -706,10 +706,10 @@ class GalagaGame extends Game {
         opacity: rank == 7 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: The Overlord of the Galaxy",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -718,10 +718,10 @@ class GalagaGame extends Game {
         opacity: rank == 8 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: The President of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -730,10 +730,10 @@ class GalagaGame extends Game {
         opacity: rank == 9 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: The Supreme Commander of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -742,10 +742,10 @@ class GalagaGame extends Game {
         opacity: rank == 10 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: The Overlord of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -754,10 +754,10 @@ class GalagaGame extends Game {
         opacity: rank == 11 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: The Overseer of the Multi-verse",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -766,10 +766,10 @@ class GalagaGame extends Game {
         opacity: rank == 12 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -275, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
         text: "You're: Pablo Manrequez De Montoya De La Qruez the Third",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -778,10 +778,10 @@ class GalagaGame extends Game {
         opacity: rank == 13 ? .8 : 0,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -97, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -97,
         text: "Welcome to Galaga!",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -790,10 +790,22 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: -31, 
+
+    addEntity(new GameText(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "welcome"));
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: -31,
         text: "Start Game",
         buttonAction: () {
           newGame();
@@ -808,17 +820,17 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 14, 
-        text: "Statistics", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 14,
+        text: "Statistics",
         buttonAction: () {
           removeEntitiesByGroup("stats");
           createStatsMenu();
-          
+
           state = GalagaGameState.stats;
-          
+
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -830,17 +842,17 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 48, 
-        text: "Options", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 48,
+        text: "Options",
         buttonAction: () {
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
-          
+
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -852,17 +864,17 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "welcome"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 82, 
-        text: "Leaderboard", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 82,
+        text: "Leaderboard",
         buttonAction: () {
           removeEntitiesByGroup("leaders");
           createLeaderBoardMenu();
-          
+
           state = GalagaGameState.leaderboard;
-          
+
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -874,14 +886,14 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "welcome"));
-    
+
     disableEntitiesByGroup("welcome");
   }
-  
+
   void createPausedMenu() {
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -31, 
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -31,
         text: "PAUSED",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -890,22 +902,22 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "paused"));
-    
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 15, 
-        text: "Quit", 
-        buttonAction: () {  
+
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 15,
+        text: "Quit",
+        buttonAction: () {
           if (ship != null)
             ship.removeFromGame();
-          
+
           removeEntitiesByFilter((e) => e is PowerUp);
           removeEntitiesByFilter((e) => e is Bullet);
           removeEntitiesByFilter((e) => e is Enemy);
-          
+
           _statUpdateEvent.signal();
-          
+
           gameOver();
           state = GalagaGameState.welcome;
       },
@@ -916,10 +928,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "paused"));
-        
+
     disableEntitiesByGroup("paused");
   }
-  
+
   void createLeaderBoardMenu() {
     for (int i = 1; i < 11; i++) {
       if (Highscores[i] <= 0)
@@ -951,10 +963,10 @@ class GalagaGame extends Game {
       else if (Highscores[i] >= 100000)
         HighscoresRank[i] = "Pablo Manrequez";
     }
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -240, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -240,
         text: "Leaderboard",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -963,251 +975,263 @@ class GalagaGame extends Game {
         opacity: 0.8,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: -175, 
-        text: "1: ${Highscores[1]}",
-        size: 42,
+
+    addEntity(new GameText(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        size: 16,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered: true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50,
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: -175,
+        text: "1: ${Highscores[1]}",
+        size: 42,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "leaders"));
+
+    addEntity(new GameText(game: this,
+        x: 145,
         y: -175,
         text: "${HighscoresRank[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: -135, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: -135,
         text: "2: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
+
     addEntity(new GameText(game: this,
-        x: 50, 
-        y: -135, 
+        x: 145,
+        y: -135,
         text: "${HighscoresRank[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
+
     addEntity(new GameText(game: this,
-        x: -145,
-        y: -95, 
+        x: -140,
+        y: -95,
         text: "3: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
+
     addEntity(new GameText(game: this,
-        x: 50, 
-        y: -95, 
+        x: 145,
+        y: -95,
         text: "${HighscoresRank[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
+
     addEntity(new GameText(game: this,
-        x: -145, 
-        y: -55, 
+        x: -140,
+        y: -55,
         text: "4: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: -55, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: -55,
         text: "${HighscoresRank[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: -15, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: -15,
         text: "5: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: -15, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: -15,
         text: "${HighscoresRank[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: 25, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: 25,
         text: "6: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: 25, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: 25,
         text: "${HighscoresRank[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: 65, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: 65,
         text: "7: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: 65, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: 65,
         text: "${HighscoresRank[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: 105, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: 105,
         text: "8: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: 105, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: 105,
         text: "${HighscoresRank[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: 145, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: 145,
         text: "9: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: 145, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: 145,
         text: "${HighscoresRank[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: -145, 
-        y: 185, 
+
+    addEntity(new GameText(game: this,
+        x: -140,
+        y: 185,
         text: "10: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameText(game: this, 
-        x: 50, 
-        y: 185, 
+
+    addEntity(new GameText(game: this,
+        x: 145,
+        y: 185,
         text: "${HighscoresRank[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
-        centered:  false,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 250, 
-        text: "RESET", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 250,
+        text: "RESET",
         buttonAction: () => resetLeaderBoard(),
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1216,12 +1240,12 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
-    addEntity(new GameButton(game: this, 
-        x: -420, 
-        y: -280, 
-        text: "Back", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: -420,
+        y: -280,
+        text: "Back",
+        buttonAction: () {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1234,14 +1258,14 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "leaders"));
-    
+
     disableEntitiesByGroup("leaders");
   }
-  
+
   void createStatsMenu() {
-    addEntity(new GameText(game: this, 
-        x:  0, 
-        y: -280, 
+    addEntity(new GameText(game: this,
+        x:  0,
+        y: -280,
         text: "Statistics",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -1250,10 +1274,22 @@ class GalagaGame extends Game {
         opacity: 0.8,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -200, 
+
+    addEntity(new GameText(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "stats"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -200,
         text: "Total Killed: ${Stats["killed"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1262,10 +1298,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -155, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -155,
         text: "Groupies Annihilated: ${Stats["normalKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1274,10 +1310,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -110, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -110,
         text: "Big Bosses Denominated: ${Stats["bossKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1286,10 +1322,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -65, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -65,
         text: "Mother Ships Deflowered: ${Stats["motherKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1298,10 +1334,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -20, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -20,
         text: "Powerups Absorbed: ${Stats["powerups"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1310,10 +1346,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 25, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 25,
         text: "Total Wins: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1322,10 +1358,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 70, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 70,
         text: "Total Loses: ${Stats["loses"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1334,10 +1370,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 115, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 115,
         text: "Total Games: ${Stats["totalGames"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1346,10 +1382,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 160, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 160,
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1358,12 +1394,12 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameButton(game: this, 
-        x: -420, 
-        y: -280, 
-        text: "Back", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: -420,
+        y: -280,
+        text: "Back",
+        buttonAction: () {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1376,11 +1412,11 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 225, 
-        text: "RESET", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 225,
+        text: "RESET",
         buttonAction: () => resetStats(),
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1389,16 +1425,16 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "stats"));
-    
+
     disableEntitiesByGroup("stats");
   }
-  
+
   void createOptionsMenu() {
     _gameOverEvent.signal();
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -160, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -160,
         text: "Options",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -1407,10 +1443,22 @@ class GalagaGame extends Game {
         opacity: 0.8,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -60, 
+
+    addEntity(new GameText(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -60,
         text: "Starting Lives:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1419,27 +1467,27 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 120, 
-        y: -60, 
-        text: "${Options["startLives"]}", 
+
+    addEntity(new GameButton(game: this,
+        x: 120,
+        y: -60,
+        text: "${Options["startLives"]}",
         buttonAction: (){
-          
+
           if (Options["startLives"] >= 10) {
             Options["startLives"] = 1;
           }
           else {
             Options["startLives"]++;
           }
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1449,10 +1497,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -30, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -30,
         text: "Bullet Cap:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1461,25 +1509,25 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 120, 
-        y: -30, 
-        text: "${Options["bulletCap"]}", 
+
+    addEntity(new GameButton(game: this,
+        x: 120,
+        y: -30,
+        text: "${Options["bulletCap"]}",
         buttonAction: () {
-          
+
           if (Options["bulletCap"] >= 10)
             Options["bulletCap"] = 1;
           else
             Options["bulletCap"]++;
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1489,10 +1537,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 0, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 0,
         text: "Time:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1501,25 +1549,25 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 120, 
-        y: 0, 
-        text: "${Options["time"]}", 
+
+    addEntity(new GameButton(game: this,
+        x: 120,
+        y: 0,
+        text: "${Options["time"]}",
         buttonAction: () {
-          
+
           if (Options["time"] >= 180)
             Options["time"] = 0;
           else
             Options["time"] += 20;
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1529,10 +1577,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 30, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 30,
         text: "Difficulty:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1541,25 +1589,25 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 120, 
-        y: 30, 
-        text: "${Options["difficulty"]}", 
+
+    addEntity(new GameButton(game: this,
+        x: 120,
+        y: 30,
+        text: "${Options["difficulty"]}",
         buttonAction: () {
-          
+
           if (Options["difficulty"] >= 5)
             Options["difficulty"] = 1;
           else
             Options["difficulty"] += 1;
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1569,10 +1617,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: -38, 
-        y: -94, 
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: -94,
         text: "Powerups Enabled:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1581,25 +1629,25 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 150, 
-        y: -94, 
+
+    addEntity(new GameButton(game: this,
+        x: 150,
+        y: -94,
         text: Options["powerups"] == 1 ? "True" : "False",
         buttonAction: () {
-          
+
           if (Options["powerups"] >= 2)
             Options["powerups"] = 1;
           else
             Options["powerups"] += 1;
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1609,10 +1657,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameText(game: this, 
-        x: -38, 
-        y: 60, 
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: 60,
         text: "Sound Effects Enabled:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1621,34 +1669,34 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 170, 
-        y: 60, 
+
+    addEntity(new GameButton(game: this,
+        x: 170,
+        y: 60,
         text: Options["soundeffects"] == 1 ? "True" : "False",
         buttonAction: () {
-          
+
           if (Options["soundeffects"] >= 2)
             Options["soundeffects"] = 1;
           else
             Options["soundeffects"] += 1;
-          
+
           if (Options["soundeffects"] == 1)
             soundEffectsOn = true;
           else
             soundEffectsOn = false;
-          
+
           //if (!soundEffectsOn) {
             menuSong.remove();
           //}
-          
+
           _statUpdateEvent.signal();
-          
+
           state = GalagaGameState.welcome;
-          
+
           removeEntitiesByGroup("options");
           createOptionsMenu();
-          
+
           state = GalagaGameState.options;
         },
         size: 36,
@@ -1658,11 +1706,11 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 10, 
-        y: 120, 
-        text: "Set to Defaults", 
+
+    addEntity(new GameButton(game: this,
+        x: 10,
+        y: 120,
+        text: "Set to Defaults",
         buttonAction: () => resetOptions(),
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1671,12 +1719,12 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 380, 
-        y: -280, 
-        text: "Instructions", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: 380,
+        y: -280,
+        text: "Instructions",
+        buttonAction: () {
           newBouncer(1);
           newBouncer(2);
           newBouncer(3);
@@ -1699,12 +1747,12 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
-    addEntity(new GameButton(game: this, 
-        x: -420, 
-        y: -280, 
-        text: "Back", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: -420,
+        y: -280,
+        text: "Back",
+        buttonAction: () {
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1717,14 +1765,14 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "options"));
-    
+
     disableEntitiesByGroup("options");
   }
-  
+
   void createControlsMenu() {
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -225, 
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -225,
         text: "Instructions",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -1733,10 +1781,22 @@ class GalagaGame extends Game {
         opacity: 0.8,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -145, 
+
+    addEntity(new GameText(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -145,
         text: "Move left/right: Mouse swipe",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1745,10 +1805,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -96, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -96,
         text: "Fire: Left Mouse Button",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1757,10 +1817,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -47, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -47,
         text: "SpaceBar: Shoots a super bullet if you have a total of 15 charges or more.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1769,10 +1829,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 2, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 2,
         text: "Powerups:",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1781,10 +1841,10 @@ class GalagaGame extends Game {
         opacity: 0.8,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 51, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 51,
         text: "Fire Flower: Spread shot upgrade.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1793,10 +1853,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 100, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 100,
         text: "Energy Canister: Extra life.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1805,10 +1865,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 149, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 149,
         text: "Apple: Multiplier times two.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1817,10 +1877,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 198, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 198,
         text: "Energy Ball: Extra bullet",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1829,10 +1889,10 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: 247, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 247,
         text: "Coin: Plus 100 points.",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -1841,12 +1901,12 @@ class GalagaGame extends Game {
         opacity: 0.6,
         id: "",
         groupId: "instructions"));
-    
-    addEntity(new GameButton(game: this, 
-        x: -420, 
-        y: -280,  
-        text: "Back", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: -420,
+        y: -280,
+        text: "Back",
+        buttonAction: () {
           state = GalagaGameState.options;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1859,14 +1919,14 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "instructions"));
-    
+
     disableEntitiesByGroup("instructions");
   }
-  
+
   void createGameOverMenu() {
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -97, 
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -97,
         text: enemyAmount <= 0 ? "You Won!" : "You Lost!",
         size: 56,
         font: "cinnamoncake, Verdana",
@@ -1875,10 +1935,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "gameOver"));
-    
-    addEntity(new GameText(game: this, 
-        x: 0, 
-        y: -31, 
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -31,
         text: "Play again?",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1887,11 +1947,11 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "gameOver"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 15, 
-        text: "Yes", 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 15,
+        text: "Yes",
         buttonAction: () {
           newGame();
         },
@@ -1902,18 +1962,18 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "gameOver"));
-    
-    addEntity(new GameButton(game: this, 
-        x: 0, 
-        y: 60, 
-        text: "No", 
-        buttonAction: () { 
+
+    addEntity(new GameButton(game: this,
+        x: 0,
+        y: 60,
+        text: "No",
+        buttonAction: () {
             removeEntitiesByFilter((e) => e is PowerUp);
             removeEntitiesByFilter((e) => e is Bullet);
-            
+
             if (ship != null)
               ship.removeFromGame();
-            
+
             state = GalagaGameState.welcome;
           },
         size: 36,
@@ -1923,10 +1983,10 @@ class GalagaGame extends Game {
         opacity: 0.4,
         id: "",
         groupId: "gameOver"));
-    
+
     disableEntitiesByGroup("gameOver");
   }
-  
+
   void resetLeaderBoard() {
     Highscores[1] = 0;
     Highscores[2] = 0;
@@ -1938,15 +1998,15 @@ class GalagaGame extends Game {
     Highscores[8] = 0;
     Highscores[9] = 0;
     Highscores[10] = 0;
-    
+
     state = GalagaGameState.welcome;
-    
+
     removeEntitiesByGroup("leaders");
     createLeaderBoardMenu();
-    
+
     state = GalagaGameState.leaderboard;
   }
-  
+
   void resetStats() {
     Stats["killed"] = 0;
     Stats["wins"] = 0;
@@ -1957,92 +2017,92 @@ class GalagaGame extends Game {
     Stats["bossKills"] = 0;
     Stats["motherKills"] = 0;
     Stats["powerups"] = 0;
-    
+
     state = GalagaGameState.welcome;
-    
+
     removeEntitiesByGroup("stats");
     createStatsMenu();
-    
+
     state = GalagaGameState.stats;
   }
-  
+
   void resetOptions() {
     Options["startLives"] = 3;
     Options["bulletCap"] = 3;
     Options["time"] = 60;
     Options["difficulty"] = 1;
     Options["soundeffects"] = 1;
-    
+
     state = GalagaGameState.welcome;
-    
+
     removeEntitiesByGroup("options");
     createOptionsMenu();
-    
+
     state = GalagaGameState.options;
   }
-  
-  void newGame() { 
+
+  void newGame() {
     entities.where((e) => e is Stars).forEach((e) => e.removeFromGame());
     for (int i = 0; i < 50; i++) {
-      
+
       if (colorCount < 7)
         colorCount++;
       else if (colorCount >= 7)
         colorCount = 1;
-      
+
       startStars();
     }
-   
+
     score = 0;
-    
+
     if (ship != null)
       ship.removeFromGame();
-    
+
     removeEntitiesByFilter((e) => e is PowerUp);
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
-    
+
     enemyX = -400;
     enemyY = -165;
     enemyAmount = 33;
-    
+
     bonusCheck = 3;
     bonusStage = false;
     visualLevel = 1;
     level = 1;
     score = 0;
-    pointMultiplier = (60 / Options["time"]) + Options["difficulty"];
-    
+    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]);
+
     if (level >= bonusCheck) {
       bonusStage = true;
       bonusCheck += 3;
     } else {
       bonusStage = false;
     }
-    
+
     for (int i = 0; i < 33; i++)
       newEnemy();
-    
+
     ship = new Ship(this, 0, (rect.halfHeight - 30));
     addEntity(ship);
     p1Dead = false;
-    
+
     ship.spiralShot = true;
     ship.lives = Options["startLives"];
-    
+
     Stats["totalGames"] += 1;
     state = GalagaGameState.playing;
     timer.timeDecrease = true;
     timer.gameTime = Options["time"];
   }
-  
+
   void gameOver() {
     removeEntitiesByFilter((e) => e is PowerUp);
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
-    
+
     updateLeaderboard();
-    
+
     Stats["loses"] += 1;
     _gameOverEvent.signal();
     _statUpdateEvent.signal();
@@ -2050,22 +2110,22 @@ class GalagaGame extends Game {
       cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
     removeEntitiesByGroup("gameOver");
     createGameOverMenu();
-    
+
     state = GalagaGameState.gameOver;
   }
-  
+
   void resetPowerups() {
      ship.spiralShot = false;
      ship.superSpiral = false;
      ship.bulletPower = 8;
   }
-  
+
   void switchDirection() {
     goingRight = !goingRight;
     entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Normal") {
         e.momentum.xVel *= -1;
-        
+
         if (e.momentum.xVel >= 0)
           e.x += 3;
         else
@@ -2073,68 +2133,68 @@ class GalagaGame extends Game {
       }
     });
   }
-  
+
   bool canEnemyFall() {
     int x = 0;
-    entities.where((e) => e is Enemy).forEach((Enemy e) { 
+    entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Normal" && e.isFalling == true) {
         x++;
       }
     });
-    
+
     if (x >= 3)
       return false;
     else
       return true;
   }
-  
+
   void removeBullets() {
     removeEntitiesByFilter((e) => e is Bullet);
   }
-  
+
   void updateLeaderboard() {
     Map<num, num> tempMap = new Map<num, num>();
     for (int k = 1; k < 11; k++) {
       tempMap[k] = Highscores[k];
     }
-    
+
     for (int i = 1; i <= 10; i++) {
       if (score > Highscores[i]) {
         for (int j = i + 1; j < 10; j++) {
           Highscores[j] = tempMap[j - 1];
         }
-        
+
         Highscores[i] = score;
         Stats["highScore"] = Highscores[i];
         break;
       }
     }
-    
+
     Stats["highscore"] = Highscores[1];
   }
-  
+
   final EventStream _statUpdateEvent = new EventStream();
   Stream<EventArgs> get onStatUpdate => _statUpdateEvent.stream;
-  
+
   final EventStream _gameOverEvent = new EventStream();
   Stream<EventArgs> get onGameOver => _gameOverEvent.stream;
-  
+
   final EventStream _shipHitEvent = new EventStream();
   Stream<EventArgs> get onShipHit => _shipHitEvent.stream;
-  
+
   final EventStream _bossHitEvent = new EventStream();
   Stream<EventArgs> get onBossHit => _bossHitEvent.stream;
-  
+
   final EventStream _bossKilledEvent = new EventStream();
   Stream<EventArgs> get onBossKilled => _bossKilledEvent.stream;
-  
+
   final EventStream _motherShipEvent = new EventStream();
   Stream<EventArgs> get onMotherShipHit => _motherShipEvent.stream;
-  
+
   final EventStream _normalHitEvent = new EventStream();
   Stream<EventArgs> get onNormalHit => _normalHitEvent.stream;
 }
-  
+
 class GalagaGameState {
   static final num welcome = 1;
   static final num paused = 2;
