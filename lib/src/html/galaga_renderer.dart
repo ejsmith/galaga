@@ -476,9 +476,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   void drawCountDown() {
     if (game.state == GalagaGameState.levelEnd) {
+    num temp = 0;
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "52px cinnamoncake, Verdana";
-    ctx.fillText("${game.waiting}", 0, 0);
+    if (game.waiting == 1)
+      temp = 3;
+    if (game.waiting == 2)
+      temp = 2;
+    if (game.waiting == 3)
+      temp = 1;
+    ctx.fillText("Next Level In: ${temp}", -165, 0);
     }
   }
 

@@ -122,7 +122,7 @@ class GalagaGame extends Game {
     _waitingTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {
         _waiting++;
 
-      if (_waiting == 3) {
+      if (_waiting == 4) {
         entities.where((e) => e is Stars).toList().forEach((e) => e.removeFromGame());
         for (int i = 0; i < 50; i++) {
 
@@ -620,8 +620,16 @@ class GalagaGame extends Game {
       rank = 11;
     if (Highscores[1] <= 60000 && Highscores[1] >= 55001)
       rank = 12;
-    if (Highscores[1] >= 100000)
+    if (Highscores[1] >= 150000 && Highscores[1] >= 100001)
       rank = 13;
+    if (Highscores[1] <= 200000 && Highscores[1] >= 150001)
+      rank = 14;
+    if (Highscores[1] <= 250000 && Highscores[1] >= 200001)
+      rank = 15;
+    if (Highscores[1] <= 300000 && Highscores[1] >= 250001)
+      rank = 16;
+    if (Highscores[1] >= 400000)
+      rank = 17;
 
     addEntity(new GameText(game: this,
         x: 0,
@@ -770,12 +778,60 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're: Pablo Manrequez De Montoya De La Qruez the Third",
+        text: "You're: The Supreme Commander of the Multi-verse",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
         opacity: rank == 13 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
+        text: "You're: The Overlord of the Multi-verse",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 14 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
+        text: "You're: The God of this Dimension",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 15 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
+        text: "You're: The God of all Dimensions",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 16 ? .8 : 0,
+        id: "",
+        groupId: "welcome"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -275,
+        text: "You're: Pablo Manrequez De Montoya De La Qruez the Third",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: rank == 17 ? .8 : 0,
         id: "",
         groupId: "welcome"));
 
@@ -959,8 +1015,16 @@ class GalagaGame extends Game {
       else if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
         HighscoresRank[i] = "Overlord of the Universe";
       else if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
-        HighscoresRank[i] = "Overlord of the Multi-verse";
-      else if (Highscores[i] >= 100000)
+        HighscoresRank[i] = "Overseer of Multi-verse";
+      else if (Highscores[i] <= 150000 && Highscores[i] >= 100001)
+        HighscoresRank[i] = "Supreme Commander of Multi-verse";
+      else if (Highscores[i] <= 200000 && Highscores[i] >= 150001)
+        HighscoresRank[i] = "Overlord of Multi-verse";
+      else if (Highscores[i] <= 250000 && Highscores[i] >= 200001)
+        HighscoresRank[i] = "God of this Dimension";
+      else if (Highscores[i] <= 300000 && Highscores[i] >= 250001)
+        HighscoresRank[i] = "God of all Dimensions";
+      else if (Highscores[i] >= 400000)
         HighscoresRank[i] = "Pablo Manrequez";
     }
 
