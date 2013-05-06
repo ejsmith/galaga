@@ -1055,7 +1055,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: -175,
-        text: "1: ${Highscores[1]}",
+        text: "1: ${Highscores[1]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1079,7 +1079,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: -135,
-        text: "2: ${Highscores[2]}",
+        text: "2: ${Highscores[2]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1103,7 +1103,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: -95,
-        text: "3: ${Highscores[3]}",
+        text: "3: ${Highscores[3]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1127,7 +1127,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: -55,
-        text: "4: ${Highscores[4]}",
+        text: "4: ${Highscores[4]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1151,7 +1151,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: -15,
-        text: "5: ${Highscores[5]}",
+        text: "5: ${Highscores[5]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1175,7 +1175,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: 25,
-        text: "6: ${Highscores[6]}",
+        text: "6: ${Highscores[6]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1199,7 +1199,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: 65,
-        text: "7: ${Highscores[7]}",
+        text: "7: ${Highscores[7]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1223,7 +1223,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: 105,
-        text: "8: ${Highscores[8]}",
+        text: "8: ${Highscores[8]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1247,7 +1247,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: 145,
-        text: "9: ${Highscores[9]}",
+        text: "9: ${Highscores[9]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1271,7 +1271,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -140,
         y: 185,
-        text: "10: ${Highscores[10]}",
+        text: "10: ${Highscores[10]}:",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2135,7 +2135,10 @@ class GalagaGame extends Game {
     visualLevel = 1;
     level = 1;
     score = 0;
-    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]);
+    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]) + (3 / Options["bulletCap"]);
+
+    if (Options["powerups"] == 1)
+      pointMultiplier *= 2;
 
     if (level >= bonusCheck) {
       bonusStage = true;
