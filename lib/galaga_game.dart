@@ -1011,13 +1011,13 @@ class GalagaGame extends Game {
       else if (Highscores[i] <= 45000 && Highscores[i] >= 40001)
         HighscoresRank[i] = "President of the Universe";
       else if (Highscores[i] <= 50000 && Highscores[i] >= 45001)
-        HighscoresRank[i] = "Supreme Comander of the Universe";
+        HighscoresRank[i] = "Commander of the Universe";
       else if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
         HighscoresRank[i] = "Overlord of the Universe";
       else if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
         HighscoresRank[i] = "Overseer of Multi-verse";
       else if (Highscores[i] <= 150000 && Highscores[i] >= 100001)
-        HighscoresRank[i] = "Supreme Commander of Multi-verse";
+        HighscoresRank[i] = "Commander of Multi-verse";
       else if (Highscores[i] <= 200000 && Highscores[i] >= 150001)
         HighscoresRank[i] = "Overlord of Multi-verse";
       else if (Highscores[i] <= 250000 && Highscores[i] >= 200001)
@@ -1041,7 +1041,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 400,
+        x: 425,
         y: 275,
         text: "Made by Cody Smith",
         size: 16,
@@ -1053,7 +1053,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: -175,
         text: "1: ${Highscores[1]}:",
         size: 42,
@@ -1065,7 +1065,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: -175,
         text: "${HighscoresRank[1]}",
         size: 42,
@@ -1077,7 +1077,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: -135,
         text: "2: ${Highscores[2]}:",
         size: 42,
@@ -1089,7 +1089,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: -135,
         text: "${HighscoresRank[2]}",
         size: 42,
@@ -1101,7 +1101,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: -95,
         text: "3: ${Highscores[3]}:",
         size: 42,
@@ -1113,7 +1113,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: -95,
         text: "${HighscoresRank[3]}",
         size: 42,
@@ -1125,7 +1125,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: -55,
         text: "4: ${Highscores[4]}:",
         size: 42,
@@ -1137,7 +1137,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: -55,
         text: "${HighscoresRank[4]}",
         size: 42,
@@ -1149,7 +1149,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: -15,
         text: "5: ${Highscores[5]}:",
         size: 42,
@@ -1161,7 +1161,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: -15,
         text: "${HighscoresRank[5]}",
         size: 42,
@@ -1173,7 +1173,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: 25,
         text: "6: ${Highscores[6]}:",
         size: 42,
@@ -1185,7 +1185,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: 25,
         text: "${HighscoresRank[6]}",
         size: 42,
@@ -1197,7 +1197,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: 65,
         text: "7: ${Highscores[7]}:",
         size: 42,
@@ -1209,7 +1209,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: 65,
         text: "${HighscoresRank[7]}",
         size: 42,
@@ -1221,7 +1221,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: 105,
         text: "8: ${Highscores[8]}:",
         size: 42,
@@ -1233,7 +1233,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: 105,
         text: "${HighscoresRank[8]}",
         size: 42,
@@ -1245,7 +1245,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: 145,
         text: "9: ${Highscores[9]}:",
         size: 42,
@@ -1257,7 +1257,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: 145,
         text: "${HighscoresRank[9]}",
         size: 42,
@@ -1269,7 +1269,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: -140,
+        x: -160,
         y: 185,
         text: "10: ${Highscores[10]}:",
         size: 42,
@@ -1281,7 +1281,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 145,
+        x: 160,
         y: 185,
         text: "${HighscoresRank[10]}",
         size: 42,
@@ -1617,7 +1617,7 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 120,
         y: 0,
-        text: "${Options["time"]}",
+        text: "<- ${Options["time"]} ->",
         buttonAction: () {
 
           if (Options["time"] >= 180)
