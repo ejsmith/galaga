@@ -742,7 +742,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're: The Supreme Commander of the Universe",
+        text: "You're: The Commander of the Universe",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -778,7 +778,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're: The Supreme Commander of the Multi-verse",
+        text: "You're: The Commander of the Multi-verse",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -975,6 +975,10 @@ class GalagaGame extends Game {
           _statUpdateEvent.signal();
 
           gameOver();
+
+          removeEntitiesByGroup("welcome");
+          createWelcomeMenu();
+
           state = GalagaGameState.welcome;
       },
         size: 36,
@@ -994,37 +998,37 @@ class GalagaGame extends Game {
         HighscoresRank[i] = "";
       else if (Highscores[i] <= 5000 && Highscores[i] > 0)
         HighscoresRank[i] = "Jew";
-      else if (Highscores[i] <= 10000 && Highscores[i] >= 5001)
+      else if (Highscores[i] <= 20000 && Highscores[i] >= 5001)
         HighscoresRank[i] = "Jewish Priest";
-      else if (Highscores[i] <= 15000 && Highscores[i] >= 10001)
+      else if (Highscores[i] <= 35000 && Highscores[i] >= 20001)
         HighscoresRank[i] = "Amish Mastermind";
-      else if (Highscores[i] <= 20000 && Highscores[i] >= 15001)
+      else if (Highscores[i] <= 45000 && Highscores[i] >= 35001)
         HighscoresRank[i] = "Road Warrior";
-      else if (Highscores[i] <= 25000 && Highscores[i] >= 20001)
+      else if (Highscores[i] <= 65000 && Highscores[i] >= 45001)
         HighscoresRank[i] = "Space Recruit";
-      else if (Highscores[i] <= 30000 && Highscores[i] >= 25001)
+      else if (Highscores[i] <= 80000 && Highscores[i] >= 65001)
         HighscoresRank[i] = "Space Cadet";
-      else if (Highscores[i] <= 35000 && Highscores[i] >= 30001)
+      else if (Highscores[i] <= 90000 && Highscores[i] >= 80001)
         HighscoresRank[i] = "Space Captain";
-      else if (Highscores[i] <= 40000 && Highscores[i] >= 35001)
+      else if (Highscores[i] <= 100000 && Highscores[i] >= 90001)
         HighscoresRank[i] = "Overlord of the Galaxy";
-      else if (Highscores[i] <= 45000 && Highscores[i] >= 40001)
-        HighscoresRank[i] = "President of the Universe";
-      else if (Highscores[i] <= 50000 && Highscores[i] >= 45001)
-        HighscoresRank[i] = "Commander of the Universe";
-      else if (Highscores[i] <= 55000 && Highscores[i] >= 50001)
-        HighscoresRank[i] = "Overlord of the Universe";
-      else if (Highscores[i] <= 60000 && Highscores[i] >= 55001)
-        HighscoresRank[i] = "Overseer of Multi-verse";
       else if (Highscores[i] <= 150000 && Highscores[i] >= 100001)
-        HighscoresRank[i] = "Commander of Multi-verse";
+        HighscoresRank[i] = "President of the Universe";
       else if (Highscores[i] <= 200000 && Highscores[i] >= 150001)
-        HighscoresRank[i] = "Overlord of Multi-verse";
+        HighscoresRank[i] = "Commander of the Universe";
       else if (Highscores[i] <= 250000 && Highscores[i] >= 200001)
+        HighscoresRank[i] = "Overlord of the Universe";
+      else if (Highscores[i] <= 350000 && Highscores[i] >= 250001)
+        HighscoresRank[i] = "Overseer of Multi-verse";
+      else if (Highscores[i] <= 450000 && Highscores[i] >= 350001)
+        HighscoresRank[i] = "Commander of Multi-verse";
+      else if (Highscores[i] <= 500000 && Highscores[i] >= 450001)
+        HighscoresRank[i] = "Overlord of Multi-verse";
+      else if (Highscores[i] <= 550000 && Highscores[i] >= 500001)
         HighscoresRank[i] = "God of this Dimension";
-      else if (Highscores[i] <= 300000 && Highscores[i] >= 250001)
+      else if (Highscores[i] <= 700000 && Highscores[i] >= 550001)
         HighscoresRank[i] = "God of all Dimensions";
-      else if (Highscores[i] >= 400000)
+      else if (Highscores[i] >= 1000000)
         HighscoresRank[i] = "Pablo Manrequez";
     }
 
@@ -1041,7 +1045,7 @@ class GalagaGame extends Game {
         groupId: "leaders"));
 
     addEntity(new GameText(game: this,
-        x: 425,
+        x: 400,
         y: 275,
         text: "Made by Cody Smith",
         size: 16,
@@ -1310,6 +1314,9 @@ class GalagaGame extends Game {
         y: -280,
         text: "Back",
         buttonAction: () {
+          removeEntitiesByGroup("welcome");
+          createWelcomeMenu();
+
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1464,6 +1471,9 @@ class GalagaGame extends Game {
         y: -280,
         text: "Back",
         buttonAction: () {
+          removeEntitiesByGroup("welcome");
+          createWelcomeMenu();
+
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -1817,6 +1827,9 @@ class GalagaGame extends Game {
         y: -280,
         text: "Back",
         buttonAction: () {
+          removeEntitiesByGroup("welcome");
+          createWelcomeMenu();
+
           state = GalagaGameState.welcome;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -2037,6 +2050,9 @@ class GalagaGame extends Game {
 
             if (ship != null)
               ship.removeFromGame();
+
+            removeEntitiesByGroup("welcome");
+            createWelcomeMenu();
 
             state = GalagaGameState.welcome;
           },
