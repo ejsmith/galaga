@@ -1542,17 +1542,57 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
-    addEntity(new GameButton(game: this,
-        x: 120,
+    addEntity(new GameText(game: this,
+        x: 200,
         y: -60,
         text: "${Options["startLives"]}",
-        buttonAction: (){
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
 
+    addEntity(new GameButton(game: this,
+        x: 245,
+        y: -60,
+        text: "->",
+        buttonAction: () {
           if (Options["startLives"] >= 10) {
             Options["startLives"] = 1;
           }
           else {
             Options["startLives"]++;
+          }
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("options");
+          createOptionsMenu();
+
+          state = GalagaGameState.options;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameButton(game: this,
+        x: 160,
+        y: -60,
+        text: "<-",
+        buttonAction: () {
+          if (Options["startLives"] <= 1) {
+            Options["startLives"] = 10;
+          }
+          else {
+            Options["startLives"]--;
           }
 
           _statUpdateEvent.signal();
@@ -1584,16 +1624,54 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
-    addEntity(new GameButton(game: this,
-        x: 120,
+    addEntity(new GameText(game: this,
+        x: 200,
         y: -30,
         text: "${Options["bulletCap"]}",
-        buttonAction: () {
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
 
+    addEntity(new GameButton(game: this,
+        x: 245,
+        y: -30,
+        text: "->",
+        buttonAction: () {
           if (Options["bulletCap"] >= 10)
             Options["bulletCap"] = 1;
           else
             Options["bulletCap"]++;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("options");
+          createOptionsMenu();
+
+          state = GalagaGameState.options;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameButton(game: this,
+        x: 160,
+        y: -30,
+        text: "<-",
+        buttonAction: () {
+          if (Options["bulletCap"] <= 1)
+            Options["bulletCap"] = 10;
+          else
+            Options["bulletCap"]--;
 
           _statUpdateEvent.signal();
 
@@ -1624,16 +1702,54 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
-    addEntity(new GameButton(game: this,
-        x: 120,
+    addEntity(new GameText(game: this,
+        x: 200,
         y: 0,
-        text: "<- ${Options["time"]} ->",
-        buttonAction: () {
+        text: "${Options["time"]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
 
+    addEntity(new GameButton(game: this,
+        x: 245,
+        y: 0,
+        text: "->",
+        buttonAction: () {
           if (Options["time"] >= 180)
             Options["time"] = 0;
           else
             Options["time"] += 20;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("options");
+          createOptionsMenu();
+
+          state = GalagaGameState.options;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameButton(game: this,
+        x: 160,
+        y: 0,
+        text: "<-",
+        buttonAction: () {
+          if (Options["time"] <= 0)
+            Options["time"] = 180;
+          else
+            Options["time"] -= 20;
 
           _statUpdateEvent.signal();
 
@@ -1664,16 +1780,54 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
-    addEntity(new GameButton(game: this,
-        x: 120,
+    addEntity(new GameText(game: this,
+        x: 200,
         y: 30,
         text: "${Options["difficulty"]}",
-        buttonAction: () {
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
 
+    addEntity(new GameButton(game: this,
+        x: 245,
+        y: 30,
+        text: "->",
+        buttonAction: () {
           if (Options["difficulty"] >= 5)
             Options["difficulty"] = 1;
           else
             Options["difficulty"] += 1;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("options");
+          createOptionsMenu();
+
+          state = GalagaGameState.options;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.4,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameButton(game: this,
+        x: 160,
+        y: 30,
+        text: "<-",
+        buttonAction: () {
+          if (Options["difficulty"] <= 1)
+            Options["difficulty"] = 5;
+          else
+            Options["difficulty"] -= 1;
 
           _statUpdateEvent.signal();
 
@@ -1705,7 +1859,7 @@ class GalagaGame extends Game {
         groupId: "options"));
 
     addEntity(new GameButton(game: this,
-        x: 150,
+        x: 200,
         y: -94,
         text: Options["powerups"] == 1 ? "True" : "False",
         buttonAction: () {
@@ -1745,7 +1899,7 @@ class GalagaGame extends Game {
         groupId: "options"));
 
     addEntity(new GameButton(game: this,
-        x: 170,
+        x: 200,
         y: 60,
         text: Options["soundeffects"] == 1 ? "True" : "False",
         buttonAction: () {

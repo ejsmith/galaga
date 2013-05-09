@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -6087,13 +6087,13 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 9 ? 0.8 : 0, 36, "You're: The President of the Universe", 0, -275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 10 ? 0.8 : 0, 36, "You're: The Supreme Commander of the Universe", 0, -275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 10 ? 0.8 : 0, 36, "You're: The Commander of the Universe", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 11 ? 0.8 : 0, 36, "You're: The Overlord of the Universe", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 12 ? 0.8 : 0, 36, "You're: The Overseer of the Multi-verse", 0, -275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 13 ? 0.8 : 0, 36, "You're: The Supreme Commander of the Multi-verse", 0, -275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 13 ? 0.8 : 0, 36, "You're: The Commander of the Multi-verse", 0, -275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", this.rank === 14 ? 0.8 : 0, 36, "You're: The Overlord of the Multi-verse", 0, -275);
     this.entities.push(t1);
@@ -6131,41 +6131,41 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
         t1.$indexSet(t1, i, "");
       else if ($.$le$n(t2.$index(t2, i), 5000) === true && $.$gt$n(t2.$index(t2, i), 0) === true)
         t1.$indexSet(t1, i, "Jew");
-      else if ($.$le$n(t2.$index(t2, i), 10000) === true && $.$ge$n(t2.$index(t2, i), 5001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 20000) === true && $.$ge$n(t2.$index(t2, i), 5001) === true)
         t1.$indexSet(t1, i, "Jewish Priest");
-      else if ($.$le$n(t2.$index(t2, i), 15000) === true && $.$ge$n(t2.$index(t2, i), 10001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 35000) === true && $.$ge$n(t2.$index(t2, i), 20001) === true)
         t1.$indexSet(t1, i, "Amish Mastermind");
-      else if ($.$le$n(t2.$index(t2, i), 20000) === true && $.$ge$n(t2.$index(t2, i), 15001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 45000) === true && $.$ge$n(t2.$index(t2, i), 35001) === true)
         t1.$indexSet(t1, i, "Road Warrior");
-      else if ($.$le$n(t2.$index(t2, i), 25000) === true && $.$ge$n(t2.$index(t2, i), 20001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 65000) === true && $.$ge$n(t2.$index(t2, i), 45001) === true)
         t1.$indexSet(t1, i, "Space Recruit");
-      else if ($.$le$n(t2.$index(t2, i), 30000) === true && $.$ge$n(t2.$index(t2, i), 25001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 80000) === true && $.$ge$n(t2.$index(t2, i), 65001) === true)
         t1.$indexSet(t1, i, "Space Cadet");
-      else if ($.$le$n(t2.$index(t2, i), 35000) === true && $.$ge$n(t2.$index(t2, i), 30001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 90000) === true && $.$ge$n(t2.$index(t2, i), 80001) === true)
         t1.$indexSet(t1, i, "Space Captain");
-      else if ($.$le$n(t2.$index(t2, i), 40000) === true && $.$ge$n(t2.$index(t2, i), 35001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 100000) === true && $.$ge$n(t2.$index(t2, i), 90001) === true)
         t1.$indexSet(t1, i, "Overlord of the Galaxy");
-      else if ($.$le$n(t2.$index(t2, i), 45000) === true && $.$ge$n(t2.$index(t2, i), 40001) === true)
-        t1.$indexSet(t1, i, "President of the Universe");
-      else if ($.$le$n(t2.$index(t2, i), 50000) === true && $.$ge$n(t2.$index(t2, i), 45001) === true)
-        t1.$indexSet(t1, i, "Commander of the Universe");
-      else if ($.$le$n(t2.$index(t2, i), 55000) === true && $.$ge$n(t2.$index(t2, i), 50001) === true)
-        t1.$indexSet(t1, i, "Overlord of the Universe");
-      else if ($.$le$n(t2.$index(t2, i), 60000) === true && $.$ge$n(t2.$index(t2, i), 55001) === true)
-        t1.$indexSet(t1, i, "Overseer of Multi-verse");
       else if ($.$le$n(t2.$index(t2, i), 150000) === true && $.$ge$n(t2.$index(t2, i), 100001) === true)
-        t1.$indexSet(t1, i, "Commander of Multi-verse");
+        t1.$indexSet(t1, i, "President of the Universe");
       else if ($.$le$n(t2.$index(t2, i), 200000) === true && $.$ge$n(t2.$index(t2, i), 150001) === true)
-        t1.$indexSet(t1, i, "Overlord of Multi-verse");
+        t1.$indexSet(t1, i, "Commander of the Universe");
       else if ($.$le$n(t2.$index(t2, i), 250000) === true && $.$ge$n(t2.$index(t2, i), 200001) === true)
+        t1.$indexSet(t1, i, "Overlord of the Universe");
+      else if ($.$le$n(t2.$index(t2, i), 350000) === true && $.$ge$n(t2.$index(t2, i), 250001) === true)
+        t1.$indexSet(t1, i, "Overseer of Multi-verse");
+      else if ($.$le$n(t2.$index(t2, i), 450000) === true && $.$ge$n(t2.$index(t2, i), 350001) === true)
+        t1.$indexSet(t1, i, "Commander of Multi-verse");
+      else if ($.$le$n(t2.$index(t2, i), 500000) === true && $.$ge$n(t2.$index(t2, i), 450001) === true)
+        t1.$indexSet(t1, i, "Overlord of Multi-verse");
+      else if ($.$le$n(t2.$index(t2, i), 550000) === true && $.$ge$n(t2.$index(t2, i), 500001) === true)
         t1.$indexSet(t1, i, "God of this Dimension");
-      else if ($.$le$n(t2.$index(t2, i), 300000) === true && $.$ge$n(t2.$index(t2, i), 250001) === true)
+      else if ($.$le$n(t2.$index(t2, i), 700000) === true && $.$ge$n(t2.$index(t2, i), 550001) === true)
         t1.$indexSet(t1, i, "God of all Dimensions");
-      else if ($.$ge$n(t2.$index(t2, i), 400000) === true)
+      else if ($.$ge$n(t2.$index(t2, i), 1000000) === true)
         t1.$indexSet(t1, i, "Pablo Manrequez");
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 56, "Leaderboard", 0, -240);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 16, "Made by Cody Smith", 425, 275);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t3);
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t2.$index(t2, 1)) + ":", -160, -175);
     this.entities.push(t3);
@@ -6254,39 +6254,51 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Starting Lives:", 0, -60);
     this.entities.push(t1);
     t1 = this.Options;
-    t2 = $.S(t1.$index(t1, "startLives"));
-    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 120, -60);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, $.S(t1.$index(t1, "startLives")), 200, -60);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "->", 245, -60);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "<-", 160, -60);
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Bullet Cap:", 0, -30);
     this.entities.push(t2);
-    t2 = $.S(t1.$index(t1, "bulletCap"));
-    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 120, -30);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, $.S(t1.$index(t1, "bulletCap")), 200, -30);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon1(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "->", 245, -30);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon2(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "<-", 160, -30);
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Time:", 0, 0);
     this.entities.push(t2);
-    t2 = $.S(t1.$index(t1, "time"));
-    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon1(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 120, 0);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, $.S(t1.$index(t1, "time")), 200, 0);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon3(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "->", 245, 0);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon4(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "<-", 160, 0);
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Difficulty:", 0, 30);
     this.entities.push(t2);
-    t2 = $.S(t1.$index(t1, "difficulty"));
-    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon2(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 120, 30);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, $.S(t1.$index(t1, "difficulty")), 200, 30);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon5(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "->", 245, 30);
+    this.entities.push(t2);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon6(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "<-", 160, 30);
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Powerups Enabled:", -38, -94);
     this.entities.push(t2);
     t2 = $.$eq(t1.$index(t1, "powerups"), 1) === true ? "True" : "False";
-    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon3(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 150, -94);
+    t2 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon7(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t2, 200, -94);
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Sound Effects Enabled:", -38, 60);
     this.entities.push(t2);
     t1 = $.$eq(t1.$index(t1, "soundeffects"), 1) === true ? "True" : "False";
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon4(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t1, 170, 60);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon8(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, t1, 200, 60);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon5(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Set to Defaults", 10, 120);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon9(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.6, 36, "Set to Defaults", 10, 120);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon6(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Instructions", 380, -280);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon10(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Instructions", 380, -280);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon7(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Back", -420, -280);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon11(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Back", -420, -280);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("options");
   },
@@ -6792,6 +6804,8 @@ $$.GalagaGame_createPausedMenu_anon = {"": "Closure;this_0",
     t1.removeEntitiesByFilter$1(new $.GalagaGame_createPausedMenu__anon1());
     t1.get$_statUpdateEvent().signal$0();
     t1.gameOver$0();
+    t1.removeEntitiesByGroup$1("welcome");
+    t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
   }
 };
@@ -6823,6 +6837,8 @@ $$.GalagaGame_createLeaderBoardMenu_anon = {"": "Closure;this_0",
 $$.GalagaGame_createLeaderBoardMenu_anon0 = {"": "Closure;this_1",
   call$0: function() {
     var t1 = this.this_1;
+    t1.removeEntitiesByGroup$1("welcome");
+    t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
@@ -6835,6 +6851,8 @@ $$.GalagaGame_createLeaderBoardMenu_anon0 = {"": "Closure;this_1",
 $$.GalagaGame_createStatsMenu_anon = {"": "Closure;this_0",
   call$0: function() {
     var t1 = this.this_0;
+    t1.removeEntitiesByGroup$1("welcome");
+    t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
@@ -6875,6 +6893,26 @@ $$.GalagaGame_createOptionsMenu_anon0 = {"": "Closure;this_1",
     var t1, t2, t3, t4;
     t1 = this.this_1;
     t2 = t1.get$Options();
+    t3 = $.$le$n(t2.$index(t2, "startLives"), 1);
+    t4 = t1.get$Options();
+    if (t3 === true)
+      t4.$indexSet(t4, "startLives", 10);
+    else
+      t4.$indexSet(t4, "startLives", $.$sub$n(t4.$index(t4, "startLives"), 1));
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("options");
+    t1.createOptionsMenu$0();
+    t2.set$state(t1, 6);
+  }
+};
+
+$$.GalagaGame_createOptionsMenu_anon1 = {"": "Closure;this_2",
+  call$0: function() {
+    var t1, t2, t3, t4;
+    t1 = this.this_2;
+    t2 = t1.get$Options();
     t3 = $.$ge$n(t2.$index(t2, "bulletCap"), 10);
     t4 = t1.get$Options();
     if (t3 === true)
@@ -6890,10 +6928,30 @@ $$.GalagaGame_createOptionsMenu_anon0 = {"": "Closure;this_1",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon1 = {"": "Closure;this_2",
+$$.GalagaGame_createOptionsMenu_anon2 = {"": "Closure;this_3",
   call$0: function() {
     var t1, t2, t3, t4;
-    t1 = this.this_2;
+    t1 = this.this_3;
+    t2 = t1.get$Options();
+    t3 = $.$le$n(t2.$index(t2, "bulletCap"), 1);
+    t4 = t1.get$Options();
+    if (t3 === true)
+      t4.$indexSet(t4, "bulletCap", 10);
+    else
+      t4.$indexSet(t4, "bulletCap", $.$sub$n(t4.$index(t4, "bulletCap"), 1));
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("options");
+    t1.createOptionsMenu$0();
+    t2.set$state(t1, 6);
+  }
+};
+
+$$.GalagaGame_createOptionsMenu_anon3 = {"": "Closure;this_4",
+  call$0: function() {
+    var t1, t2, t3, t4;
+    t1 = this.this_4;
     t2 = t1.get$Options();
     t3 = $.$ge$n(t2.$index(t2, "time"), 180);
     t4 = t1.get$Options();
@@ -6910,10 +6968,30 @@ $$.GalagaGame_createOptionsMenu_anon1 = {"": "Closure;this_2",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon2 = {"": "Closure;this_3",
+$$.GalagaGame_createOptionsMenu_anon4 = {"": "Closure;this_5",
   call$0: function() {
     var t1, t2, t3, t4;
-    t1 = this.this_3;
+    t1 = this.this_5;
+    t2 = t1.get$Options();
+    t3 = $.$le$n(t2.$index(t2, "time"), 0);
+    t4 = t1.get$Options();
+    if (t3 === true)
+      t4.$indexSet(t4, "time", 180);
+    else
+      t4.$indexSet(t4, "time", $.$sub$n(t4.$index(t4, "time"), 20));
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("options");
+    t1.createOptionsMenu$0();
+    t2.set$state(t1, 6);
+  }
+};
+
+$$.GalagaGame_createOptionsMenu_anon5 = {"": "Closure;this_6",
+  call$0: function() {
+    var t1, t2, t3, t4;
+    t1 = this.this_6;
     t2 = t1.get$Options();
     t3 = $.$ge$n(t2.$index(t2, "difficulty"), 5);
     t4 = t1.get$Options();
@@ -6930,10 +7008,30 @@ $$.GalagaGame_createOptionsMenu_anon2 = {"": "Closure;this_3",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon3 = {"": "Closure;this_4",
+$$.GalagaGame_createOptionsMenu_anon6 = {"": "Closure;this_7",
   call$0: function() {
     var t1, t2, t3, t4;
-    t1 = this.this_4;
+    t1 = this.this_7;
+    t2 = t1.get$Options();
+    t3 = $.$le$n(t2.$index(t2, "difficulty"), 1);
+    t4 = t1.get$Options();
+    if (t3 === true)
+      t4.$indexSet(t4, "difficulty", 5);
+    else
+      t4.$indexSet(t4, "difficulty", $.$sub$n(t4.$index(t4, "difficulty"), 1));
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("options");
+    t1.createOptionsMenu$0();
+    t2.set$state(t1, 6);
+  }
+};
+
+$$.GalagaGame_createOptionsMenu_anon7 = {"": "Closure;this_8",
+  call$0: function() {
+    var t1, t2, t3, t4;
+    t1 = this.this_8;
     t2 = t1.get$Options();
     t3 = $.$ge$n(t2.$index(t2, "powerups"), 2);
     t4 = t1.get$Options();
@@ -6950,10 +7048,10 @@ $$.GalagaGame_createOptionsMenu_anon3 = {"": "Closure;this_4",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon4 = {"": "Closure;this_5",
+$$.GalagaGame_createOptionsMenu_anon8 = {"": "Closure;this_9",
   call$0: function() {
     var t1, t2, t3, t4;
-    t1 = this.this_5;
+    t1 = this.this_9;
     t2 = t1.get$Options();
     t3 = $.$ge$n(t2.$index(t2, "soundeffects"), 2);
     t4 = t1.get$Options();
@@ -6977,15 +7075,15 @@ $$.GalagaGame_createOptionsMenu_anon4 = {"": "Closure;this_5",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon5 = {"": "Closure;this_6",
+$$.GalagaGame_createOptionsMenu_anon9 = {"": "Closure;this_10",
   call$0: function() {
-    return this.this_6.resetOptions$0();
+    return this.this_10.resetOptions$0();
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon6 = {"": "Closure;this_7",
+$$.GalagaGame_createOptionsMenu_anon10 = {"": "Closure;this_11",
   call$0: function() {
-    var t1 = this.this_7;
+    var t1 = this.this_11;
     t1.newBouncer$1(1);
     t1.newBouncer$1(2);
     t1.newBouncer$1(3);
@@ -7005,9 +7103,11 @@ $$.GalagaGame_createOptionsMenu_anon6 = {"": "Closure;this_7",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon7 = {"": "Closure;this_8",
+$$.GalagaGame_createOptionsMenu_anon11 = {"": "Closure;this_12",
   call$0: function() {
-    var t1 = this.this_8;
+    var t1 = this.this_12;
+    t1.removeEntitiesByGroup$1("welcome");
+    t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
@@ -7044,6 +7144,8 @@ $$.GalagaGame_createGameOverMenu_anon0 = {"": "Closure;this_1",
     t2 = t1.get$ship();
     if (t2 != null)
       t2.removeFromGame$0();
+    t1.removeEntitiesByGroup$1("welcome");
+    t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
   }
 };
