@@ -21,6 +21,12 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement superBullet = new ImageElement();
   ImageElement bossSuperBullet = new ImageElement();
   ImageElement chargeBar = new ImageElement();
+  ImageElement star1 = new ImageElement();
+  ImageElement star2 = new ImageElement();
+  ImageElement star3 = new ImageElement();
+  ImageElement star4 = new ImageElement();
+  ImageElement star5 = new ImageElement();
+  ImageElement star6 = new ImageElement();
 
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -44,6 +50,12 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     superBullet.src = '../web/images/SuperAttack.png';
     bossSuperBullet.src = '../web/images/bossShot.png';
     chargeBar.src = '../web/images/chargeBar.png';
+    star1.src = '../web/images/star1.png';
+    star2.src = '../web/images/star2.png';
+    star3.src = '../web/images/star3.png';
+    star4.src = '../web/images/star4.png';
+    star5.src = '../web/images/star5.png';
+    star6.src = '../web/images/star6.png';
   }
 
   void init() {

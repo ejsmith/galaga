@@ -226,27 +226,6 @@ class GalagaGame extends Game {
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
 
-    if (!HighscoresRank.containsKey(1))
-      HighscoresRank[1] = "Jew";
-    if (!HighscoresRank.containsKey(2))
-      HighscoresRank[2] = "Jew";
-    if (!HighscoresRank.containsKey(3))
-      HighscoresRank[3] = "Jew";
-    if (!HighscoresRank.containsKey(4))
-      HighscoresRank[4] = "Jew";
-    if (!HighscoresRank.containsKey(5))
-      HighscoresRank[5] = "Jew";
-    if (!HighscoresRank.containsKey(6))
-      HighscoresRank[6] = "Jew";
-    if (!HighscoresRank.containsKey(7))
-      HighscoresRank[7] = "Jew";
-    if (!HighscoresRank.containsKey(8))
-      HighscoresRank[8] = "Jew";
-    if (!HighscoresRank.containsKey(9))
-      HighscoresRank[9] = "Jew";
-    if (!HighscoresRank.containsKey(10))
-      HighscoresRank[10] = "Jew";
-
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
     else
@@ -843,7 +822,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.8,
         id: "",
         groupId: "welcome"));
 
@@ -1059,7 +1038,31 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -175,
-        text: "1: ${Highscores[1]}:",
+        text: "Scores",
+        size: 42,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "leaders"));
+
+    addEntity(new GameText(game: this,
+        x: 160,
+        y: -175,
+        text: "Ranks",
+        size: 42,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "leaders"));
+
+    addEntity(new GameText(game: this,
+        x: -160,
+        y: -135,
+        text: "1: ${Highscores[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1070,7 +1073,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: -175,
+        y: -135,
         text: "${HighscoresRank[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1082,8 +1085,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: -135,
-        text: "2: ${Highscores[2]}:",
+        y: -95,
+        text: "2: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1094,7 +1097,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: -135,
+        y: -95,
         text: "${HighscoresRank[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1106,8 +1109,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: -95,
-        text: "3: ${Highscores[3]}:",
+        y: -55,
+        text: "3: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1118,7 +1121,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: -95,
+        y: -55,
         text: "${HighscoresRank[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1130,8 +1133,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: -55,
-        text: "4: ${Highscores[4]}:",
+        y: -15,
+        text: "4: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1142,7 +1145,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: -55,
+        y: -15,
         text: "${HighscoresRank[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1154,8 +1157,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: -15,
-        text: "5: ${Highscores[5]}:",
+        y: 25,
+        text: "5: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1166,7 +1169,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: -15,
+        y: 25,
         text: "${HighscoresRank[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1178,8 +1181,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: 25,
-        text: "6: ${Highscores[6]}:",
+        y: 65,
+        text: "6: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1190,7 +1193,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: 25,
+        y: 65,
         text: "${HighscoresRank[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1202,8 +1205,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: 65,
-        text: "7: ${Highscores[7]}:",
+        y: 105,
+        text: "7: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1214,7 +1217,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: 65,
+        y: 105,
         text: "${HighscoresRank[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1226,8 +1229,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: 105,
-        text: "8: ${Highscores[8]}:",
+        y: 145,
+        text: "8: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1238,7 +1241,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: 105,
+        y: 145,
         text: "${HighscoresRank[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1250,8 +1253,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: 145,
-        text: "9: ${Highscores[9]}:",
+        y: 185,
+        text: "9: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1262,7 +1265,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: 145,
+        y: 185,
         text: "${HighscoresRank[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1274,8 +1277,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: -160,
-        y: 185,
-        text: "10: ${Highscores[10]}:",
+        y: 225,
+        text: "10: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1286,7 +1289,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 160,
-        y: 185,
+        y: 225,
         text: "${HighscoresRank[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
@@ -1298,7 +1301,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 0,
-        y: 250,
+        y: 275,
         text: "RESET",
         buttonAction: () => resetLeaderBoard(),
         size: 36,
@@ -1550,7 +1553,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.7,
         id: "",
         groupId: "options"));
 
@@ -1632,7 +1635,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.7,
         id: "",
         groupId: "options"));
 
@@ -1710,7 +1713,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.7,
         id: "",
         groupId: "options"));
 
@@ -1788,7 +1791,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.7,
         id: "",
         groupId: "options"));
 
