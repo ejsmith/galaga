@@ -27,6 +27,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement star4 = new ImageElement();
   ImageElement star5 = new ImageElement();
   ImageElement star6 = new ImageElement();
+  ImageElement star7 = new ImageElement();
 
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -56,6 +57,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     star4.src = '../web/images/star4.png';
     star5.src = '../web/images/star5.png';
     star6.src = '../web/images/star6.png';
+    star7.src = '../web/images/star7.png';
   }
 
   void init() {
@@ -98,6 +100,97 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void gameOver() {
     bgFade();
     updateStats();
+  }
+
+  void drawStar1() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 1) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star1, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar2() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 2) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star2, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar3() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 3) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star3, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar4() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 4) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star4, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar5() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 5) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star5, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar6() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 6) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star6, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
+  }
+
+  void drawStar7() {
+    game.entities.where((e) => e is Stars).forEach((Stars e) {
+      if (e.momentum.yVel > 0 && e.starColor == 7) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(star7, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        ctx.stroke();
+      }
+    });
   }
 
   void drawSuperBullet() {
@@ -436,6 +529,13 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void drawBeforeCtxRestore() {
     drawBouncer();
     drawCountDown();
+    drawStar1();
+    drawStar2();
+    drawStar3();
+    drawStar4();
+    drawStar5();
+    drawStar6();
+    drawStar7();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
       drawLives();
       if (!shipFlicker)

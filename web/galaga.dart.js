@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -8208,7 +8208,7 @@ $$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet,chargeBar,star1,star2,star3,star4,star5,star6,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -8270,6 +8270,30 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   gameOver$0: function() {
     this.bgFade$0();
     this.updateStats$0();
+  },
+  drawStar1$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar1_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar1_anon0(this));
+  },
+  drawStar2$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar2_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar2_anon0(this));
+  },
+  drawStar3$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar3_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar3_anon0(this));
+  },
+  drawStar4$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar4_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar4_anon0(this));
+  },
+  drawStar5$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar5_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar5_anon0(this));
+  },
+  drawStar6$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStar6_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawStar6_anon0(this));
   },
   drawSuperBullet$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawSuperBullet_anon());
@@ -8478,6 +8502,12 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     var t1, t2;
     this.drawBouncer$0();
     this.drawCountDown$0();
+    this.drawStar1$0();
+    this.drawStar2$0();
+    this.drawStar3$0();
+    this.drawStar4$0();
+    this.drawStar5$0();
+    this.drawStar6$0();
     t1 = this.get$game();
     if (t1.get$state(t1) !== 3) {
       t1 = this.get$game();
@@ -8650,6 +8680,132 @@ $$.GalagaRenderer_init_anon3 = {"": "Closure;this_4",
 $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     return this.this_5.normalShipHit$0();
+  }
+};
+
+$$.GalagaRenderer_drawStar1_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar1_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 1) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star1(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawStar2_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar2_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 2) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star2(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawStar3_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar3_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 3) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star3(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawStar4_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar4_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 4) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star4(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawStar5_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar5_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 5) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star5(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
+  }
+};
+
+$$.GalagaRenderer_drawStar6_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isStars;
+  }
+};
+
+$$.GalagaRenderer_drawStar6_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2;
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$starColor() === 6) {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star6(), $.$sub$n(t2.get$x(e), 4), $.$sub$n(t2.get$y(e), 4), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+      $.stroke$0$x(t1.get$ctx());
+    }
   }
 };
 
@@ -9547,7 +9703,7 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,char
   $isShip: true
 };
 
-$$.Stars = {"": "GameEntity;game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Stars = {"": "GameEntity;starColor<,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true)
       return;
@@ -9557,21 +9713,21 @@ $$.Stars = {"": "GameEntity;game,_x,_y,_width,_height,isHighlighted,soundReady,i
   },
   Stars$6: function(game, x, y, h, w, col) {
     var t1;
-    this.opacity = $.random(0.5, 1, false);
+    this.opacity = 0;
     if (col === 1)
-      this.color = "204, 0, 51";
+      this.starColor = 1;
     if (col === 2)
-      this.color = "102, 255, 51";
+      this.starColor = 2;
     if (col === 3)
-      this.color = "51, 104, 204";
+      this.starColor = 3;
     if (col === 4)
-      this.color = "105, 255, 105";
+      this.starColor = 4;
     if (col === 5)
-      this.color = "204, 255, 51";
+      this.starColor = 5;
     if (col === 6)
-      this.color = "255, 102, 153";
+      this.starColor = 6;
     if (col === 7)
-      this.color = "255, 153, 51";
+      this.starColor = 6;
     t1 = $.random(50, 75, false);
     this.momentum.yVel = t1;
   },
@@ -11342,7 +11498,7 @@ $.Ship$ = function(game, x, y) {
 };
 
 $.Stars$ = function(game, x, y, h, w, col) {
-  var t1 = new $.Stars(game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Stars(1, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, h, w, null, null);
   t1.Stars$6(game, x, y, h, w, col);
   return t1;

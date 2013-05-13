@@ -1,25 +1,27 @@
 part of galaga_game;
 
 class Stars extends GameEntity {
+  num starColor = 1;
 
   Stars(Game game, num x, num y, num h, num w, num col) : super.withPosition(game, x, y, h, w) {
 
-    opacity = random(.5, 1);
+    opacity = 0;
+    //opacity = random(.5, 1);
 
     if (col == 1)
-      color = "204, 0, 51";
+      starColor = 1;
     if (col == 2)
-      color = "102, 255, 51";
+      starColor = 2;
     if (col == 3)
-      color = "51, 104, 204";
+      starColor = 3;
     if (col == 4)
-      color = "105, 255, 105";
+      starColor = 4;
     if (col == 5)
-      color = "204, 255, 51";
+      starColor = 5;
     if (col == 6)
-      color = "255, 102, 153";
+      starColor = 6;
     if (col == 7)
-      color = "255, 153, 51";
+      starColor = 7;
 
     momentum.yVel = random(50, 75);
   }
