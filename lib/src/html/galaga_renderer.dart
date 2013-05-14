@@ -102,92 +102,28 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     updateStats();
   }
 
-  void drawStar1() {
+  void drawStars() {
     game.entities.where((e) => e is Stars).forEach((Stars e) {
       if (e.momentum.yVel > 0 && e.starColor == 1) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
-        ctx.drawImageScaled(star1, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
+        if (e.starColor == 1)
+          ctx.drawImageScaled(star1, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 2)
+          ctx.drawImageScaled(star2, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 3)
+          ctx.drawImageScaled(star3, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 4)
+          ctx.drawImageScaled(star4, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 5)
+          ctx.drawImageScaled(star5, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 6)
+          ctx.drawImageScaled(star6, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+        if (e.starColor == 7)
+          ctx.drawImageScaled(star7, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
 
-  void drawStar2() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 2) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star2, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawStar3() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 3) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star3, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawStar4() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 4) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star4, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawStar5() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 5) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star5, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawStar6() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 6) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star6, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawStar7() {
-    game.entities.where((e) => e is Stars).forEach((Stars e) {
-      if (e.momentum.yVel > 0 && e.starColor == 7) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(star7, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
         ctx.stroke();
       }
     });
@@ -208,7 +144,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   void drawBossSuperBullet() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
-      if (e.momentum.yVel > 0) {
+      if (e.momentum.yVel > 0 && e.Type == "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
@@ -529,19 +465,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void drawBeforeCtxRestore() {
     drawBouncer();
     drawCountDown();
-    drawStar1();
-    drawStar2();
-    drawStar3();
-    drawStar4();
-    drawStar5();
-    drawStar6();
-    drawStar7();
+    drawStars();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
       drawLives();
       if (!shipFlicker)
         drawShip();
       drawShipBullet();
       drawSuperBullet();
+      drawBossSuperBullet();
       drawEnemyBullet();
       drawCoin();
       drawLifeUp();
