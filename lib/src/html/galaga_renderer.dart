@@ -110,19 +110,19 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
         ctx.beginPath();
         if (e.starColor == 1)
-          ctx.drawImageScaled(star1, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star1, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 2)
-          ctx.drawImageScaled(star2, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star2, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 3)
-          ctx.drawImageScaled(star3, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star3, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 4)
-          ctx.drawImageScaled(star4, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star4, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 5)
-          ctx.drawImageScaled(star5, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star5, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 6)
-          ctx.drawImageScaled(star6, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star6, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
         if (e.starColor == 7)
-          ctx.drawImageScaled(star7, e.x - 4, e.y - 4, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star7, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
 
         ctx.stroke();
       }
@@ -162,25 +162,25 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
       ctx.beginPath();
       if (e.Sprite == 1)
-        ctx.drawImageScaled(spreadup, e.x - 22, e.y - 25, 42, 42);
+        ctx.drawImageScaled(spreadup, e.x - 21, e.y - 21, 42, 42);
       else if(e.Sprite == 2)
-        ctx.drawImageScaled(lifeup, e.x - 22, e.y - 25, 36, 36);
+        ctx.drawImageScaled(lifeup, e.x - 18, e.y - 18, 36, 36);
       else if(e.Sprite == 3)
-        ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
+        ctx.drawImageScaled(multiplierup, e.x - 18, e.y - 18, 36, 36);
       else if(e.Sprite == 4)
-        ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
+        ctx.drawImageScaled(bulletup, e.x - 18, e.y - 18, 36, 36);
       else if(e.Sprite == 5)
-        ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
+        ctx.drawImageScaled(coin, e.x - 6, e.y - 6, 12, 12);
       else if(e.Sprite == 6)
-        ctx.drawImageScaled(ship, e.x - 22, e.y - 25, 42, 42);
+        ctx.drawImageScaled(ship, e.x - 21, e.y - 21, 42, 42);
       else if(e.Sprite == 7)
-        ctx.drawImageScaled(enemy, e.x - 20, e.y - 20, 42, 42);
+        ctx.drawImageScaled(enemy, e.x - 21, e.y - 21, 42, 42);
       else if(e.Sprite == 8)
-        ctx.drawImageScaled(mothership, e.x - 22, e.y - 22, 42, 42);
+        ctx.drawImageScaled(mothership, e.x - 21, e.y - 21, 42, 42);
       else if(e.Sprite == 9)
-        ctx.drawImageScaled(enemy2, e.x - 20, e.y - 20, 36, 36);
+        ctx.drawImageScaled(enemy2, e.x - 18, e.y - 18, 36, 36);
       else if(e.Sprite == 10)
-        ctx.drawImageScaled(boss, e.x - 42, e.y - 42, 72, 72);
+        ctx.drawImageScaled(boss, e.x - 36, e.y - 36, 72, 72);
 
       ctx.stroke();
     });
