@@ -212,68 +212,23 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
 
-  void drawSpreadUp() {
+  void drawPowerUps() {
     game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
-      if (e.type == "SpiralShot") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
-        ctx.drawImageScaled(spreadup, e.x - 20, e.y - 20, 36, 36);
+        if (e.type == "SpiralShot")
+          ctx.drawImageScaled(spreadup, e.x - 20, e.y - 20, 36, 36);
+        if (e.type == "ExtraLife")
+          ctx.drawImageScaled(lifeup, e.x - 20, e.y - 20, 36, 36);
+        if (e.type == "Multiplier")
+          ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
+        if (e.type == "BulletIncrease")
+          ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
+        if (e.type == "bulletPower")
+          ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
         ctx.stroke();
-      }
-    });
-  }
-
-  void drawLifeUp() {
-    game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
-      if (e.type == "ExtraLife") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(lifeup, e.x - 20, e.y - 20, 36, 36);
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawMultiplierUp() {
-    game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
-      if (e.type == "Multiplier") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawBulletUp() {
-    game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
-      if (e.type == "BulletIncrease") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawCoin() {
-    game.entities.where((e) => e is PowerUp).forEach((PowerUp e) {
-      if (e.type == "bulletPower") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
-        ctx.stroke();
-      }
     });
   }
 
@@ -467,54 +422,55 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     drawCountDown();
     drawStars();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
-      drawLives();
       if (!shipFlicker)
         drawShip();
       drawShipBullet();
       drawSuperBullet();
       drawBossSuperBullet();
       drawEnemyBullet();
-      drawCoin();
-      drawLifeUp();
-      drawSpreadUp();
-      drawMultiplierUp();
-      drawBulletUp();
+      drawPowerUps();
       drawEnemy();
       drawBoss();
       drawDrone();
       drawMotherShip();
-      drawTime();
-      drawScore();
-      drawHighScore();
-      drawLevel();
+      drawEtc();
     }
     super.drawBeforeCtxRestore();
   }
 
-  void drawLevel() {
+  void drawEtc() {
+    num textX = 225;
+    int digits = 0;
+    num tempHigh = game.Stats["highscore"];
+
+    while (tempHigh != 0) {
+      tempHigh /= 10;
+      digits++;
+    }
+
+    textX = textX - digits / 10;
+
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.font = "32px cinnamoncake, Verdana";
+    ctx.fillText("High Score: ${game.Stats["highscore"]} ", textX, -(game.rect.halfHeight - 30));
+
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("Level: ${game.level}", 375, (game.rect.halfHeight - 5));
-  }
 
-  void drawTime() {
     ctx.fillStyle = "rgba(255, 255, 255, 1)";
     ctx.font = "32px cinnamoncake, Verdana";
     ctx.fillText("Time: ${game.timer.gameTime.round()} ", -100, -(game.rect.halfHeight - 30));
-  }
 
-  void drawLives() {
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.font = "32px cinnamoncake, Verdana";
+    ctx.fillText("Score: ${game.score} ", -475, -(game.rect.halfHeight - 30));
+
     ctx.beginPath();
     for (num i = 0; i < game.ship.lives; i++) {
       ctx.drawImageScaled(ship, -475 + (45 * i), (game.rect.halfHeight - 45), 36, 36);
     }
     ctx.stroke();
-  }
-
-  void drawScore() {
-    ctx.fillStyle = "rgba(255, 255, 255, 1)";
-    ctx.font = "32px cinnamoncake, Verdana";
-    ctx.fillText("Score: ${game.score} ", -475, -(game.rect.halfHeight - 30));
   }
 
   void drawCountDown() {
@@ -530,24 +486,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       temp = 1;
     ctx.fillText("Next Level In: ${temp}", -165, 0);
     }
-  }
-
-  void drawHighScore() {
-    num textX = 225;
-    int digits = 0;
-    num tempHigh = game.Stats["highscore"];
-
-    while (tempHigh != 0) {
-      tempHigh /= 10;
-      digits++;
-    }
-
-    textX = textX - digits / 10;
-    //textX = textX - (game.Stats["highscore"] / 10000);
-
-    ctx.fillStyle = "rgba(255, 255, 255, 1)";
-    ctx.font = "32px cinnamoncake, Verdana";
-    ctx.fillText("High Score: ${game.Stats["highscore"]} ", textX, -(game.rect.halfHeight - 30));
   }
 
   void bgFade() {

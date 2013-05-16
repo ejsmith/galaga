@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
+    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
   }
 };
 
@@ -4737,25 +4737,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -8196,25 +8181,9 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemyBullet_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_drawEnemyBullet_anon0(this));
   },
-  drawSpreadUp$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawSpreadUp_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawSpreadUp_anon0(this));
-  },
-  drawLifeUp$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawLifeUp_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawLifeUp_anon0(this));
-  },
-  drawMultiplierUp$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMultiplierUp_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawMultiplierUp_anon0(this));
-  },
-  drawBulletUp$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBulletUp_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawBulletUp_anon0(this));
-  },
-  drawCoin$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawCoin_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawCoin_anon0(this));
+  drawPowerUps$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawPowerUps_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawPowerUps_anon0(this));
   },
   drawChargeBar$0: function() {
     $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
@@ -8396,50 +8365,74 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     } else
       t1 = true;
     if (t1) {
-      this.drawLives$0();
       if (!this.shipFlicker)
         this.drawShip$0();
       this.drawShipBullet$0();
       this.drawSuperBullet$0();
       this.drawBossSuperBullet$0();
       this.drawEnemyBullet$0();
-      this.drawCoin$0();
-      this.drawLifeUp$0();
-      this.drawSpreadUp$0();
-      this.drawMultiplierUp$0();
-      this.drawBulletUp$0();
+      this.drawPowerUps$0();
       this.drawEnemy$0();
       this.drawBoss$0();
       this.drawDrone$0();
       this.drawMotherShip$0();
-      this.drawTime$0();
-      this.drawScore$0();
-      this.drawHighScore$0();
-      this.drawLevel$0();
+      this.drawEtc$0();
     }
     $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
   },
-  drawLevel$0: function() {
+  drawEtc$0: function() {
+    var t1, tempHigh, digits, t2, i;
+    t1 = this.get$game().get$Stats();
+    tempHigh = t1.$index(t1, "highscore");
+    if (typeof tempHigh !== "number")
+      return this.drawEtc$0$bailout(1, tempHigh);
+    for (digits = 0; tempHigh !== 0;) {
+      tempHigh /= 10;
+      ++digits;
+    }
+    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
+    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
+    t1 = this.ctx;
+    t2 = this.get$game().get$Stats();
+    $.fillText$3$x(t1, "High Score: " + $.S(t2.$index(t2, "highscore")) + " ", 225 - digits / 10, -(this.get$game().rect.get$halfHeight() - 30));
     $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
     $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
     $.fillText$3$x(this.ctx, "Level: " + $.S(this.get$game().get$level()), 375, this.get$game().rect.get$halfHeight() - 5);
-  },
-  drawTime$0: function() {
     $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
     $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
     $.fillText$3$x(this.ctx, "Time: " + $.S($.round$0$nx(this.get$game().timer.gameTime)) + " ", -100, -(this.get$game().rect.get$halfHeight() - 30));
-  },
-  drawLives$0: function() {
-    var i, t1, t2;
+    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
+    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
+    $.fillText$3$x(this.ctx, "Score: " + $.S(this.get$game().get$score()) + " ", -475, -(this.get$game().rect.get$halfHeight() - 30));
     $.beginPath$0$x(this.ctx);
     for (i = 0; t1 = $.JSNumber_methods.$lt(i, this.get$game().get$ship().lives), t2 = this.ctx, t1; ++i)
       $.drawImageScaled$5$x(t2, this.ship, -475 + 45 * i, this.get$game().rect.get$halfHeight() - 45, 36, 36);
     $.stroke$0$x(t2);
   },
-  drawScore$0: function() {
+  drawEtc$0$bailout: function(state0, tempHigh) {
+    var digits, t1, t2, i;
+    for (digits = 0; t1 = $.getInterceptor(tempHigh), t1.$eq(tempHigh, 0) !== true;) {
+      tempHigh = t1.$div(tempHigh, 10);
+      ++digits;
+    }
+    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
+    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
+    t1 = this.ctx;
+    t2 = this.get$game().get$Stats();
+    $.fillText$3$x(t1, "High Score: " + $.S(t2.$index(t2, "highscore")) + " ", 225 - digits / 10, -(this.get$game().rect.get$halfHeight() - 30));
+    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
+    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
+    $.fillText$3$x(this.ctx, "Level: " + $.S(this.get$game().get$level()), 375, this.get$game().rect.get$halfHeight() - 5);
+    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
+    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
+    $.fillText$3$x(this.ctx, "Time: " + $.S($.round$0$nx(this.get$game().timer.gameTime)) + " ", -100, -(this.get$game().rect.get$halfHeight() - 30));
     $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
     $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
     $.fillText$3$x(this.ctx, "Score: " + $.S(this.get$game().get$score()) + " ", -475, -(this.get$game().rect.get$halfHeight() - 30));
+    $.beginPath$0$x(this.ctx);
+    for (i = 0; t1 = $.JSNumber_methods.$lt(i, this.get$game().get$ship().lives), t2 = this.ctx, t1; ++i)
+      $.drawImageScaled$5$x(t2, this.ship, -475 + 45 * i, this.get$game().rect.get$halfHeight() - 45, 36, 36);
+    $.stroke$0$x(t2);
   },
   drawCountDown$0: function() {
     var t1, temp;
@@ -8454,34 +8447,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
         temp = 1;
       $.fillText$3$x(this.ctx, "Next Level In: " + $.S(temp), -165, 0);
     }
-  },
-  drawHighScore$0: function() {
-    var t1, tempHigh, digits, t2;
-    t1 = this.get$game().get$Stats();
-    tempHigh = t1.$index(t1, "highscore");
-    if (typeof tempHigh !== "number")
-      return this.drawHighScore$0$bailout(1, tempHigh);
-    for (digits = 0; tempHigh !== 0;) {
-      tempHigh /= 10;
-      ++digits;
-    }
-    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
-    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
-    t1 = this.ctx;
-    t2 = this.get$game().get$Stats();
-    $.fillText$3$x(t1, "High Score: " + $.S(t2.$index(t2, "highscore")) + " ", 225 - digits / 10, -(this.get$game().rect.get$halfHeight() - 30));
-  },
-  drawHighScore$0$bailout: function(state0, tempHigh) {
-    var digits, t1, t2;
-    for (digits = 0; t1 = $.getInterceptor(tempHigh), t1.$eq(tempHigh, 0) !== true;) {
-      tempHigh = t1.$div(tempHigh, 10);
-      ++digits;
-    }
-    $.set$fillStyle$x(this.ctx, "rgba(255, 255, 255, 1)");
-    $.set$font$x(this.ctx, "32px cinnamoncake, Verdana");
-    t1 = this.ctx;
-    t2 = this.get$game().get$Stats();
-    $.fillText$3$x(t1, "High Score: " + $.S(t2.$index(t2, "highscore")) + " ", 225 - digits / 10, -(this.get$game().rect.get$halfHeight() - 30));
   },
   bgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.8)";
@@ -8745,108 +8710,31 @@ $$.GalagaRenderer_drawEnemyBullet_anon0 = {"": "Closure;this_0",
   }
 };
 
-$$.GalagaRenderer_drawSpreadUp_anon = {"": "Closure;",
+$$.GalagaRenderer_drawPowerUps_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isPowerUp;
   }
 };
 
-$$.GalagaRenderer_drawSpreadUp_anon0 = {"": "Closure;this_0",
+$$.GalagaRenderer_drawPowerUps_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "SpiralShot") === true) {
-      t2 = this.this_0;
-      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t2.get$ctx(), 3);
-      $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$spreadup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
-      $.stroke$0$x(t2.get$ctx());
-    }
-  }
-};
-
-$$.GalagaRenderer_drawLifeUp_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isPowerUp;
-  }
-};
-
-$$.GalagaRenderer_drawLifeUp_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "ExtraLife") === true) {
-      t2 = this.this_0;
-      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t2.get$ctx(), 3);
-      $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$lifeup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
-      $.stroke$0$x(t2.get$ctx());
-    }
-  }
-};
-
-$$.GalagaRenderer_drawMultiplierUp_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isPowerUp;
-  }
-};
-
-$$.GalagaRenderer_drawMultiplierUp_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "Multiplier") === true) {
-      t2 = this.this_0;
-      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t2.get$ctx(), 3);
-      $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$multiplierup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
-      $.stroke$0$x(t2.get$ctx());
-    }
-  }
-};
-
-$$.GalagaRenderer_drawBulletUp_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isPowerUp;
-  }
-};
-
-$$.GalagaRenderer_drawBulletUp_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "BulletIncrease") === true) {
-      t2 = this.this_0;
-      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t2.get$ctx(), 3);
-      $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$bulletup(), $.$sub$n(t1.get$x(e), 20), $.$sub$n(t1.get$y(e), 20), 36, 36);
-      $.stroke$0$x(t2.get$ctx());
-    }
-  }
-};
-
-$$.GalagaRenderer_drawCoin_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isPowerUp;
-  }
-};
-
-$$.GalagaRenderer_drawCoin_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "bulletPower") === true) {
-      t2 = this.this_0;
-      $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t2.get$ctx(), 3);
-      $.beginPath$0$x(t2.get$ctx());
-      $.drawImageScaled$5$x(t2.get$ctx(), t2.get$coin(), $.$sub$n(t1.get$x(e), 8), $.$sub$n(t1.get$y(e), 8), 12, 12);
-      $.stroke$0$x(t2.get$ctx());
-    }
+    t1 = this.this_0;
+    $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+    $.set$lineWidth$x(t1.get$ctx(), 3);
+    $.beginPath$0$x(t1.get$ctx());
+    t2 = $.getInterceptor$x(e);
+    if ($.$eq(t2.get$type(e), "SpiralShot") === true)
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$spreadup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    if ($.$eq(t2.get$type(e), "ExtraLife") === true)
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$lifeup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    if ($.$eq(t2.get$type(e), "Multiplier") === true)
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$multiplierup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    if ($.$eq(t2.get$type(e), "BulletIncrease") === true)
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bulletup(), $.$sub$n(t2.get$x(e), 20), $.$sub$n(t2.get$y(e), 20), 36, 36);
+    if ($.$eq(t2.get$type(e), "bulletPower") === true)
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$coin(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 12, 12);
+    $.stroke$0$x(t1.get$ctx());
   }
 };
 
