@@ -1067,7 +1067,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1079,7 +1079,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1091,7 +1091,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1103,7 +1103,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1115,7 +1115,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1127,7 +1127,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1139,7 +1139,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1151,7 +1151,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1163,7 +1163,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1175,7 +1175,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1187,7 +1187,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1199,7 +1199,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1211,7 +1211,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1223,7 +1223,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1235,7 +1235,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1247,7 +1247,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1259,7 +1259,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1271,7 +1271,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1283,7 +1283,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1295,7 +1295,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "leaders"));
 
@@ -1369,7 +1369,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1381,7 +1381,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1393,7 +1393,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1405,7 +1405,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1417,7 +1417,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1429,7 +1429,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1441,7 +1441,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1453,7 +1453,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1465,7 +1465,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1486,7 +1486,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 
@@ -1499,7 +1499,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.6,
         id: "",
         groupId: "stats"));
 

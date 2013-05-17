@@ -140,8 +140,8 @@ class Enemy extends GameEntity<GalagaGame> {
         game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16)));
         if (game.soundEffectsOn)
           game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
-
-  }
+      }
+    }
 
     if (type == "Boss") {
       if (health <= 0) {
@@ -554,5 +554,4 @@ class Enemy extends GameEntity<GalagaGame> {
     }
     super.update();
   }
-}
 }

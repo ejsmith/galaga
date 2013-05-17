@@ -9,5 +9,3 @@ import "package:dgame/dgame_html.dart";
 import 'dart:async';
 
 part "src/html/galaga_renderer.dart";
-part "src/html/powerup_renderer.dart";
-part "src/html/enemy_renderer.dart";

@@ -6150,45 +6150,45 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t3);
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Ranks", 160, -175);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "1: " + $.S(t2.$index(t2, 1)), -160, -135);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "1: " + $.S(t2.$index(t2, 1)), -160, -135);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 1)), 160, -135);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 1)), 160, -135);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "2: " + $.S(t2.$index(t2, 2)), -160, -95);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "2: " + $.S(t2.$index(t2, 2)), -160, -95);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 2)), 160, -95);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 2)), 160, -95);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "3: " + $.S(t2.$index(t2, 3)), -160, -55);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "3: " + $.S(t2.$index(t2, 3)), -160, -55);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 3)), 160, -55);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 3)), 160, -55);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "4: " + $.S(t2.$index(t2, 4)), -160, -15);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "4: " + $.S(t2.$index(t2, 4)), -160, -15);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 4)), 160, -15);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 4)), 160, -15);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "5: " + $.S(t2.$index(t2, 5)), -160, 25);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "5: " + $.S(t2.$index(t2, 5)), -160, 25);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 5)), 160, 25);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 5)), 160, 25);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "6: " + $.S(t2.$index(t2, 6)), -160, 65);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "6: " + $.S(t2.$index(t2, 6)), -160, 65);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 6)), 160, 65);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 6)), 160, 65);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "7: " + $.S(t2.$index(t2, 7)), -160, 105);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "7: " + $.S(t2.$index(t2, 7)), -160, 105);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 7)), 160, 105);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 7)), 160, 105);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "8: " + $.S(t2.$index(t2, 8)), -160, 145);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "8: " + $.S(t2.$index(t2, 8)), -160, 145);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 8)), 160, 145);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 8)), 160, 145);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "9: " + $.S(t2.$index(t2, 9)), -160, 185);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "9: " + $.S(t2.$index(t2, 9)), -160, 185);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 9)), 160, 185);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 9)), 160, 185);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, "10: " + $.S(t2.$index(t2, 10)), -160, 225);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "10: " + $.S(t2.$index(t2, 10)), -160, 225);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 42, $.S(t1.$index(t1, 10)), 160, 225);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, $.S(t1.$index(t1, 10)), 160, 225);
     this.entities.push(t3);
     t3 = $.GameButton$(new $.GalagaGame_createLeaderBoardMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 36, "RESET", 0, 275);
     this.entities.push(t3);
@@ -6203,27 +6203,27 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     t1 = this.Stats;
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Total Killed: " + $.S(t1.$index(t1, "killed")), 0, -200);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Killed: " + $.S(t1.$index(t1, "killed")), 0, -200);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Groupies Annihilated: " + $.S(t1.$index(t1, "normalKills")), 0, -155);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Groupies Annihilated: " + $.S(t1.$index(t1, "normalKills")), 0, -155);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Big Bosses Denominated: " + $.S(t1.$index(t1, "bossKills")), 0, -110);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Big Bosses Denominated: " + $.S(t1.$index(t1, "bossKills")), 0, -110);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Mother Ships Deflowered: " + $.S(t1.$index(t1, "motherKills")), 0, -65);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Mother Ships Deflowered: " + $.S(t1.$index(t1, "motherKills")), 0, -65);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Powerups Absorbed: " + $.S(t1.$index(t1, "powerups")), 0, -20);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Powerups Absorbed: " + $.S(t1.$index(t1, "powerups")), 0, -20);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Total Completed Levels: " + $.S(t1.$index(t1, "wins")), 0, 25);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Completed Levels: " + $.S(t1.$index(t1, "wins")), 0, 25);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Total Loses: " + $.S(t1.$index(t1, "loses")), 0, 70);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Loses: " + $.S(t1.$index(t1, "loses")), 0, 70);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Total Games: " + $.S(t1.$index(t1, "totalGames")), 0, 115);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Games: " + $.S(t1.$index(t1, "totalGames")), 0, 115);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "High Score: " + $.S(t1.$index(t1, "highscore")), 0, 160);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "High Score: " + $.S(t1.$index(t1, "highscore")), 0, 160);
     this.entities.push(t2);
-    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "Back", -420, -280);
+    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Back", -420, -280);
     this.entities.push(t2);
-    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 36, "RESET", 0, 225);
+    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "RESET", 0, 225);
     this.entities.push(t2);
     this.disableEntitiesByGroup$1("stats");
   },
@@ -7508,517 +7508,517 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
           t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
         }
       }
-      if (this.type === "Boss") {
-        if (this.health <= 0) {
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "wins", $.$add$ns(t1.$index(t1, "wins"), 1));
-          this.game.newExplosion$2(this.get$x(this), this.get$y(this));
-          this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon());
-          this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon0());
-          this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon1());
+    }
+    if (this.type === "Boss") {
+      if (this.health <= 0) {
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "wins", $.$add$ns(t1.$index(t1, "wins"), 1));
+        this.game.newExplosion$2(this.get$x(this), this.get$y(this));
+        this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon());
+        this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon0());
+        this.game.removeEntitiesByFilter$1(new $.Enemy_update_anon1());
+        t1 = this.game;
+        if (t1.get$soundEffectsOn()) {
+          t1 = t1.get$cursorSelect2();
+          t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+        }
+        this.game.removeEntitiesByGroup$1("levelEnd");
+        this.game.createLevelEnd$0();
+        $.set$state$x(this.game, 8);
+        this.game.set$waiting(1);
+        this.game.set$bonusCheck(3);
+        this.game.set$bonusStage(false);
+        t1 = this.game;
+        t1.set$level(t1.get$level() + 1);
+        this.bossHealth = this.bossHealth + 50;
+        t1 = this.game;
+        if (t1.get$level() >= t1.get$bonusCheck()) {
+          t1.set$bonusStage(true);
+          t1 = this.game;
+          t1.set$bonusCheck(t1.get$bonusCheck() + 3);
+        } else
+          t1.set$bonusStage(false);
+        t1 = this.game;
+        t1.set$score($.$add$ns(t1.get$score(), 10000 * t1.get$pointMultiplier()));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "bossKills", $.$add$ns(t1.$index(t1, "bossKills"), 1));
+        this.game.set$bonusStage(false);
+        this._removeFromGame = true;
+      }
+      if ($.random(0, 1, false) <= 0.01) {
+        t1 = $.$eq(this.momentum.yVel, 0);
+        t2 = this.momentum;
+        if (t1 !== true)
+          t2.yVel = $.$mul$n(t2.yVel, -1);
+        else
+          t2.yVel = 60;
+      }
+      if ($.random(0, 1, false) <= 0.01) {
+        t1 = $.$eq(this.momentum.xVel, 0);
+        t2 = this.momentum;
+        if (t1 !== true)
+          t2.xVel = $.$mul$n(t2.xVel, -1);
+        else
+          t2.xVel = 60;
+      }
+      if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight() - 250) === true && $.random(0, 1, false) <= 0.07) {
+        t1 = this.momentum;
+        t1.yVel = $.$mul$n(t1.yVel, -1);
+      }
+      if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight() - 115) === true) {
+        t1 = this.momentum;
+        t1.yVel = $.$mul$n(t1.yVel, -1);
+      }
+      if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight() + 72) === true) {
+        t1 = this.momentum;
+        t1.yVel = $.$mul$n(t1.yVel, -1);
+      }
+      if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth() - 72) === true) {
+        t1 = this.momentum;
+        t1.xVel = $.$mul$n(t1.xVel, -1);
+      }
+      if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth() + 72) === true) {
+        t1 = this.momentum;
+        t1.xVel = $.$mul$n(t1.xVel, -1);
+      }
+      if (this.belowHalfHp) {
+        t1 = this.bossDifficulty;
+        if (t1 === 1) {
+          if ($.random(0, 1, false) <= 0.1) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 2) {
+          if ($.random(0, 1, false) <= 0.1) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 3) {
+          if ($.random(0, 1, false) <= 0.07) {
+            if ($.random(0, 1, false) <= 0.1) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.1) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 4) {
+          if ($.random(0, 1, false) <= 0.1) {
+            if ($.random(0, 1, false) <= 0.3) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.3) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 5)
+          if ($.random(0, 1, false) <= 0.2) {
+            if ($.random(0, 1, false) <= 0.5) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.5) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+      } else {
+        t1 = this.bossDifficulty;
+        if (t1 === 1) {
+          if ($.random(0, 1, false) <= 0.01) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 2) {
+          if ($.random(0, 1, false) <= 0.03) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 3) {
+          if ($.random(0, 1, false) <= 0.07) {
+            if ($.random(0, 1, false) <= 0.1) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.1) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 4) {
+          if ($.random(0, 1, false) <= 0.1) {
+            if ($.random(0, 1, false) <= 0.3) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.3) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+        } else if (t1 === 5)
+          if ($.random(0, 1, false) <= 0.2) {
+            if ($.random(0, 1, false) <= 0.5) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
+            } else if ($.random(0, 1, false) <= 0.5) {
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
+              t1 = this.game;
+              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
+            }
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          } else if ($.random(0, 1, false) <= 0.01) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
+            t1 = this.game;
+            if (t1.get$soundEffectsOn()) {
+              t1 = t1.get$enemyFire();
+              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+            }
+          }
+      }
+      t1 = $.random(0, 1, false);
+      t2 = this.game;
+      if (t1 <= 0.5)
+        t2.newBossDrone$2(this.get$x(this), $.$sub$n(this.get$y(this), 50));
+      else
+        t2.newBossDrone$2($.$add$ns(this.get$x(this), 72), $.$sub$n(this.get$y(this), 50));
+    }
+    if (this.type === "MotherShip") {
+      if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth()) === true)
+        this._removeFromGame = true;
+      if (this.health <= 0) {
+        t1 = this.game;
+        t1.set$score($.$add$ns(t1.get$score(), 1000 * t1.get$pointMultiplier()));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "motherKills", $.$add$ns(t1.$index(t1, "motherKills"), 1));
+        if ($.random(0, 1, false) > 0.5)
+          this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
+        this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
+        this._removeFromGame = true;
+      }
+      t1 = this.difficulty;
+      if (t1 === 1) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
           if (t1.get$soundEffectsOn()) {
-            t1 = t1.get$cursorSelect2();
+            t1 = t1.get$motherShipFire();
             t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
-          this.game.removeEntitiesByGroup$1("levelEnd");
-          this.game.createLevelEnd$0();
-          $.set$state$x(this.game, 8);
-          this.game.set$waiting(1);
-          this.game.set$bonusCheck(3);
-          this.game.set$bonusStage(false);
+        }
+      } else if (t1 === 2) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
           t1 = this.game;
-          t1.set$level(t1.get$level() + 1);
-          this.bossHealth = this.bossHealth + 50;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           t1 = this.game;
-          if (t1.get$level() >= t1.get$bonusCheck()) {
-            t1.set$bonusStage(true);
-            t1 = this.game;
-            t1.set$bonusCheck(t1.get$bonusCheck() + 3);
-          } else
-            t1.set$bonusStage(false);
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$motherShipFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+      } else if (t1 === 3) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
           t1 = this.game;
-          t1.set$score($.$add$ns(t1.get$score(), 10000 * t1.get$pointMultiplier()));
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "bossKills", $.$add$ns(t1.$index(t1, "bossKills"), 1));
-          this.game.set$bonusStage(false);
-          this._removeFromGame = true;
-        }
-        if ($.random(0, 1, false) <= 0.01) {
-          t1 = $.$eq(this.momentum.yVel, 0);
-          t2 = this.momentum;
-          if (t1 !== true)
-            t2.yVel = $.$mul$n(t2.yVel, -1);
-          else
-            t2.yVel = 60;
-        }
-        if ($.random(0, 1, false) <= 0.01) {
-          t1 = $.$eq(this.momentum.xVel, 0);
-          t2 = this.momentum;
-          if (t1 !== true)
-            t2.xVel = $.$mul$n(t2.xVel, -1);
-          else
-            t2.xVel = 60;
-        }
-        if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight() - 250) === true && $.random(0, 1, false) <= 0.07) {
-          t1 = this.momentum;
-          t1.yVel = $.$mul$n(t1.yVel, -1);
-        }
-        if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight() - 115) === true) {
-          t1 = this.momentum;
-          t1.yVel = $.$mul$n(t1.yVel, -1);
-        }
-        if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight() + 72) === true) {
-          t1 = this.momentum;
-          t1.yVel = $.$mul$n(t1.yVel, -1);
-        }
-        if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth() - 72) === true) {
-          t1 = this.momentum;
-          t1.xVel = $.$mul$n(t1.xVel, -1);
-        }
-        if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth() + 72) === true) {
-          t1 = this.momentum;
-          t1.xVel = $.$mul$n(t1.xVel, -1);
-        }
-        if (this.belowHalfHp) {
-          t1 = this.bossDifficulty;
-          if (t1 === 1) {
-            if ($.random(0, 1, false) <= 0.1) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 2) {
-            if ($.random(0, 1, false) <= 0.1) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 3) {
-            if ($.random(0, 1, false) <= 0.07) {
-              if ($.random(0, 1, false) <= 0.1) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.1) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 4) {
-            if ($.random(0, 1, false) <= 0.1) {
-              if ($.random(0, 1, false) <= 0.3) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.3) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 5)
-            if ($.random(0, 1, false) <= 0.2) {
-              if ($.random(0, 1, false) <= 0.5) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.5) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-        } else {
-          t1 = this.bossDifficulty;
-          if (t1 === 1) {
-            if ($.random(0, 1, false) <= 0.01) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 2) {
-            if ($.random(0, 1, false) <= 0.03) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 3) {
-            if ($.random(0, 1, false) <= 0.07) {
-              if ($.random(0, 1, false) <= 0.1) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.1) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 4) {
-            if ($.random(0, 1, false) <= 0.1) {
-              if ($.random(0, 1, false) <= 0.3) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.3) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-          } else if (t1 === 5)
-            if ($.random(0, 1, false) <= 0.2) {
-              if ($.random(0, 1, false) <= 0.5) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
-              } else if ($.random(0, 1, false) <= 0.5) {
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
-                t1 = this.game;
-                t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
-              }
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            } else if ($.random(0, 1, false) <= 0.01) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
-              t1 = this.game;
-              if (t1.get$soundEffectsOn()) {
-                t1 = t1.get$enemyFire();
-                t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-              }
-            }
-        }
-        t1 = $.random(0, 1, false);
-        t2 = this.game;
-        if (t1 <= 0.5)
-          t2.newBossDrone$2(this.get$x(this), $.$sub$n(this.get$y(this), 50));
-        else
-          t2.newBossDrone$2($.$add$ns(this.get$x(this), 72), $.$sub$n(this.get$y(this), 50));
-      }
-      if (this.type === "MotherShip") {
-        if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth()) === true)
-          this._removeFromGame = true;
-        if (this.health <= 0) {
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.1) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          }
           t1 = this.game;
-          t1.set$score($.$add$ns(t1.get$score(), 1000 * t1.get$pointMultiplier()));
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "motherKills", $.$add$ns(t1.$index(t1, "motherKills"), 1));
-          if ($.random(0, 1, false) > 0.5)
-            this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
-          this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
-          this._removeFromGame = true;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$motherShipFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
         }
-        t1 = this.difficulty;
-        if (t1 === 1) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$motherShipFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-        } else if (t1 === 2) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$motherShipFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-        } else if (t1 === 3) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.1) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$motherShipFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-        } else if (t1 === 4) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.3) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$motherShipFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-        } else if (t1 === 5)
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.5) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$motherShipFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-      }
-      if (this.type === "Normal") {
-        if ($.random(0, 1, false) < 0.0002)
-          this.game.get$canEnemyFall();
-        if (this.health <= 0) {
+      } else if (t1 === 4) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
           t1 = this.game;
-          t1.set$score($.$add$ns(t1.get$score(), 100 * t1.get$pointMultiplier()));
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.3) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          }
           t1 = this.game;
-          t1.set$enemyAmount(t1.get$enemyAmount() - 1);
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
-          t1 = this.game.get$Stats();
-          t1.$indexSet(t1, "normalKills", $.$add$ns(t1.$index(t1, "normalKills"), 1));
-          if ($.random(0, 1, false) > 0.5)
-            this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
-          this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
-          this._removeFromGame = true;
-        }
-        if ($.$ge$n(this.get$y(this), 350) === true && !this.yReset) {
-          this.set$y(this, -350);
-          this.yReset = true;
-        }
-        if (this.yReset) {
-          t1 = this.game.get$goingRight();
-          t2 = this.momentum;
-          if (t1)
-            t2.xVel = 80;
-          else
-            t2.xVel = -80;
-        }
-        if ($.$ge$n(this.get$y(this), this.startY) === true && this.yReset) {
-          this.momentum.yVel = 0;
-          this.set$y(this, this.startY);
-          this.yReset = false;
-        }
-        if ($.random(0, 1, false) <= 0.01 && this.game.canEnemyFall$0()) {
-          t1 = this.momentum;
-          t1.yVel = $.$mul$n(t1.yVel, -1);
-          this.isFalling = true;
-          this.yReset = false;
-        }
-        if ($.$gt$n($.$add$ns(this.get$x(this), 16), $.get$rect$x(this.game).get$halfWidth()) === true || $.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true)
-          this.game.switchDirection$0();
-        if (this.collidesWith$1(this.game.get$ship())) {
-          this.game.get$_gameOverEvent().signal$0();
-          this._removeFromGame = true;
-          t1 = this.game.get$ship();
-          t1.set$lives($.$sub$n(t1.get$lives(), 1));
-        }
-        if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth()) === true)
-          this.game.gameOver$0();
-        t1 = this.difficulty;
-        if (t1 === 1) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$enemyFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$motherShipFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
-        } else if (t1 === 2) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
+        }
+      } else if (t1 === 5)
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.5) {
             t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$enemyFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
-        } else if (t1 === 3) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.1) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$enemyFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$motherShipFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
           }
-        } else if (t1 === 4) {
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.3) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$enemyFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-        } else if (t1 === 5)
-          if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
-            t1 = this.game;
-            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            if ($.random(0, 1, false) <= 0.5) {
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-              t1 = this.game;
-              t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
-            }
-            t1 = this.game;
-            if (t1.get$soundEffectsOn()) {
-              t1 = t1.get$enemyFire();
-              t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
-            }
-          }
-      }
-      $.GameEntity.prototype.update$0.call(this);
+        }
     }
+    if (this.type === "Normal") {
+      if ($.random(0, 1, false) < 0.0002)
+        this.game.get$canEnemyFall();
+      if (this.health <= 0) {
+        t1 = this.game;
+        t1.set$score($.$add$ns(t1.get$score(), 100 * t1.get$pointMultiplier()));
+        t1 = this.game;
+        t1.set$enemyAmount(t1.get$enemyAmount() - 1);
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "killed", $.$add$ns(t1.$index(t1, "killed"), 1));
+        t1 = this.game.get$Stats();
+        t1.$indexSet(t1, "normalKills", $.$add$ns(t1.$index(t1, "normalKills"), 1));
+        if ($.random(0, 1, false) > 0.5)
+          this.game.newBulletPowerUp$2(this.get$x(this), this.get$y(this));
+        this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
+        this._removeFromGame = true;
+      }
+      if ($.$ge$n(this.get$y(this), 350) === true && !this.yReset) {
+        this.set$y(this, -350);
+        this.yReset = true;
+      }
+      if (this.yReset) {
+        t1 = this.game.get$goingRight();
+        t2 = this.momentum;
+        if (t1)
+          t2.xVel = 80;
+        else
+          t2.xVel = -80;
+      }
+      if ($.$ge$n(this.get$y(this), this.startY) === true && this.yReset) {
+        this.momentum.yVel = 0;
+        this.set$y(this, this.startY);
+        this.yReset = false;
+      }
+      if ($.random(0, 1, false) <= 0.01 && this.game.canEnemyFall$0()) {
+        t1 = this.momentum;
+        t1.yVel = $.$mul$n(t1.yVel, -1);
+        this.isFalling = true;
+        this.yReset = false;
+      }
+      if ($.$gt$n($.$add$ns(this.get$x(this), 16), $.get$rect$x(this.game).get$halfWidth()) === true || $.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true)
+        this.game.switchDirection$0();
+      if (this.collidesWith$1(this.game.get$ship())) {
+        this.game.get$_gameOverEvent().signal$0();
+        this._removeFromGame = true;
+        t1 = this.game.get$ship();
+        t1.set$lives($.$sub$n(t1.get$lives(), 1));
+      }
+      if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth()) === true)
+        this.game.gameOver$0();
+      t1 = this.difficulty;
+      if (t1 === 1) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$enemyFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+      } else if (t1 === 2) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.03) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$enemyFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+      } else if (t1 === 3) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.07) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.1) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          }
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$enemyFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+      } else if (t1 === 4) {
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.1) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.3) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          }
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$enemyFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+      } else if (t1 === 5)
+        if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.2) {
+          t1 = this.game;
+          t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          if ($.random(0, 1, false) <= 0.5) {
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+            t1 = this.game;
+            t1.addEntity$1($.Bullet$(t1, this.get$x(this), $.$add$ns(this.get$y(this), 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
+          }
+          t1 = this.game;
+          if (t1.get$soundEffectsOn()) {
+            t1 = t1.get$enemyFire();
+            t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
+          }
+        }
+    }
+    $.GameEntity.prototype.update$0.call(this);
   },
   Enemy$5: function(game, x, y, diff, Type) {
     var t1;
@@ -8083,18 +8083,7 @@ $$.Enemy_update_anon1 = {"": "Closure;",
   }
 };
 
-$$.EnemyRenderer = {"": "DefaultCanvasEntityRenderer;gr",
-  render$1: function(e) {
-    var t1;
-    $.DefaultCanvasEntityRenderer.prototype.render$1.call(this, e);
-    t1 = this.gr;
-    $.set$fillStyle$x(t1.ctx, "rgba(0, 0, 0, .5)");
-    $.set$font$x(t1.ctx, "36px Verdana");
-    $.get$type$x(e);
-  }
-};
-
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRenderer,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -8161,25 +8150,13 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawStars_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_drawStars_anon0(this));
   },
-  drawSuperBullet$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawSuperBullet_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawSuperBullet_anon0(this));
-  },
-  drawBossSuperBullet$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBossSuperBullet_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawBossSuperBullet_anon0(this));
-  },
   drawBouncer$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBouncer_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_drawBouncer_anon0(this));
   },
-  drawShipBullet$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawShipBullet_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawShipBullet_anon0(this));
-  },
-  drawEnemyBullet$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemyBullet_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawEnemyBullet_anon0(this));
+  drawBullets$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBullets_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawBullets_anon0(this));
   },
   drawPowerUps$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawPowerUps_anon());
@@ -8194,33 +8171,23 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
   },
   drawShip$0: function() {
     var t1, t2, t3, t4, t5;
-    $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
-    $.set$lineWidth$x(this.ctx, 3);
-    $.beginPath$0$x(this.ctx);
-    t1 = this.ctx;
-    t2 = this.ship;
-    t3 = this.get$game().get$ship();
-    t4 = $.$sub$n(t3.get$x(t3), 22);
-    t5 = this.get$game().get$ship();
-    $.drawImageScaled$5$x(t1, t2, t4, $.$sub$n(t5.get$y(t5), 25), 42, 42);
-    this.drawChargeBar$0();
-    $.stroke$0$x(this.ctx);
+    if (!this.shipFlicker) {
+      $.set$strokeStyle$x(this.ctx, "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(this.ctx, 3);
+      $.beginPath$0$x(this.ctx);
+      t1 = this.ctx;
+      t2 = this.ship;
+      t3 = this.get$game().get$ship();
+      t4 = $.$sub$n(t3.get$x(t3), 22);
+      t5 = this.get$game().get$ship();
+      $.drawImageScaled$5$x(t1, t2, t4, $.$sub$n(t5.get$y(t5), 25), 42, 42);
+      this.drawChargeBar$0();
+      $.stroke$0$x(this.ctx);
+    }
   },
-  drawDrone$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawDrone_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawDrone_anon0(this));
-  },
-  drawMotherShip$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawMotherShip_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawMotherShip_anon0(this));
-  },
-  drawBoss$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawBoss_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawBoss_anon0(this));
-  },
-  drawEnemy$0: function() {
-    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemy_anon());
-    t1.forEach$1(t1, new $.GalagaRenderer_drawEnemy_anon0(this));
+  drawEnemys$0: function() {
+    var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemys_anon());
+    t1.forEach$1(t1, new $.GalagaRenderer_drawEnemys_anon0(this));
   },
   subtleBgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.84)";
@@ -8336,20 +8303,15 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     t1.forEach$1(t1, new $.GalagaRenderer_normalShipHit_anon0(this));
   },
   getRenderer$1: function(e) {
-    var t1, t2, t3;
-    t1 = typeof e === "object" && e !== null && !!e.$isEnemy;
-    if (t1) {
-      t2 = this.get$game();
-      t3 = t2.get$state(t2) === 4;
-      t2 = t3;
+    var t1, t2;
+    if (typeof e === "object" && e !== null && !!e.$isEnemy) {
+      t1 = this.get$game();
+      t2 = t1.get$state(t1) === 4;
+      t1 = t2;
     } else
-      t2 = false;
-    if (t2)
-      return;
-    if (typeof e === "object" && e !== null && !!e.$isPowerUp)
-      return this.powerUpRenderer;
+      t1 = false;
     if (t1)
-      return this.enemyRenderer;
+      return;
     return $.CanvasGameRenderer.prototype.getRenderer$1.call(this, e);
   },
   drawBeforeCtxRestore$0: function() {
@@ -8365,17 +8327,10 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     } else
       t1 = true;
     if (t1) {
-      if (!this.shipFlicker)
-        this.drawShip$0();
-      this.drawShipBullet$0();
-      this.drawSuperBullet$0();
-      this.drawBossSuperBullet$0();
-      this.drawEnemyBullet$0();
+      this.drawShip$0();
       this.drawPowerUps$0();
-      this.drawEnemy$0();
-      this.drawBoss$0();
-      this.drawDrone$0();
-      this.drawMotherShip$0();
+      this.drawEnemys$0();
+      this.drawBullets$0();
       this.drawEtc$0();
     }
     $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
@@ -8463,8 +8418,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,powerUpRenderer,enemyRende
     $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_bgFade_anon9(this));
   },
   GalagaRenderer$1: function(targetId) {
-    this.powerUpRenderer = $.PowerUpRenderer$(this);
-    this.enemyRenderer = $.EnemyRenderer$(this);
     $.set$src$x(this.ship, "../web/images/Ship.png");
     $.set$src$x(this.enemy, "../web/images/enemy.png");
     $.set$src$x(this.enemy2, "../web/images/enemy2.png");
@@ -8577,48 +8530,6 @@ $$.GalagaRenderer_drawStars_anon0 = {"": "Closure;this_0",
   }
 };
 
-$$.GalagaRenderer_drawSuperBullet_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isBullet;
-  }
-};
-
-$$.GalagaRenderer_drawSuperBullet_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
-      t1 = this.this_0;
-      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t1.get$ctx(), 3);
-      $.beginPath$0$x(t1.get$ctx());
-      t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$superBullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 64, 32);
-      $.stroke$0$x(t1.get$ctx());
-    }
-  }
-};
-
-$$.GalagaRenderer_drawBossSuperBullet_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isBullet;
-  }
-};
-
-$$.GalagaRenderer_drawBossSuperBullet_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
-      t1 = this.this_0;
-      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t1.get$ctx(), 3);
-      $.beginPath$0$x(t1.get$ctx());
-      t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bossSuperBullet(), $.$sub$n(t2.get$x(e), 72), $.$sub$n(t2.get$y(e), 8), 64, 64);
-      $.stroke$0$x(t1.get$ctx());
-    }
-  }
-};
-
 $$.GalagaRenderer_drawBouncer_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isbouncingBall;
@@ -8668,15 +8579,33 @@ $$.GalagaRenderer_drawBouncer_anon0 = {"": "Closure;this_0",
   }
 };
 
-$$.GalagaRenderer_drawShipBullet_anon = {"": "Closure;",
+$$.GalagaRenderer_drawBullets_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isBullet;
   }
 };
 
-$$.GalagaRenderer_drawShipBullet_anon0 = {"": "Closure;this_0",
+$$.GalagaRenderer_drawBullets_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     var t1, t2;
+    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$superBullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 64, 32);
+      $.stroke$0$x(t1.get$ctx());
+    }
+    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bossSuperBullet(), $.$sub$n(t2.get$x(e), 72), $.$sub$n(t2.get$y(e), 8), 64, 64);
+      $.stroke$0$x(t1.get$ctx());
+    }
     if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
@@ -8686,25 +8615,22 @@ $$.GalagaRenderer_drawShipBullet_anon0 = {"": "Closure;this_0",
       $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
       $.stroke$0$x(t1.get$ctx());
     }
-  }
-};
-
-$$.GalagaRenderer_drawEnemyBullet_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isBullet;
-  }
-};
-
-$$.GalagaRenderer_drawEnemyBullet_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
+    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
       $.beginPath$0$x(t1.get$ctx());
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemybullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
+      $.stroke$0$x(t1.get$ctx());
+    }
+    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
+      t1 = this.this_0;
+      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
+      $.set$lineWidth$x(t1.get$ctx(), 3);
+      $.beginPath$0$x(t1.get$ctx());
+      t2 = $.getInterceptor$x(e);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
       $.stroke$0$x(t1.get$ctx());
     }
   }
@@ -8738,15 +8664,15 @@ $$.GalagaRenderer_drawPowerUps_anon0 = {"": "Closure;this_0",
   }
 };
 
-$$.GalagaRenderer_drawDrone_anon = {"": "Closure;",
+$$.GalagaRenderer_drawEnemys_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isEnemy;
   }
 };
 
-$$.GalagaRenderer_drawDrone_anon0 = {"": "Closure;this_0",
+$$.GalagaRenderer_drawEnemys_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
-    var t1, t2;
+    var t1, t2, t3, t4;
     t1 = $.getInterceptor$x(e);
     if ($.$eq(t1.get$type(e), "Drone") === true && !e.get$flicker()) {
       t2 = this.this_0;
@@ -8756,19 +8682,6 @@ $$.GalagaRenderer_drawDrone_anon0 = {"": "Closure;this_0",
       $.drawImageScaled$5$x(t2.get$ctx(), t2.get$enemy(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 12, 12);
       $.stroke$0$x(t2.get$ctx());
     }
-  }
-};
-
-$$.GalagaRenderer_drawMotherShip_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_drawMotherShip_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
     if ($.$eq(t1.get$type(e), "MotherShip") === true && !e.get$flicker()) {
       t2 = this.this_0;
       $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
@@ -8777,19 +8690,6 @@ $$.GalagaRenderer_drawMotherShip_anon0 = {"": "Closure;this_0",
       $.drawImageScaled$5$x(t2.get$ctx(), t2.get$mothership(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
       $.stroke$0$x(t2.get$ctx());
     }
-  }
-};
-
-$$.GalagaRenderer_drawBoss_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_drawBoss_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
     if ($.$eq(t1.get$type(e), "Boss") === true) {
       t2 = this.this_0;
       $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
@@ -8800,19 +8700,6 @@ $$.GalagaRenderer_drawBoss_anon0 = {"": "Closure;this_0",
       $.drawImageScaled$5$x(t2.get$ctx(), t2.get$bosshp(), -300, -250, e.get$health() * 6, 12);
       $.stroke$0$x(t2.get$ctx());
     }
-  }
-};
-
-$$.GalagaRenderer_drawEnemy_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_drawEnemy_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    var t1, t2, t3, t4;
-    t1 = $.getInterceptor$x(e);
     if ($.$eq(t1.get$type(e), "Normal") === true && !e.get$flicker()) {
       t2 = this.this_0;
       $.set$strokeStyle$x(t2.get$ctx(), "rgba(255, 255, 255, 1.0)");
@@ -9132,33 +9019,6 @@ $$.GalagaRenderer_bgFade_anon9 = {"": "Closure;this_10",
   call$0: function() {
     this.this_10.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
     return "rgba(0, 0, 0, 0.85)";
-  }
-};
-
-$$.PowerUpRenderer = {"": "DefaultCanvasEntityRenderer;gr",
-  render$1: function(e) {
-    var t1, t2;
-    $.DefaultCanvasEntityRenderer.prototype.render$1.call(this, e);
-    t1 = this.gr;
-    $.set$fillStyle$x(t1.ctx, "rgba(0, 0, 0, .5)");
-    $.set$font$x(t1.ctx, "24px Verdana");
-    t2 = $.getInterceptor$x(e);
-    switch (t2.get$type(e)) {
-      case "SpiralShot":
-        $.fillText$3$x(t1.ctx, "S", $.$sub$n(t2.get$x(e), 8), $.$add$ns(t2.get$y(e), 8));
-        break;
-      case "Multiplier":
-        $.fillText$3$x(t1.ctx, "x2", $.$sub$n(t2.get$x(e), 12), $.$add$ns(t2.get$y(e), 8));
-        break;
-      case "BulletIncrease":
-        $.set$font$x(t1.ctx, "36px Verdana");
-        $.fillText$3$x(t1.ctx, "+", $.$sub$n(t2.get$x(e), 14), $.$add$ns(t2.get$y(e), 10));
-        break;
-      case "ExtraLife":
-        $.set$font$x(t1.ctx, "12px Verdana");
-        $.fillText$3$x(t1.ctx, "Life", $.$sub$n(t2.get$x(e), 10), $.$add$ns(t2.get$y(e), 8));
-        break;
-    }
   }
 };
 
@@ -11173,19 +11033,11 @@ $.Enemy$ = function(game, x, y, diff, Type) {
   return t1;
 };
 
-$.EnemyRenderer$ = function(gr) {
-  return new $.EnemyRenderer(gr);
-};
-
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, null, null, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
-};
-
-$.PowerUpRenderer$ = function(gr) {
-  return new $.PowerUpRenderer(gr);
 };
 
 $.Particles$ = function(game, x, y, h, w, col, xV, yV) {

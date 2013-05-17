@@ -3,8 +3,6 @@ part of galaga_html;
 class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   num timeLeft = 0;
 
-  PowerUpRenderer powerUpRenderer;
-  EnemyRenderer enemyRenderer;
   ImageElement ship = new ImageElement();
   ImageElement enemy = new ImageElement();
   ImageElement enemy2 = new ImageElement();
@@ -33,8 +31,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   bool shipFlicker = false;
 
   GalagaRenderer(String targetId) : super(targetId) {
-    powerUpRenderer = new PowerUpRenderer(this);
-    enemyRenderer = new EnemyRenderer(this);
     ship.src = '../web/images/Ship.png';
     enemy.src = '../web/images/enemy.png';
     enemy2.src = '../web/images/enemy2.png';
@@ -129,32 +125,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
 
-  void drawSuperBullet() {
-    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
-      if (e.momentum.yVel < 0 && e.Type == "super") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
-        ctx.stroke();
-      }
-    });
-  }
-
-  void drawBossSuperBullet() {
-    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
-      if (e.momentum.yVel > 0 && e.Type == "super") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(bossSuperBullet, e.x - 72, e.y - 8, 64, 64);
-        ctx.stroke();
-      }
-    });
-  }
-
   void drawBouncer() {
     game.entities.where((e) => e is bouncingBall).forEach((bouncingBall e) {
       ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
@@ -186,8 +156,44 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
 
-  void drawShipBullet() {
+  void drawBullets() {
     game.entities.where((e) => e is Bullet).forEach((Bullet e) {
+      if (e.momentum.yVel < 0 && e.Type == "super") {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
+        ctx.stroke();
+      }
+
+      if (e.momentum.yVel > 0 && e.Type == "super") {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(bossSuperBullet, e.x - 72, e.y - 8, 64, 64);
+        ctx.stroke();
+      }
+
+      if (e.momentum.yVel < 0 && e.Type != "super") {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
+        ctx.stroke();
+      }
+
+      if (e.momentum.yVel < 0 && e.Type != "super") {
+        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
+        ctx.stroke();
+      }
+
       if (e.momentum.yVel < 0 && e.Type != "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
@@ -197,19 +203,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.stroke();
       }
     });
-  }
 
-  void drawEnemyBullet() {
-    game.entities.where((e) => e is Bullet).forEach((Bullet e) {
-      if (e.momentum.yVel > 0 && e.Type != "super") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(enemybullet, e.x - 8, e.y - 8, 16, 16);
-        ctx.stroke();
-      }
-    });
   }
 
   void drawPowerUps() {
@@ -242,16 +236,18 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
 
   void drawShip() {
-    ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-    ctx.lineWidth = 3;
+    if (!shipFlicker) {
+      ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
+      ctx.lineWidth = 3;
 
-    ctx.beginPath();
-    ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
-    drawChargeBar();
-    ctx.stroke();
+      ctx.beginPath();
+      ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
+      drawChargeBar();
+      ctx.stroke();
+    }
   }
 
-  void drawDrone() {
+  void drawEnemys() {
     game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Drone" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
@@ -261,11 +257,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 12, 12);
         ctx.stroke();
       }
-    });
-  }
 
-  void drawMotherShip() {
-    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "MotherShip" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
@@ -274,11 +266,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(mothership, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
       }
-    });
-  }
 
-  void drawBoss() {
-    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Boss") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
@@ -289,11 +277,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(bosshp, -300, -250, e.health * 6, 12);
         ctx.stroke();
       }
-    });
-  }
 
-  void drawEnemy() {
-    game.entities.where((e) => e is Enemy).forEach((Enemy e) {
       if (e.type == "Normal" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
@@ -307,6 +291,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.stroke();
       }
     });
+
   }
 
   void subtleBgFade() {
@@ -408,12 +393,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     if (e is Enemy && game.state == GalagaGameState.gameOver)
       return null;
 
-    if (e is PowerUp)
-      return powerUpRenderer;
-
-    if (e is Enemy)
-      return enemyRenderer;
-
     return super.getRenderer(e);
   }
 
@@ -422,18 +401,11 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     drawCountDown();
     drawStars();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
-      if (!shipFlicker)
-        drawShip();
-      drawShipBullet();
-      drawSuperBullet();
-      drawBossSuperBullet();
-      drawEnemyBullet();
-      drawPowerUps();
-      drawEnemy();
-      drawBoss();
-      drawDrone();
-      drawMotherShip();
-      drawEtc();
+    drawShip();
+    drawPowerUps();
+    drawEnemys();
+    drawBullets();
+    drawEtc();
     }
     super.drawBeforeCtxRestore();
   }

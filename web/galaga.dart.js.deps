@@ -126,9 +126,7 @@ file:///G:/galaga/web/packages/galaga/galaga_html.dart
 file:///G:/galaga/web/packages/galaga/src/bouncingBall.dart
 file:///G:/galaga/web/packages/galaga/src/bullet.dart
 file:///G:/galaga/web/packages/galaga/src/enemy.dart
-file:///G:/galaga/web/packages/galaga/src/html/enemy_renderer.dart
 file:///G:/galaga/web/packages/galaga/src/html/galaga_renderer.dart
-file:///G:/galaga/web/packages/galaga/src/html/powerup_renderer.dart
 file:///G:/galaga/web/packages/galaga/src/particles.dart
 file:///G:/galaga/web/packages/galaga/src/powerup.dart
 file:///G:/galaga/web/packages/galaga/src/ship.dart
