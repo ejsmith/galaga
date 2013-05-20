@@ -4737,10 +4737,25 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var nextPosition, t1;
-    nextPosition = this._position + 1;
+    var t1, nextPosition;
+    t1 = this._position;
+    if (typeof t1 !== "number")
+      return this.moveNext$0$bailout(1, t1);
+    nextPosition = t1 + 1;
     t1 = this._length;
     if (nextPosition < t1) {
+      this._current = $.$index$asx(this._array, nextPosition);
+      this._position = nextPosition;
+      return true;
+    }
+    this._current = null;
+    this._position = t1;
+    return false;
+  },
+  moveNext$0$bailout: function(state0, t1) {
+    var nextPosition = $.$add$ns(t1, 1);
+    t1 = this._length;
+    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -6084,7 +6099,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.8, 56, "Welcome to Galaga!", 0, -97);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     t1 = $.GameButton$(new $.GalagaGame_createWelcomeMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "welcome", "", 0.4, 36, "Start Game", 0, -31);
     this.entities.push(t1);
@@ -6144,7 +6159,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
         t1.$indexSet(t1, i, "Pablo Manrequez");
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 56, "Leaderboard", 0, -240);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.4, 16, "Made by Cody Smith", 400, 275);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t3);
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Scores", -160, -175);
     this.entities.push(t3);
@@ -6200,7 +6215,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     var t1, t2;
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.8, 56, "Statistics", 0, -280);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.4, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     t1 = this.Stats;
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Killed: " + $.S(t1.$index(t1, "killed")), 0, -200);
@@ -6232,7 +6247,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this._gameOverEvent.signal$0();
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.8, 56, "Options", 0, -160);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Starting Lives:", 0, -60);
     this.entities.push(t1);
@@ -6288,7 +6303,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
   createControlsMenu$0: function() {
     var t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 56, "Instructions", 0, -225);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.4, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Mouse swipe", 0, -145);
     this.entities.push(t1);
@@ -8083,7 +8098,7 @@ $$.Enemy_update_anon1 = {"": "Closure;",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
     var t1 = this.get$game().get$Stats();
     t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
@@ -8143,7 +8158,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     this.get$game().get$onNormalHit().listen$1(new $.GalagaRenderer_init_anon4(this));
   },
   gameOver$0: function() {
-    this.bgFade$0();
+    this.subtleBgFade$0();
     this.updateStats$0();
   },
   drawStars$0: function() {
@@ -8194,10 +8209,19 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon(this));
     $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon0(this));
     $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon1(this));
-    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon2(this));
-    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon3(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon4(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon2(this));
+    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon3(this));
+    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon4(this));
+    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon6(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon7(this));
+    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon8(this));
+    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon9(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon10(this));
+    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon11(this));
+    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon12(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon13(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon14(this));
   },
   shipHit$0: function() {
     this.bgFade$0();
@@ -8327,11 +8351,11 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     } else
       t1 = true;
     if (t1) {
-      this.drawShip$0();
       this.drawPowerUps$0();
-      this.drawEnemys$0();
       this.drawBullets$0();
       this.drawEtc$0();
+      this.drawShip$0();
+      this.drawEnemys$0();
     }
     $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
   },
@@ -8447,7 +8471,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
 $$.GalagaRenderer_init_anon = {"": "Closure;this_0",
   call$1: function(e) {
     var t1 = this.this_0;
-    t1.bgFade$0();
+    t1.subtleBgFade$0();
     t1.updateStats$0();
     return;
   }
@@ -8596,8 +8620,7 @@ $$.GalagaRenderer_drawBullets_anon0 = {"": "Closure;this_0",
       t2 = $.getInterceptor$x(e);
       $.drawImageScaled$5$x(t1.get$ctx(), t1.get$superBullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 64, 32);
       $.stroke$0$x(t1.get$ctx());
-    }
-    if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
+    } else if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() === "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
@@ -8605,8 +8628,7 @@ $$.GalagaRenderer_drawBullets_anon0 = {"": "Closure;this_0",
       t2 = $.getInterceptor$x(e);
       $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bossSuperBullet(), $.$sub$n(t2.get$x(e), 72), $.$sub$n(t2.get$y(e), 8), 64, 64);
       $.stroke$0$x(t1.get$ctx());
-    }
-    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
+    } else if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
@@ -8614,23 +8636,13 @@ $$.GalagaRenderer_drawBullets_anon0 = {"": "Closure;this_0",
       t2 = $.getInterceptor$x(e);
       $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
       $.stroke$0$x(t1.get$ctx());
-    }
-    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
+    } else if ($.$gt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
       t1 = this.this_0;
       $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
       $.set$lineWidth$x(t1.get$ctx(), 3);
       $.beginPath$0$x(t1.get$ctx());
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
-      $.stroke$0$x(t1.get$ctx());
-    }
-    if ($.$lt$n(e.get$momentum().yVel, 0) === true && e.get$Type() !== "super") {
-      t1 = this.this_0;
-      $.set$strokeStyle$x(t1.get$ctx(), "rgba(255, 255, 255, 1.0)");
-      $.set$lineWidth$x(t1.get$ctx(), 3);
-      $.beginPath$0$x(t1.get$ctx());
-      t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$shipbullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemybullet(), $.$sub$n(t2.get$x(e), 8), $.$sub$n(t2.get$y(e), 8), 16, 16);
       $.stroke$0$x(t1.get$ctx());
     }
   }
@@ -8739,28 +8751,91 @@ $$.GalagaRenderer_subtleBgFade_anon1 = {"": "Closure;this_2",
 
 $$.GalagaRenderer_subtleBgFade_anon2 = {"": "Closure;this_3",
   call$0: function() {
-    this.this_3.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
-    return "rgba(0, 0, 0, 0.82)";
+    this.this_3.get$game().set$bgStyle("rgba(0, 0, 0, 0.80)");
+    return "rgba(0, 0, 0, 0.80)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon3 = {"": "Closure;this_4",
   call$0: function() {
-    this.this_4.get$game().set$bgStyle("rgba(0, 0, 0, 0.83)");
-    return "rgba(0, 0, 0, 0.83)";
+    this.this_4.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
+    return "rgba(0, 0, 0, 0.79)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon4 = {"": "Closure;this_5",
   call$0: function() {
-    this.this_5.get$game().set$bgStyle("rgba(0, 0, 0, 0.84)");
-    return "rgba(0, 0, 0, 0.84)";
+    this.this_5.get$game().set$bgStyle("rgba(0, 0, 0, 0.78)");
+    return "rgba(0, 0, 0, 0.78)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon5 = {"": "Closure;this_6",
   call$0: function() {
-    this.this_6.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
+    this.this_6.get$game().set$bgStyle("rgba(0, 0, 0, 0.77)");
+    return "rgba(0, 0, 0, 0.77)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon6 = {"": "Closure;this_7",
+  call$0: function() {
+    this.this_7.get$game().set$bgStyle("rgba(0, 0, 0, 0.78)");
+    return "rgba(0, 0, 0, 0.78)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon7 = {"": "Closure;this_8",
+  call$0: function() {
+    this.this_8.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
+    return "rgba(0, 0, 0, 0.79)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon8 = {"": "Closure;this_9",
+  call$0: function() {
+    this.this_9.get$game().set$bgStyle("rgba(0, 0, 0, 0.80)");
+    return "rgba(0, 0, 0, 0.80)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon9 = {"": "Closure;this_10",
+  call$0: function() {
+    this.this_10.get$game().set$bgStyle("rgba(0, 0, 0, 0.81)");
+    return "rgba(0, 0, 0, 0.81)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon10 = {"": "Closure;this_11",
+  call$0: function() {
+    this.this_11.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
+    return "rgba(0, 0, 0, 0.82)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon11 = {"": "Closure;this_12",
+  call$0: function() {
+    this.this_12.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
+    return "rgba(0, 0, 0, 0.82)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon12 = {"": "Closure;this_13",
+  call$0: function() {
+    this.this_13.get$game().set$bgStyle("rgba(0, 0, 0, 0.83)");
+    return "rgba(0, 0, 0, 0.83)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon13 = {"": "Closure;this_14",
+  call$0: function() {
+    this.this_14.get$game().set$bgStyle("rgba(0, 0, 0, 0.84)");
+    return "rgba(0, 0, 0, 0.84)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon14 = {"": "Closure;this_15",
+  call$0: function() {
+    this.this_15.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
     return "rgba(0, 0, 0, 0.85)";
   }
 };
@@ -9060,12 +9135,8 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
 
 $$.Particles_update_anon = {"": "Closure;this_0",
   call$1: function(t) {
-    var t1 = this.this_0;
-    t1.set$_waiting(t1.get$_waiting() + 1);
-    if (t1.get$_waiting() === 1) {
-      t1.set$_removeFromGame(true);
-      t.cancel$0();
-    }
+    this.this_0.set$_removeFromGame(true);
+    t.cancel$0();
   }
 };
 

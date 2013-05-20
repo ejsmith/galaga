@@ -370,6 +370,8 @@ class Enemy extends GameEntity<GalagaGame> {
       if (x > game.rect.halfWidth)
         removeFromGame();
 
+      momentum.xVel = 150;
+
       if (health <= 0) {
         game.score += 1000 * game.pointMultiplier;
         game.Stats["killed"] += 1;

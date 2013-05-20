@@ -94,7 +94,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
 
   void gameOver() {
-    bgFade();
+    subtleBgFade();
     updateStats();
   }
 
@@ -165,41 +165,26 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.beginPath();
         ctx.drawImageScaled(superBullet, e.x - 8, e.y - 8, 64, 32);
         ctx.stroke();
-      }
-
-      if (e.momentum.yVel > 0 && e.Type == "super") {
+      } else if (e.momentum.yVel > 0 && e.Type == "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
         ctx.drawImageScaled(bossSuperBullet, e.x - 72, e.y - 8, 64, 64);
         ctx.stroke();
-      }
-
-      if (e.momentum.yVel < 0 && e.Type != "super") {
+      } else if (e.momentum.yVel < 0 && e.Type != "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
         ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
         ctx.stroke();
-      }
-
-      if (e.momentum.yVel < 0 && e.Type != "super") {
+      } else if (e.momentum.yVel > 0 && e.Type != "super") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
-        ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
-        ctx.stroke();
-      }
-
-      if (e.momentum.yVel < 0 && e.Type != "super") {
-        ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.drawImageScaled(shipbullet, e.x - 8, e.y - 8, 16, 16);
+        ctx.drawImageScaled(enemybullet, e.x - 8, e.y - 8, 16, 16);
         ctx.stroke();
       }
     });
@@ -300,6 +285,15 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
     new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
     new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
+    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.80)");
+    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
+    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.78)");
+    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.77)");
+    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.78)");
+    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
+    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.80)");
+    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
+    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
     new Timer(const Duration(milliseconds: 100), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
     new Timer(const Duration(milliseconds: 125), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
     new Timer(const Duration(milliseconds: 150), () => game.bgStyle = "rgba(0, 0, 0, 0.84)");
@@ -401,12 +395,13 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     drawCountDown();
     drawStars();
     if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
-    drawShip();
     drawPowerUps();
-    drawEnemys();
     drawBullets();
     drawEtc();
+    drawShip();
+    drawEnemys();
     }
+
     super.drawBeforeCtxRestore();
   }
 

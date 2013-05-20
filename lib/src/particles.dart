@@ -32,13 +32,9 @@ class Particles extends GameEntity {
       return;
 
     _deleteTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {
-        _waiting++;
-
-      if (_waiting == 1) {
         removeFromGame();
 
         t.cancel();
-      }
     });
 
     if (y > game.rect.halfHeight)

@@ -391,7 +391,7 @@ class GalagaGame extends Game {
   void newStar() {
     num rand = random(0, 1);
 
-    if (rand > .09 || state == GalagaGameState.paused)
+    if (rand > .01 || state == GalagaGameState.paused)
       return;
 
     num w = random(.5, 3.5);
@@ -834,7 +834,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.5,
         id: "",
         groupId: "welcome"));
 
@@ -1031,7 +1031,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.5,
         id: "",
         groupId: "leaders"));
 
@@ -1357,7 +1357,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.5,
         id: "",
         groupId: "stats"));
 
@@ -1529,7 +1529,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.5,
         id: "",
         groupId: "options"));
 
@@ -2024,7 +2024,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered: true,
         color: "255, 255, 255",
-        opacity: 0.4,
+        opacity: 0.5,
         id: "",
         groupId: "instructions"));
 
