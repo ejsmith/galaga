@@ -90,6 +90,8 @@ class Bullet extends GameEntity<GalagaGame> {
 
         game.targetId = enemy.idNum;
 
+        game.ship.bulletsHit++;
+
         if (game.ship.bullet < 3)
           game.ship.bullet++;
 

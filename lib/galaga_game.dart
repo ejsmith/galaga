@@ -184,6 +184,8 @@ class GalagaGame extends Game {
       Stats["motherKills"] = 0;
     if (!Stats.containsKey("powerups"))
       Stats["powerups"] = 0;
+    if (!Stats.containsKey("percentage"))
+      Stats["percentage"] = 0;
 
     if (!Options.containsKey("startLives"))
       Options["startLives"] = 3;
@@ -245,6 +247,10 @@ class GalagaGame extends Game {
 
     // update pubsec
 
+    resetLeaderBoard();
+    resetOptions();
+    resetPowerups();
+    resetStats();
 
     state = GalagaGameState.welcome;
     super.start();
@@ -252,6 +258,7 @@ class GalagaGame extends Game {
 
   void update() {
     if (state == GalagaGameState.playing || state == GalagaGameState.paused) {
+      resetStats();
       score = score.ceil();
       if (input.keyCode == 27)
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
@@ -279,6 +286,10 @@ class GalagaGame extends Game {
 
         visualLevel++;
       }
+
+      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+
+      Stats["percentage"].ceil();
 
       if (score > Stats["highscore"])
         Stats["highscore"] = score;
@@ -1424,7 +1435,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 25,
-        text: "Total Completed Levels: ${Stats["wins"]}",
+        text: "Hit Rate: ${Stats["percentage"]}%",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1436,7 +1447,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 70,
-        text: "Total Loses: ${Stats["loses"]}",
+        text: "Total Completed Levels: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1448,7 +1459,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 115,
-        text: "Total Games: ${Stats["totalGames"]}",
+        text: "Total Loses: ${Stats["loses"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1460,6 +1471,18 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 160,
+        text: "Total Games: ${Stats["totalGames"]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.6,
+        id: "",
+        groupId: "stats"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 205,
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1492,7 +1515,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 0,
-        y: 225,
+        y: 250,
         text: "RESET",
         buttonAction: () => resetStats(),
         size: 36,

@@ -66,6 +66,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Stats["bossKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
     game.Stats["motherKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
     game.Stats["powerups"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
+    game.Stats["percentage"] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
 
     game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 3;
     game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 3;
@@ -74,16 +75,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 1;
     game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 1;
 
-    game.Highscores[1] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
-    game.Highscores[2] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
-    game.Highscores[3] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
-    game.Highscores[4] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
-    game.Highscores[5] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
-    game.Highscores[6] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
-    game.Highscores[7] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
-    game.Highscores[8] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
-    game.Highscores[9] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
-    game.Highscores[10] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
+    game.Highscores[1] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
+    game.Highscores[2] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
+    game.Highscores[3] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
+    game.Highscores[4] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
+    game.Highscores[5] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
+    game.Highscores[6] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
+    game.Highscores[7] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
+    game.Highscores[8] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
+    game.Highscores[9] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
+    game.Highscores[10] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
 
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
@@ -323,6 +324,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win13'] = game.Stats["bossKills"].toString();
     window.localStorage['win14'] = game.Stats["motherKills"].toString();
     window.localStorage['win15'] = game.Stats["powerups"].toString();
+    window.localStorage['win16'] = game.Stats["percentage"].toString();
 
     window.localStorage['win6'] = game.Options["startLives"].toString();
     window.localStorage['win7'] = game.Options["bulletCap"].toString();
@@ -331,16 +333,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win10'] = game.Options["powerups"].toString();
     window.localStorage['win11'] = game.Options["soundeffects"].toString();
 
-    window.localStorage['win16'] = game.Highscores[1].toString();
-    window.localStorage['win17'] = game.Highscores[2].toString();
-    window.localStorage['win18'] = game.Highscores[3].toString();
-    window.localStorage['win19'] = game.Highscores[4].toString();
-    window.localStorage['win20'] = game.Highscores[5].toString();
-    window.localStorage['win21'] = game.Highscores[6].toString();
-    window.localStorage['win22'] = game.Highscores[7].toString();
-    window.localStorage['win23'] = game.Highscores[8].toString();
-    window.localStorage['win24'] = game.Highscores[9].toString();
-    window.localStorage['win25'] = game.Highscores[10].toString();
+    window.localStorage['win17'] = game.Highscores[1].toString();
+    window.localStorage['win18'] = game.Highscores[2].toString();
+    window.localStorage['win19'] = game.Highscores[3].toString();
+    window.localStorage['win20'] = game.Highscores[4].toString();
+    window.localStorage['win21'] = game.Highscores[5].toString();
+    window.localStorage['win22'] = game.Highscores[6].toString();
+    window.localStorage['win23'] = game.Highscores[7].toString();
+    window.localStorage['win24'] = game.Highscores[8].toString();
+    window.localStorage['win25'] = game.Highscores[9].toString();
+    window.localStorage['win26'] = game.Highscores[10].toString();
   }
 
   void bossHit() {

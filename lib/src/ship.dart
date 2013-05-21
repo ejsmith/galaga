@@ -4,6 +4,8 @@ class Ship extends GameEntity<GalagaGame> {
   num bulletPower = 8;
   num bullet = 3;
   num maxBullet = 3;
+  num bulletsFired = 0;
+  num bulletsHit = 0;
   num lives = 3;
   num soundLevel = 0;
   num chargedLevel = 0;
@@ -106,10 +108,13 @@ class Ship extends GameEntity<GalagaGame> {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
+      bulletsFired += 3;
+
       if (game.soundEffectsOn)
         game.shipFire.play(game.shipFire.Sound, game.shipFire.Volume, game.shipFire.Looping);
     } else {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
+      bulletsFired++;
       if (game.soundEffectsOn)
         game.shipFire.play(game.shipFire.Sound, game.shipFire.Volume, game.shipFire.Looping);
     }
