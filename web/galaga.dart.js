@@ -1351,9 +1351,6 @@ $$.JSString = {"": "Object;",
   substring$1: function($receiver, startIndex) {
     return this.substring$2($receiver, startIndex, null);
   },
-  toLowerCase$0: function(receiver) {
-    return receiver.toLowerCase();
-  },
   trim$0: function(receiver) {
     return receiver.trim();
   },
@@ -2070,7 +2067,7 @@ $$._StreamImpl = {"": "Stream;_state@",
       return;
     this._state = $.$or$n(this._state, 1);
     if (!this.get$_mayFireState()) {
-      this._addPendingEvent$1($.CONSTANT29);
+      this._addPendingEvent$1($.CONSTANT42);
       return;
     }
     if (this.get$_hasPendingEvent()) {
@@ -4230,13 +4227,6 @@ $$._ExceptionImplementation = {"": "Object;message",
   $isException: true
 };
 
-$$.FormatException = {"": "Object;message",
-  toString$0: function(_) {
-    return "FormatException: " + $.S(this.message);
-  },
-  $isException: true
-};
-
 $$.Iterable = {"": "Object;",
   forEach$1: function(_, f) {
     var t1;
@@ -4737,25 +4727,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5711,7 +5686,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("options");
     this.disableEntitiesByGroup$1("instructions");
     this.disableEntitiesByGroup$1("leaders");
-    this._waitingTimer = $.Timer_Timer$periodic($.CONSTANT28, new $.GalagaGame_waiting_anon(this));
+    this._waitingTimer = $.Timer_Timer$periodic($.CONSTANT41, new $.GalagaGame_waiting_anon(this));
   },
   start$0: function(_) {
     var t1, t2;
@@ -5734,6 +5709,8 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
       t1.$indexSet(t1, "motherKills", 0);
     if (!t1.containsKey$1(t1, "powerups"))
       t1.$indexSet(t1, "powerups", 0);
+    if (!t1.containsKey$1(t1, "percentage"))
+      t1.$indexSet(t1, "percentage", 0);
     t1 = this.Options;
     if (!t1.containsKey$1(t1, "startLives"))
       t1.$indexSet(t1, "startLives", 3);
@@ -5906,7 +5883,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
   },
   newStar$0: function() {
     var w, star, t1;
-    if ($.random(0, 1, false) > 0.09 || this.get$state(this) === 2)
+    if ($.random(0, 1, false) > 0.01 || this.get$state(this) === 2)
       return;
     w = $.random(0.5, 3.5, false);
     star = $.Stars$(this, 0, 0, w, w, this.colorCount);
@@ -6228,17 +6205,19 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Powerups Absorbed: " + $.S(t1.$index(t1, "powerups")), 0, -20);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Completed Levels: " + $.S(t1.$index(t1, "wins")), 0, 25);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Hit Rate: " + $.S(t1.$index(t1, "percentage")) + "%", 0, 25);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Loses: " + $.S(t1.$index(t1, "loses")), 0, 70);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Completed Levels: " + $.S(t1.$index(t1, "wins")), 0, 70);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Games: " + $.S(t1.$index(t1, "totalGames")), 0, 115);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Loses: " + $.S(t1.$index(t1, "loses")), 0, 115);
     this.entities.push(t2);
-    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "High Score: " + $.S(t1.$index(t1, "highscore")), 0, 160);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Total Games: " + $.S(t1.$index(t1, "totalGames")), 0, 160);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "High Score: " + $.S(t1.$index(t1, "highscore")), 0, 205);
     this.entities.push(t2);
     t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "Back", -420, -280);
     this.entities.push(t2);
-    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "RESET", 0, 225);
+    t2 = $.GameButton$(new $.GalagaGame_createStatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.6, 36, "RESET", 0, 250);
     this.entities.push(t2);
     this.disableEntitiesByGroup$1("stats");
   },
@@ -6383,6 +6362,50 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.createOptionsMenu$0();
     this.set$state(this, 6);
   },
+  resetPowerups$0: function() {
+    this.ship.spiralShot = false;
+    this.ship.superSpiral = false;
+    this.ship.bulletPower = 8;
+  },
+  switchDirection$0: function() {
+    this.goingRight = !this.goingRight;
+    var t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_switchDirection_anon());
+    t1.forEach$1(t1, new $.GalagaGame_switchDirection_anon0());
+  },
+  canEnemyFall$0: function() {
+    var t1, t2;
+    t1 = {};
+    t1.x_0 = 0;
+    t2 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_canEnemyFall_anon());
+    t2.forEach$1(t2, new $.GalagaGame_canEnemyFall_anon0(t1));
+    if ($.$ge$n(t1.x_0, 3) === true)
+      return false;
+    else
+      return true;
+  },
+  get$canEnemyFall: function() {
+    return new $.BoundClosure$0(this, "canEnemyFall$0");
+  },
+  removeBullets$0: function() {
+    this.removeEntitiesByFilter$1(new $.GalagaGame_removeBullets_anon());
+  },
+  updateLeaderboard$0: function() {
+    var tempMap, t1, k, i, j, t2;
+    tempMap = $.HashMap$();
+    for (t1 = this.Highscores, k = 1; k < 11; ++k)
+      tempMap.$indexSet(tempMap, k, t1.$index(t1, k));
+    for (i = 1; i <= 10; ++i)
+      if ($.$gt$n(this.score, t1.$index(t1, i)) === true) {
+        for (j = i + 1; j < 10; ++j)
+          t1.$indexSet(t1, j, tempMap.$index(tempMap, j - 1));
+        t1.$indexSet(t1, i, this.score);
+        t2 = this.Stats;
+        t2.$indexSet(t2, "highScore", t1.$index(t1, i));
+        break;
+      }
+    t2 = this.Stats;
+    t2.$indexSet(t2, "highscore", t1.$index(t1, 1));
+  },
   newGame$0: function() {
     var t1, i, t2, t3, t4, t5;
     t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_newGame_anon());
@@ -6437,7 +6460,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t2 = this.ship;
     this.entities.push(t2);
     this.p1Dead = false;
-    this.ship.spiralShot = true;
+    this.ship.spiralShot = false;
     t2 = t1.$index(t1, "startLives");
     this.ship.lives = t2;
     t2 = this.Stats;
@@ -6463,50 +6486,6 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.removeEntitiesByGroup$1("gameOver");
     this.createGameOverMenu$0();
     this.set$state(this, 4);
-  },
-  resetPowerups$0: function() {
-    this.ship.spiralShot = false;
-    this.ship.superSpiral = false;
-    this.ship.bulletPower = 8;
-  },
-  switchDirection$0: function() {
-    this.goingRight = !this.goingRight;
-    var t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_switchDirection_anon());
-    t1.forEach$1(t1, new $.GalagaGame_switchDirection_anon0());
-  },
-  canEnemyFall$0: function() {
-    var t1, t2;
-    t1 = {};
-    t1.x_0 = 0;
-    t2 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_canEnemyFall_anon());
-    t2.forEach$1(t2, new $.GalagaGame_canEnemyFall_anon0(t1));
-    if ($.$ge$n(t1.x_0, 3) === true)
-      return false;
-    else
-      return true;
-  },
-  get$canEnemyFall: function() {
-    return new $.BoundClosure$0(this, "canEnemyFall$0");
-  },
-  removeBullets$0: function() {
-    this.removeEntitiesByFilter$1(new $.GalagaGame_removeBullets_anon());
-  },
-  updateLeaderboard$0: function() {
-    var tempMap, t1, k, i, j, t2;
-    tempMap = $.HashMap$();
-    for (t1 = this.Highscores, k = 1; k < 11; ++k)
-      tempMap.$indexSet(tempMap, k, t1.$index(t1, k));
-    for (i = 1; i <= 10; ++i)
-      if ($.$gt$n(this.score, t1.$index(t1, i)) === true) {
-        for (j = i + 1; j < 10; ++j)
-          t1.$indexSet(t1, j, tempMap.$index(tempMap, j - 1));
-        t1.$indexSet(t1, i, this.score);
-        t2 = this.Stats;
-        t2.$indexSet(t2, "highScore", t1.$index(t1, i));
-        break;
-      }
-    t2 = this.Stats;
-    t2.$indexSet(t2, "highscore", t1.$index(t1, 1));
   },
   get$onStatUpdate: function() {
     return this._statUpdateEvent.stream;
@@ -7160,6 +7139,49 @@ $$.GalagaGame_createGameOverMenu__anon0 = {"": "Closure;",
   }
 };
 
+$$.GalagaGame_switchDirection_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaGame_switchDirection_anon0 = {"": "Closure;",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = $.getInterceptor$x(e);
+    if ($.$eq(t1.get$type(e), "Normal") === true) {
+      t2 = e.get$momentum();
+      t2.xVel = $.$mul$n(t2.xVel, -1);
+      if ($.$ge$n(e.get$momentum().xVel, 0) === true)
+        t1.set$x(e, $.$add$ns(t1.get$x(e), 3));
+      else
+        t1.set$x(e, $.$sub$n(t1.get$x(e), 3));
+    }
+  }
+};
+
+$$.GalagaGame_canEnemyFall_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaGame_canEnemyFall_anon0 = {"": "Closure;box_0",
+  call$1: function(e) {
+    var t1;
+    if ($.$eq($.get$type$x(e), "Normal") === true && e.get$isFalling()) {
+      t1 = this.box_0;
+      t1.x_0 = $.$add$ns(t1.x_0, 1);
+    }
+  }
+};
+
+$$.GalagaGame_removeBullets_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isBullet;
+  }
+};
+
 $$.GalagaGame_newGame_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isStars;
@@ -7205,49 +7227,6 @@ $$.GalagaGame_gameOver_anon0 = {"": "Closure;",
 $$.GalagaGame_gameOver_anon1 = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaGame_switchDirection_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaGame_switchDirection_anon0 = {"": "Closure;",
-  call$1: function(e) {
-    var t1, t2;
-    t1 = $.getInterceptor$x(e);
-    if ($.$eq(t1.get$type(e), "Normal") === true) {
-      t2 = e.get$momentum();
-      t2.xVel = $.$mul$n(t2.xVel, -1);
-      if ($.$ge$n(e.get$momentum().xVel, 0) === true)
-        t1.set$x(e, $.$add$ns(t1.get$x(e), 3));
-      else
-        t1.set$x(e, $.$sub$n(t1.get$x(e), 3));
-    }
-  }
-};
-
-$$.GalagaGame_canEnemyFall_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaGame_canEnemyFall_anon0 = {"": "Closure;box_0",
-  call$1: function(e) {
-    var t1;
-    if ($.$eq($.get$type$x(e), "Normal") === true && e.get$isFalling()) {
-      t1 = this.box_0;
-      t1.x_0 = $.$add$ns(t1.x_0, 1);
-    }
-  }
-};
-
-$$.GalagaGame_removeBullets_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isBullet;
   }
 };
 
@@ -7400,6 +7379,8 @@ $$.Bullet_update_anon2 = {"": "Closure;this_3",
       t1.set$_removeFromGame(true);
     t2 = enemy.get$idNum();
     t1.get$game().set$targetId(t2);
+    t2 = t1.get$game().get$ship();
+    t2.set$bulletsHit(t2.get$bulletsHit() + 1);
     if ($.$lt$n(t1.get$game().get$ship().get$bullet(), 3) === true) {
       t2 = t1.get$game().get$ship();
       t2.set$bullet($.$add$ns(t2.get$bullet(), 1));
@@ -7831,6 +7812,7 @@ $$.Enemy = {"": "GameEntity;type>,yReset,isFalling<,creationTime,startY,difficul
     if (this.type === "MotherShip") {
       if ($.$gt$n(this.get$x(this), $.get$rect$x(this.game).get$halfWidth()) === true)
         this._removeFromGame = true;
+      this.momentum.xVel = 150;
       if (this.health <= 0) {
         t1 = this.game;
         t1.set$score($.$add$ns(t1.get$score(), 1000 * t1.get$pointMultiplier()));
@@ -8100,56 +8082,6 @@ $$.Enemy_update_anon1 = {"": "Closure;",
 
 $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
   init$0: function() {
-    var t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "wins", $.containsKey$1$x(window.localStorage, "win2") ? $.int_parse($.$index$asx(window.localStorage, "win2"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "loses", $.containsKey$1$x(window.localStorage, "win3") ? $.int_parse($.$index$asx(window.localStorage, "win3"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "totalGames", $.containsKey$1$x(window.localStorage, "win4") ? $.int_parse($.$index$asx(window.localStorage, "win4"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "highscore", $.containsKey$1$x(window.localStorage, "win5") ? $.int_parse($.$index$asx(window.localStorage, "win5"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "normalKills", $.containsKey$1$x(window.localStorage, "win12") ? $.int_parse($.$index$asx(window.localStorage, "win12"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "bossKills", $.containsKey$1$x(window.localStorage, "win13") ? $.int_parse($.$index$asx(window.localStorage, "win13"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "motherKills", $.containsKey$1$x(window.localStorage, "win14") ? $.int_parse($.$index$asx(window.localStorage, "win14"), null, null) : 0);
-    t1 = this.get$game().get$Stats();
-    t1.$indexSet(t1, "powerups", $.containsKey$1$x(window.localStorage, "win15") ? $.int_parse($.$index$asx(window.localStorage, "win15"), null, null) : 0);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "startLives", $.containsKey$1$x(window.localStorage, "win6") ? $.int_parse($.$index$asx(window.localStorage, "win6"), null, null) : 3);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "bulletCap", $.containsKey$1$x(window.localStorage, "win7") ? $.int_parse($.$index$asx(window.localStorage, "win7"), null, null) : 3);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "time", $.containsKey$1$x(window.localStorage, "win8") ? $.int_parse($.$index$asx(window.localStorage, "win8"), null, null) : 60);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "difficulty", $.containsKey$1$x(window.localStorage, "win9") ? $.int_parse($.$index$asx(window.localStorage, "win9"), null, null) : 1);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "powerups", $.containsKey$1$x(window.localStorage, "win10") ? $.int_parse($.$index$asx(window.localStorage, "win10"), null, null) : 1);
-    t1 = this.get$game().get$Options();
-    t1.$indexSet(t1, "soundeffects", $.containsKey$1$x(window.localStorage, "win11") ? $.int_parse($.$index$asx(window.localStorage, "win11"), null, null) : 1);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 1, $.containsKey$1$x(window.localStorage, "win16") ? $.int_parse($.$index$asx(window.localStorage, "win16"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 2, $.containsKey$1$x(window.localStorage, "win17") ? $.int_parse($.$index$asx(window.localStorage, "win17"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 3, $.containsKey$1$x(window.localStorage, "win18") ? $.int_parse($.$index$asx(window.localStorage, "win18"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 4, $.containsKey$1$x(window.localStorage, "win19") ? $.int_parse($.$index$asx(window.localStorage, "win19"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 5, $.containsKey$1$x(window.localStorage, "win20") ? $.int_parse($.$index$asx(window.localStorage, "win20"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 6, $.containsKey$1$x(window.localStorage, "win21") ? $.int_parse($.$index$asx(window.localStorage, "win21"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 7, $.containsKey$1$x(window.localStorage, "win22") ? $.int_parse($.$index$asx(window.localStorage, "win22"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 8, $.containsKey$1$x(window.localStorage, "win23") ? $.int_parse($.$index$asx(window.localStorage, "win23"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 9, $.containsKey$1$x(window.localStorage, "win24") ? $.int_parse($.$index$asx(window.localStorage, "win24"), null, null) : 0);
-    t1 = this.get$game().get$Highscores();
-    t1.$indexSet(t1, 10, $.containsKey$1$x(window.localStorage, "win25") ? $.int_parse($.$index$asx(window.localStorage, "win25"), null, null) : 0);
     this.get$game().get$onGameOver().listen$1(new $.GalagaRenderer_init_anon(this));
     this.get$game().get$onShipHit().listen$1(new $.GalagaRenderer_init_anon0(this));
     this.get$game().get$onStatUpdate().listen$1(new $.GalagaRenderer_init_anon1(this));
@@ -8205,23 +8137,39 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     t1.forEach$1(t1, new $.GalagaRenderer_drawEnemys_anon0(this));
   },
   subtleBgFade$0: function() {
-    this.get$game().bgStyle = "rgba(0, 0, 0, 0.84)";
+    this.get$game().bgStyle = "rgba(0, 0, 0, 0.85)";
     $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon(this));
     $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon0(this));
     $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon1(this));
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon2(this));
-    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon3(this));
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon4(this));
-    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon5(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon6(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon7(this));
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon8(this));
-    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon9(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon10(this));
-    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon11(this));
-    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon12(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon13(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon14(this));
+    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon2(this));
+    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon3(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon4(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon6(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon7(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon8(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon9(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon10(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon11(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon12(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon13(this));
+    $.Timer_Timer($.CONSTANT15, new $.GalagaRenderer_subtleBgFade_anon14(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon15(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon16(this));
+    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_subtleBgFade_anon17(this));
+    $.Timer_Timer($.CONSTANT29, new $.GalagaRenderer_subtleBgFade_anon18(this));
+    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_subtleBgFade_anon19(this));
+    $.Timer_Timer($.CONSTANT30, new $.GalagaRenderer_subtleBgFade_anon20(this));
+    $.Timer_Timer($.CONSTANT31, new $.GalagaRenderer_subtleBgFade_anon21(this));
+    $.Timer_Timer($.CONSTANT32, new $.GalagaRenderer_subtleBgFade_anon22(this));
+    $.Timer_Timer($.CONSTANT33, new $.GalagaRenderer_subtleBgFade_anon23(this));
+    $.Timer_Timer($.CONSTANT34, new $.GalagaRenderer_subtleBgFade_anon24(this));
+    $.Timer_Timer($.CONSTANT35, new $.GalagaRenderer_subtleBgFade_anon25(this));
+    $.Timer_Timer($.CONSTANT36, new $.GalagaRenderer_subtleBgFade_anon26(this));
+    $.Timer_Timer($.CONSTANT37, new $.GalagaRenderer_subtleBgFade_anon27(this));
+    $.Timer_Timer($.CONSTANT38, new $.GalagaRenderer_subtleBgFade_anon28(this));
+    $.Timer_Timer($.CONSTANT39, new $.GalagaRenderer_subtleBgFade_anon29(this));
+    $.Timer_Timer($.CONSTANT40, new $.GalagaRenderer_subtleBgFade_anon30(this));
   },
   shipHit$0: function() {
     this.bgFade$0();
@@ -8237,7 +8185,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     return new $.BoundClosure$0(this, "shipHit$0");
   },
   updateStats$0: function() {
-    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26;
+    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27;
     t1 = window.localStorage;
     t2 = this.get$game().get$Stats();
     $.$indexSet$ax(t1, "win1", $.toString$0(t2.$index(t2, "killed")));
@@ -8266,53 +8214,56 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     t10 = this.get$game().get$Stats();
     $.$indexSet$ax(t1, "win15", $.toString$0(t10.$index(t10, "powerups")));
     t1 = window.localStorage;
-    t11 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win6", $.toString$0(t11.$index(t11, "startLives")));
+    t11 = this.get$game().get$Stats();
+    $.$indexSet$ax(t1, "win16", $.toString$0(t11.$index(t11, "percentage")));
     t1 = window.localStorage;
     t12 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win7", $.toString$0(t12.$index(t12, "bulletCap")));
+    $.$indexSet$ax(t1, "win6", $.toString$0(t12.$index(t12, "startLives")));
     t1 = window.localStorage;
     t13 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win8", $.toString$0(t13.$index(t13, "time")));
+    $.$indexSet$ax(t1, "win7", $.toString$0(t13.$index(t13, "bulletCap")));
     t1 = window.localStorage;
     t14 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win9", $.toString$0(t14.$index(t14, "difficulty")));
+    $.$indexSet$ax(t1, "win8", $.toString$0(t14.$index(t14, "time")));
     t1 = window.localStorage;
     t15 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win10", $.toString$0(t15.$index(t15, "powerups")));
+    $.$indexSet$ax(t1, "win9", $.toString$0(t15.$index(t15, "difficulty")));
     t1 = window.localStorage;
     t16 = this.get$game().get$Options();
-    $.$indexSet$ax(t1, "win11", $.toString$0(t16.$index(t16, "soundeffects")));
+    $.$indexSet$ax(t1, "win10", $.toString$0(t16.$index(t16, "powerups")));
     t1 = window.localStorage;
-    t17 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win16", $.toString$0(t17.$index(t17, 1)));
+    t17 = this.get$game().get$Options();
+    $.$indexSet$ax(t1, "win11", $.toString$0(t17.$index(t17, "soundeffects")));
     t1 = window.localStorage;
     t18 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win17", $.toString$0(t18.$index(t18, 2)));
+    $.$indexSet$ax(t1, "win17", $.toString$0(t18.$index(t18, 1)));
     t1 = window.localStorage;
     t19 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win18", $.toString$0(t19.$index(t19, 3)));
+    $.$indexSet$ax(t1, "win18", $.toString$0(t19.$index(t19, 2)));
     t1 = window.localStorage;
     t20 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win19", $.toString$0(t20.$index(t20, 4)));
+    $.$indexSet$ax(t1, "win19", $.toString$0(t20.$index(t20, 3)));
     t1 = window.localStorage;
     t21 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win20", $.toString$0(t21.$index(t21, 5)));
+    $.$indexSet$ax(t1, "win20", $.toString$0(t21.$index(t21, 4)));
     t1 = window.localStorage;
     t22 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win21", $.toString$0(t22.$index(t22, 6)));
+    $.$indexSet$ax(t1, "win21", $.toString$0(t22.$index(t22, 5)));
     t1 = window.localStorage;
     t23 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win22", $.toString$0(t23.$index(t23, 7)));
+    $.$indexSet$ax(t1, "win22", $.toString$0(t23.$index(t23, 6)));
     t1 = window.localStorage;
     t24 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win23", $.toString$0(t24.$index(t24, 8)));
+    $.$indexSet$ax(t1, "win23", $.toString$0(t24.$index(t24, 7)));
     t1 = window.localStorage;
     t25 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win24", $.toString$0(t25.$index(t25, 9)));
+    $.$indexSet$ax(t1, "win24", $.toString$0(t25.$index(t25, 8)));
     t1 = window.localStorage;
     t26 = this.get$game().get$Highscores();
-    $.$indexSet$ax(t1, "win25", $.toString$0(t26.$index(t26, 10)));
+    $.$indexSet$ax(t1, "win25", $.toString$0(t26.$index(t26, 9)));
+    t1 = window.localStorage;
+    t27 = this.get$game().get$Highscores();
+    $.$indexSet$ax(t1, "win26", $.toString$0(t27.$index(t27, 10)));
   },
   bossHit$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_bossHit_anon());
@@ -8737,105 +8688,217 @@ $$.GalagaRenderer_subtleBgFade_anon = {"": "Closure;this_0",
 
 $$.GalagaRenderer_subtleBgFade_anon0 = {"": "Closure;this_1",
   call$0: function() {
-    this.this_1.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
-    return "rgba(0, 0, 0, 0.82)";
+    this.this_1.get$game().set$bgStyle("rgba(0, 0, 0, 0.81)");
+    return "rgba(0, 0, 0, 0.81)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon1 = {"": "Closure;this_2",
   call$0: function() {
-    this.this_2.get$game().set$bgStyle("rgba(0, 0, 0, 0.81)");
-    return "rgba(0, 0, 0, 0.81)";
+    this.this_2.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
+    return "rgba(0, 0, 0, 0.79)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon2 = {"": "Closure;this_3",
   call$0: function() {
-    this.this_3.get$game().set$bgStyle("rgba(0, 0, 0, 0.80)");
-    return "rgba(0, 0, 0, 0.80)";
+    this.this_3.get$game().set$bgStyle("rgba(0, 0, 0, 0.77)");
+    return "rgba(0, 0, 0, 0.77)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon3 = {"": "Closure;this_4",
   call$0: function() {
-    this.this_4.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
-    return "rgba(0, 0, 0, 0.79)";
+    this.this_4.get$game().set$bgStyle("rgba(0, 0, 0, 0.75)");
+    return "rgba(0, 0, 0, 0.75)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon4 = {"": "Closure;this_5",
   call$0: function() {
-    this.this_5.get$game().set$bgStyle("rgba(0, 0, 0, 0.78)");
-    return "rgba(0, 0, 0, 0.78)";
+    this.this_5.get$game().set$bgStyle("rgba(0, 0, 0, 0.73)");
+    return "rgba(0, 0, 0, 0.73)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon5 = {"": "Closure;this_6",
   call$0: function() {
-    this.this_6.get$game().set$bgStyle("rgba(0, 0, 0, 0.77)");
-    return "rgba(0, 0, 0, 0.77)";
+    this.this_6.get$game().set$bgStyle("rgba(0, 0, 0, 0.71)");
+    return "rgba(0, 0, 0, 0.71)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon6 = {"": "Closure;this_7",
   call$0: function() {
-    this.this_7.get$game().set$bgStyle("rgba(0, 0, 0, 0.78)");
-    return "rgba(0, 0, 0, 0.78)";
+    this.this_7.get$game().set$bgStyle("rgba(0, 0, 0, 0.69)");
+    return "rgba(0, 0, 0, 0.69)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon7 = {"": "Closure;this_8",
   call$0: function() {
-    this.this_8.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
-    return "rgba(0, 0, 0, 0.79)";
+    this.this_8.get$game().set$bgStyle("rgba(0, 0, 0, 0.67)");
+    return "rgba(0, 0, 0, 0.67)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon8 = {"": "Closure;this_9",
   call$0: function() {
-    this.this_9.get$game().set$bgStyle("rgba(0, 0, 0, 0.80)");
-    return "rgba(0, 0, 0, 0.80)";
+    this.this_9.get$game().set$bgStyle("rgba(0, 0, 0, 0.65)");
+    return "rgba(0, 0, 0, 0.65)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon9 = {"": "Closure;this_10",
   call$0: function() {
-    this.this_10.get$game().set$bgStyle("rgba(0, 0, 0, 0.81)");
-    return "rgba(0, 0, 0, 0.81)";
+    this.this_10.get$game().set$bgStyle("rgba(0, 0, 0, 0.63)");
+    return "rgba(0, 0, 0, 0.63)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon10 = {"": "Closure;this_11",
   call$0: function() {
-    this.this_11.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
-    return "rgba(0, 0, 0, 0.82)";
+    this.this_11.get$game().set$bgStyle("rgba(0, 0, 0, 0.61)");
+    return "rgba(0, 0, 0, 0.61)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon11 = {"": "Closure;this_12",
   call$0: function() {
-    this.this_12.get$game().set$bgStyle("rgba(0, 0, 0, 0.82)");
-    return "rgba(0, 0, 0, 0.82)";
+    this.this_12.get$game().set$bgStyle("rgba(0, 0, 0, 0.59)");
+    return "rgba(0, 0, 0, 0.59)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon12 = {"": "Closure;this_13",
   call$0: function() {
-    this.this_13.get$game().set$bgStyle("rgba(0, 0, 0, 0.83)");
-    return "rgba(0, 0, 0, 0.83)";
+    this.this_13.get$game().set$bgStyle("rgba(0, 0, 0, 0.57)");
+    return "rgba(0, 0, 0, 0.57)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon13 = {"": "Closure;this_14",
   call$0: function() {
-    this.this_14.get$game().set$bgStyle("rgba(0, 0, 0, 0.84)");
-    return "rgba(0, 0, 0, 0.84)";
+    this.this_14.get$game().set$bgStyle("rgba(0, 0, 0, 0.55)");
+    return "rgba(0, 0, 0, 0.55)";
   }
 };
 
 $$.GalagaRenderer_subtleBgFade_anon14 = {"": "Closure;this_15",
   call$0: function() {
-    this.this_15.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
+    this.this_15.get$game().set$bgStyle("rgba(0, 0, 0, 0.53)");
+    return "rgba(0, 0, 0, 0.53)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon15 = {"": "Closure;this_16",
+  call$0: function() {
+    this.this_16.get$game().set$bgStyle("rgba(0, 0, 0, 0.55)");
+    return "rgba(0, 0, 0, 0.55)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon16 = {"": "Closure;this_17",
+  call$0: function() {
+    this.this_17.get$game().set$bgStyle("rgba(0, 0, 0, 0.57)");
+    return "rgba(0, 0, 0, 0.57)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon17 = {"": "Closure;this_18",
+  call$0: function() {
+    this.this_18.get$game().set$bgStyle("rgba(0, 0, 0, 0.59)");
+    return "rgba(0, 0, 0, 0.59)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon18 = {"": "Closure;this_19",
+  call$0: function() {
+    this.this_19.get$game().set$bgStyle("rgba(0, 0, 0, 0.61)");
+    return "rgba(0, 0, 0, 0.61)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon19 = {"": "Closure;this_20",
+  call$0: function() {
+    this.this_20.get$game().set$bgStyle("rgba(0, 0, 0, 0.63)");
+    return "rgba(0, 0, 0, 0.63)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon20 = {"": "Closure;this_21",
+  call$0: function() {
+    this.this_21.get$game().set$bgStyle("rgba(0, 0, 0, 0.65)");
+    return "rgba(0, 0, 0, 0.65)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon21 = {"": "Closure;this_22",
+  call$0: function() {
+    this.this_22.get$game().set$bgStyle("rgba(0, 0, 0, 0.67)");
+    return "rgba(0, 0, 0, 0.67)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon22 = {"": "Closure;this_23",
+  call$0: function() {
+    this.this_23.get$game().set$bgStyle("rgba(0, 0, 0, 0.69)");
+    return "rgba(0, 0, 0, 0.69)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon23 = {"": "Closure;this_24",
+  call$0: function() {
+    this.this_24.get$game().set$bgStyle("rgba(0, 0, 0, 0.71)");
+    return "rgba(0, 0, 0, 0.71)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon24 = {"": "Closure;this_25",
+  call$0: function() {
+    this.this_25.get$game().set$bgStyle("rgba(0, 0, 0, 0.73)");
+    return "rgba(0, 0, 0, 0.73)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon25 = {"": "Closure;this_26",
+  call$0: function() {
+    this.this_26.get$game().set$bgStyle("rgba(0, 0, 0, 0.75)");
+    return "rgba(0, 0, 0, 0.75)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon26 = {"": "Closure;this_27",
+  call$0: function() {
+    this.this_27.get$game().set$bgStyle("rgba(0, 0, 0, 0.77)");
+    return "rgba(0, 0, 0, 0.77)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon27 = {"": "Closure;this_28",
+  call$0: function() {
+    this.this_28.get$game().set$bgStyle("rgba(0, 0, 0, 0.79)");
+    return "rgba(0, 0, 0, 0.79)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon28 = {"": "Closure;this_29",
+  call$0: function() {
+    this.this_29.get$game().set$bgStyle("rgba(0, 0, 0, 0.81)");
+    return "rgba(0, 0, 0, 0.81)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon29 = {"": "Closure;this_30",
+  call$0: function() {
+    this.this_30.get$game().set$bgStyle("rgba(0, 0, 0, 0.83)");
+    return "rgba(0, 0, 0, 0.83)";
+  }
+};
+
+$$.GalagaRenderer_subtleBgFade_anon30 = {"": "Closure;this_31",
+  call$0: function() {
+    this.this_31.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
     return "rgba(0, 0, 0, 0.85)";
   }
 };
@@ -9101,7 +9164,7 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true)
       return;
-    this._deleteTimer = $.Timer_Timer$periodic($.CONSTANT28, new $.Particles_update_anon(this));
+    this._deleteTimer = $.Timer_Timer$periodic($.CONSTANT41, new $.Particles_update_anon(this));
     if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight()) === true)
       this._removeFromGame = true;
     if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight()) === true)
@@ -9249,7 +9312,7 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
   $isPowerUp: true
 };
 
-$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,superSpiral?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit@,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,superSpiral?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
@@ -9320,6 +9383,7 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,char
       t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
       t1 = this.game;
       t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
+      this.bulletsFired = this.bulletsFired + 3;
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();
@@ -9327,6 +9391,7 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,lives@,soundLevel,char
       }
     } else {
       t2.addEntity$1($.Bullet$(t2, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
+      this.bulletsFired = this.bulletsFired + 1;
       t1 = this.game;
       if (t1.get$soundEffectsOn()) {
         t1 = t1.get$shipFire();
@@ -9878,56 +9943,6 @@ $.Primitives_printString = function(string) {
   throw "Unable to print message: " + String(string);
 };
 
-$.Primitives__throwFormatException = function(string) {
-  throw $.$$throw($.FormatException$(string));
-};
-
-$.Primitives_parseInt = function(source, radix, handleError) {
-  var match, t1, maxCharCode, digitsPart, i;
-  if (handleError == null)
-    handleError = $.Primitives__throwFormatException;
-  $.checkString(source);
-  match = /^\s*[+-]?((0x[a-f0-9]+)|(\d+)|([a-z0-9]+))\s*$/i.exec(source);
-  if (radix == null) {
-    t1 = $.getInterceptor(match);
-    if (match != null) {
-      if (t1.$index(match, 2) != null)
-        return parseInt(source, 16);
-      if (t1.$index(match, 3) != null)
-        return parseInt(source, 10);
-      return handleError.call$1(source);
-    }
-    radix = 10;
-  } else {
-    throw $.$$throw($.ArgumentError$("Radix is not an integer"));
-    if ($.JSNull_methods.$lt(radix, 2) || $.JSNull_methods.$gt(radix, 36))
-      throw $.$$throw($.RangeError$("Radix " + $.S(radix) + " not in range 2..36"));
-    t1 = $.getInterceptor(match);
-    if (match != null) {
-      if (false)
-        return parseInt(source, 10);
-      if ($.JSNull_methods.$lt(radix, 10) || t1.$index(match, 3) == null) {
-        if ($.JSNull_methods.$le(radix, 10)) {
-          if (typeof radix !== "number")
-            throw $.iae(radix);
-          maxCharCode = 48 + radix - 1;
-        } else {
-          if (typeof radix !== "number")
-            throw $.iae(radix);
-          maxCharCode = 97 + radix - 10 - 1;
-        }
-        digitsPart = $.toLowerCase$0$s(t1.$index(match, 1));
-        for (i = 0; i < digitsPart.length; ++i)
-          if ($.JSString_methods.codeUnitAt$1(digitsPart, i) > maxCharCode)
-            return handleError.call$1(source);
-      }
-    }
-  }
-  if (match == null)
-    return handleError.call$1(source);
-  return parseInt(source, radix);
-};
-
 $.Primitives_objectTypeName = function(object) {
   var $name, decompiled, t1;
   $name = $.constructorNameFallback(object);
@@ -10003,8 +10018,6 @@ $.checkNum = function(value) {
 };
 
 $.checkString = function(value) {
-  if (!(typeof value === "string"))
-    throw $.$$throw($.ArgumentError$(value));
   return value;
 };
 
@@ -10339,7 +10352,7 @@ $.dynamicBind = function(obj, $name, methods, $arguments) {
   } else
     method = null;
   if (method == null)
-    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT30));
+    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT43));
   if (method == null)
     (function(){throw new TypeError($name + " is not a function");})();
   else {
@@ -10379,7 +10392,7 @@ $.dynamicFunction = function($name) {
   if (f != null && !!f.methods)
     return f.methods;
   methods = {};
-  dartMethod = Object.getPrototypeOf($.CONSTANT30)[$name];
+  dartMethod = Object.getPrototypeOf($.CONSTANT43)[$name];
   if (dartMethod != null)
     methods["Object"] = dartMethod;
   bind = function() {return $.dynamicBind.call$4(this, $name, methods, Array.prototype.slice.call(arguments));};
@@ -10795,14 +10808,6 @@ $._ExceptionImplementation$ = function(message) {
   return new $._ExceptionImplementation(message);
 };
 
-$.FormatException$ = function(message) {
-  return new $.FormatException(message);
-};
-
-$.int_parse = function(source, onError, radix) {
-  return $.Primitives_parseInt(source, radix, onError);
-};
-
 $.List_List = function($length) {
   var t1 = $ === $length;
   if (t1)
@@ -11126,7 +11131,7 @@ $.PowerUp$ = function(game, x, y, Type) {
 };
 
 $.Ship$ = function(game, x, y) {
-  var t1 = new $.Ship(8, 3, 3, 3, 0, 0, 0, false, false, false, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Ship(8, 3, 3, 0, 0, 3, 0, 0, 0, false, false, false, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, 36, 36, null, null);
   t1.Ship$3(game, x, y);
   return t1;
@@ -11141,8 +11146,6 @@ $.Stars$ = function(game, x, y, h, w, col) {
 
 $.IsolateNatives__processWorkerMessage.call$2 = $.IsolateNatives__processWorkerMessage;
 $.IsolateNatives__processWorkerMessage.$name = "IsolateNatives__processWorkerMessage";
-$.Primitives__throwFormatException.call$1 = $.Primitives__throwFormatException;
-$.Primitives__throwFormatException.$name = "Primitives__throwFormatException";
 $.$$throw.call$1 = $.$$throw;
 $.$$throw.$name = "$$throw";
 $.DartError_toStringWrapper.call$0 = $.DartError_toStringWrapper;
@@ -11185,44 +11188,57 @@ Isolate.makeConstantList = function(list) {
   return list;
 };
 $.CONSTANT3 = Isolate.makeConstantList([]);
-$.CONSTANT30 = new $.Object();
-$.CONSTANT1 = new $._NullKey();
-$.CONSTANT23 = new $.Duration(100000);
-$.CONSTANT22 = new $.Duration(375000);
+$.CONSTANT12 = new $.EventStreamProvider("mousemove");
 $.CONSTANT25 = new $.Duration(175000);
+$.CONSTANT37 = new $.Duration(575000);
 $.CONSTANT9 = new $.EventStreamProvider("keydown");
-$.CONSTANT16 = new $.EventStreamProvider("ended");
 $.CONSTANT2 = new $._LinkedHashTableHeadMarker();
-$.JSNull_methods = $.JSNull.prototype;
-$.JSNumber_methods = $.JSNumber.prototype;
-$.CONSTANT6 = new $.Duration(50000);
-$.JSString_methods = $.JSString.prototype;
 $.CONSTANT15 = new $.Duration(250000);
+$.CONSTANT40 = new $.Duration(650000);
 $.CONSTANT11 = new $.EventStreamProvider("touchmove");
-$.CONSTANT24 = new $.Duration(125000);
+$.CONSTANT28 = new $.Duration(325000);
 $.CONSTANT13 = new $.EventStreamProvider("click");
 $.CONSTANT4 = new $.Duration(0);
 $.CONSTANT8 = new $.EventStreamProvider("mousedown");
 $.JSBool_methods = $.JSBool.prototype;
-$.CONSTANT26 = new $.Duration(200000);
+$.CONSTANT30 = new $.Duration(400000);
 $.CONSTANT = new $.NullThrownError();
 $.CONSTANT10 = new $.EventStreamProvider("touchstart");
-$.CONSTANT14 = new $._Random();
-$.CONSTANT18 = new $.Duration(75000);
-$.CONSTANT28 = new $.Duration(1000000);
 $.CONSTANT27 = new $.Duration(275000);
 $.JSDouble_methods = $.JSDouble.prototype;
-$.CONSTANT19 = new $.Duration(150000);
-$.CONSTANT7 = new $.EventStreamProvider("mouseup");
+$.CONSTANT29 = new $.Duration(350000);
+$.CONSTANT31 = new $.Duration(425000);
 $.CONSTANT5 = new $.CloseToken();
 $.CONSTANT17 = new $.Duration(25000);
-$.JSInt_methods = $.JSInt.prototype;
+$.CONSTANT23 = new $.Duration(100000);
+$.CONSTANT34 = new $.Duration(500000);
+$.CONSTANT43 = new $.Object();
+$.CONSTANT22 = new $.Duration(375000);
+$.CONSTANT16 = new $.EventStreamProvider("ended");
+$.JSNull_methods = $.JSNull.prototype;
+$.JSNumber_methods = $.JSNumber.prototype;
+$.CONSTANT6 = new $.Duration(50000);
+$.JSString_methods = $.JSString.prototype;
+$.CONSTANT32 = new $.Duration(450000);
+$.CONSTANT24 = new $.Duration(125000);
+$.CONSTANT35 = new $.Duration(525000);
+$.CONSTANT26 = new $.Duration(200000);
+$.CONSTANT38 = new $.Duration(600000);
+$.CONSTANT41 = new $.Duration(1000000);
+$.CONSTANT14 = new $._Random();
+$.CONSTANT18 = new $.Duration(75000);
+$.CONSTANT33 = new $.Duration(475000);
+$.CONSTANT19 = new $.Duration(150000);
+$.CONSTANT36 = new $.Duration(550000);
+$.CONSTANT7 = new $.EventStreamProvider("mouseup");
+$.CONSTANT39 = new $.Duration(625000);
 $.CONSTANT20 = new $.Duration(225000);
-$.CONSTANT29 = new $._DelayedDone();
+$.JSInt_methods = $.JSInt.prototype;
+$.CONSTANT42 = new $._DelayedDone();
 $.JSArray_methods = $.JSArray.prototype;
 $.CONSTANT21 = new $.Duration(300000);
 $.CONSTANT0 = new $._DeadEntry();
-$.CONSTANT12 = new $.EventStreamProvider("mousemove");
+$.CONSTANT1 = new $._NullKey();
 $.lazyPort = null;
 $.ReceivePortImpl__nextFreeId = 1;
 $.Primitives_hashCodeSeed = 0;
@@ -11359,9 +11375,6 @@ $.clone$1$x = function(receiver, a0) {
 };
 $.closePath$0$x = function(receiver) {
   return $.getInterceptor$x(receiver).closePath$0(receiver);
-};
-$.containsKey$1$x = function(receiver, a0) {
-  return $.getInterceptor$x(receiver).containsKey$1(receiver, a0);
 };
 $.drawImageScaled$5$x = function(receiver, a0, a1, a2, a3, a4) {
   return $.getInterceptor$x(receiver).drawImageScaled$5(receiver, a0, a1, a2, a3, a4);
@@ -11569,9 +11582,6 @@ $.sublist$1$ax = function(receiver, a0) {
 };
 $.toList$0$ax = function(receiver) {
   return $.getInterceptor$ax(receiver).toList$0(receiver);
-};
-$.toLowerCase$0$s = function(receiver) {
-  return $.getInterceptor$s(receiver).toLowerCase$0(receiver);
 };
 $.toString$0 = function(receiver) {
   return $.getInterceptor(receiver).toString$0(receiver);
@@ -12620,9 +12630,6 @@ $.$defineNativeClass("HTMLSourceElement", {"": "src},type%"});
 $.$defineNativeClass("SpeechRecognitionError", {"": "error="});
 
 $.$defineNativeClass("Storage", {
-  containsKey$1: function(receiver, key) {
-    return this.$$dom_getItem$1(receiver, key) != null;
-  },
   $index: function(receiver, key) {
     return this.$$dom_getItem$1(receiver, key);
   },

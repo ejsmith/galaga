@@ -57,34 +57,34 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
 
   void init() {
-    game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
-    game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
-    game.Stats["loses"] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
-    game.Stats["totalGames"] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
-    game.Stats["highscore"] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
-    game.Stats["normalKills"] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12']) : 0;
-    game.Stats["bossKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
-    game.Stats["motherKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
-    game.Stats["powerups"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
-    game.Stats["percentage"] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
-
-    game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 3;
-    game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 3;
-    game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 60;
-    game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 1;
-    game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 1;
-    game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 1;
-
-    game.Highscores[1] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
-    game.Highscores[2] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
-    game.Highscores[3] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
-    game.Highscores[4] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
-    game.Highscores[5] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
-    game.Highscores[6] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
-    game.Highscores[7] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
-    game.Highscores[8] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
-    game.Highscores[9] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
-    game.Highscores[10] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
+//    game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
+//    game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
+//    game.Stats["loses"] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
+//    game.Stats["totalGames"] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
+//    game.Stats["highscore"] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
+//    game.Stats["normalKills"] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12']) : 0;
+//    game.Stats["bossKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
+//    game.Stats["motherKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
+//    game.Stats["powerups"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
+//    game.Stats["percentage"] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
+//
+//    game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 3;
+//    game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 3;
+//    game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 60;
+//    game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 1;
+//    game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 1;
+//    game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 1;
+//
+//    game.Highscores[1] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
+//    game.Highscores[2] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
+//    game.Highscores[3] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
+//    game.Highscores[4] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
+//    game.Highscores[5] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
+//    game.Highscores[6] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
+//    game.Highscores[7] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
+//    game.Highscores[8] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
+//    game.Highscores[9] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
+//    game.Highscores[10] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
 
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
@@ -280,27 +280,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   }
 
-  void subtleBgFade() {
-    game.bgStyle = "rgba(0, 0, 0, 0.84)";
-
-    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
-    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
-    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
-    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.80)");
-    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
-    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.78)");
-    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.77)");
-    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.78)");
-    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
-    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.80)");
-    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
-    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
-    new Timer(const Duration(milliseconds: 100), () => game.bgStyle = "rgba(0, 0, 0, 0.82)");
-    new Timer(const Duration(milliseconds: 125), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
-    new Timer(const Duration(milliseconds: 150), () => game.bgStyle = "rgba(0, 0, 0, 0.84)");
-    new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.85)");
-  }
-
   void shipHit() {
     bgFade();
 
@@ -384,29 +363,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     });
   }
 
-  GameEntityRenderer getRenderer(GameEntity e) {
-
-    if (e is Enemy && game.state == GalagaGameState.gameOver)
-      return null;
-
-    return super.getRenderer(e);
-  }
-
-  void drawBeforeCtxRestore() {
-    drawBouncer();
-    drawCountDown();
-    drawStars();
-    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
-    drawPowerUps();
-    drawBullets();
-    drawEtc();
-    drawShip();
-    drawEnemys();
-    }
-
-    super.drawBeforeCtxRestore();
-  }
-
   void drawEtc() {
     num textX = 225;
     int digits = 0;
@@ -455,6 +411,66 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       temp = 1;
     ctx.fillText("Next Level In: ${temp}", -165, 0);
     }
+  }
+
+  GameEntityRenderer getRenderer(GameEntity e) {
+
+    if (e is Enemy && game.state == GalagaGameState.gameOver)
+      return null;
+
+    return super.getRenderer(e);
+  }
+
+  void drawBeforeCtxRestore() {
+    drawBouncer();
+    drawCountDown();
+    drawStars();
+    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
+    drawPowerUps();
+    drawBullets();
+    drawEtc();
+    drawShip();
+    drawEnemys();
+    }
+
+    super.drawBeforeCtxRestore();
+  }
+
+  void subtleBgFade() {
+    game.bgStyle = "rgba(0, 0, 0, 0.85)";
+
+    new Timer(const Duration(milliseconds: 25), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
+    new Timer(const Duration(milliseconds: 50), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
+    new Timer(const Duration(milliseconds: 75), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
+    new Timer(const Duration(milliseconds: 100), () => game.bgStyle = "rgba(0, 0, 0, 0.77)");
+    new Timer(const Duration(milliseconds: 125), () => game.bgStyle = "rgba(0, 0, 0, 0.75)");
+    new Timer(const Duration(milliseconds: 150), () => game.bgStyle = "rgba(0, 0, 0, 0.73)");
+    new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.71)");
+    new Timer(const Duration(milliseconds: 200), () => game.bgStyle = "rgba(0, 0, 0, 0.69)");
+    new Timer(const Duration(milliseconds: 225), () => game.bgStyle = "rgba(0, 0, 0, 0.67)");
+    new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.65)");
+    new Timer(const Duration(milliseconds: 200), () => game.bgStyle = "rgba(0, 0, 0, 0.63)");
+    new Timer(const Duration(milliseconds: 225), () => game.bgStyle = "rgba(0, 0, 0, 0.61)");
+    new Timer(const Duration(milliseconds: 175), () => game.bgStyle = "rgba(0, 0, 0, 0.59)");
+    new Timer(const Duration(milliseconds: 200), () => game.bgStyle = "rgba(0, 0, 0, 0.57)");
+    new Timer(const Duration(milliseconds: 225), () => game.bgStyle = "rgba(0, 0, 0, 0.55)");
+    new Timer(const Duration(milliseconds: 250), () => game.bgStyle = "rgba(0, 0, 0, 0.53)");
+    new Timer(const Duration(milliseconds: 275), () => game.bgStyle = "rgba(0, 0, 0, 0.55)");
+    new Timer(const Duration(milliseconds: 300), () => game.bgStyle = "rgba(0, 0, 0, 0.57)");
+    new Timer(const Duration(milliseconds: 325), () => game.bgStyle = "rgba(0, 0, 0, 0.59)");
+    new Timer(const Duration(milliseconds: 350), () => game.bgStyle = "rgba(0, 0, 0, 0.61)");
+    new Timer(const Duration(milliseconds: 375), () => game.bgStyle = "rgba(0, 0, 0, 0.63)");
+    new Timer(const Duration(milliseconds: 400), () => game.bgStyle = "rgba(0, 0, 0, 0.65)");
+    new Timer(const Duration(milliseconds: 425), () => game.bgStyle = "rgba(0, 0, 0, 0.67)");
+    new Timer(const Duration(milliseconds: 450), () => game.bgStyle = "rgba(0, 0, 0, 0.69)");
+    new Timer(const Duration(milliseconds: 475), () => game.bgStyle = "rgba(0, 0, 0, 0.71)");
+    new Timer(const Duration(milliseconds: 500), () => game.bgStyle = "rgba(0, 0, 0, 0.73)");
+    new Timer(const Duration(milliseconds: 525), () => game.bgStyle = "rgba(0, 0, 0, 0.75)");
+    new Timer(const Duration(milliseconds: 550), () => game.bgStyle = "rgba(0, 0, 0, 0.77)");
+    new Timer(const Duration(milliseconds: 575), () => game.bgStyle = "rgba(0, 0, 0, 0.79)");
+    new Timer(const Duration(milliseconds: 600), () => game.bgStyle = "rgba(0, 0, 0, 0.81)");
+    new Timer(const Duration(milliseconds: 625), () => game.bgStyle = "rgba(0, 0, 0, 0.83)");
+    new Timer(const Duration(milliseconds: 650), () => game.bgStyle = "rgba(0, 0, 0, 0.85)");
   }
 
   void bgFade() {

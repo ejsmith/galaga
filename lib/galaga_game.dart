@@ -247,10 +247,9 @@ class GalagaGame extends Game {
 
     // update pubsec
 
-    resetLeaderBoard();
-    resetOptions();
-    resetPowerups();
-    resetStats();
+//    resetLeaderBoard();
+//    resetOptions();
+//    resetStats();
 
     state = GalagaGameState.welcome;
     super.start();
@@ -258,7 +257,6 @@ class GalagaGame extends Game {
 
   void update() {
     if (state == GalagaGameState.playing || state == GalagaGameState.paused) {
-      resetStats();
       score = score.ceil();
       if (input.keyCode == 27)
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
@@ -286,10 +284,6 @@ class GalagaGame extends Game {
 
         visualLevel++;
       }
-
-      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
-
-      Stats["percentage"].ceil();
 
       if (score > Stats["highscore"])
         Stats["highscore"] = score;
@@ -2301,82 +2295,6 @@ class GalagaGame extends Game {
     state = GalagaGameState.options;
   }
 
-  void newGame() {
-    entities.where((e) => e is Stars).forEach((e) => e.removeFromGame());
-    for (int i = 0; i < 50; i++) {
-
-      if (colorCount < 7)
-        colorCount++;
-      else if (colorCount >= 7)
-        colorCount = 1;
-
-      startStars();
-    }
-
-    score = 0;
-
-    if (ship != null)
-      ship.removeFromGame();
-
-    removeEntitiesByFilter((e) => e is PowerUp);
-    removeEntitiesByFilter((e) => e is Bullet);
-    removeEntitiesByFilter((e) => e is Enemy);
-
-    enemyX = -400;
-    enemyY = -165;
-    enemyAmount = 33;
-
-    bonusCheck = 3;
-    bonusStage = false;
-    visualLevel = 1;
-    level = 1;
-    score = 0;
-    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]) + (3 / Options["bulletCap"]);
-
-    if (Options["powerups"] == 1)
-      pointMultiplier *= 2;
-
-    if (level >= bonusCheck) {
-      bonusStage = true;
-      bonusCheck += 3;
-    } else {
-      bonusStage = false;
-    }
-
-    for (int i = 0; i < 33; i++)
-      newEnemy();
-
-    ship = new Ship(this, 0, (rect.halfHeight - 30));
-    addEntity(ship);
-    p1Dead = false;
-
-    ship.spiralShot = true;
-    ship.lives = Options["startLives"];
-
-    Stats["totalGames"] += 1;
-    state = GalagaGameState.playing;
-    timer.timeDecrease = true;
-    timer.gameTime = Options["time"];
-  }
-
-  void gameOver() {
-    removeEntitiesByFilter((e) => e is PowerUp);
-    removeEntitiesByFilter((e) => e is Bullet);
-    removeEntitiesByFilter((e) => e is Enemy);
-
-    updateLeaderboard();
-
-    Stats["loses"] += 1;
-    _gameOverEvent.signal();
-    _statUpdateEvent.signal();
-    if (soundEffectsOn)
-      cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
-    removeEntitiesByGroup("gameOver");
-    createGameOverMenu();
-
-    state = GalagaGameState.gameOver;
-  }
-
   void resetPowerups() {
      ship.spiralShot = false;
      ship.superSpiral = false;
@@ -2434,6 +2352,86 @@ class GalagaGame extends Game {
     }
 
     Stats["highscore"] = Highscores[1];
+  }
+
+  void newGame() {
+    entities.where((e) => e is Stars).forEach((e) => e.removeFromGame());
+    for (int i = 0; i < 50; i++) {
+
+      if (colorCount < 7)
+        colorCount++;
+      else if (colorCount >= 7)
+        colorCount = 1;
+
+      startStars();
+    }
+
+    score = 0;
+
+    if (ship != null)
+      ship.removeFromGame();
+
+    removeEntitiesByFilter((e) => e is PowerUp);
+    removeEntitiesByFilter((e) => e is Bullet);
+    removeEntitiesByFilter((e) => e is Enemy);
+
+    enemyX = -400;
+    enemyY = -165;
+    enemyAmount = 33;
+
+    bonusCheck = 3;
+    bonusStage = false;
+    visualLevel = 1;
+    level = 1;
+    score = 0;
+    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]) + (3 / Options["bulletCap"]);
+
+    if (Options["powerups"] == 1)
+      pointMultiplier *= 2;
+
+    if (level >= bonusCheck) {
+      bonusStage = true;
+      bonusCheck += 3;
+    } else {
+      bonusStage = false;
+    }
+
+    for (int i = 0; i < 33; i++)
+      newEnemy();
+
+    ship = new Ship(this, 0, (rect.halfHeight - 30));
+    addEntity(ship);
+    p1Dead = false;
+
+    ship.spiralShot = false;
+    ship.lives = Options["startLives"];
+
+    Stats["totalGames"] += 1;
+    state = GalagaGameState.playing;
+    timer.timeDecrease = true;
+    timer.gameTime = Options["time"];
+  }
+
+  void gameOver() {
+    removeEntitiesByFilter((e) => e is PowerUp);
+    removeEntitiesByFilter((e) => e is Bullet);
+    removeEntitiesByFilter((e) => e is Enemy);
+
+    updateLeaderboard();
+
+    Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+
+    Stats["percentage"] = Stats["percentage"].round();
+
+    Stats["loses"] += 1;
+    _gameOverEvent.signal();
+    _statUpdateEvent.signal();
+    if (soundEffectsOn)
+      cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
+    removeEntitiesByGroup("gameOver");
+    createGameOverMenu();
+
+    state = GalagaGameState.gameOver;
   }
 
   final EventStream _statUpdateEvent = new EventStream();
