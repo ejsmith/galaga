@@ -5632,7 +5632,7 @@ $$.EventStream = {"": "Object;_controller,stream",
 
 $$.EventArgs = {"": "Object;"};
 
-$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   shipHit$0: function() {
     return this.shipHit.call$0();
   },
@@ -5689,7 +5689,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this._waitingTimer = $.Timer_Timer$periodic($.CONSTANT41, new $.GalagaGame_waiting_anon(this));
   },
   start$0: function(_) {
-    var t1, t2;
+    var t1, t2, i;
     t1 = this.Stats;
     if (!t1.containsKey$1(t1, "killed"))
       t1.$indexSet(t1, "killed", 0);
@@ -5762,6 +5762,14 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.createPausedMenu$0();
     this.createControlsMenu$0();
     this.createLeaderBoardMenu$0();
+    for (i = 0; i < 50; ++i) {
+      t1 = this.colorCount;
+      if (t1 < 7)
+        this.colorCount = t1 + 1;
+      else if (t1 >= 7)
+        this.colorCount = 1;
+      this.startStars$0();
+    }
     if (this.soundEffectsOn) {
       t1 = this.menuSong;
       t1.play$3(t1, t1.Sound, t1.Volume, t1.Looping);
@@ -5838,13 +5846,11 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     $.Game.prototype.update$0.call(this);
   },
   startStars$0: function() {
-    var w, star, t1;
+    var w, star;
     w = $.random(0.5, 3.5, false);
     star = $.Stars$(this, 0, 0, w, w, this.colorCount);
-    do {
-      star.set$x(star, $.random(-this.rect.get$halfWidth(), this.rect.get$halfWidth(), false));
-      star.set$y(star, $.random(-this.rect.get$halfHeight(), this.rect.get$halfHeight(), false));
-    } while (t1 = $.JSArray_methods.where$1(this.entities, new $.GalagaGame_startStars_anon()), t1.any$1(t1, new $.GalagaGame_startStars_anon0(star)));
+    star.set$x(star, $.random(-this.rect.get$halfWidth(), this.rect.get$halfWidth(), false));
+    star.set$y(star, $.random(-this.rect.get$halfHeight(), this.rect.get$halfHeight(), false));
     this.entities.push(star);
   },
   newParticle$4: function(x, y, xVel, yVel) {
@@ -5883,7 +5889,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
   },
   newStar$0: function() {
     var w, star, t1;
-    if ($.random(0, 1, false) > 0.01 || this.get$state(this) === 2)
+    if ($.random(0, 1, false) > 0.1 || this.get$state(this) === 2)
       return;
     w = $.random(0.5, 3.5, false);
     star = $.Stars$(this, 0, 0, w, w, this.colorCount);
@@ -6471,11 +6477,15 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.timer.gameTime = t1;
   },
   gameOver$0: function() {
+    var t1, t2;
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon0());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon1());
     this.updateLeaderboard$0();
-    var t1 = this.Stats;
+    t1 = this.Stats;
+    t2 = this.ship;
+    t1.$indexSet(t1, "percentage", t2.bulletsHit / t2.bulletsFired * 100);
+    t1.$indexSet(t1, "percentage", $.round$0$nx(t1.$index(t1, "percentage")));
     t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
     this._gameOverEvent.signal$0();
     this._statUpdateEvent.signal$0();
@@ -6503,6 +6513,9 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     return this._motherShipEvent.stream;
   },
   get$onNormalHit: function() {
+    return this._normalHitEvent.stream;
+  },
+  get$onFadeEvent: function() {
     return this._normalHitEvent.stream;
   }
 };
@@ -6619,18 +6632,6 @@ $$.GalagaGame_update_anon6 = {"": "Closure;this_0",
   }
 };
 
-$$.GalagaGame_startStars_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isStars;
-  }
-};
-
-$$.GalagaGame_startStars_anon0 = {"": "Closure;star_0",
-  call$1: function(e) {
-    return this.star_0.collidesWith$1(e);
-  }
-};
-
 $$.GalagaGame_newStar_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isStars;
@@ -6733,6 +6734,7 @@ $$.GalagaGame_createWelcomeMenu_anon0 = {"": "Closure;this_1",
     t1.removeEntitiesByGroup$1("stats");
     t1.createStatsMenu$0();
     $.set$state$x(t1, 5);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -6747,6 +6749,7 @@ $$.GalagaGame_createWelcomeMenu_anon1 = {"": "Closure;this_2",
     t1.removeEntitiesByGroup$1("options");
     t1.createOptionsMenu$0();
     $.set$state$x(t1, 6);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -6761,6 +6764,7 @@ $$.GalagaGame_createWelcomeMenu_anon2 = {"": "Closure;this_3",
     t1.removeEntitiesByGroup$1("leaders");
     t1.createLeaderBoardMenu$0();
     $.set$state$x(t1, 9);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -6817,6 +6821,7 @@ $$.GalagaGame_createLeaderBoardMenu_anon0 = {"": "Closure;this_1",
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -6831,6 +6836,7 @@ $$.GalagaGame_createStatsMenu_anon = {"": "Closure;this_0",
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -7086,6 +7092,7 @@ $$.GalagaGame_createOptionsMenu_anon11 = {"": "Closure;this_12",
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -7098,6 +7105,7 @@ $$.GalagaGame_createControlsMenu_anon = {"": "Closure;this_0",
   call$0: function() {
     var t1 = this.this_0;
     $.set$state$x(t1, 6);
+    t1.get$_fadeEvent().signal$0();
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -8088,6 +8096,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     this.get$game().get$onMotherShipHit().listen$1(new $.GalagaRenderer_init_anon2(this));
     this.get$game().get$onBossHit().listen$1(new $.GalagaRenderer_init_anon3(this));
     this.get$game().get$onNormalHit().listen$1(new $.GalagaRenderer_init_anon4(this));
+    this.get$game().get$onFadeEvent().listen$1(new $.GalagaRenderer_init_anon5(this));
   },
   gameOver$0: function() {
     this.subtleBgFade$0();
@@ -8135,41 +8144,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
   drawEnemys$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_drawEnemys_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_drawEnemys_anon0(this));
-  },
-  subtleBgFade$0: function() {
-    this.get$game().bgStyle = "rgba(0, 0, 0, 0.85)";
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon(this));
-    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon0(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon1(this));
-    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon2(this));
-    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon3(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon4(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon5(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon6(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon7(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon8(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon9(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon10(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon11(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon12(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon13(this));
-    $.Timer_Timer($.CONSTANT15, new $.GalagaRenderer_subtleBgFade_anon14(this));
-    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon15(this));
-    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon16(this));
-    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_subtleBgFade_anon17(this));
-    $.Timer_Timer($.CONSTANT29, new $.GalagaRenderer_subtleBgFade_anon18(this));
-    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_subtleBgFade_anon19(this));
-    $.Timer_Timer($.CONSTANT30, new $.GalagaRenderer_subtleBgFade_anon20(this));
-    $.Timer_Timer($.CONSTANT31, new $.GalagaRenderer_subtleBgFade_anon21(this));
-    $.Timer_Timer($.CONSTANT32, new $.GalagaRenderer_subtleBgFade_anon22(this));
-    $.Timer_Timer($.CONSTANT33, new $.GalagaRenderer_subtleBgFade_anon23(this));
-    $.Timer_Timer($.CONSTANT34, new $.GalagaRenderer_subtleBgFade_anon24(this));
-    $.Timer_Timer($.CONSTANT35, new $.GalagaRenderer_subtleBgFade_anon25(this));
-    $.Timer_Timer($.CONSTANT36, new $.GalagaRenderer_subtleBgFade_anon26(this));
-    $.Timer_Timer($.CONSTANT37, new $.GalagaRenderer_subtleBgFade_anon27(this));
-    $.Timer_Timer($.CONSTANT38, new $.GalagaRenderer_subtleBgFade_anon28(this));
-    $.Timer_Timer($.CONSTANT39, new $.GalagaRenderer_subtleBgFade_anon29(this));
-    $.Timer_Timer($.CONSTANT40, new $.GalagaRenderer_subtleBgFade_anon30(this));
   },
   shipHit$0: function() {
     this.bgFade$0();
@@ -8277,39 +8251,6 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_normalShipHit_anon());
     t1.forEach$1(t1, new $.GalagaRenderer_normalShipHit_anon0(this));
   },
-  getRenderer$1: function(e) {
-    var t1, t2;
-    if (typeof e === "object" && e !== null && !!e.$isEnemy) {
-      t1 = this.get$game();
-      t2 = t1.get$state(t1) === 4;
-      t1 = t2;
-    } else
-      t1 = false;
-    if (t1)
-      return;
-    return $.CanvasGameRenderer.prototype.getRenderer$1.call(this, e);
-  },
-  drawBeforeCtxRestore$0: function() {
-    var t1, t2;
-    this.drawBouncer$0();
-    this.drawCountDown$0();
-    this.drawStars$0();
-    t1 = this.get$game();
-    if (t1.get$state(t1) !== 3) {
-      t1 = this.get$game();
-      t2 = t1.get$state(t1) === 2;
-      t1 = t2;
-    } else
-      t1 = true;
-    if (t1) {
-      this.drawPowerUps$0();
-      this.drawBullets$0();
-      this.drawEtc$0();
-      this.drawShip$0();
-      this.drawEnemys$0();
-    }
-    $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
-  },
   drawEtc$0: function() {
     var t1, tempHigh, digits, t2, i;
     t1 = this.get$game().get$Stats();
@@ -8377,6 +8318,74 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
         temp = 1;
       $.fillText$3$x(this.ctx, "Next Level In: " + $.S(temp), -165, 0);
     }
+  },
+  getRenderer$1: function(e) {
+    var t1, t2;
+    if (typeof e === "object" && e !== null && !!e.$isEnemy) {
+      t1 = this.get$game();
+      t2 = t1.get$state(t1) === 4;
+      t1 = t2;
+    } else
+      t1 = false;
+    if (t1)
+      return;
+    return $.CanvasGameRenderer.prototype.getRenderer$1.call(this, e);
+  },
+  drawBeforeCtxRestore$0: function() {
+    var t1, t2;
+    this.drawBouncer$0();
+    this.drawCountDown$0();
+    this.drawStars$0();
+    t1 = this.get$game();
+    if (t1.get$state(t1) !== 3) {
+      t1 = this.get$game();
+      t2 = t1.get$state(t1) === 2;
+      t1 = t2;
+    } else
+      t1 = true;
+    if (t1) {
+      this.drawPowerUps$0();
+      this.drawBullets$0();
+      this.drawEtc$0();
+      this.drawShip$0();
+      this.drawEnemys$0();
+    }
+    $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
+  },
+  subtleBgFade$0: function() {
+    this.get$game().bgStyle = "rgba(0, 0, 0, 0.85)";
+    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon(this));
+    $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon0(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon1(this));
+    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon2(this));
+    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon3(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon4(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon6(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon7(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon8(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon9(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon10(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon11(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon12(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon13(this));
+    $.Timer_Timer($.CONSTANT15, new $.GalagaRenderer_subtleBgFade_anon14(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon15(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon16(this));
+    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_subtleBgFade_anon17(this));
+    $.Timer_Timer($.CONSTANT29, new $.GalagaRenderer_subtleBgFade_anon18(this));
+    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_subtleBgFade_anon19(this));
+    $.Timer_Timer($.CONSTANT30, new $.GalagaRenderer_subtleBgFade_anon20(this));
+    $.Timer_Timer($.CONSTANT31, new $.GalagaRenderer_subtleBgFade_anon21(this));
+    $.Timer_Timer($.CONSTANT32, new $.GalagaRenderer_subtleBgFade_anon22(this));
+    $.Timer_Timer($.CONSTANT33, new $.GalagaRenderer_subtleBgFade_anon23(this));
+    $.Timer_Timer($.CONSTANT34, new $.GalagaRenderer_subtleBgFade_anon24(this));
+    $.Timer_Timer($.CONSTANT35, new $.GalagaRenderer_subtleBgFade_anon25(this));
+    $.Timer_Timer($.CONSTANT36, new $.GalagaRenderer_subtleBgFade_anon26(this));
+    $.Timer_Timer($.CONSTANT37, new $.GalagaRenderer_subtleBgFade_anon27(this));
+    $.Timer_Timer($.CONSTANT38, new $.GalagaRenderer_subtleBgFade_anon28(this));
+    $.Timer_Timer($.CONSTANT39, new $.GalagaRenderer_subtleBgFade_anon29(this));
+    $.Timer_Timer($.CONSTANT40, new $.GalagaRenderer_subtleBgFade_anon30(this));
   },
   bgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.8)";
@@ -8458,6 +8467,12 @@ $$.GalagaRenderer_init_anon4 = {"": "Closure;this_5",
   }
 };
 
+$$.GalagaRenderer_init_anon5 = {"": "Closure;this_6",
+  call$1: function(e) {
+    return this.this_6.subtleBgFade$0();
+  }
+};
+
 $$.GalagaRenderer_drawStars_anon = {"": "Closure;",
   call$1: function(e) {
     return typeof e === "object" && e !== null && !!e.$isStars;
@@ -8474,31 +8489,31 @@ $$.GalagaRenderer_drawStars_anon0 = {"": "Closure;this_0",
       $.beginPath$0$x(t1.get$ctx());
       if (e.get$starColor() === 1) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star1(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star1(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 2) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star2(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star2(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 3) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star3(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star3(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 4) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star4(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star4(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 5) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star5(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star5(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 6) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star6(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star6(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       if (e.get$starColor() === 7) {
         t2 = $.getInterceptor$x(e);
-        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star7(), $.$sub$n(t2.get$x(e), 3), $.$sub$n(t2.get$y(e), 3), $.random(0.5, 3.5, false), $.random(0.5, 3.5, false));
+        $.drawImageScaled$5$x(t1.get$ctx(), t1.get$star7(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), t2.get$width(e), t2.get$height(e));
       }
       $.stroke$0$x(t1.get$ctx());
     }
@@ -8676,6 +8691,186 @@ $$.GalagaRenderer_drawEnemys_anon0 = {"": "Closure;this_0",
         $.drawImageScaled$5$x(t4, t2.get$enemy2(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 36, 36);
       $.stroke$0$x(t2.get$ctx());
     }
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon = {"": "Closure;this_0",
+  call$0: function() {
+    this.this_0.set$shipFlicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon0 = {"": "Closure;this_1",
+  call$0: function() {
+    this.this_1.set$shipFlicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon1 = {"": "Closure;this_2",
+  call$0: function() {
+    this.this_2.set$shipFlicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon2 = {"": "Closure;this_3",
+  call$0: function() {
+    this.this_3.set$shipFlicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon3 = {"": "Closure;this_4",
+  call$0: function() {
+    this.this_4.set$shipFlicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_shipHit_anon4 = {"": "Closure;this_5",
+  call$0: function() {
+    this.this_5.set$shipFlicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_bossHit_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_bossHit_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    if ($.$eq($.get$type$x(e), "Boss") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
+      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_bossHit__anon(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bossHit__anon0(e));
+      this.this_0.subtleBgFade$0();
+    }
+  }
+};
+
+$$.GalagaRenderer_bossHit__anon = {"": "Closure;e_1",
+  call$0: function() {
+    this.e_1.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_bossHit__anon0 = {"": "Closure;e_2",
+  call$0: function() {
+    this.e_2.set$flicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    if ($.$eq($.get$type$x(e), "MotherShip") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
+      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_motherShipHit__anon(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_motherShipHit__anon0(e));
+      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_motherShipHit__anon1(e));
+      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_motherShipHit__anon2(e));
+      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_motherShipHit__anon3(e));
+      $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_motherShipHit__anon4(e));
+      this.this_0.subtleBgFade$0();
+    }
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon = {"": "Closure;e_1",
+  call$0: function() {
+    this.e_1.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon0 = {"": "Closure;e_2",
+  call$0: function() {
+    this.e_2.set$flicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon1 = {"": "Closure;e_3",
+  call$0: function() {
+    this.e_3.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon2 = {"": "Closure;e_4",
+  call$0: function() {
+    this.e_4.set$flicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon3 = {"": "Closure;e_5",
+  call$0: function() {
+    this.e_5.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_motherShipHit__anon4 = {"": "Closure;e_6",
+  call$0: function() {
+    this.e_6.set$flicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_normalShipHit_anon = {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!e.$isEnemy;
+  }
+};
+
+$$.GalagaRenderer_normalShipHit_anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    if ($.$eq($.get$type$x(e), "Normal") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
+      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_normalShipHit__anon(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_normalShipHit__anon0(e));
+      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_normalShipHit__anon1(e));
+      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_normalShipHit__anon2(e));
+      this.this_0.subtleBgFade$0();
+    }
+  }
+};
+
+$$.GalagaRenderer_normalShipHit__anon = {"": "Closure;e_1",
+  call$0: function() {
+    this.e_1.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_normalShipHit__anon0 = {"": "Closure;e_2",
+  call$0: function() {
+    this.e_2.set$flicker(false);
+    return false;
+  }
+};
+
+$$.GalagaRenderer_normalShipHit__anon1 = {"": "Closure;e_3",
+  call$0: function() {
+    this.e_3.set$flicker(true);
+    return true;
+  }
+};
+
+$$.GalagaRenderer_normalShipHit__anon2 = {"": "Closure;e_4",
+  call$0: function() {
+    this.e_4.set$flicker(false);
+    return false;
   }
 };
 
@@ -8900,186 +9095,6 @@ $$.GalagaRenderer_subtleBgFade_anon30 = {"": "Closure;this_31",
   call$0: function() {
     this.this_31.get$game().set$bgStyle("rgba(0, 0, 0, 0.85)");
     return "rgba(0, 0, 0, 0.85)";
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon = {"": "Closure;this_0",
-  call$0: function() {
-    this.this_0.set$shipFlicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon0 = {"": "Closure;this_1",
-  call$0: function() {
-    this.this_1.set$shipFlicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon1 = {"": "Closure;this_2",
-  call$0: function() {
-    this.this_2.set$shipFlicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon2 = {"": "Closure;this_3",
-  call$0: function() {
-    this.this_3.set$shipFlicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon3 = {"": "Closure;this_4",
-  call$0: function() {
-    this.this_4.set$shipFlicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_shipHit_anon4 = {"": "Closure;this_5",
-  call$0: function() {
-    this.this_5.set$shipFlicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_bossHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_bossHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "Boss") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_bossHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bossHit__anon0(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_bossHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    this.e_1.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_bossHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    this.e_2.set$flicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "MotherShip") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_motherShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_motherShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_motherShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_motherShipHit__anon2(e));
-      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_motherShipHit__anon3(e));
-      $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_motherShipHit__anon4(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    this.e_1.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    this.e_2.set$flicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon1 = {"": "Closure;e_3",
-  call$0: function() {
-    this.e_3.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon2 = {"": "Closure;e_4",
-  call$0: function() {
-    this.e_4.set$flicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon3 = {"": "Closure;e_5",
-  call$0: function() {
-    this.e_5.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_motherShipHit__anon4 = {"": "Closure;e_6",
-  call$0: function() {
-    this.e_6.set$flicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit_anon = {"": "Closure;",
-  call$1: function(e) {
-    return typeof e === "object" && e !== null && !!e.$isEnemy;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit_anon0 = {"": "Closure;this_0",
-  call$1: function(e) {
-    if ($.$eq($.get$type$x(e), "Normal") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_normalShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_normalShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_normalShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_normalShipHit__anon2(e));
-      this.this_0.subtleBgFade$0();
-    }
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon = {"": "Closure;e_1",
-  call$0: function() {
-    this.e_1.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon0 = {"": "Closure;e_2",
-  call$0: function() {
-    this.e_2.set$flicker(false);
-    return false;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon1 = {"": "Closure;e_3",
-  call$0: function() {
-    this.e_3.set$flicker(true);
-    return true;
-  }
-};
-
-$$.GalagaRenderer_normalShipHit__anon2 = {"": "Closure;e_4",
-  call$0: function() {
-    this.e_4.set$flicker(false);
-    return false;
   }
 };
 
@@ -9436,7 +9451,7 @@ $$.Stars = {"": "GameEntity;starColor<,game,_x,_y,_width,_height,isHighlighted,s
       this.starColor = 6;
     if (col === 7)
       this.starColor = 7;
-    t1 = $.random(50, 75, false);
+    t1 = $.random(50, 150, false);
     this.momentum.yVel = t1;
   },
   $isStars: true
@@ -11083,7 +11098,7 @@ $.EventArgs$ = function() {
 };
 
 $.GalagaGame$withServices = function(input, renderer, loop) {
-  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   t1.Game$withServices$3(input, renderer, loop);
   return t1;
 };

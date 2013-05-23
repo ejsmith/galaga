@@ -240,6 +240,16 @@ class GalagaGame extends Game {
     createControlsMenu();
     createLeaderBoardMenu();
 
+    for (int i = 0; i < 50; i++) {
+
+      if (colorCount < 7)
+        colorCount++;
+      else if (colorCount >= 7)
+        colorCount = 1;
+
+      startStars();
+    }
+
     if (soundEffectsOn)
       menuSong.play(menuSong.Sound, menuSong.Volume, menuSong.Looping);
 
@@ -341,11 +351,8 @@ class GalagaGame extends Game {
     num w = random(.5, 3.5);
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
 
-    do {
-      star.x = random(-rect.halfWidth, rect.halfWidth);
-      star.y = random(-rect.halfHeight, rect.halfHeight);
-
-    } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
+    star.x = random(-rect.halfWidth, rect.halfWidth);
+    star.y = random(-rect.halfHeight, rect.halfHeight);
 
     addEntity(star);
   }
@@ -396,7 +403,7 @@ class GalagaGame extends Game {
   void newStar() {
     num rand = random(0, 1);
 
-    if (rand > .01 || state == GalagaGameState.paused)
+    if (rand > .1 || state == GalagaGameState.paused)
       return;
 
     num w = random(.5, 3.5);
@@ -871,6 +878,7 @@ class GalagaGame extends Game {
 
           state = GalagaGameState.stats;
 
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -893,6 +901,7 @@ class GalagaGame extends Game {
 
           state = GalagaGameState.options;
 
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -915,6 +924,7 @@ class GalagaGame extends Game {
 
           state = GalagaGameState.leaderboard;
 
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -1326,6 +1336,7 @@ class GalagaGame extends Game {
           createWelcomeMenu();
 
           state = GalagaGameState.welcome;
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -1495,6 +1506,7 @@ class GalagaGame extends Game {
           createWelcomeMenu();
 
           state = GalagaGameState.welcome;
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -2005,6 +2017,7 @@ class GalagaGame extends Game {
           createWelcomeMenu();
 
           state = GalagaGameState.welcome;
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -2159,6 +2172,7 @@ class GalagaGame extends Game {
         text: "Back",
         buttonAction: () {
           state = GalagaGameState.options;
+          _fadeEvent.signal();
           _statUpdateEvent.signal();
           if (soundEffectsOn)
             cursorSelect2.play(cursorSelect2.Sound, cursorSelect2.Volume, cursorSelect2.Looping);
@@ -2424,6 +2438,7 @@ class GalagaGame extends Game {
     Stats["percentage"] = Stats["percentage"].round();
 
     Stats["loses"] += 1;
+
     _gameOverEvent.signal();
     _statUpdateEvent.signal();
     if (soundEffectsOn)
@@ -2454,6 +2469,9 @@ class GalagaGame extends Game {
 
   final EventStream _normalHitEvent = new EventStream();
   Stream<EventArgs> get onNormalHit => _normalHitEvent.stream;
+
+  final EventStream _fadeEvent = new EventStream();
+  Stream<EventArgs> get onFadeEvent => _normalHitEvent.stream;
 }
 
 class GalagaGameState {

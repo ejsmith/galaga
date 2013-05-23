@@ -23,7 +23,7 @@ class Stars extends GameEntity {
     if (col == 7)
       starColor = 7;
 
-    momentum.yVel = random(50, 75);
+    momentum.yVel = random(50, 150);
   }
 
   void update() {

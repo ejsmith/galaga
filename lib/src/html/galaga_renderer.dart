@@ -92,6 +92,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.onMotherShipHit.listen((e) => motherShipHit());
     game.onBossHit.listen((e) => bossHit());
     game.onNormalHit.listen((e) => normalShipHit());
+    game.onFadeEvent.listen((e) => subtleBgFade());
   }
 
   void gameOver() {
@@ -107,19 +108,19 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
         ctx.beginPath();
         if (e.starColor == 1)
-          ctx.drawImageScaled(star1, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star1, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 2)
-          ctx.drawImageScaled(star2, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star2, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 3)
-          ctx.drawImageScaled(star3, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star3, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 4)
-          ctx.drawImageScaled(star4, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star4, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 5)
-          ctx.drawImageScaled(star5, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star5, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 6)
-          ctx.drawImageScaled(star6, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star6, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
         if (e.starColor == 7)
-          ctx.drawImageScaled(star7, e.x - 3, e.y - 3, random(.5, 3.5), random(.5, 3.5));
+          ctx.drawImageScaled(star7, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
         ctx.stroke();
       }
