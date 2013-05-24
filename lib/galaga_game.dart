@@ -48,6 +48,7 @@ class GalagaGame extends Game {
   bool bonusStage = false;
   bool soundEffectsOn = true;
   bool tutorial = true;
+  bool secret = false;
   num visualLevel = 1;
   Ship ship;
   num nextId = 1;
@@ -85,6 +86,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("levelEnd");
     disableEntitiesByGroup("leaders");
+    disableEntitiesByGroup("cheats");
 
     if (_state == GalagaGameState.welcome)
       enableEntitiesByGroup("welcome");
@@ -102,6 +104,8 @@ class GalagaGame extends Game {
       enableEntitiesByGroup("levelEnd");
     else if (_state == GalagaGameState.leaderboard)
       enableEntitiesByGroup("leaders");
+    else if (_state == GalagaGameState.cheats)
+      enableEntitiesByGroup("cheats");
 
   }
 
@@ -118,6 +122,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("options");
     disableEntitiesByGroup("instructions");
     disableEntitiesByGroup("leaders");
+    disableEntitiesByGroup("cheats");
 
     _waitingTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {
         _waiting++;
@@ -239,6 +244,7 @@ class GalagaGame extends Game {
     createPausedMenu();
     createControlsMenu();
     createLeaderBoardMenu();
+    createCheatsMenu();
 
     for (int i = 0; i < 50; i++) {
 
@@ -448,6 +454,10 @@ class GalagaGame extends Game {
       bouncer.height = 72;
       bouncer.width = 72;
     }
+    if (sprite == 11) {
+      bouncer.height = 36;
+      bouncer.width = 36;
+    }
 
     addEntity(bouncer);
   }
@@ -568,6 +578,82 @@ class GalagaGame extends Game {
     return 0;
   }
 
+  void createCheatsMenu() {
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: -240,
+        text: "Hax",
+        size: 56,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: -94,
+        text: "SpreadShot:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 200,
+        y: -94,
+        text: secret == true ? "True" : "False",
+        buttonAction: () {
+
+          if (secret == true)
+            secret = false;
+          else
+            secret = true;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 400,
+        y: 275,
+        text: "Made by Cody Smith",
+        buttonAction: () {
+          removeEntitiesByGroup("welcome");
+          createWelcomeMenu();
+
+          state = GalagaGameState.welcome;
+
+          _fadeEvent.signal();
+        },
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.5,
+        id: "",
+        groupId: "cheats"));
+
+    disableEntitiesByGroup("cheats");
+  }
+
   void createLevelEnd() {
     addEntity(new GameText(game: this,
         x: 0,
@@ -625,7 +711,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Jew",
+        text: "You're: The Jew",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -637,7 +723,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Jewish Priest",
+        text: "You're: The Jewish Priest",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -649,7 +735,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Amish Mastermind",
+        text: "You're: The Amish Mastermind",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -661,7 +747,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Road Warrior",
+        text: "You're: The Road Warrior",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -673,7 +759,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Space Recruit",
+        text: "You're: The Space Recruit",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -685,7 +771,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Space Cadet",
+        text: "You're: The Space Cadet",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -697,7 +783,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're a: Space Captain",
+        text: "You're: The Space Captain",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1550,13 +1636,28 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
-    addEntity(new GameText(game: this,
+    addEntity(new GameButton(game: this,
         x: 400,
         y: 275,
         text: "Made by Cody Smith",
+        buttonAction: () {
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+
+          newBouncer(11);
+          newBouncer(11);
+          newBouncer(11);
+          newBouncer(11);
+          newBouncer(11);
+          newBouncer(11);
+
+          _fadeEvent.signal();
+        },
         size: 16,
         font: "cinnamoncake, Verdana",
-        centered: true,
+        centered:  true,
         color: "255, 255, 255",
         opacity: 0.5,
         id: "",
@@ -2417,7 +2518,11 @@ class GalagaGame extends Game {
     addEntity(ship);
     p1Dead = false;
 
-    ship.spiralShot = false;
+    if (secret)
+      ship.spiralShot = true;
+    else
+      ship.spiralShot = false;
+
     ship.lives = Options["startLives"];
 
     Stats["totalGames"] += 1;
@@ -2484,4 +2589,5 @@ class GalagaGameState {
   static final num instructions = 7;
   static final num levelEnd = 8;
   static final num leaderboard = 9;
+  static final num cheats = 10;
 }

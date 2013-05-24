@@ -43,6 +43,16 @@ class Ship extends GameEntity<GalagaGame> {
       game.gameOver();
     }
 
+    window.onKeyDown.listen((e) {
+     if (e.keyCode == 37)
+       momentum.xVel = -250;
+     else if (e.keyCode == 39)
+       momentum.xVel = 250;
+    });
+    window.onKeyUp.listen((e) {
+       momentum.xVel = 0;
+    });
+
     if (bullet > maxBullet)
       bullet = 3;
 
@@ -52,9 +62,9 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.welcome)
       return;
 
-    if (game.input.mouse != null) {
-      x = game.input.mouse.x;
-    }
+//    if (game.input.mouse != null) {
+//      x = game.input.mouse.x;
+//    }
 
     if (x + 16 > game.rect.halfWidth)
       x = game.rect.halfWidth - 16;
@@ -74,6 +84,10 @@ class Ship extends GameEntity<GalagaGame> {
       if (game.input.click != null)
         fire();
 
+      window.onKeyDown.listen((e) {
+        if (e.keyCode == 32)
+          fire();
+      });
 //      if (isPoweringUp)
 //        bulletPower += .25;
     }

@@ -26,6 +26,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement star5 = new ImageElement();
   ImageElement star6 = new ImageElement();
   ImageElement star7 = new ImageElement();
+  ImageElement skull = new ImageElement();
 
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -54,6 +55,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     star5.src = '../web/images/star5.png';
     star6.src = '../web/images/star6.png';
     star7.src = '../web/images/star7.png';
+    skull.src = '../web/images/skull.png';
   }
 
   void init() {
@@ -153,6 +155,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(enemy2, e.x - 18, e.y - 18, 36, 36);
       else if(e.Sprite == 10)
         ctx.drawImageScaled(boss, e.x - 36, e.y - 36, 72, 72);
+      else if(e.Sprite == 11)
+        ctx.drawImageScaled(skull, e.x - 18, e.y - 18, 36, 36);
 
       ctx.stroke();
     });
@@ -426,14 +430,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     drawBouncer();
     drawCountDown();
     drawStars();
-    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
-    drawPowerUps();
-    drawBullets();
-    drawEtc();
-    drawShip();
-    drawEnemys();
-    }
 
+    if (game.state == GalagaGameState.playing || game.state == GalagaGameState.paused) {
+      drawPowerUps();
+      drawBullets();
+      drawEtc();
+      drawShip();
+      drawEnemys();
+    }
     super.drawBeforeCtxRestore();
   }
 

@@ -13,7 +13,7 @@ class bouncingBall extends GameEntity {
   }
 
   void update() {
-    if (game.state != GalagaGameState.instructions)
+    if (game.state != GalagaGameState.instructions && game.state != GalagaGameState.cheats)
       removeFromGame();
 
     if (y > game.rect.halfHeight - (height / 2)) {
