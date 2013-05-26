@@ -30,13 +30,9 @@ class Particles extends GameEntity {
   void update() {
     if (game.state == GalagaGameState.paused)
       return;
-
-    _deleteTimer = new Timer.periodic(const Duration(milliseconds: 1000), (t) {
-        removeFromGame();
-
-        t.cancel();
-    });
-
+    
+    _deleteTimer = new Timer(const Duration(milliseconds: 1000), () => removeFromGame());
+    
     if (y > game.rect.halfHeight)
       removeFromGame();
 

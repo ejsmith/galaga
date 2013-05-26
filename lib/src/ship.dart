@@ -13,6 +13,7 @@ class Ship extends GameEntity<GalagaGame> {
   bool isPoweringUp = false;
   bool spiralShot = false;
   bool superSpiral = false;
+  num lastShotFired = 0;
 
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
@@ -43,10 +44,12 @@ class Ship extends GameEntity<GalagaGame> {
       game.gameOver();
     }
     
-    if (game.input.keyCode == 37)
-       momentum.xVel = -250;
-    if (game.input.keyCode == 39)
-       momentum.xVel = 250;
+    if (game.input.isKeyDown(37))
+      momentum.xVel = -250;
+    else if (game.input.isKeyDown(39))
+      momentum.xVel = 250;
+    else
+      momentum.xVel = 0;
 
     if (bullet > maxBullet)
       bullet = 3;
@@ -75,31 +78,26 @@ class Ship extends GameEntity<GalagaGame> {
     if (bullet > 0) {
 //      if (game.input.mouseDown)
 //        isPoweringUp = true;
-
-      if (game.input.click != null)
-        fire();
-      
-      if (game.input.keyCode == 32)
-        fire();
-      
+    
+    if (game.input.isKeyJustPressed(32) || game.input.click != null)
+      fire();
+    
 //      if (isPoweringUp)
 //        bulletPower += .25;
     }
-
-    if (superCharged > 0)
-      if (game.input.keyCode == 32) {
-        superFire();
-        superCharged--;
-      }
-
+    
     super.update();
   }
 
   void superFire() {
     game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "super"));
+    superCharged--;
   }
 
   void fire() {
+    if (superCharged > 0)
+      return superFire();
+    
     soundLevel = bulletPower * .02;
 
     if (soundLevel > 1)
@@ -112,6 +110,7 @@ class Ship extends GameEntity<GalagaGame> {
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
     }
+    
     if (spiralShot) {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
@@ -129,12 +128,5 @@ class Ship extends GameEntity<GalagaGame> {
 
     if (bullet > 0)
       bullet--;
-  }
-
-  void fade() {
-//    opacity = 0.5;
-//    html.window.setTimeout(() { opacity = 0.4;}, 50);
-//    html.window.setTimeout(() { opacity = 0.3;}, 100);
-//    html.window.setTimeout(() { opacity = 0.2;}, 150);
   }
 }

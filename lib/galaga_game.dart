@@ -273,7 +273,7 @@ class GalagaGame extends Game {
   void update() {
     if (state == GalagaGameState.playing || state == GalagaGameState.paused) {
       score = score.ceil();
-      if (input.keyCode == 27)
+      if (input.isKeyJustPressed(27))
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
 
 //      if (state == GalagaGameState.paused) {
@@ -2536,8 +2536,11 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Enemy);
 
     updateLeaderboard();
-
-    Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+    
+    if (ship.bulletsHit > 0)
+      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+    else
+      Stats["percentage"] = 0;
 
     Stats["percentage"] = Stats["percentage"].round();
 
