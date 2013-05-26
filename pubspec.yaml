@@ -6,9 +6,8 @@ authors:
 description: A galaga game written in Dart.
 homepage: https://github.com/ejsmith/galaga
 dependencies:
-  event_stream:
-    git: https://github.com/ejsmith/event_stream.git
-  unittest: any
   browser: any
   dgame:
     git: https://github.com/ejsmith/dgame.git
+  event_stream: any
+  unittest: any
