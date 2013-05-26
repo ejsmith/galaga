@@ -2,7 +2,6 @@ library galaga_game;
 
 import "dart:math" as Math;
 import "dart:async";
-import "dart:html";
 import "dart:isolate";
 import "package:dgame/dgame.dart";
 import "package:event_stream/event_stream.dart";
