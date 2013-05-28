@@ -48,6 +48,7 @@ class GalagaGame extends Game {
   bool soundEffectsOn = true;
   bool tutorial = true;
   bool secret = false;
+  bool keyboardInput = true;
   num visualLevel = 1;
   Ship ship;
   num nextId = 1;
@@ -2067,9 +2068,53 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 90,
+        text: "Input Type:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameButton(game: this,
+        x: 200,
+        y: 90,
+        text: keyboardInput ? "Keyboard" : "Mouse",
+        buttonAction: () {
+
+          if (keyboardInput == true)
+            keyboardInput = false;
+          else
+            keyboardInput = true;
+
+          //if (!soundEffectsOn) {
+            menuSong.remove();
+          //}
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("options");
+          createOptionsMenu();
+
+          state = GalagaGameState.options;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "options"));
+
     addEntity(new GameButton(game: this,
         x: 10,
-        y: 120,
+        y: 150,
         text: "Set to Defaults",
         buttonAction: () => resetOptions(),
         size: 36,
@@ -2161,7 +2206,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -145,
-        text: "Move left/right: Mouse swipe",
+        text: "Move left/right: Left and Right arrow keys.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2173,7 +2218,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -96,
-        text: "Fire: Left Mouse Button",
+        text: "Fire: Spacebar.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2185,7 +2230,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -47,
-        text: "SpaceBar: Shoots a super bullet if you have a total of 15 charges or more.",
+        text: "Super Bullet: Shift Key.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2536,7 +2581,7 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Enemy);
 
     updateLeaderboard();
-    
+
     if (ship.bulletsHit > 0)
       Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
     else

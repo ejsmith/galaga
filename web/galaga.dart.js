@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
+    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
   }
 };
 
@@ -982,17 +982,20 @@ $$.JSArray = {"": "Object;",
     $.checkGrowable(receiver, "add");
     receiver.push(value);
   },
-  removeAt$1: function(receiver, index) {
-    if (index < 0 || index >= receiver.length)
-      throw $.$$throw($.RangeError$value(index));
-    $.checkGrowable(receiver, "removeAt");
-    return receiver.splice(index, 1)[0];
-  },
   removeLast$0: function(receiver) {
     $.checkGrowable(receiver, "removeLast");
     if (receiver.length === 0)
       throw $.$$throw($.RangeError$value(-1));
     return receiver.pop();
+  },
+  remove$1: function(receiver, element) {
+    var i;
+    $.checkGrowable(receiver, "remove");
+    for (i = 0; i < receiver.length; ++i)
+      if ($.$eq(receiver[i], element) === true) {
+        receiver.splice(i, 1);
+        return;
+      }
   },
   where$1: function(receiver, f) {
     return $.WhereIterable$(receiver, f);
@@ -1336,13 +1339,15 @@ $$.JSString = {"": "Object;",
     return receiver.split(pattern);
   },
   substring$2: function(receiver, startIndex, endIndex) {
+    var t1;
     $.checkNum(startIndex);
     if (endIndex == null)
       endIndex = receiver.length;
     $.checkNum(endIndex);
-    if (startIndex < 0)
+    t1 = $.getInterceptor$n(startIndex);
+    if (t1.$lt(startIndex, 0) === true)
       throw $.$$throw($.RangeError$value(startIndex));
-    if ($.JSNumber_methods.$gt(startIndex, endIndex))
+    if (t1.$gt(startIndex, endIndex) === true)
       throw $.$$throw($.RangeError$value(startIndex));
     if ($.$gt$n(endIndex, receiver.length) === true)
       throw $.$$throw($.RangeError$value(endIndex));
@@ -1350,6 +1355,9 @@ $$.JSString = {"": "Object;",
   },
   substring$1: function($receiver, startIndex) {
     return this.substring$2($receiver, startIndex, null);
+  },
+  toLowerCase$0: function(receiver) {
+    return receiver.toLowerCase();
   },
   trim$0: function(receiver) {
     return receiver.trim();
@@ -2067,7 +2075,7 @@ $$._StreamImpl = {"": "Stream;_state@",
       return;
     this._state = $.$or$n(this._state, 1);
     if (!this.get$_mayFireState()) {
-      this._addPendingEvent$1($.CONSTANT42);
+      this._addPendingEvent$1($.CONSTANT44);
       return;
     }
     if (this.get$_hasPendingEvent()) {
@@ -2894,6 +2902,58 @@ $$.HashMap_addAll_anon = {"": "Closure;this_0",
   }
 };
 
+$$.HashSet = {"": "Collection;_table",
+  get$iterator: function(_) {
+    return $._HashTableKeyIterator$(this._table);
+  },
+  get$length: function(_) {
+    return this._table.get$_elementCount();
+  },
+  contains$1: function(_, object) {
+    return $.$ge$n(this._table._get$1(object), 0);
+  },
+  add$1: function(_, element) {
+    var t1 = this._table;
+    t1._put$1(element);
+    t1._checkCapacity$0();
+  },
+  addAll$1: function(_, objects) {
+    var t1, t2;
+    for (t1 = $.get$iterator$ax(objects), t2 = this._table; t1.moveNext$0();) {
+      t2._put$1(t1.get$current());
+      t2._checkCapacity$0();
+    }
+  },
+  remove$1: function(_, object) {
+    var t1, offset;
+    t1 = this._table;
+    offset = t1._remove$1(object);
+    if (typeof offset !== "number")
+      return this.remove$1$bailout1(1, offset, t1);
+    t1._checkCapacity$0();
+    return offset >= 0;
+  },
+  remove$1$bailout1: function(state0, offset, t1) {
+    t1._checkCapacity$0();
+    return $.$ge$n(offset, 0);
+  },
+  clear$0: function(_) {
+    this._table._clear$0();
+  },
+  toString$0: function(_) {
+    return $.ToString_collectionToString(this);
+  },
+  HashSet$0: function() {
+    this._table._container = this;
+  },
+  $asCollection: function() {
+    return null;
+  },
+  $isCollection: function() {
+    return true;
+  }
+};
+
 $$._DeadEntry = {"": "Object;"};
 
 $$._NullKey = {"": "Object;",
@@ -2902,7 +2962,7 @@ $$._NullKey = {"": "Object;",
   }
 };
 
-$$._HashTable = {"": "Object;",
+$$._HashTable = {"": "Object;_table,_capacity,_entryCount,_deletedCount,_modificationCount,_container",
   _key$1: function(offset) {
     var t1, key;
     t1 = this._table;
@@ -3124,13 +3184,43 @@ $$._HashTable = {"": "Object;",
   },
   _remove$1: function(key) {
     var offset = this._probeForLookup$2($.get$hashCode$(key), key);
+    if (typeof offset !== "number")
+      return this._remove$1$bailout(1, offset);
+    if (offset >= 0)
+      this._deleteEntry$1(offset);
+    return offset;
+  },
+  _remove$1$bailout: function(state0, offset) {
     if ($.$ge$n(offset, 0))
       this._deleteEntry$1(offset);
     return offset;
   },
+  _clear$0: function() {
+    var i;
+    if (this.get$_elementCount() === 0)
+      return;
+    for (var i = 0; i < $.get$length$asx(this._table); ++i)
+      $.$indexSet$ax(this._table, i, null);
+    this._deletedCount = 0;
+    this._entryCount = 0;
+    this._recordModification$0();
+  },
   _deleteEntry$1: function(offset) {
-    var key = $.CONSTANT0;
-    $.$indexSet$ax(this._table, offset, key);
+    var key, t1;
+    key = $.CONSTANT0;
+    t1 = this._table;
+    if (typeof t1 !== "object" || t1 === null || (t1.constructor !== Array || !!t1.immutable$list) && !t1.$isJavaScriptIndexingBehavior())
+      return this._deleteEntry$1$bailout(1, offset, t1, key);
+    if (offset !== (offset | 0))
+      throw $.iae(offset);
+    if (offset < 0 || offset >= t1.length)
+      throw $.ioore(offset);
+    t1[offset] = key;
+    this._deletedCount = this._deletedCount + 1;
+    this._recordModification$0();
+  },
+  _deleteEntry$1$bailout: function(state0, offset, t1, key) {
+    $.$indexSet$ax(t1, offset, key);
     this._deletedCount = this._deletedCount + 1;
     this._recordModification$0();
   },
@@ -3633,10 +3723,22 @@ $$._LinkedHashTable = {"": "_HashTable;_table,_capacity,_entryCount,_deletedCoun
     }
   },
   _deleteEntry$1: function(offset) {
-    var key;
+    var key, t1;
     this._unlink$1(offset);
     key = $.CONSTANT0;
-    $.$indexSet$ax(this._table, offset, key);
+    t1 = this._table;
+    if (typeof t1 !== "object" || t1 === null || (t1.constructor !== Array || !!t1.immutable$list) && !t1.$isJavaScriptIndexingBehavior())
+      return this._deleteEntry$1$bailout1(1, offset, t1, key);
+    if (offset !== (offset | 0))
+      throw $.iae(offset);
+    if (offset < 0 || offset >= t1.length)
+      throw $.ioore(offset);
+    t1[offset] = key;
+    this._deletedCount = this._deletedCount + 1;
+    this._recordModification$0();
+  },
+  _deleteEntry$1$bailout1: function(state0, offset, t1, key) {
+    $.$indexSet$ax(t1, offset, key);
     this._deletedCount = this._deletedCount + 1;
     this._recordModification$0();
   }
@@ -4223,6 +4325,13 @@ $$._ExceptionImplementation = {"": "Object;message",
     if (t1 == null)
       return "Exception";
     return "Exception: " + $.S(t1);
+  },
+  $isException: true
+};
+
+$$.FormatException = {"": "Object;message",
+  toString$0: function(_) {
+    return "FormatException: " + $.S(this.message);
   },
   $isException: true
 };
@@ -4938,15 +5047,12 @@ $$.Game = {"": "Object;entities<,timer<,clockTick@,rect>,input<,renderer<,loop',
     $.JSArray_methods.forEach$1(t1.toList$0(t1), new $.Game_removeEntitiesByFilter_anon0());
   },
   update$0: function() {
-    var t1, t2, i;
+    var t1, t2;
     for (t1 = $.JSArray_methods.where$1(this.entities, new $.Game_update_anon()), t2 = $.JSArray_methods.get$iterator(t1.toList$0(t1)); t2.moveNext$0();)
       t2.get$current().update$0();
-    for (i = this.entities.length - 1; i >= 0; --i) {
-      t1 = this.entities;
-      if (i >= t1.length)
-        throw $.ioore(i);
-      if (t1[i].get$_removeFromGame())
-        $.JSArray_methods.removeAt$1(t1, i);
+    for (t1 = $.JSArray_methods.where$1(this.entities, new $.Game_update_anon0()), t2 = $.JSArray_methods.get$iterator(t1.toList$0(t1)); t2.moveNext$0();) {
+      t1 = t2.get$current();
+      $.JSArray_methods.remove$1(this.entities, t1);
     }
   },
   Game$withServices$3: function(input, renderer, loop) {
@@ -5027,6 +5133,12 @@ $$.Game_update_anon = {"": "Closure;",
   }
 };
 
+$$.Game_update_anon0 = {"": "Closure;",
+  call$1: function(e) {
+    return e.get$_removeFromGame();
+  }
+};
+
 $$.GameButton = {"": "GameText;buttonAction,text,centered,font,size,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   buttonAction$0: function() {
     return this.buttonAction.call$0();
@@ -5063,7 +5175,7 @@ $$.GameButton = {"": "GameText;buttonAction,text,centered,font,size,game,_x,_y,_
       t1 = false;
     if (t1) {
       this.opacity = 1;
-      $.Timer_Timer($.CONSTANT15, new $.GameButton_update_anon(this));
+      $.Timer_Timer($.CONSTANT16, new $.GameButton_update_anon(this));
       this.buttonAction$0();
     }
   },
@@ -5156,14 +5268,55 @@ $$.GameEntity = {"": "Object;game<,isHighlighted<,soundReady@,id*,groupId<,box<,
   }
 };
 
-$$.GameInput = {"": "Object;click*,mouse@,keyCode*,mouseDown?,game<",
+$$.GameInput = {"": "Object;_downKeys<,_justPressedKeys<,click*,mouse@,mouseDown?,game<,keyDownEventStream<,keyUpEventStream<",
+  isKeyDown$1: function(keyCode) {
+    var t1 = this._downKeys;
+    return t1.contains$1(t1, keyCode);
+  },
+  isKeyJustPressed$1: function(keyCode) {
+    var t1 = this._justPressedKeys;
+    return t1.contains$1(t1, keyCode);
+  },
   start$0: function(_) {
   },
   reset$0: function(_) {
+    var t1;
     this.click = null;
-    this.keyCode = -1;
+    t1 = this._justPressedKeys;
+    t1.clear$0(t1);
+  },
+  get$onKeyDown: function(_) {
+    return this.keyDownEventStream.stream;
+  },
+  get$onKeyUp: function(_) {
+    return this.keyUpEventStream.stream;
+  },
+  GameInput$0: function() {
+    this.get$onKeyDown(this).listen$1(new $.anon0(this));
+    this.get$onKeyUp(this).listen$1(new $.anon1(this));
   }
 };
+
+$$.anon0 = {"": "Closure;this_0",
+  call$1: function(e) {
+    var t1, t2, t3;
+    t1 = this.this_0;
+    t2 = t1.get$_downKeys();
+    t3 = $.getInterceptor$x(e);
+    t2.add$1(t2, t3.get$keyCode(e));
+    t1 = t1.get$_justPressedKeys();
+    t1.add$1(t1, t3.get$keyCode(e));
+  }
+};
+
+$$.anon1 = {"": "Closure;this_1",
+  call$1: function(e) {
+    var t1 = this.this_1.get$_downKeys();
+    return t1.remove$1(t1, $.get$keyCode$x(e));
+  }
+};
+
+$$.GameKeyboardEvent = {"": "Object;keyCode>,altKey>,ctrlKey>,shiftKey>"};
 
 $$.GameLoop = {"": "Object;",
   start$1: function(_, callback) {
@@ -5290,13 +5443,33 @@ $$.CanvasGameRenderer = {"": "GameRenderer;targetId@,ctx<",
     $.set$font$x(this.ctx, "16px Verdana");
     $.fillText$3$x(this.ctx, "FPS: " + $.JSNumber_methods.toStringAsFixed$1(this.get$game().timer.fps, 1), this.rect.get$halfWidth() - 120, -(this.rect.get$halfHeight() - 30));
   },
+  clicked$1: function($event) {
+  },
+  get$clicked: function() {
+    return new $.BoundClosure$1(this, "clicked$1");
+  },
+  get$_pointerLocked: function() {
+    var t1, t2;
+    t1 = this.canvas;
+    t2 = $.get$pointerLockElement$x($.document());
+    return t1 == null ? t2 == null : t1 === t2;
+  },
+  pointerLockChange$1: function($event) {
+    this.ownMouse = this.get$_pointerLocked();
+  },
+  get$pointerLockChange: function() {
+    return new $.BoundClosure$1(this, "pointerLockChange$1");
+  },
   CanvasGameRenderer$1: function(targetId) {
     var t1, clientRect, t2, t3;
     this.canvas = $.query("#" + $.S(this.targetId));
+    $.get$onPointerLockChange$x($.document()).listen$1(this.get$pointerLockChange());
+    $.get$onClick$x(this.canvas).listen$1(this.get$clicked());
     this.ctx = $.get$context2d$x(this.canvas);
     t1 = this.ctx.canvas;
     this.rect = $.Rectangle$(0, 0, t1.width, t1.height);
     clientRect = $.getBoundingClientRect$0$x(this.ctx.canvas);
+    this.ownMouse = false;
     t2 = $.getInterceptor$x(clientRect);
     t3 = t2.get$top(clientRect);
     this.rect.top = t3;
@@ -5350,19 +5523,17 @@ $$.DefaultCanvasEntityRenderer = {"": "Object;gr",
   }
 };
 
-$$.HtmlGameInput = {"": "GameInput;click,mouse,keyCode,mouseDown,game",
+$$.HtmlGameInput = {"": "GameInput;_downKeys,_justPressedKeys,click,mouse,mouseDown,game,keyDownEventStream,keyUpEventStream",
   start$0: function(_) {
-    var t1;
-    $.Primitives_printString("Starting input");
-    t1 = new $.HtmlGameInput_start_getXandY(this);
+    var t1 = new $.HtmlGameInput_start_getXandY(this);
     $.get$onClick$x(document).listen$1(new $.HtmlGameInput_start_anon(this, t1));
     $.get$onMouseMove$x(document).listen$1(new $.HtmlGameInput_start_anon0(this, t1));
     $.get$onTouchMove$x(document).listen$1(new $.HtmlGameInput_start_anon1(this, t1));
     $.get$onTouchStart$x(document).listen$1(new $.HtmlGameInput_start_anon2());
     $.get$onKeyDown$x(document).listen$1(new $.HtmlGameInput_start_anon3(this));
-    $.get$onMouseDown$x(document).listen$1(new $.HtmlGameInput_start_anon4(this));
-    $.get$onMouseUp$x(document).listen$1(new $.HtmlGameInput_start_anon5(this));
-    $.Primitives_printString("Input started");
+    $.get$onKeyUp$x(document).listen$1(new $.HtmlGameInput_start_anon4(this));
+    $.get$onMouseDown$x(document).listen$1(new $.HtmlGameInput_start_anon5(this));
+    $.get$onMouseUp$x(document).listen$1(new $.HtmlGameInput_start_anon6(this));
   }
 };
 
@@ -5410,20 +5581,27 @@ $$.HtmlGameInput_start_anon2 = {"": "Closure;",
 
 $$.HtmlGameInput_start_anon3 = {"": "Closure;this_7",
   call$1: function(e) {
-    var t1 = $.get$keyCode$x(e);
-    $.set$keyCode$x(this.this_7, t1);
+    var t1 = $.getInterceptor$x(e);
+    this.this_7.get$keyDownEventStream().signal$1($.GameKeyboardEvent$(t1.get$keyCode(e), t1.get$altKey(e), t1.get$ctrlKey(e), t1.get$shiftKey(e)));
   }
 };
 
 $$.HtmlGameInput_start_anon4 = {"": "Closure;this_8",
   call$1: function(e) {
-    this.this_8.set$mouseDown(true);
+    var t1 = $.getInterceptor$x(e);
+    this.this_8.get$keyUpEventStream().signal$1($.GameKeyboardEvent$(t1.get$keyCode(e), t1.get$altKey(e), t1.get$ctrlKey(e), t1.get$shiftKey(e)));
   }
 };
 
 $$.HtmlGameInput_start_anon5 = {"": "Closure;this_9",
   call$1: function(e) {
-    this.this_9.set$mouseDown(false);
+    this.this_9.set$mouseDown(true);
+  }
+};
+
+$$.HtmlGameInput_start_anon6 = {"": "Closure;this_10",
+  call$1: function(e) {
+    this.this_10.set$mouseDown(false);
   }
 };
 
@@ -5632,7 +5810,7 @@ $$.EventStream = {"": "Object;_controller,stream",
 
 $$.EventArgs = {"": "Object;"};
 
-$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,secret@,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,secret@,keyboardInput@,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   shipHit$0: function() {
     return this.shipHit.call$0();
   },
@@ -5690,7 +5868,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("instructions");
     this.disableEntitiesByGroup$1("leaders");
     this.disableEntitiesByGroup$1("cheats");
-    this._waitingTimer = $.Timer_Timer$periodic($.CONSTANT41, new $.GalagaGame_waiting_anon(this));
+    this._waitingTimer = $.Timer_Timer$periodic($.CONSTANT42, new $.GalagaGame_waiting_anon(this));
   },
   start$0: function(_) {
     var t1, t2, i;
@@ -5788,7 +5966,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     var t1, t2, t3;
     if (this.get$state(this) === 3 || this.get$state(this) === 2) {
       this.score = $.ceil$0$nx(this.score);
-      if (this.input.keyCode === 27)
+      if (this.input.isKeyJustPressed$1(27))
         this.set$state(this, this.get$state(this) === 2 ? 3 : 2);
       if (this.enemyAmount <= 0) {
         t1 = this.Stats;
@@ -6298,11 +6476,16 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1 = $.$eq(t1.$index(t1, "soundeffects"), 1) === true ? "True" : "False";
     t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon9(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, t1, 200, 60);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon10(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Set to Defaults", 10, 120);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Input Type:", 0, 90);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon11(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Instructions", 380, -280);
+    t1 = this.keyboardInput ? "Keyboard" : "Mouse";
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon10(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, t1, 200, 90);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon12(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Back", -420, -280);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon11(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Set to Defaults", 10, 150);
+    this.entities.push(t1);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon12(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.7, 36, "Instructions", 380, -280);
+    this.entities.push(t1);
+    t1 = $.GameButton$(new $.GalagaGame_createOptionsMenu_anon13(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "options", "", 0.4, 36, "Back", -420, -280);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("options");
   },
@@ -6311,11 +6494,11 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Mouse swipe", 0, -145);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Left and Right arrow keys.", 0, -145);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Left Mouse Button", 0, -96);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Spacebar.", 0, -96);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "SpaceBar: Shoots a super bullet if you have a total of 15 charges or more.", 0, -47);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Super Bullet: Shift Key.", 0, -47);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.9, 24, "Powerups:", 0, 2);
     this.entities.push(t1);
@@ -6503,14 +6686,19 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.timer.gameTime = t1;
   },
   gameOver$0: function() {
-    var t1, t2;
+    var t1, t2, t3;
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon0());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon1());
     this.updateLeaderboard$0();
+    t1 = this.ship;
+    t2 = t1.bulletsHit;
+    t3 = this.Stats;
+    if (t2 > 0)
+      t3.$indexSet(t3, "percentage", t2 / t1.bulletsFired * 100);
+    else
+      t3.$indexSet(t3, "percentage", 0);
     t1 = this.Stats;
-    t2 = this.ship;
-    t1.$indexSet(t1, "percentage", t2.bulletsHit / t2.bulletsFired * 100);
     t1.$indexSet(t1, "percentage", $.round$0$nx(t1.$index(t1, "percentage")));
     t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
     this._gameOverEvent.signal$0();
@@ -7129,13 +7317,32 @@ $$.GalagaGame_createOptionsMenu_anon9 = {"": "Closure;this_10",
 
 $$.GalagaGame_createOptionsMenu_anon10 = {"": "Closure;this_11",
   call$0: function() {
-    return this.this_11.resetOptions$0();
+    var t1, t2;
+    t1 = this.this_11;
+    if (t1.get$keyboardInput())
+      t1.set$keyboardInput(false);
+    else
+      t1.set$keyboardInput(true);
+    t2 = t1.get$menuSong();
+    t2.remove$0(t2);
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("options");
+    t1.createOptionsMenu$0();
+    t2.set$state(t1, 6);
   }
 };
 
 $$.GalagaGame_createOptionsMenu_anon11 = {"": "Closure;this_12",
   call$0: function() {
-    var t1 = this.this_12;
+    return this.this_12.resetOptions$0();
+  }
+};
+
+$$.GalagaGame_createOptionsMenu_anon12 = {"": "Closure;this_13",
+  call$0: function() {
+    var t1 = this.this_13;
     t1.newBouncer$1(1);
     t1.newBouncer$1(2);
     t1.newBouncer$1(3);
@@ -7155,9 +7362,9 @@ $$.GalagaGame_createOptionsMenu_anon11 = {"": "Closure;this_12",
   }
 };
 
-$$.GalagaGame_createOptionsMenu_anon12 = {"": "Closure;this_13",
+$$.GalagaGame_createOptionsMenu_anon13 = {"": "Closure;this_14",
   call$0: function() {
-    var t1 = this.this_13;
+    var t1 = this.this_14;
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
@@ -8157,8 +8364,60 @@ $$.Enemy_update_anon1 = {"": "Closure;",
   }
 };
 
-$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,canvas,_game,rect",
+$$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,ownMouse,canvas,_game,rect",
   init$0: function() {
+    var t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "killed", $.containsKey$1$x(window.localStorage, "win1") ? $.int_parse($.$index$asx(window.localStorage, "win1"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "wins", $.containsKey$1$x(window.localStorage, "win2") ? $.int_parse($.$index$asx(window.localStorage, "win2"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "loses", $.containsKey$1$x(window.localStorage, "win3") ? $.int_parse($.$index$asx(window.localStorage, "win3"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "totalGames", $.containsKey$1$x(window.localStorage, "win4") ? $.int_parse($.$index$asx(window.localStorage, "win4"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "highscore", $.containsKey$1$x(window.localStorage, "win5") ? $.int_parse($.$index$asx(window.localStorage, "win5"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "normalKills", $.containsKey$1$x(window.localStorage, "win12") ? $.int_parse($.$index$asx(window.localStorage, "win12"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "bossKills", $.containsKey$1$x(window.localStorage, "win13") ? $.int_parse($.$index$asx(window.localStorage, "win13"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "motherKills", $.containsKey$1$x(window.localStorage, "win14") ? $.int_parse($.$index$asx(window.localStorage, "win14"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "powerups", $.containsKey$1$x(window.localStorage, "win15") ? $.int_parse($.$index$asx(window.localStorage, "win15"), null, null) : 0);
+    t1 = this.get$game().get$Stats();
+    t1.$indexSet(t1, "percentage", $.containsKey$1$x(window.localStorage, "win16") ? $.int_parse($.$index$asx(window.localStorage, "win16"), null, null) : 0);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "startLives", $.containsKey$1$x(window.localStorage, "win6") ? $.int_parse($.$index$asx(window.localStorage, "win6"), null, null) : 3);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "bulletCap", $.containsKey$1$x(window.localStorage, "win7") ? $.int_parse($.$index$asx(window.localStorage, "win7"), null, null) : 3);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "time", $.containsKey$1$x(window.localStorage, "win8") ? $.int_parse($.$index$asx(window.localStorage, "win8"), null, null) : 60);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "difficulty", $.containsKey$1$x(window.localStorage, "win9") ? $.int_parse($.$index$asx(window.localStorage, "win9"), null, null) : 1);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "powerups", $.containsKey$1$x(window.localStorage, "win10") ? $.int_parse($.$index$asx(window.localStorage, "win10"), null, null) : 1);
+    t1 = this.get$game().get$Options();
+    t1.$indexSet(t1, "soundeffects", $.containsKey$1$x(window.localStorage, "win11") ? $.int_parse($.$index$asx(window.localStorage, "win11"), null, null) : 1);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 1, $.containsKey$1$x(window.localStorage, "win17") ? $.int_parse($.$index$asx(window.localStorage, "win17"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 2, $.containsKey$1$x(window.localStorage, "win18") ? $.int_parse($.$index$asx(window.localStorage, "win18"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 3, $.containsKey$1$x(window.localStorage, "win19") ? $.int_parse($.$index$asx(window.localStorage, "win19"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 4, $.containsKey$1$x(window.localStorage, "win20") ? $.int_parse($.$index$asx(window.localStorage, "win20"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 5, $.containsKey$1$x(window.localStorage, "win21") ? $.int_parse($.$index$asx(window.localStorage, "win21"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 6, $.containsKey$1$x(window.localStorage, "win22") ? $.int_parse($.$index$asx(window.localStorage, "win22"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 7, $.containsKey$1$x(window.localStorage, "win23") ? $.int_parse($.$index$asx(window.localStorage, "win23"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 8, $.containsKey$1$x(window.localStorage, "win24") ? $.int_parse($.$index$asx(window.localStorage, "win24"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 9, $.containsKey$1$x(window.localStorage, "win25") ? $.int_parse($.$index$asx(window.localStorage, "win25"), null, null) : 0);
+    t1 = this.get$game().get$Highscores();
+    t1.$indexSet(t1, 10, $.containsKey$1$x(window.localStorage, "win26") ? $.int_parse($.$index$asx(window.localStorage, "win26"), null, null) : 0);
     this.get$game().get$onGameOver().listen$1(new $.GalagaRenderer_init_anon(this));
     this.get$game().get$onShipHit().listen$1(new $.GalagaRenderer_init_anon0(this));
     this.get$game().get$onStatUpdate().listen$1(new $.GalagaRenderer_init_anon1(this));
@@ -8216,12 +8475,12 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
   },
   shipHit$0: function() {
     this.bgFade$0();
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_shipHit_anon(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_shipHit_anon0(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_shipHit_anon1(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_shipHit_anon2(this));
-    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_shipHit_anon3(this));
-    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_shipHit_anon4(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_shipHit_anon(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_shipHit_anon0(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_shipHit_anon1(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_shipHit_anon2(this));
+    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_shipHit_anon3(this));
+    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_shipHit_anon4(this));
     this.subtleBgFade$0();
   },
   get$shipHit: function() {
@@ -8423,52 +8682,52 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
   },
   subtleBgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.85)";
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_subtleBgFade_anon(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon(this));
     $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_subtleBgFade_anon0(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_subtleBgFade_anon1(this));
-    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon2(this));
-    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon3(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon4(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon5(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon6(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon7(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon8(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon9(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon10(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon11(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon12(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon13(this));
-    $.Timer_Timer($.CONSTANT15, new $.GalagaRenderer_subtleBgFade_anon14(this));
-    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon15(this));
-    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon16(this));
-    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_subtleBgFade_anon17(this));
-    $.Timer_Timer($.CONSTANT29, new $.GalagaRenderer_subtleBgFade_anon18(this));
-    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_subtleBgFade_anon19(this));
-    $.Timer_Timer($.CONSTANT30, new $.GalagaRenderer_subtleBgFade_anon20(this));
-    $.Timer_Timer($.CONSTANT31, new $.GalagaRenderer_subtleBgFade_anon21(this));
-    $.Timer_Timer($.CONSTANT32, new $.GalagaRenderer_subtleBgFade_anon22(this));
-    $.Timer_Timer($.CONSTANT33, new $.GalagaRenderer_subtleBgFade_anon23(this));
-    $.Timer_Timer($.CONSTANT34, new $.GalagaRenderer_subtleBgFade_anon24(this));
-    $.Timer_Timer($.CONSTANT35, new $.GalagaRenderer_subtleBgFade_anon25(this));
-    $.Timer_Timer($.CONSTANT36, new $.GalagaRenderer_subtleBgFade_anon26(this));
-    $.Timer_Timer($.CONSTANT37, new $.GalagaRenderer_subtleBgFade_anon27(this));
-    $.Timer_Timer($.CONSTANT38, new $.GalagaRenderer_subtleBgFade_anon28(this));
-    $.Timer_Timer($.CONSTANT39, new $.GalagaRenderer_subtleBgFade_anon29(this));
-    $.Timer_Timer($.CONSTANT40, new $.GalagaRenderer_subtleBgFade_anon30(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_subtleBgFade_anon1(this));
+    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_subtleBgFade_anon2(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_subtleBgFade_anon3(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_subtleBgFade_anon4(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon6(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon7(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon8(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon9(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon10(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_subtleBgFade_anon11(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_subtleBgFade_anon12(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_subtleBgFade_anon13(this));
+    $.Timer_Timer($.CONSTANT16, new $.GalagaRenderer_subtleBgFade_anon14(this));
+    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_subtleBgFade_anon15(this));
+    $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_subtleBgFade_anon16(this));
+    $.Timer_Timer($.CONSTANT29, new $.GalagaRenderer_subtleBgFade_anon17(this));
+    $.Timer_Timer($.CONSTANT30, new $.GalagaRenderer_subtleBgFade_anon18(this));
+    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_subtleBgFade_anon19(this));
+    $.Timer_Timer($.CONSTANT31, new $.GalagaRenderer_subtleBgFade_anon20(this));
+    $.Timer_Timer($.CONSTANT32, new $.GalagaRenderer_subtleBgFade_anon21(this));
+    $.Timer_Timer($.CONSTANT33, new $.GalagaRenderer_subtleBgFade_anon22(this));
+    $.Timer_Timer($.CONSTANT34, new $.GalagaRenderer_subtleBgFade_anon23(this));
+    $.Timer_Timer($.CONSTANT35, new $.GalagaRenderer_subtleBgFade_anon24(this));
+    $.Timer_Timer($.CONSTANT36, new $.GalagaRenderer_subtleBgFade_anon25(this));
+    $.Timer_Timer($.CONSTANT37, new $.GalagaRenderer_subtleBgFade_anon26(this));
+    $.Timer_Timer($.CONSTANT38, new $.GalagaRenderer_subtleBgFade_anon27(this));
+    $.Timer_Timer($.CONSTANT39, new $.GalagaRenderer_subtleBgFade_anon28(this));
+    $.Timer_Timer($.CONSTANT40, new $.GalagaRenderer_subtleBgFade_anon29(this));
+    $.Timer_Timer($.CONSTANT41, new $.GalagaRenderer_subtleBgFade_anon30(this));
   },
   bgFade$0: function() {
     this.get$game().bgStyle = "rgba(0, 0, 0, 0.8)";
-    $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_bgFade_anon(this));
+    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bgFade_anon(this));
     $.Timer_Timer($.CONSTANT6, new $.GalagaRenderer_bgFade_anon0(this));
-    $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bgFade_anon1(this));
-    $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_bgFade_anon2(this));
-    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_bgFade_anon3(this));
-    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_bgFade_anon4(this));
-    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_bgFade_anon5(this));
-    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_bgFade_anon6(this));
-    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_bgFade_anon7(this));
-    $.Timer_Timer($.CONSTANT15, new $.GalagaRenderer_bgFade_anon8(this));
-    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_bgFade_anon9(this));
+    $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_bgFade_anon1(this));
+    $.Timer_Timer($.CONSTANT24, new $.GalagaRenderer_bgFade_anon2(this));
+    $.Timer_Timer($.CONSTANT25, new $.GalagaRenderer_bgFade_anon3(this));
+    $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_bgFade_anon4(this));
+    $.Timer_Timer($.CONSTANT26, new $.GalagaRenderer_bgFade_anon5(this));
+    $.Timer_Timer($.CONSTANT27, new $.GalagaRenderer_bgFade_anon6(this));
+    $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_bgFade_anon7(this));
+    $.Timer_Timer($.CONSTANT16, new $.GalagaRenderer_bgFade_anon8(this));
+    $.Timer_Timer($.CONSTANT28, new $.GalagaRenderer_bgFade_anon9(this));
   },
   GalagaRenderer$1: function(targetId) {
     $.set$src$x(this.ship, "../web/images/Ship.png");
@@ -8818,8 +9077,8 @@ $$.GalagaRenderer_bossHit_anon = {"": "Closure;",
 $$.GalagaRenderer_bossHit_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     if ($.$eq($.get$type$x(e), "Boss") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_bossHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bossHit__anon0(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_bossHit__anon(e));
+      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_bossHit__anon0(e));
       this.this_0.subtleBgFade$0();
     }
   }
@@ -8848,12 +9107,12 @@ $$.GalagaRenderer_motherShipHit_anon = {"": "Closure;",
 $$.GalagaRenderer_motherShipHit_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     if ($.$eq($.get$type$x(e), "MotherShip") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_motherShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_motherShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_motherShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_motherShipHit__anon2(e));
-      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_motherShipHit__anon3(e));
-      $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_motherShipHit__anon4(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_motherShipHit__anon(e));
+      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_motherShipHit__anon0(e));
+      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_motherShipHit__anon1(e));
+      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_motherShipHit__anon2(e));
+      $.Timer_Timer($.CONSTANT22, new $.GalagaRenderer_motherShipHit__anon3(e));
+      $.Timer_Timer($.CONSTANT23, new $.GalagaRenderer_motherShipHit__anon4(e));
       this.this_0.subtleBgFade$0();
     }
   }
@@ -8910,10 +9169,10 @@ $$.GalagaRenderer_normalShipHit_anon = {"": "Closure;",
 $$.GalagaRenderer_normalShipHit_anon0 = {"": "Closure;this_0",
   call$1: function(e) {
     if ($.$eq($.get$type$x(e), "Normal") === true && e.get$idNum() === this.this_0.get$game().get$targetId()) {
-      $.Timer_Timer($.CONSTANT17, new $.GalagaRenderer_normalShipHit__anon(e));
-      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_normalShipHit__anon0(e));
-      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_normalShipHit__anon1(e));
-      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_normalShipHit__anon2(e));
+      $.Timer_Timer($.CONSTANT18, new $.GalagaRenderer_normalShipHit__anon(e));
+      $.Timer_Timer($.CONSTANT19, new $.GalagaRenderer_normalShipHit__anon0(e));
+      $.Timer_Timer($.CONSTANT20, new $.GalagaRenderer_normalShipHit__anon1(e));
+      $.Timer_Timer($.CONSTANT21, new $.GalagaRenderer_normalShipHit__anon2(e));
       this.this_0.subtleBgFade$0();
     }
   }
@@ -9252,7 +9511,7 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
   update$0: function() {
     if ($.$eq($.get$state$x(this.game), 2) === true)
       return;
-    this._deleteTimer = $.Timer_Timer$periodic($.CONSTANT41, new $.Particles_update_anon(this));
+    this._deleteTimer = $.Timer_Timer($.CONSTANT42, new $.Particles_update_anon(this));
     if ($.$gt$n(this.get$y(this), $.get$rect$x(this.game).get$halfHeight()) === true)
       this._removeFromGame = true;
     if ($.$lt$n(this.get$y(this), -$.get$rect$x(this.game).get$halfHeight()) === true)
@@ -9285,9 +9544,9 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
 };
 
 $$.Particles_update_anon = {"": "Closure;this_0",
-  call$1: function(t) {
+  call$0: function() {
     this.this_0.set$_removeFromGame(true);
-    t.cancel$0();
+    return;
   }
 };
 
@@ -9400,8 +9659,9 @@ $$.PowerUp = {"": "GameEntity;type>,creationTime,game,_x,_y,_width,_height,isHig
   $isPowerUp: true
 };
 
-$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit@,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,superSpiral?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+$$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit@,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,superSpiral?,lastShotFired,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
+    var t1, t2;
     if ($.$eq($.get$state$x(this.game), 2) === true || $.$eq($.get$state$x(this.game), 4) === true || $.$eq($.get$state$x(this.game), 1) === true)
       return;
     this.set$width(this, 32);
@@ -9412,21 +9672,34 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHi
       this.set$height(this, 36);
     }
     if ($.$le$n(this.lives, 0) === true) {
-      var t1 = this.game.get$Stats();
+      t1 = this.game.get$Stats();
       t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
       this.game.set$p1Dead(true);
       this._removeFromGame = true;
       this.game.gameOver$0();
     }
+    t1 = this.game;
+    if (t1.get$keyboardInput())
+      if (t1.get$input().isKeyDown$1(37))
+        this.momentum.xVel = -250;
+      else {
+        t1 = this.game.get$input().isKeyDown$1(39);
+        t2 = this.momentum;
+        if (t1)
+          t2.xVel = 250;
+        else
+          t2.xVel = 0;
+      }
     if ($.$gt$n(this.bullet, this.maxBullet) === true)
       this.bullet = 3;
     if ($.$lt$n(this.bullet, 0) === true)
       this.bullet = 0;
     if ($.$eq($.get$state$x(this.game), 1) === true)
       return;
-    t1 = this.game.get$input().get$mouse();
-    if (t1 != null)
-      this.set$x(this, t1.x);
+    t1 = this.game;
+    t2 = t1.get$input().get$mouse();
+    if (t2 != null && !t1.get$keyboardInput())
+      this.set$x(this, t2.x);
     if ($.$gt$n($.$add$ns(this.get$x(this), 16), $.get$rect$x(this.game).get$halfWidth()) === true)
       this.set$x(this, $.get$rect$x(this.game).get$halfWidth() - 16);
     if ($.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true)
@@ -9435,15 +9708,18 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHi
       this.superCharged = this.superCharged + 1;
       this.chargedLevel = 0;
     }
-    if ($.$gt$n(this.bullet, 0) === true)
-      if ($.get$click$x(this.game.get$input()) != null)
+    if ($.$gt$n(this.bullet, 0) === true) {
+      if (this.game.get$input().isKeyJustPressed$1(32) && this.game.get$keyboardInput())
         this.fire$0();
-    if (this.superCharged > 0)
-      if ($.get$keyCode$x(this.game.get$input()) === 32) {
+      t1 = this.game;
+      if ($.get$click$x(t1.get$input()) != null && !t1.get$keyboardInput())
+        this.fire$0();
+      if (this.game.get$input().isKeyJustPressed$1(16) && this.superCharged > 0) {
         t1 = this.game;
         t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "super"));
         this.superCharged = this.superCharged - 1;
       }
+    }
     $.GameEntity.prototype.update$0.call(this);
   },
   fire$0: function() {
@@ -10031,6 +10307,56 @@ $.Primitives_printString = function(string) {
   throw "Unable to print message: " + String(string);
 };
 
+$.Primitives__throwFormatException = function(string) {
+  throw $.$$throw($.FormatException$(string));
+};
+
+$.Primitives_parseInt = function(source, radix, handleError) {
+  var match, t1, maxCharCode, digitsPart, i;
+  if (handleError == null)
+    handleError = $.Primitives__throwFormatException;
+  $.checkString(source);
+  match = /^\s*[+-]?((0x[a-f0-9]+)|(\d+)|([a-z0-9]+))\s*$/i.exec(source);
+  if (radix == null) {
+    t1 = $.getInterceptor(match);
+    if (match != null) {
+      if (t1.$index(match, 2) != null)
+        return parseInt(source, 16);
+      if (t1.$index(match, 3) != null)
+        return parseInt(source, 10);
+      return handleError.call$1(source);
+    }
+    radix = 10;
+  } else {
+    throw $.$$throw($.ArgumentError$("Radix is not an integer"));
+    if ($.JSNull_methods.$lt(radix, 2) || $.JSNull_methods.$gt(radix, 36))
+      throw $.$$throw($.RangeError$("Radix " + $.S(radix) + " not in range 2..36"));
+    t1 = $.getInterceptor(match);
+    if (match != null) {
+      if (false)
+        return parseInt(source, 10);
+      if ($.JSNull_methods.$lt(radix, 10) || t1.$index(match, 3) == null) {
+        if ($.JSNull_methods.$le(radix, 10)) {
+          if (typeof radix !== "number")
+            throw $.iae(radix);
+          maxCharCode = 48 + radix - 1;
+        } else {
+          if (typeof radix !== "number")
+            throw $.iae(radix);
+          maxCharCode = 97 + radix - 10 - 1;
+        }
+        digitsPart = $.toLowerCase$0$s(t1.$index(match, 1));
+        for (i = 0; i < digitsPart.length; ++i)
+          if ($.JSString_methods.codeUnitAt$1(digitsPart, i) > maxCharCode)
+            return handleError.call$1(source);
+      }
+    }
+  }
+  if (match == null)
+    return handleError.call$1(source);
+  return parseInt(source, radix);
+};
+
 $.Primitives_objectTypeName = function(object) {
   var $name, decompiled, t1;
   $name = $.constructorNameFallback(object);
@@ -10106,6 +10432,8 @@ $.checkNum = function(value) {
 };
 
 $.checkString = function(value) {
+  if (!(typeof value === "string"))
+    throw $.$$throw($.ArgumentError$(value));
   return value;
 };
 
@@ -10440,7 +10768,7 @@ $.dynamicBind = function(obj, $name, methods, $arguments) {
   } else
     method = null;
   if (method == null)
-    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT43));
+    method = $.lookupDynamicClass(hasOwnPropertyFunction, methods, $.getTypeNameOf($.CONSTANT45));
   if (method == null)
     (function(){throw new TypeError($name + " is not a function");})();
   else {
@@ -10480,7 +10808,7 @@ $.dynamicFunction = function($name) {
   if (f != null && !!f.methods)
     return f.methods;
   methods = {};
-  dartMethod = Object.getPrototypeOf($.CONSTANT43)[$name];
+  dartMethod = Object.getPrototypeOf($.CONSTANT45)[$name];
   if (dartMethod != null)
     methods["Object"] = dartMethod;
   bind = function() {return $.dynamicBind.call$4(this, $name, methods, Array.prototype.slice.call(arguments));};
@@ -10738,6 +11066,18 @@ $.HashMap$ = function() {
   return t1;
 };
 
+$.HashSet$ = function() {
+  var t1 = new $.HashSet($._HashTable$(8));
+  t1.HashSet$0();
+  return t1;
+};
+
+$._HashTable$ = function(initialCapacity) {
+  var t1 = new $._HashTable(null, initialCapacity, 0, 0, 0, null);
+  t1._HashTable$1(initialCapacity);
+  return t1;
+};
+
 $._HashTableKeyIterable$ = function(hashTable) {
   return new $._HashTableKeyIterable(hashTable);
 };
@@ -10896,6 +11236,14 @@ $._ExceptionImplementation$ = function(message) {
   return new $._ExceptionImplementation(message);
 };
 
+$.FormatException$ = function(message) {
+  return new $.FormatException(message);
+};
+
+$.int_parse = function(source, onError, radix) {
+  return $.Primitives_parseInt(source, radix, onError);
+};
+
 $.List_List = function($length) {
   var t1 = $ === $length;
   if (t1)
@@ -10926,6 +11274,10 @@ $.List_List$from = function(other, growable) {
 
 $.Map_Map = function() {
   return $.HashMap$();
+};
+
+$.Set_Set = function() {
+  return $.HashSet$();
 };
 
 $.StringBuffer$ = function($content) {
@@ -11096,6 +11448,10 @@ $.GameButton$ = function(buttonAction, centered, color, font, game, groupId, id,
   return t1;
 };
 
+$.GameKeyboardEvent$ = function(keyCode, altKey, ctrlKey, shiftKey) {
+  return new $.GameKeyboardEvent(keyCode, altKey, ctrlKey, shiftKey);
+};
+
 $.GameSound$ = function(sound, volume, looping) {
   var t1 = new $.GameSound(true, null, null, null, null, "Sounds/");
   t1.GameSound$3(sound, volume, looping);
@@ -11118,7 +11474,9 @@ $.DefaultCanvasEntityRenderer$ = function(gr) {
 };
 
 $.HtmlGameInput$ = function() {
-  return new $.HtmlGameInput(null, null, null, false, null);
+  var t1 = new $.HtmlGameInput($.Set_Set(), $.Set_Set(), null, null, false, null, $.EventStream$(), $.EventStream$());
+  t1.GameInput$0();
+  return t1;
 };
 
 $.HtmlGameLoop$ = function() {
@@ -11136,7 +11494,7 @@ $.TextRenderer$ = function(gr) {
 };
 
 $.random = function(min, max, wholeNumbers) {
-  var value = min + $.CONSTANT14.nextDouble$0() * (max - min);
+  var value = min + $.CONSTANT15.nextDouble$0() * (max - min);
   return wholeNumbers ? $.JSNumber_methods.round$0(value) : value;
 };
 
@@ -11171,7 +11529,7 @@ $.EventArgs$ = function() {
 };
 
 $.GalagaGame$withServices = function(input, renderer, loop) {
-  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, false, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, false, true, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   t1.Game$withServices$3(input, renderer, loop);
   return t1;
 };
@@ -11198,7 +11556,7 @@ $.Enemy$ = function(game, x, y, diff, Type) {
 };
 
 $.GalagaRenderer$ = function(targetId) {
-  var t1 = new $.GalagaRenderer(0, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
@@ -11219,7 +11577,7 @@ $.PowerUp$ = function(game, x, y, Type) {
 };
 
 $.Ship$ = function(game, x, y) {
-  var t1 = new $.Ship(8, 3, 3, 0, 0, 3, 0, 0, 0, false, false, false, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Ship(8, 3, 3, 0, 0, 3, 0, 0, 0, false, false, false, 0, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, 36, 36, null, null);
   t1.Ship$3(game, x, y);
   return t1;
@@ -11234,6 +11592,8 @@ $.Stars$ = function(game, x, y, h, w, col) {
 
 $.IsolateNatives__processWorkerMessage.call$2 = $.IsolateNatives__processWorkerMessage;
 $.IsolateNatives__processWorkerMessage.$name = "IsolateNatives__processWorkerMessage";
+$.Primitives__throwFormatException.call$1 = $.Primitives__throwFormatException;
+$.Primitives__throwFormatException.$name = "Primitives__throwFormatException";
 $.$$throw.call$1 = $.$$throw;
 $.$$throw.$name = "$$throw";
 $.DartError_toStringWrapper.call$0 = $.DartError_toStringWrapper;
@@ -11261,6 +11621,7 @@ $._nullErrorHandler.$name = "_nullErrorHandler";
 $._nullDoneHandler.call$0 = $._nullDoneHandler;
 $._nullDoneHandler.$name = "_nullDoneHandler";
 $.num = {builtin$cls: "num"};
+$.List = {builtin$cls: "List"};
 $.TextTrack = {builtin$cls: "TextTrack"};
 $.String = {builtin$cls: "String"};
 $.Touch = {builtin$cls: "Touch"};
@@ -11269,62 +11630,63 @@ $.ReceivePort = {builtin$cls: "ReceivePort"};
 $.$int = {builtin$cls: "$int"};
 $._ManagerStub = {builtin$cls: "_ManagerStub"};
 $.$double = {builtin$cls: "$double"};
-$.List = {builtin$cls: "List"};
 Isolate.makeConstantList = function(list) {
   list.immutable$list = true;
   list.fixed$length = true;
   return list;
 };
 $.CONSTANT3 = Isolate.makeConstantList([]);
-$.CONSTANT12 = new $.EventStreamProvider("mousemove");
-$.CONSTANT25 = new $.Duration(175000);
-$.CONSTANT37 = new $.Duration(575000);
-$.CONSTANT9 = new $.EventStreamProvider("keydown");
+$.CONSTANT13 = new $.EventStreamProvider("mousemove");
+$.CONSTANT26 = new $.Duration(175000);
+$.CONSTANT38 = new $.Duration(575000);
+$.CONSTANT10 = new $.EventStreamProvider("keydown");
 $.CONSTANT2 = new $._LinkedHashTableHeadMarker();
-$.CONSTANT15 = new $.Duration(250000);
-$.CONSTANT40 = new $.Duration(650000);
-$.CONSTANT11 = new $.EventStreamProvider("touchmove");
-$.CONSTANT28 = new $.Duration(325000);
-$.CONSTANT13 = new $.EventStreamProvider("click");
+$.CONSTANT16 = new $.Duration(250000);
+$.CONSTANT41 = new $.Duration(650000);
+$.CONSTANT12 = new $.EventStreamProvider("touchmove");
+$.CONSTANT29 = new $.Duration(325000);
+$.CONSTANT14 = new $.EventStreamProvider("click");
 $.CONSTANT4 = new $.Duration(0);
 $.CONSTANT8 = new $.EventStreamProvider("mousedown");
 $.JSBool_methods = $.JSBool.prototype;
-$.CONSTANT30 = new $.Duration(400000);
+$.CONSTANT31 = new $.Duration(400000);
 $.CONSTANT = new $.NullThrownError();
-$.CONSTANT10 = new $.EventStreamProvider("touchstart");
-$.CONSTANT27 = new $.Duration(275000);
+$.CONSTANT11 = new $.EventStreamProvider("touchstart");
+$.CONSTANT43 = new $.EventStreamProvider("webkitpointerlockchange");
+$.CONSTANT28 = new $.Duration(275000);
 $.JSDouble_methods = $.JSDouble.prototype;
-$.CONSTANT29 = new $.Duration(350000);
-$.CONSTANT31 = new $.Duration(425000);
+$.CONSTANT30 = new $.Duration(350000);
+$.CONSTANT32 = new $.Duration(425000);
 $.CONSTANT5 = new $.CloseToken();
-$.CONSTANT17 = new $.Duration(25000);
-$.CONSTANT23 = new $.Duration(100000);
-$.CONSTANT34 = new $.Duration(500000);
-$.CONSTANT43 = new $.Object();
-$.CONSTANT22 = new $.Duration(375000);
-$.CONSTANT16 = new $.EventStreamProvider("ended");
+$.CONSTANT18 = new $.Duration(25000);
+$.CONSTANT24 = new $.Duration(100000);
+$.CONSTANT35 = new $.Duration(500000);
+$.CONSTANT45 = new $.Object();
+$.CONSTANT23 = new $.Duration(375000);
+$.CONSTANT17 = new $.EventStreamProvider("ended");
 $.JSNull_methods = $.JSNull.prototype;
 $.JSNumber_methods = $.JSNumber.prototype;
 $.CONSTANT6 = new $.Duration(50000);
 $.JSString_methods = $.JSString.prototype;
-$.CONSTANT32 = new $.Duration(450000);
-$.CONSTANT24 = new $.Duration(125000);
-$.CONSTANT35 = new $.Duration(525000);
-$.CONSTANT26 = new $.Duration(200000);
-$.CONSTANT38 = new $.Duration(600000);
-$.CONSTANT41 = new $.Duration(1000000);
-$.CONSTANT14 = new $._Random();
-$.CONSTANT18 = new $.Duration(75000);
-$.CONSTANT33 = new $.Duration(475000);
-$.CONSTANT19 = new $.Duration(150000);
-$.CONSTANT36 = new $.Duration(550000);
+$.CONSTANT33 = new $.Duration(450000);
+$.CONSTANT25 = new $.Duration(125000);
+$.CONSTANT9 = new $.EventStreamProvider("keyup");
+$.CONSTANT36 = new $.Duration(525000);
+$.CONSTANT27 = new $.Duration(200000);
+$.CONSTANT39 = new $.Duration(600000);
+$.CONSTANT42 = new $.Duration(1000000);
+$.CONSTANT15 = new $._Random();
+$.CONSTANT19 = new $.Duration(75000);
+$.CONSTANT34 = new $.Duration(475000);
+$.CONSTANT20 = new $.Duration(150000);
+$.CONSTANT37 = new $.Duration(550000);
 $.CONSTANT7 = new $.EventStreamProvider("mouseup");
-$.CONSTANT39 = new $.Duration(625000);
-$.CONSTANT20 = new $.Duration(225000);
+$.CONSTANT40 = new $.Duration(625000);
+$.CONSTANT21 = new $.Duration(225000);
 $.JSInt_methods = $.JSInt.prototype;
-$.CONSTANT42 = new $._DelayedDone();
+$.CONSTANT44 = new $._DelayedDone();
 $.JSArray_methods = $.JSArray.prototype;
-$.CONSTANT21 = new $.Duration(300000);
+$.CONSTANT22 = new $.Duration(300000);
 $.CONSTANT0 = new $._DeadEntry();
 $.CONSTANT1 = new $._NullKey();
 $.lazyPort = null;
@@ -11464,6 +11826,9 @@ $.clone$1$x = function(receiver, a0) {
 $.closePath$0$x = function(receiver) {
   return $.getInterceptor$x(receiver).closePath$0(receiver);
 };
+$.containsKey$1$x = function(receiver, a0) {
+  return $.getInterceptor$x(receiver).containsKey$1(receiver, a0);
+};
 $.drawImageScaled$5$x = function(receiver, a0, a1, a2, a3, a4) {
   return $.getInterceptor$x(receiver).drawImageScaled$5(receiver, a0, a1, a2, a3, a4);
 };
@@ -11478,6 +11843,9 @@ $.forEach$1$ax = function(receiver, a0) {
 };
 $.get$$$dom_body$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$$$dom_body(receiver);
+};
+$.get$$$dom_webkitPointerLockElement$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$$$dom_webkitPointerLockElement(receiver);
 };
 $.get$attributes$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$attributes(receiver);
@@ -11527,6 +11895,9 @@ $.get$onEnded$x = function(receiver) {
 $.get$onKeyDown$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$onKeyDown(receiver);
 };
+$.get$onKeyUp$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$onKeyUp(receiver);
+};
 $.get$onMouseDown$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$onMouseDown(receiver);
 };
@@ -11536,11 +11907,17 @@ $.get$onMouseMove$x = function(receiver) {
 $.get$onMouseUp$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$onMouseUp(receiver);
 };
+$.get$onPointerLockChange$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$onPointerLockChange(receiver);
+};
 $.get$onTouchMove$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$onTouchMove(receiver);
 };
 $.get$onTouchStart$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$onTouchStart(receiver);
+};
+$.get$pointerLockElement$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$pointerLockElement(receiver);
 };
 $.get$rect$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$rect(receiver);
@@ -11623,9 +12000,6 @@ $.set$height$x = function(receiver, value) {
 $.set$id$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$id(receiver, value);
 };
-$.set$keyCode$x = function(receiver, value) {
-  return $.getInterceptor$x(receiver).set$keyCode(receiver, value);
-};
 $.set$lineWidth$x = function(receiver, value) {
   return $.getInterceptor$x(receiver).set$lineWidth(receiver, value);
 };
@@ -11670,6 +12044,9 @@ $.sublist$1$ax = function(receiver, a0) {
 };
 $.toList$0$ax = function(receiver) {
   return $.getInterceptor$ax(receiver).toList$0(receiver);
+};
+$.toLowerCase$0$s = function(receiver) {
+  return $.getInterceptor$s(receiver).toLowerCase$0(receiver);
 };
 $.toString$0 = function(receiver) {
   return $.getInterceptor(receiver).toString$0(receiver);
@@ -12014,7 +12391,7 @@ $.$defineNativeClass("CSSStyleDeclaration", {"": "length=",
   }
 });
 
-$.$defineNativeClass("Document", {"": "$$dom_body:body=",
+$.$defineNativeClass("Document", {"": "$$dom_body:body=,$$dom_webkitPointerLockElement:webkitPointerLockElement=",
   $$dom_createElement$1: function(receiver, tagName) {
     return receiver.createElement(tagName);
   },
@@ -12022,25 +12399,31 @@ $.$defineNativeClass("Document", {"": "$$dom_body:body=",
     return receiver.querySelector(selectors);
   },
   get$onClick: function(receiver) {
-    return $.CONSTANT13.forTarget$1(receiver);
+    return $.CONSTANT14.forTarget$1(receiver);
   },
   get$onKeyDown: function(receiver) {
+    return $.CONSTANT10.forTarget$1(receiver);
+  },
+  get$onKeyUp: function(receiver) {
     return $.CONSTANT9.forTarget$1(receiver);
   },
   get$onMouseDown: function(receiver) {
     return $.CONSTANT8.forTarget$1(receiver);
   },
   get$onMouseMove: function(receiver) {
-    return $.CONSTANT12.forTarget$1(receiver);
+    return $.CONSTANT13.forTarget$1(receiver);
   },
   get$onMouseUp: function(receiver) {
     return $.CONSTANT7.forTarget$1(receiver);
   },
   get$onTouchMove: function(receiver) {
-    return $.CONSTANT11.forTarget$1(receiver);
+    return $.CONSTANT12.forTarget$1(receiver);
   },
   get$onTouchStart: function(receiver) {
-    return $.CONSTANT10.forTarget$1(receiver);
+    return $.CONSTANT11.forTarget$1(receiver);
+  },
+  get$onPointerLockChange: function(receiver) {
+    return $.CONSTANT43.forTarget$1(receiver);
   }
 });
 
@@ -12077,6 +12460,9 @@ $.$defineNativeClass("Element", {"": "id%",
   },
   $$dom_setAttribute$2: function(receiver, $name, value) {
     return receiver.setAttribute($name,value);
+  },
+  get$onClick: function(receiver) {
+    return $.CONSTANT14.forTarget$1(receiver);
   }
 });
 
@@ -12312,6 +12698,9 @@ $.$defineNativeClass("HTMLCollection", {
 $.$defineNativeClass("HTMLDocument", {
   get$body: function(receiver) {
     return $.get$$$dom_body$x($.document());
+  },
+  get$pointerLockElement: function(receiver) {
+    return $.get$$$dom_webkitPointerLockElement$x($.document());
   }
 });
 
@@ -12513,7 +12902,7 @@ $.$defineNativeClass("Int8Array", {
   }
 });
 
-$.$defineNativeClass("KeyboardEvent", {
+$.$defineNativeClass("KeyboardEvent", {"": "altKey=,ctrlKey=,shiftKey=",
   get$keyCode: function(receiver) {
     return this.keyCode;
   }
@@ -12548,7 +12937,7 @@ $.$defineNativeClass("HTMLMediaElement", {"": "currentTime},error=,loop},preload
     return receiver.play();
   },
   get$onEnded: function(receiver) {
-    return $.CONSTANT16.forTarget$1(receiver);
+    return $.CONSTANT17.forTarget$1(receiver);
   }
 });
 
@@ -12560,13 +12949,13 @@ $.$defineNativeClass("MediaStream", {"": "id=",
     return receiver.removeEventListener(type,$.convertDartClosureToJS(listener, 1),useCapture);
   },
   get$onEnded: function(receiver) {
-    return $.CONSTANT16.forTarget$1(receiver);
+    return $.CONSTANT17.forTarget$1(receiver);
   }
 });
 
 $.$defineNativeClass("HTMLMeterElement", {"": "value="});
 
-$.$defineNativeClass("MouseEvent", {
+$.$defineNativeClass("MouseEvent", {"": "altKey=,ctrlKey=,shiftKey=",
   get$clientX: function(receiver) {
     return this.get$client(receiver).x;
   },
@@ -12718,6 +13107,9 @@ $.$defineNativeClass("HTMLSourceElement", {"": "src},type%"});
 $.$defineNativeClass("SpeechRecognitionError", {"": "error="});
 
 $.$defineNativeClass("Storage", {
+  containsKey$1: function(receiver, key) {
+    return this.$$dom_getItem$1(receiver, key) != null;
+  },
   $index: function(receiver, key) {
     return this.$$dom_getItem$1(receiver, key);
   },
@@ -12852,7 +13244,7 @@ $.$defineNativeClass("TimeRanges", {"": "length=",
   }
 });
 
-$.$defineNativeClass("TouchEvent", {"": "touches="});
+$.$defineNativeClass("TouchEvent", {"": "altKey=,ctrlKey=,shiftKey=,touches="});
 
 $.$defineNativeClass("TouchList", {
   get$length: function(receiver) {

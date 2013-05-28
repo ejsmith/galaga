@@ -43,13 +43,15 @@ class Ship extends GameEntity<GalagaGame> {
 
       game.gameOver();
     }
-    
-    if (game.input.isKeyDown(37))
-      momentum.xVel = -250;
-    else if (game.input.isKeyDown(39))
-      momentum.xVel = 250;
-    else
-      momentum.xVel = 0;
+
+    if (game.keyboardInput == true) {
+      if (game.input.isKeyDown(37))
+        momentum.xVel = -250;
+      else if (game.input.isKeyDown(39))
+        momentum.xVel = 250;
+      else
+        momentum.xVel = 0;
+    }
 
     if (bullet > maxBullet)
       bullet = 3;
@@ -60,9 +62,9 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.welcome)
       return;
 
-//    if (game.input.mouse != null) {
-//      x = game.input.mouse.x;
-//    }
+    if (game.input.mouse != null && game.keyboardInput == false) {
+      x = game.input.mouse.x;
+    }
 
     if (x + 16 > game.rect.halfWidth)
       x = game.rect.halfWidth - 16;
@@ -78,14 +80,20 @@ class Ship extends GameEntity<GalagaGame> {
     if (bullet > 0) {
 //      if (game.input.mouseDown)
 //        isPoweringUp = true;
-    
-    if (game.input.isKeyJustPressed(32) || game.input.click != null)
+
+    if (game.input.isKeyJustPressed(32) && game.keyboardInput == true)
       fire();
-    
+
+    if (game.input.click != null && game.keyboardInput == false)
+      fire();
+
+    if (game.input.isKeyJustPressed(16) && superCharged > 0)
+      superFire();
+
 //      if (isPoweringUp)
 //        bulletPower += .25;
     }
-    
+
     super.update();
   }
 
@@ -95,9 +103,6 @@ class Ship extends GameEntity<GalagaGame> {
   }
 
   void fire() {
-    if (superCharged > 0)
-      return superFire();
-    
     soundLevel = bulletPower * .02;
 
     if (soundLevel > 1)
@@ -110,7 +115,7 @@ class Ship extends GameEntity<GalagaGame> {
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
     }
-    
+
     if (spiralShot) {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
       game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
