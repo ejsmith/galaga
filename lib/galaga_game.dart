@@ -48,7 +48,6 @@ class GalagaGame extends Game {
   bool soundEffectsOn = true;
   bool tutorial = true;
   bool secret = false;
-  bool keyboardInput = true;
   num visualLevel = 1;
   Ship ship;
   num nextId = 1;
@@ -204,6 +203,8 @@ class GalagaGame extends Game {
       Options["powerups"] = 1;
     if (!Options.containsKey("soundeffects"))
       Options["soundeffects"] = 1;
+    if (!Options.containsKey("controls"))
+      Options["controls"] = 1;
 
     if (!Controls.containsKey("left"))
       Controls["left"] = "left";
@@ -2083,13 +2084,13 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: 90,
-        text: keyboardInput ? "Keyboard" : "Mouse",
+        text: Options["controls"] == 1 ? "Keyboard" : "Mouse",
         buttonAction: () {
 
-          if (keyboardInput == true)
-            keyboardInput = false;
+          if (Options["controls"] >= 2)
+            Options["controls"] = 1;
           else
-            keyboardInput = true;
+            Options["controls"] += 1;
 
           //if (!soundEffectsOn) {
             menuSong.remove();
@@ -2445,6 +2446,7 @@ class GalagaGame extends Game {
     Options["time"] = 60;
     Options["difficulty"] = 1;
     Options["soundeffects"] = 1;
+    Options["controls"] = 1;
 
     state = GalagaGameState.welcome;
 

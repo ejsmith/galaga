@@ -44,7 +44,7 @@ class Ship extends GameEntity<GalagaGame> {
       game.gameOver();
     }
 
-    if (game.keyboardInput == true) {
+    if (game.Options["controls"] == 1) {
       if (game.input.isKeyDown(37))
         momentum.xVel = -250;
       else if (game.input.isKeyDown(39))
@@ -62,7 +62,7 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.welcome)
       return;
 
-    if (game.input.mouse != null && game.keyboardInput == false) {
+    if (game.input.mouse != null && game.Options["controls"] == 2) {
       x = game.input.mouse.x;
     }
 
@@ -81,10 +81,10 @@ class Ship extends GameEntity<GalagaGame> {
 //      if (game.input.mouseDown)
 //        isPoweringUp = true;
 
-    if (game.input.isKeyJustPressed(32) && game.keyboardInput == true)
+    if (game.input.isKeyJustPressed(32) && game.Options["controls"] == 1)
       fire();
 
-    if (game.input.click != null && game.keyboardInput == false)
+    if (game.input.click != null && game.Options["controls"] == 2)
       fire();
 
     if (game.input.isKeyJustPressed(16) && superCharged > 0)
