@@ -117,7 +117,8 @@ class Bullet extends GameEntity<GalagaGame> {
 
     if (momentum.yVel > 0) {
       game.entities.where((e) => e is Ship && collidesWith(e)).toList().forEach((e) {
-        game.ship.lives -= 1;
+        if (game.invincibilityCheat == false)
+          game.ship.lives -= 1;
 
         game._shipHitEvent.signal();
 

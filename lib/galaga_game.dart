@@ -26,6 +26,7 @@ class GalagaGame extends Game {
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
   Map<num, String> HighscoresRank = new Map<num, String>();
+  Map<num, String> Cheats = new Map<num, String>();
   num rank = 1;
   num pointMultiplier = 1;
   num enemyX = -400;
@@ -47,7 +48,8 @@ class GalagaGame extends Game {
   bool bonusStage = false;
   bool soundEffectsOn = true;
   bool tutorial = true;
-  bool secret = false;
+  bool spreadShotCheat = false;
+  bool invincibilityCheat = false;
   num visualLevel = 1;
   Ship ship;
   num nextId = 1;
@@ -607,13 +609,53 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -94,
-        text: secret == true ? "True" : "False",
+        text: spreadShotCheat == true ? "True" : "False",
         buttonAction: () {
 
-          if (secret == true)
-            secret = false;
+          if (spreadShotCheat == true)
+            spreadShotCheat = false;
           else
-            secret = true;
+            spreadShotCheat = true;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: -64,
+        text: "Invincibility:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 200,
+        y: -64,
+        text: invincibilityCheat == true ? "True" : "False",
+        buttonAction: () {
+
+          if (invincibilityCheat == true)
+            invincibilityCheat = false;
+          else
+            invincibilityCheat = true;
 
           _statUpdateEvent.signal();
 
@@ -2564,7 +2606,7 @@ class GalagaGame extends Game {
     addEntity(ship);
     p1Dead = false;
 
-    if (secret)
+    if (spreadShotCheat)
       ship.spiralShot = true;
     else
       ship.spiralShot = false;

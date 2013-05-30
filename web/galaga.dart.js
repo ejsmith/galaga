@@ -5810,7 +5810,7 @@ $$.EventStream = {"": "Object;_controller,stream",
 
 $$.EventArgs = {"": "Object;"};
 
-$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,secret@,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,spreadShotCheat@,invincibilityCheat@,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   shipHit$0: function() {
     return this.shipHit.call$0();
   },
@@ -6197,10 +6197,15 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, "SpreadShot:", -38, -94);
     this.entities.push(t1);
-    t1 = this.secret ? "True" : "False";
+    t1 = this.spreadShotCheat ? "True" : "False";
     t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, t1, 200, -94);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.5, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, "Invincibility:", -38, -64);
+    this.entities.push(t1);
+    t1 = this.invincibilityCheat ? "True" : "False";
+    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, t1, 200, -64);
+    this.entities.push(t1);
+    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon1(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("cheats");
   },
@@ -6673,7 +6678,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t2 = this.ship;
     this.entities.push(t2);
     this.p1Dead = false;
-    t2 = this.secret;
+    t2 = this.spreadShotCheat;
     t3 = this.ship;
     if (t2)
       t3.spiralShot = true;
@@ -6937,10 +6942,10 @@ $$.GalagaGame_createCheatsMenu_anon = {"": "Closure;this_0",
   call$0: function() {
     var t1, t2;
     t1 = this.this_0;
-    if (t1.get$secret())
-      t1.set$secret(false);
+    if (t1.get$spreadShotCheat())
+      t1.set$spreadShotCheat(false);
     else
-      t1.set$secret(true);
+      t1.set$spreadShotCheat(true);
     t1.get$_statUpdateEvent().signal$0();
     t2 = $.getInterceptor$x(t1);
     t2.set$state(t1, 1);
@@ -6952,7 +6957,24 @@ $$.GalagaGame_createCheatsMenu_anon = {"": "Closure;this_0",
 
 $$.GalagaGame_createCheatsMenu_anon0 = {"": "Closure;this_1",
   call$0: function() {
-    var t1 = this.this_1;
+    var t1, t2;
+    t1 = this.this_1;
+    if (t1.get$invincibilityCheat())
+      t1.set$invincibilityCheat(false);
+    else
+      t1.set$invincibilityCheat(true);
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("cheats");
+    t1.createCheatsMenu$0();
+    t2.set$state(t1, 10);
+  }
+};
+
+$$.GalagaGame_createCheatsMenu_anon1 = {"": "Closure;this_2",
+  call$0: function() {
+    var t1 = this.this_2;
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
@@ -7703,8 +7725,10 @@ $$.Bullet_update_anon4 = {"": "Closure;this_5",
   call$1: function(e) {
     var t1, t2;
     t1 = this.this_5;
-    t2 = t1.get$game().get$ship();
-    t2.set$lives($.$sub$n(t2.get$lives(), 1));
+    if (!t1.get$game().get$invincibilityCheat()) {
+      t2 = t1.get$game().get$ship();
+      t2.set$lives($.$sub$n(t2.get$lives(), 1));
+    }
     t1.get$game().get$_shipHitEvent().signal$0();
     if (t1.get$game().get$soundEffectsOn())
       $.play$3$x(t1.get$game().get$shipHit(), t1.get$game().get$shipHit().get$Sound(), t1.get$game().get$shipHit().get$Volume(), t1.get$game().get$shipHit().get$Looping());
@@ -11554,7 +11578,7 @@ $.EventArgs$ = function() {
 };
 
 $.GalagaGame$withServices = function(input, renderer, loop) {
-  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, false, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  var t1 = new $.GalagaGame(0, 0, 5, 5, 0, null, $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), $.Map_Map(), 1, 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, false, false, 1, null, 1, 0, $.GameSound$("Menu", 1, false), $.GameSound$("Options", 1, true), $.GameSound$("GameStart", 1, false), $.GameSound$("Game", 1, true), $.GameSound$("cursorMove", 0.3, false), $.GameSound$("cursorSelect", 0.3, false), $.GameSound$("cursorSelect2", 0.3, false), $.GameSound$("enemyFire", 0.3, false), $.GameSound$("enemyHit", 0.3, false), $.GameSound$("explosion", 0.3, false), $.GameSound$("mothershipfire", 0.3, false), $.GameSound$("shipFire", 0.3, false), $.GameSound$("shipHit", 0.3, false), $.GameSound$("powerUp", 0.3, false), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), $.EventStream$(), null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   t1.Game$withServices$3(input, renderer, loop);
   return t1;
 };
