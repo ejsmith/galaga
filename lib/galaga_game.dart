@@ -26,7 +26,7 @@ class GalagaGame extends Game {
   Map<String, String> Controls = new Map<String,String>();
   Map<num, num> Highscores = new Map<num, num>();
   Map<num, String> HighscoresRank = new Map<num, String>();
-  Map<num, String> Cheats = new Map<num, String>();
+  Map<String, num> Cheats = new Map<String, num>();
   num rank = 1;
   num pointMultiplier = 1;
   num enemyX = -400;
@@ -48,8 +48,6 @@ class GalagaGame extends Game {
   bool bonusStage = false;
   bool soundEffectsOn = true;
   bool tutorial = true;
-  bool spreadShotCheat = false;
-  bool invincibilityCheat = false;
   num visualLevel = 1;
   Ship ship;
   num nextId = 1;
@@ -235,6 +233,11 @@ class GalagaGame extends Game {
       Highscores[9] = 0;
     if (!Highscores.containsKey(10))
       Highscores[10] = 0;
+
+    if (!Cheats.containsKey("spreadshot"))
+      Cheats["spreadshot"] = 1;
+    if (!Cheats.containsKey("invincibility"))
+      Cheats["invincibility"] = 1;
 
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -609,13 +612,12 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -94,
-        text: spreadShotCheat == true ? "True" : "False",
+        text: Cheats["spreadshot"] == 1 ? "True" : "False",
         buttonAction: () {
-
-          if (spreadShotCheat == true)
-            spreadShotCheat = false;
+          if (Cheats["spreadshot"] >= 2)
+            Cheats["spreadshot"] = 1;
           else
-            spreadShotCheat = true;
+            Cheats["spreadshot"] += 1;
 
           _statUpdateEvent.signal();
 
@@ -649,13 +651,12 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -64,
-        text: invincibilityCheat == true ? "True" : "False",
+        text: Cheats["invincibility"] == 1 ? "True" : "False",
         buttonAction: () {
-
-          if (invincibilityCheat == true)
-            invincibilityCheat = false;
+          if (Cheats["invincibility"] >= 2)
+            Cheats["invincibility"] = 1;
           else
-            invincibilityCheat = true;
+            Cheats["invincibility"] += 1;
 
           _statUpdateEvent.signal();
 
@@ -1182,7 +1183,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -175,
-        text: "Scores",
+        text: "Score",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1194,7 +1195,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 160,
         y: -175,
-        text: "Ranks",
+        text: "Ranking",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2606,7 +2607,7 @@ class GalagaGame extends Game {
     addEntity(ship);
     p1Dead = false;
 
-    if (spreadShotCheat)
+    if (Cheats["spreadshot"] == 1)
       ship.spiralShot = true;
     else
       ship.spiralShot = false;

@@ -44,6 +44,9 @@ class Ship extends GameEntity<GalagaGame> {
       game.gameOver();
     }
 
+    if (game.Cheats["spreadshot"] == 1)
+      spiralShot = true;
+
     if (game.Options["controls"] == 1) {
       if (game.input.isKeyDown(37))
         momentum.xVel = -250;
