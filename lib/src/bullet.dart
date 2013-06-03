@@ -85,6 +85,7 @@ class Bullet extends GameEntity<GalagaGame> {
         if (width > enemy.width && height > enemy.height) {
           width -= enemy.width;
           height -= enemy.height;
+
         } else if (Type != "super")
           removeFromGame();
 
@@ -98,13 +99,12 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.soundEffectsOn)
           game.enemyHit.play(game.enemyHit.Sound, game.enemyHit.Volume, game.enemyHit.Looping);
 
-        if (enemy.type == "MotherShip") {
+        if (enemy.type == "MotherShip")
           game._motherShipEvent.signal();
-        } else if (enemy.type == "Boss") {
+         else if (enemy.type == "Boss")
           game._bossHitEvent.signal();
-        } else if (enemy.type == "Normal") {
+         else if (enemy.type == "Normal")
           game._normalHitEvent.signal();
-        }
 
         if (enemy.type != "Boss") {
           enemy.width -= 8;
@@ -125,7 +125,9 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.soundEffectsOn)
           game.shipHit.play(game.shipHit.Sound, game.shipHit.Volume, game.shipHit.Looping);
 
-        game.resetPowerups();
+        if (game.Cheats["spreadshot"] == 2)
+          game.resetPowerups();
+
         game.removeBullets();
 
         game.ship.bullet = game.ship.maxBullet;

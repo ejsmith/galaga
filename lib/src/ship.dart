@@ -40,7 +40,6 @@ class Ship extends GameEntity<GalagaGame> {
       game.p1Dead = true;
 
       removeFromGame();
-
       game.gameOver();
     }
 

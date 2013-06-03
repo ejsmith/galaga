@@ -6,7 +6,6 @@ class Stars extends GameEntity {
   Stars(Game game, num x, num y, num h, num w, num col) : super.withPosition(game, x, y, h, w) {
 
     opacity = 0;
-    //opacity = random(.5, 1);
 
     if (col == 1)
       starColor = 1;

@@ -2474,6 +2474,7 @@ class GalagaGame extends Game {
     Stats["bossKills"] = 0;
     Stats["motherKills"] = 0;
     Stats["powerups"] = 0;
+    Stats["percentage"] = 0;
 
     state = GalagaGameState.welcome;
 
@@ -2626,13 +2627,7 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Enemy);
 
     updateLeaderboard();
-
-    if (ship.bulletsHit > 0)
-      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
-    else
-      Stats["percentage"] = 0;
-
-    Stats["percentage"] = Stats["percentage"].round();
+    updatePercentage();
 
     Stats["loses"] += 1;
 
@@ -2644,6 +2639,18 @@ class GalagaGame extends Game {
     createGameOverMenu();
 
     state = GalagaGameState.gameOver;
+  }
+
+  void updatePercentage() {
+    if (ship.bulletsHit > 0)
+      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+    else
+      Stats["percentage"] = 0;
+
+    Stats["percentage"] = Stats["percentage"].round();
+
+    if (Stats["percentage"] >= 100)
+      Stats["percentage"] = 100;
   }
 
   final EventStream _statUpdateEvent = new EventStream();

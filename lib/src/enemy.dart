@@ -17,7 +17,6 @@ class Enemy extends GameEntity<GalagaGame> {
   num enemyType = 0;
   num idNum = 1;
 
-
   Enemy(GalagaGame game, num x, num y, num diff, String Type) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
     creationTime = game.timer.gameTime;

@@ -4836,25 +4836,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -6372,9 +6357,9 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t3);
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Scores", -160, -175);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Score", -160, -175);
     this.entities.push(t3);
-    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Ranks", 160, -175);
+    t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.8, 42, "Ranking", 160, -175);
     this.entities.push(t3);
     t3 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "leaders", "", 0.6, 42, "1: " + $.S(t2.$index(t2, 1)), -160, -135);
     this.entities.push(t3);
@@ -6584,6 +6569,7 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     t1.$indexSet(t1, "bossKills", 0);
     t1.$indexSet(t1, "motherKills", 0);
     t1.$indexSet(t1, "powerups", 0);
+    t1.$indexSet(t1, "percentage", 0);
     this.set$state(this, 1);
     this.removeEntitiesByGroup$1("stats");
     this.createStatsMenu$0();
@@ -6717,20 +6703,12 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.timer.gameTime = t1;
   },
   gameOver$0: function() {
-    var t1, t2, t3;
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon0());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_anon1());
     this.updateLeaderboard$0();
-    t1 = this.ship;
-    t2 = t1.bulletsHit;
-    t3 = this.Stats;
-    if (t2 > 0)
-      t3.$indexSet(t3, "percentage", t2 / t1.bulletsFired * 100);
-    else
-      t3.$indexSet(t3, "percentage", 0);
-    t1 = this.Stats;
-    t1.$indexSet(t1, "percentage", $.round$0$nx(t1.$index(t1, "percentage")));
+    this.updatePercentage$0();
+    var t1 = this.Stats;
     t1.$indexSet(t1, "loses", $.$add$ns(t1.$index(t1, "loses"), 1));
     this._gameOverEvent.signal$0();
     this._statUpdateEvent.signal$0();
@@ -6741,6 +6719,20 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.removeEntitiesByGroup$1("gameOver");
     this.createGameOverMenu$0();
     this.set$state(this, 4);
+  },
+  updatePercentage$0: function() {
+    var t1, t2, t3;
+    t1 = this.ship;
+    t2 = t1.bulletsHit;
+    t3 = this.Stats;
+    if (t2 > 0)
+      t3.$indexSet(t3, "percentage", t2 / t1.bulletsFired * 100);
+    else
+      t3.$indexSet(t3, "percentage", 0);
+    t1 = this.Stats;
+    t1.$indexSet(t1, "percentage", $.round$0$nx(t1.$index(t1, "percentage")));
+    if ($.$ge$n(t1.$index(t1, "percentage"), 100) === true)
+      t1.$indexSet(t1, "percentage", 100);
   },
   get$onStatUpdate: function() {
     return this._statUpdateEvent.stream;
