@@ -2184,6 +2184,12 @@ class GalagaGame extends Game {
           newBouncer(8);
           newBouncer(9);
           newBouncer(10);
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("instructions");
+          createControlsMenu();
+
           state = GalagaGameState.instructions;
           _statUpdateEvent.signal();
           if (soundEffectsOn)
@@ -2250,7 +2256,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -145,
-        text: "Move left/right: Left and Right arrow keys.",
+        text: Options["controls"] == 1 ? "Move left/right: Left and Right arrow keys." : "Move left/right: Mouse movement.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2262,7 +2268,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -96,
-        text: "Fire: Spacebar.",
+        text: Options["controls"] == 1 ? "Fire: Spacebar." : "Fire: Left mouse click.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2274,7 +2280,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -47,
-        text: "Super Bullet: Shift Key.",
+        text: Options["controls"] == 1 ? "Super Bullet: Shift Key." : "Super Bullet: Spacebar.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,

@@ -89,7 +89,10 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.input.click != null && game.Options["controls"] == 2)
       fire();
 
-    if (game.input.isKeyJustPressed(16) && superCharged > 0)
+    if (game.input.isKeyJustPressed(16) && superCharged > 0 && game.Options["controls"] == 1)
+      superFire();
+
+    if (game.input.isKeyJustPressed(32) && superCharged > 0 && game.Options["controls"] == 2)
       superFire();
 
 //      if (isPoweringUp)
@@ -109,14 +112,6 @@ class Ship extends GameEntity<GalagaGame> {
 
     if (soundLevel > 1)
       soundLevel = 1;
-
-    if (superSpiral) {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
-    }
 
     if (spiralShot) {
       game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));

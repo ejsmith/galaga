@@ -6504,15 +6504,17 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.disableEntitiesByGroup$1("options");
   },
   createControlsMenu$0: function() {
-    var t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 56, "Instructions", 0, -225);
+    var t1, t2;
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.8, 56, "Instructions", 0, -225);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.5, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Move left/right: Left and Right arrow keys.", 0, -145);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Fire: Spacebar.", 0, -96);
-    this.entities.push(t1);
-    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, "Super Bullet: Shift Key.", 0, -47);
+    t1 = this.Options;
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, $.$eq(t1.$index(t1, "controls"), 1) === true ? "Move left/right: Left and Right arrow keys." : "Move left/right: Mouse movement.", 0, -145);
+    this.entities.push(t2);
+    t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, $.$eq(t1.$index(t1, "controls"), 1) === true ? "Fire: Spacebar." : "Fire: Left mouse click.", 0, -96);
+    this.entities.push(t2);
+    t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.6, 24, $.$eq(t1.$index(t1, "controls"), 1) === true ? "Super Bullet: Shift Key." : "Super Bullet: Spacebar.", 0, -47);
     this.entities.push(t1);
     t1 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.9, 24, "Powerups:", 0, 2);
     this.entities.push(t1);
@@ -7391,7 +7393,8 @@ $$.GalagaGame_createOptionsMenu_anon11 = {"": "Closure;this_12",
 
 $$.GalagaGame_createOptionsMenu_anon12 = {"": "Closure;this_13",
   call$0: function() {
-    var t1 = this.this_13;
+    var t1, t2;
+    t1 = this.this_13;
     t1.newBouncer$1(1);
     t1.newBouncer$1(2);
     t1.newBouncer$1(3);
@@ -7402,7 +7405,11 @@ $$.GalagaGame_createOptionsMenu_anon12 = {"": "Closure;this_13",
     t1.newBouncer$1(8);
     t1.newBouncer$1(9);
     t1.newBouncer$1(10);
-    $.set$state$x(t1, 7);
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("instructions");
+    t1.createControlsMenu$0();
+    t2.set$state(t1, 7);
     t1.get$_statUpdateEvent().signal$0();
     if (t1.get$soundEffectsOn()) {
       t1 = t1.get$cursorSelect2();
@@ -7754,7 +7761,9 @@ $$.Bullet_update_anon4 = {"": "Closure;this_5",
     t1.get$game().get$_shipHitEvent().signal$0();
     if (t1.get$game().get$soundEffectsOn())
       $.play$3$x(t1.get$game().get$shipHit(), t1.get$game().get$shipHit().get$Sound(), t1.get$game().get$shipHit().get$Volume(), t1.get$game().get$shipHit().get$Looping());
-    t1.get$game().resetPowerups$0();
+    t2 = t1.get$game().get$Cheats();
+    if ($.$eq(t2.$index(t2, "spreadshot"), 2) === true)
+      t1.get$game().resetPowerups$0();
     t1.get$game().removeBullets$0();
     t2 = t1.get$game().get$ship().get$maxBullet();
     t1.get$game().get$ship().set$bullet(t2);
@@ -9788,7 +9797,30 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHi
         t1 = false;
       if (t1)
         this.fire$0();
-      if (this.game.get$input().isKeyJustPressed$1(16) && this.superCharged > 0) {
+      if (this.game.get$input().isKeyJustPressed$1(16))
+        if (this.superCharged > 0) {
+          t1 = this.game.get$Options();
+          t2 = $.$eq(t1.$index(t1, "controls"), 1) === true;
+          t1 = t2;
+        } else
+          t1 = false;
+      else
+        t1 = false;
+      if (t1) {
+        t1 = this.game;
+        t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "super"));
+        this.superCharged = this.superCharged - 1;
+      }
+      if (this.game.get$input().isKeyJustPressed$1(32))
+        if (this.superCharged > 0) {
+          t1 = this.game.get$Options();
+          t2 = $.$eq(t1.$index(t1, "controls"), 2) === true;
+          t1 = t2;
+        } else
+          t1 = false;
+      else
+        t1 = false;
+      if (t1) {
         t1 = this.game;
         t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "super"));
         this.superCharged = this.superCharged - 1;
@@ -9801,18 +9833,6 @@ $$.Ship = {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHi
     this.soundLevel = this.bulletPower * 0.02;
     if (this.soundLevel > 1)
       this.soundLevel = 1;
-    if (this.superSpiral) {
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "straight", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "right", -350, this.bulletPower, "normal"));
-      t1 = this.game;
-      t1.addEntity$1($.Bullet$(t1, this.get$x(this), this.get$y(this), "left", -350, this.bulletPower, "normal"));
-    }
     t1 = this.spiralShot;
     t2 = this.game;
     if (t1) {
