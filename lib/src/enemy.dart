@@ -2,8 +2,6 @@ part of galaga_game;
 
 class Enemy extends GameEntity<GalagaGame> {
   String type;
-  bool yReset = false;
-  bool isFalling = false;
   num creationTime = 0;
   num startY = 0;
   num difficulty = 1;
@@ -452,33 +450,6 @@ class Enemy extends GameEntity<GalagaGame> {
         game.newMiniExplosion(x, y);
 
         removeFromGame();
-      }
-
-      if (y >= 350 && !yReset) {
-        y = -350;
-        yReset = true;
-      }
-
-      if (yReset) {
-        if (game.goingRight)
-          momentum.xVel = 80;
-        else
-          momentum.xVel = -80;
-
-      }
-
-      if (y >= startY && yReset) {
-        momentum.yVel = 0;
-        y = startY;
-
-        yReset = false;
-      }
-
-      if (random() <= .01 && game.canEnemyFall()) {
-        momentum.yVel *= -1;
-
-        isFalling = true;
-        yReset = false;
       }
 
   //    if (game.ship.x > x && momentum.yVel > 0 && !yReset)
