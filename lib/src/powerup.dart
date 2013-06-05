@@ -2,11 +2,9 @@ part of galaga_game;
 
 class PowerUp extends GameEntity<GalagaGame> {
   String type;
-  num creationTime = 0;
 
   PowerUp(GalagaGame game, num x, num y, [String Type = null]) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
-    creationTime = game.timer.gameTime;
 
     if (rType < .2) {
       color = "0, 255, 0";
@@ -51,30 +49,38 @@ class PowerUp extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.paused || game.state == GalagaGameState.gameOver || game.state == GalagaGameState.welcome)
       return;
 
-    if (type == "bulletPower") {
+    if (type == "bulletPower")
       if (game.ship.x > x)
         momentum.xVel = 40;
       else
         momentum.xVel = -40;
-    }
 
     if (collidesWith(game.ship)) {
       switch (type) {
         case 'SpiralShot':
-          SpiralUpdate();
-          game.Stats["powerups"] += 1;
+          if (game.ship.spiralShot) {
+            game.ship.spiralShot = false;
+          }
+          if (!game.ship.spiralShot)
+            game.ship.spiralShot = true;
+
+          game.Stats["powerups"] += 5;
+          game.score += 200 * game.pointMultiplier;
           break;
         case 'Multiplier':
           game.pointMultiplier *= 2;
-          game.Stats["powerups"] += 1;
+          game.Stats["powerups"] += 5;
+          game.score += 200 * game.pointMultiplier;
           break;
         case 'BulletIncrease':
           game.ship.maxBullet++;
-          game.Stats["powerups"] += 1;
+          game.Stats["powerups"] += 5;
+          game.score += 200 * game.pointMultiplier;
           break;
         case 'ExtraLife':
           game.ship.lives++;
-          game.Stats["powerups"] += 1;
+          game.Stats["powerups"] += 5;
+          game.score += 200 * game.pointMultiplier;
           break;
         case 'bulletPower':
           game.score += 100 * game.pointMultiplier;
@@ -93,16 +99,4 @@ class PowerUp extends GameEntity<GalagaGame> {
 
     super.update();
   }
-
-  void SpiralUpdate() {
-    game.score += 100 * game.pointMultiplier;
-
-    if (game.ship.spiralShot) {
-      game.ship.superSpiral = true;
-      game.ship.spiralShot = false;
-    }
-    if (!game.ship.spiralShot)
-      game.ship.spiralShot = true;
-  }
-
 }

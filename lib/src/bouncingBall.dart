@@ -8,8 +8,8 @@ class bouncingBall extends GameEntity {
 
     opacity = 0.0;
 
-    momentum.yVel = random(-200, 200);
-    momentum.xVel = random(-200, 200);
+    momentum.yVel = random(-250, 250);
+    momentum.xVel = random(-250, 250);
   }
 
   void update() {
@@ -35,4 +35,3 @@ class bouncingBall extends GameEntity {
     super.update();
   }
 }
-

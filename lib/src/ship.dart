@@ -12,7 +12,6 @@ class Ship extends GameEntity<GalagaGame> {
   num superCharged = 0;
   bool isPoweringUp = false;
   bool spiralShot = false;
-  bool superSpiral = false;
   num lastShotFired = 0;
 
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {

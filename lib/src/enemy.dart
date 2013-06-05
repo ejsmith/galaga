@@ -2,7 +2,6 @@ part of galaga_game;
 
 class Enemy extends GameEntity<GalagaGame> {
   String type;
-  num creationTime = 0;
   num startY = 0;
   num difficulty = 1;
   num bossDifficulty = 1;
@@ -17,7 +16,6 @@ class Enemy extends GameEntity<GalagaGame> {
 
   Enemy(GalagaGame game, num x, num y, num diff, String Type) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
-    creationTime = game.timer.gameTime;
 
     type = Type;
     difficulty = diff;

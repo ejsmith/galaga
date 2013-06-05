@@ -4,35 +4,35 @@ class Particles extends GameEntity {
   Timer _deleteTimer;
   num _waiting = 0;
 
-  Particles(Game game, num x, num y, num h, num w, num col, num xV, num yV) : super.withPosition(game, x, y, h, w) {
+  Particles(Game game, num x, num y, num h, num w, num col, num xVel, num yVel) : super.withPosition(game, x, y, h, w) {
 
     opacity = random(.5, 1);
 
     if (col == 1)
-      color = "204, 0, 51";
+      color = "200, 0, 50";
     if (col == 2)
-      color = "102, 255, 51";
+      color = "100, 255, 50";
     if (col == 3)
-      color = "51, 104, 204";
+      color = "20, 100, 200";
     if (col == 4)
-      color = "105, 255, 105";
+      color = "105, 255, 100";
     if (col == 5)
-      color = "204, 255, 51";
+      color = "200, 255, 50";
     if (col == 6)
-      color = "255, 102, 153";
+      color = "255, 100, 150";
     if (col == 7)
-      color = "255, 153, 51";
+      color = "255, 150, 50";
 
-    momentum.yVel = yV;
-    momentum.xVel = xV;
+    momentum.yVel = yVel;
+    momentum.xVel = xVel;
   }
 
   void update() {
     if (game.state == GalagaGameState.paused)
       return;
-    
+
     _deleteTimer = new Timer(const Duration(milliseconds: 1000), () => removeFromGame());
-    
+
     if (y > game.rect.halfHeight)
       removeFromGame();
 
