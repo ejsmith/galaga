@@ -89,6 +89,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Highscores[9] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
     game.Highscores[10] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : 0;
 
+    game.Cheats["spreadshot"] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win25']) : 0;
+    game.Cheats["invincibility"] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win26']) : 0;
+    game.Cheats["freeze"] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win27']) : 0;
+
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
     game.onStatUpdate.listen((e) => updateStats());
@@ -328,6 +332,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     window.localStorage['win24'] = game.Highscores[8].toString();
     window.localStorage['win25'] = game.Highscores[9].toString();
     window.localStorage['win26'] = game.Highscores[10].toString();
+
+    window.localStorage['win9'] = game.Options["spreadshot"].toString();
+    window.localStorage['win10'] = game.Options["invincibility"].toString();
+    window.localStorage['win11'] = game.Options["freeze"].toString();
   }
 
   void bossHit() {

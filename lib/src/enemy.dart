@@ -433,7 +433,7 @@ class Enemy extends GameEntity<GalagaGame> {
     }
 
     if (type == "Normal") {
-      if (random() < .0002 && game.canEnemyFall == true)
+      if (random() < .0002 && game.canEnemyFall == true && game.Cheats["freeze"] != 1)
         momentum.yVel = 140;
 
       if (health <= 0) {

@@ -238,6 +238,8 @@ class GalagaGame extends Game {
       Cheats["spreadshot"] = 1;
     if (!Cheats.containsKey("invincibility"))
       Cheats["invincibility"] = 1;
+    if (!Cheats.containsKey("freeze"))
+      Cheats["freeze"] = 1;
 
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -657,6 +659,33 @@ class GalagaGame extends Game {
             Cheats["invincibility"] = 1;
           else
             Cheats["invincibility"] += 1;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 200,
+        y: -64,
+        text: Cheats["freeze"] == 1 ? "True" : "False",
+        buttonAction: () {
+          if (Cheats["freeze"] >= 2)
+            Cheats["freeze"] = 1;
+          else
+            Cheats["freeze"] += 1;
 
           _statUpdateEvent.signal();
 

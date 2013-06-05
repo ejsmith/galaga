@@ -4836,10 +4836,25 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var nextPosition, t1;
-    nextPosition = this._position + 1;
+    var t1, nextPosition;
+    t1 = this._position;
+    if (typeof t1 !== "number")
+      return this.moveNext$0$bailout(1, t1);
+    nextPosition = t1 + 1;
     t1 = this._length;
     if (nextPosition < t1) {
+      this._current = $.$index$asx(this._array, nextPosition);
+      this._position = nextPosition;
+      return true;
+    }
+    this._current = null;
+    this._position = t1;
+    return false;
+  },
+  moveNext$0$bailout: function(state0, t1) {
+    var nextPosition = $.$add$ns(t1, 1);
+    t1 = this._length;
+    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5148,13 +5163,10 @@ $$.GameButton = {"": "GameText;buttonAction,text,centered,font,size,game,_x,_y,_
     $.GameEntity.prototype.update$0.call(this);
     if (!this.enabled)
       return;
-    t1 = $.get$click$x(this.game.get$input());
-    if (t1 != null) {
-      $.Primitives_printString("x: " + $.S($.get$x$x(t1)) + " y: " + $.S($.get$y$x($.get$click$x(this.game.get$input()))));
-      t2 = this.box;
-      $.Primitives_printString($.JSBool_methods.toString$0(t2.contains$1(t2, $.get$click$x(this.game.get$input()))));
-    }
-    t1 = this.game.get$input().get$mouse();
+    t1 = this.game.get$input();
+    if ($.get$click$x(t1) != null)
+      ;
+    t1 = t1.get$mouse();
     if (t1 != null) {
       t2 = this.box;
       t1 = t2.contains$1(t2, t1);
@@ -5941,6 +5953,8 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
       t2.$indexSet(t2, "spreadshot", 1);
     if (!t2.containsKey$1(t2, "invincibility"))
       t2.$indexSet(t2, "invincibility", 1);
+    if (!t2.containsKey$1(t2, "freeze"))
+      t2.$indexSet(t2, "freeze", 1);
     if ($.$eq(t1.$index(t1, "soundeffects"), 1) === true)
       this.soundEffectsOn = true;
     else
@@ -6209,10 +6223,13 @@ $$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_libl
     this.entities.push(t2);
     t2 = $.GameText$(true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, "Invincibility:", -38, -64);
     this.entities.push(t2);
-    t1 = $.$eq(t1.$index(t1, "invincibility"), 1) === true ? "True" : "False";
-    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, t1, 200, -64);
+    t2 = $.$eq(t1.$index(t1, "invincibility"), 1) === true ? "True" : "False";
+    t2 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon0(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, t2, 200, -64);
+    this.entities.push(t2);
+    t1 = $.$eq(t1.$index(t1, "freeze"), 1) === true ? "True" : "False";
+    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon1(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 36, t1, 200, -64);
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon1(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 16, "Made by Cody Smith", 400, 275);
+    t1 = $.GameButton$(new $.GalagaGame_createCheatsMenu_anon2(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "cheats", "", 0.7, 16, "Made by Cody Smith", 400, 275);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("cheats");
   },
@@ -6996,7 +7013,27 @@ $$.GalagaGame_createCheatsMenu_anon0 = {"": "Closure;this_1",
 
 $$.GalagaGame_createCheatsMenu_anon1 = {"": "Closure;this_2",
   call$0: function() {
-    var t1 = this.this_2;
+    var t1, t2, t3, t4;
+    t1 = this.this_2;
+    t2 = t1.get$Cheats();
+    t3 = $.$ge$n(t2.$index(t2, "freeze"), 2);
+    t4 = t1.get$Cheats();
+    if (t3 === true)
+      t4.$indexSet(t4, "freeze", 1);
+    else
+      t4.$indexSet(t4, "freeze", $.$add$ns(t4.$index(t4, "freeze"), 1));
+    t1.get$_statUpdateEvent().signal$0();
+    t2 = $.getInterceptor$x(t1);
+    t2.set$state(t1, 1);
+    t1.removeEntitiesByGroup$1("cheats");
+    t1.createCheatsMenu$0();
+    t2.set$state(t1, 10);
+  }
+};
+
+$$.GalagaGame_createCheatsMenu_anon2 = {"": "Closure;this_3",
+  call$0: function() {
+    var t1 = this.this_3;
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
@@ -8240,8 +8277,14 @@ $$.Enemy = {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,boss
         }
     }
     if (this.type === "Normal") {
-      if ($.random(0, 1, false) < 0.0002)
-        this.game.get$canEnemyFall();
+      if ($.random(0, 1, false) < 0.0002) {
+        t1 = this.game;
+        t1.get$canEnemyFall();
+        t1 = false;
+      } else
+        t1 = false;
+      if (t1)
+        this.momentum.yVel = 140;
       if (this.health <= 0) {
         t1 = this.game;
         t1.set$score($.$add$ns(t1.get$score(), 100 * t1.get$pointMultiplier()));
@@ -8456,6 +8499,12 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     t1.$indexSet(t1, 9, $.containsKey$1$x(window.localStorage, "win26") ? $.int_parse($.$index$asx(window.localStorage, "win26"), null, null) : 0);
     t1 = this.get$game().get$Highscores();
     t1.$indexSet(t1, 10, $.containsKey$1$x(window.localStorage, "win27") ? $.int_parse($.$index$asx(window.localStorage, "win27"), null, null) : 0);
+    t1 = this.get$game().get$Cheats();
+    t1.$indexSet(t1, "spreadshot", $.containsKey$1$x(window.localStorage, "win28") ? $.int_parse($.$index$asx(window.localStorage, "win25"), null, null) : 0);
+    t1 = this.get$game().get$Cheats();
+    t1.$indexSet(t1, "invincibility", $.containsKey$1$x(window.localStorage, "win29") ? $.int_parse($.$index$asx(window.localStorage, "win26"), null, null) : 0);
+    t1 = this.get$game().get$Cheats();
+    t1.$indexSet(t1, "freeze", $.containsKey$1$x(window.localStorage, "win30") ? $.int_parse($.$index$asx(window.localStorage, "win27"), null, null) : 0);
     this.get$game().get$onGameOver().listen$1(new $.GalagaRenderer_init_anon(this));
     this.get$game().get$onShipHit().listen$1(new $.GalagaRenderer_init_anon0(this));
     this.get$game().get$onStatUpdate().listen$1(new $.GalagaRenderer_init_anon1(this));
@@ -8525,7 +8574,7 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     return new $.BoundClosure$0(this, "shipHit$0");
   },
   updateStats$0: function() {
-    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27;
+    var t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30;
     t1 = window.localStorage;
     t2 = this.get$game().get$Stats();
     $.$indexSet$ax(t1, "win1", $.toString$0(t2.$index(t2, "killed")));
@@ -8604,6 +8653,15 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     t1 = window.localStorage;
     t27 = this.get$game().get$Highscores();
     $.$indexSet$ax(t1, "win26", $.toString$0(t27.$index(t27, 10)));
+    t1 = window.localStorage;
+    t28 = this.get$game().get$Options();
+    $.$indexSet$ax(t1, "win9", $.toString$0(t28.$index(t28, "spreadshot")));
+    t1 = window.localStorage;
+    t29 = this.get$game().get$Options();
+    $.$indexSet$ax(t1, "win10", $.toString$0(t29.$index(t29, "invincibility")));
+    t1 = window.localStorage;
+    t30 = this.get$game().get$Options();
+    $.$indexSet$ax(t1, "win11", $.toString$0(t30.$index(t30, "freeze")));
   },
   bossHit$0: function() {
     var t1 = $.JSArray_methods.where$1(this.get$game().entities, new $.GalagaRenderer_bossHit_anon());
@@ -9560,7 +9618,7 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
       this._removeFromGame = true;
     $.GameEntity.prototype.update$0.call(this);
   },
-  Particles$8: function(game, x, y, h, w, col, xV, yV) {
+  Particles$8: function(game, x, y, h, w, col, xVel, yVel) {
     this.opacity = $.random(0.5, 1, false);
     if (col === 1)
       this.color = "200, 0, 50";
@@ -9576,8 +9634,8 @@ $$.Particles = {"": "GameEntity;_deleteTimer,_waiting@,game,_x,_y,_width,_height
       this.color = "255, 100, 150";
     if (col === 7)
       this.color = "255, 150, 50";
-    this.momentum.yVel = yV;
-    this.momentum.xVel = xV;
+    this.momentum.yVel = yVel;
+    this.momentum.xVel = xVel;
   }
 };
 
@@ -11631,10 +11689,10 @@ $.GalagaRenderer$ = function(targetId) {
   return t1;
 };
 
-$.Particles$ = function(game, x, y, h, w, col, xV, yV) {
+$.Particles$ = function(game, x, y, h, w, col, xVel, yVel) {
   var t1 = new $.Particles(null, 0, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, h, w, null, null);
-  t1.Particles$8(game, x, y, h, w, col, xV, yV);
+  t1.Particles$8(game, x, y, h, w, col, xVel, yVel);
   return t1;
 };
 
@@ -11717,7 +11775,6 @@ $.CONSTANT29 = new $.Duration(325000);
 $.CONSTANT14 = new $.EventStreamProvider("click");
 $.CONSTANT4 = new $.Duration(0);
 $.CONSTANT8 = new $.EventStreamProvider("mousedown");
-$.JSBool_methods = $.JSBool.prototype;
 $.CONSTANT31 = new $.Duration(400000);
 $.CONSTANT = new $.NullThrownError();
 $.CONSTANT11 = new $.EventStreamProvider("touchstart");
@@ -11726,8 +11783,8 @@ $.CONSTANT28 = new $.Duration(275000);
 $.JSDouble_methods = $.JSDouble.prototype;
 $.CONSTANT30 = new $.Duration(350000);
 $.CONSTANT32 = new $.Duration(425000);
-$.CONSTANT5 = new $.CloseToken();
 $.CONSTANT18 = new $.Duration(25000);
+$.CONSTANT5 = new $.CloseToken();
 $.CONSTANT24 = new $.Duration(100000);
 $.CONSTANT35 = new $.Duration(500000);
 $.CONSTANT45 = new $.Object();
