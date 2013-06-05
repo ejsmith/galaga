@@ -450,25 +450,8 @@ class Enemy extends GameEntity<GalagaGame> {
         removeFromGame();
       }
 
-  //    if (game.ship.x > x && momentum.yVel > 0 && !yReset)
-  //      momentum.xVel = 30;
-  //    else if (game.ship.x < x && momentum.yVel > 0 && !yReset)
-  //      momentum.xVel = -30;
-
-      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth))
+      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth) && game.Cheats["freeze"] != 1)
         game.switchDirection();
-
-      if (collidesWith(game.ship)) {
-        game._gameOverEvent.signal();
-
-        removeFromGame();
-
-        game.ship.lives -= 1;
-      }
-
-      if (x < -(game.rect.halfWidth)) {
-        game.gameOver();
-      }
 
       if (difficulty == 1) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .01) {

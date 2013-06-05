@@ -89,9 +89,9 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     game.Highscores[9] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
     game.Highscores[10] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : 0;
 
-    game.Cheats["spreadshot"] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win25']) : 0;
-    game.Cheats["invincibility"] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win26']) : 0;
-    game.Cheats["freeze"] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win27']) : 0;
+    game.Cheats["spreadshot"] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win25']) : 1;
+    game.Cheats["invincibility"] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win26']) : 1;
+    game.Cheats["freeze"] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win27']) : 1;
 
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
@@ -141,27 +141,27 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
       ctx.beginPath();
       if (e.Sprite == 1)
-        ctx.drawImageScaled(spreadup, e.x - 21, e.y - 21, 42, 42);
+        ctx.drawImageScaled(spreadup, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
       else if(e.Sprite == 2)
-        ctx.drawImageScaled(lifeup, e.x - 18, e.y - 18, 36, 36);
+        ctx.drawImageScaled(lifeup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
       else if(e.Sprite == 3)
-        ctx.drawImageScaled(multiplierup, e.x - 18, e.y - 18, 36, 36);
+        ctx.drawImageScaled(multiplierup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
       else if(e.Sprite == 4)
-        ctx.drawImageScaled(bulletup, e.x - 18, e.y - 18, 36, 36);
+        ctx.drawImageScaled(bulletup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
       else if(e.Sprite == 5)
-        ctx.drawImageScaled(coin, e.x - 6, e.y - 6, 12, 12);
+        ctx.drawImageScaled(coin, e.x - (e.width / 2), e.y - (e.height / 2), 12, 12);
       else if(e.Sprite == 6)
-        ctx.drawImageScaled(ship, e.x - 21, e.y - 21, 42, 42);
+        ctx.drawImageScaled(ship, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
       else if(e.Sprite == 7)
-        ctx.drawImageScaled(enemy, e.x - 21, e.y - 21, 42, 42);
+        ctx.drawImageScaled(enemy, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
       else if(e.Sprite == 8)
-        ctx.drawImageScaled(mothership, e.x - 21, e.y - 21, 42, 42);
+        ctx.drawImageScaled(mothership, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
       else if(e.Sprite == 9)
-        ctx.drawImageScaled(enemy2, e.x - 18, e.y - 18, 36, 36);
+        ctx.drawImageScaled(enemy2, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
       else if(e.Sprite == 10)
-        ctx.drawImageScaled(boss, e.x - 36, e.y - 36, 72, 72);
+        ctx.drawImageScaled(boss, e.x - (e.width / 2), e.y - (e.height / 2), 72, 72);
       else if(e.Sprite == 11)
-        ctx.drawImageScaled(skull, e.x - 18, e.y - 18, 36, 36);
+        ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
 
       ctx.stroke();
     });

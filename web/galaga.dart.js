@@ -36,7 +36,7 @@ $$.ListIterator = {"": "Object;_iterable,_liblib$_length,_index,_liblib$_current
 
 $$.WhereIterable = {"": "Iterable;_iterable,_f",
   get$iterator: function(_) {
-    return $.WhereIterator$($.JSArray_methods.get$iterator(this._iterable), this._f);
+    return $.WhereIterator$($.get$iterator$ax(this._iterable), this._f);
   }
 };
 
@@ -4836,25 +4836,10 @@ $$.Rect = {"": "Object;left>,top>,width>,height>",
 
 $$.FixedSizeListIterator = {"": "Object;_array,_length,_position,_current",
   moveNext$0: function() {
-    var t1, nextPosition;
-    t1 = this._position;
-    if (typeof t1 !== "number")
-      return this.moveNext$0$bailout(1, t1);
-    nextPosition = t1 + 1;
+    var nextPosition, t1;
+    nextPosition = this._position + 1;
     t1 = this._length;
     if (nextPosition < t1) {
-      this._current = $.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
-      return true;
-    }
-    this._current = null;
-    this._position = t1;
-    return false;
-  },
-  moveNext$0$bailout: function(state0, t1) {
-    var nextPosition = $.$add$ns(t1, 1);
-    t1 = this._length;
-    if ($.$lt$n(nextPosition, t1) === true) {
       this._current = $.$index$asx(this._array, nextPosition);
       this._position = nextPosition;
       return true;
@@ -5822,7 +5807,7 @@ $$.EventStream = {"": "Object;_controller,stream",
 
 $$.EventArgs = {"": "Object;"};
 
-$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+$$.GalagaGame = {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib3$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount@,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn@,tutorial?,visualLevel<,ship<,nextId,targetId@,menuSong<,optionSong,gameStart,gameSong,cursorMove<,cursorSelect<,cursorSelect2<,enemyFire<,enemyHit<,explosion,motherShipFire<,shipFire<,shipHit<,powerUp<,_statUpdateEvent<,_gameOverEvent,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   shipHit$0: function() {
     return this.shipHit.call$0();
   },
@@ -8299,16 +8284,17 @@ $$.Enemy = {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,boss
         this.game.newMiniExplosion$2(this.get$x(this), this.get$y(this));
         this._removeFromGame = true;
       }
-      if ($.$gt$n($.$add$ns(this.get$x(this), 16), $.get$rect$x(this.game).get$halfWidth()) === true || $.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true)
+      if ($.$gt$n($.$add$ns(this.get$x(this), 16), $.get$rect$x(this.game).get$halfWidth()) !== true)
+        if ($.$lt$n($.$sub$n(this.get$x(this), 16), -$.get$rect$x(this.game).get$halfWidth()) === true) {
+          t1 = this.game.get$Cheats();
+          t2 = $.$eq(t1.$index(t1, "freeze"), 1) !== true;
+          t1 = t2;
+        } else
+          t1 = false;
+      else
+        t1 = true;
+      if (t1)
         this.game.switchDirection$0();
-      if (this.collidesWith$1(this.game.get$ship())) {
-        this.game.get$_gameOverEvent().signal$0();
-        this._removeFromGame = true;
-        t1 = this.game.get$ship();
-        t1.set$lives($.$sub$n(t1.get$lives(), 1));
-      }
-      if ($.$lt$n(this.get$x(this), -$.get$rect$x(this.game).get$halfWidth()) === true)
-        this.game.gameOver$0();
       t1 = this.difficulty;
       if (t1 === 1) {
         if ($.$ge$n($.$add$ns(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.$le$n($.$sub$n(this.get$x(this), 16), $.get$x$x(this.game.get$ship())) === true && $.random(0, 1, false) <= 0.01) {
@@ -8500,11 +8486,11 @@ $$.GalagaRenderer = {"": "CanvasGameRenderer;timeLeft,ship<,enemy<,enemy2<,boss<
     t1 = this.get$game().get$Highscores();
     t1.$indexSet(t1, 10, $.containsKey$1$x(window.localStorage, "win27") ? $.int_parse($.$index$asx(window.localStorage, "win27"), null, null) : 0);
     t1 = this.get$game().get$Cheats();
-    t1.$indexSet(t1, "spreadshot", $.containsKey$1$x(window.localStorage, "win28") ? $.int_parse($.$index$asx(window.localStorage, "win25"), null, null) : 0);
+    t1.$indexSet(t1, "spreadshot", $.containsKey$1$x(window.localStorage, "win28") ? $.int_parse($.$index$asx(window.localStorage, "win25"), null, null) : 1);
     t1 = this.get$game().get$Cheats();
-    t1.$indexSet(t1, "invincibility", $.containsKey$1$x(window.localStorage, "win29") ? $.int_parse($.$index$asx(window.localStorage, "win26"), null, null) : 0);
+    t1.$indexSet(t1, "invincibility", $.containsKey$1$x(window.localStorage, "win29") ? $.int_parse($.$index$asx(window.localStorage, "win26"), null, null) : 1);
     t1 = this.get$game().get$Cheats();
-    t1.$indexSet(t1, "freeze", $.containsKey$1$x(window.localStorage, "win30") ? $.int_parse($.$index$asx(window.localStorage, "win27"), null, null) : 0);
+    t1.$indexSet(t1, "freeze", $.containsKey$1$x(window.localStorage, "win30") ? $.int_parse($.$index$asx(window.localStorage, "win27"), null, null) : 1);
     this.get$game().get$onGameOver().listen$1(new $.GalagaRenderer_init_anon(this));
     this.get$game().get$onShipHit().listen$1(new $.GalagaRenderer_init_anon0(this));
     this.get$game().get$onStatUpdate().listen$1(new $.GalagaRenderer_init_anon1(this));
@@ -8961,37 +8947,37 @@ $$.GalagaRenderer_drawBouncer_anon0 = {"": "Closure;this_0",
     t2 = e.get$Sprite();
     if (t2 === 1) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$spreadup(), $.$sub$n(t2.get$x(e), 21), $.$sub$n(t2.get$y(e), 21), 42, 42);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$spreadup(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 42, 42);
     } else if (t2 === 2) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$lifeup(), $.$sub$n(t2.get$x(e), 18), $.$sub$n(t2.get$y(e), 18), 36, 36);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$lifeup(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 36, 36);
     } else if (t2 === 3) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$multiplierup(), $.$sub$n(t2.get$x(e), 18), $.$sub$n(t2.get$y(e), 18), 36, 36);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$multiplierup(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 36, 36);
     } else if (t2 === 4) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bulletup(), $.$sub$n(t2.get$x(e), 18), $.$sub$n(t2.get$y(e), 18), 36, 36);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$bulletup(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 36, 36);
     } else if (t2 === 5) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$coin(), $.$sub$n(t2.get$x(e), 6), $.$sub$n(t2.get$y(e), 6), 12, 12);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$coin(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 12, 12);
     } else if (t2 === 6) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$ship(), $.$sub$n(t2.get$x(e), 21), $.$sub$n(t2.get$y(e), 21), 42, 42);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$ship(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 42, 42);
     } else if (t2 === 7) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy(), $.$sub$n(t2.get$x(e), 21), $.$sub$n(t2.get$y(e), 21), 42, 42);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 42, 42);
     } else if (t2 === 8) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$mothership(), $.$sub$n(t2.get$x(e), 21), $.$sub$n(t2.get$y(e), 21), 42, 42);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$mothership(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 42, 42);
     } else if (t2 === 9) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy2(), $.$sub$n(t2.get$x(e), 18), $.$sub$n(t2.get$y(e), 18), 36, 36);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$enemy2(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 36, 36);
     } else if (t2 === 10) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$boss(), $.$sub$n(t2.get$x(e), 36), $.$sub$n(t2.get$y(e), 36), 72, 72);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$boss(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 72, 72);
     } else if (t2 === 11) {
       t2 = $.getInterceptor$x(e);
-      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$skull(), $.$sub$n(t2.get$x(e), 18), $.$sub$n(t2.get$y(e), 18), 36, 36);
+      $.drawImageScaled$5$x(t1.get$ctx(), t1.get$skull(), $.$sub$n(t2.get$x(e), $.$div$n(t2.get$width(e), 2)), $.$sub$n(t2.get$y(e), $.$div$n(t2.get$height(e), 2)), 36, 36);
     }
     $.stroke$0$x(t1.get$ctx());
   }
