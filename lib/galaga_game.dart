@@ -677,9 +677,21 @@ class GalagaGame extends Game {
         id: "",
         groupId: "cheats"));
 
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: -34,
+        text: "Freeze Enemy:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
     addEntity(new GameButton(game: this,
         x: 200,
-        y: -64,
+        y: -34,
         text: Cheats["freeze"] == 1 ? "True" : "False",
         buttonAction: () {
           if (Cheats["freeze"] >= 2)
