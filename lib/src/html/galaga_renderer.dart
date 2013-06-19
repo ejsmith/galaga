@@ -116,17 +116,17 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.beginPath();
         if (e.starColor == 1)
           ctx.drawImageScaled(star1, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 2)
+        else if (e.starColor == 2)
           ctx.drawImageScaled(star2, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 3)
+        else if (e.starColor == 3)
           ctx.drawImageScaled(star3, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 4)
+        else if (e.starColor == 4)
           ctx.drawImageScaled(star4, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 5)
+        else if (e.starColor == 5)
           ctx.drawImageScaled(star5, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 6)
+        else if (e.starColor == 6)
           ctx.drawImageScaled(star6, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-        if (e.starColor == 7)
+        else if (e.starColor == 7)
           ctx.drawImageScaled(star7, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
         ctx.stroke();
@@ -210,13 +210,13 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.beginPath();
         if (e.type == "SpiralShot")
           ctx.drawImageScaled(spreadup, e.x - 20, e.y - 20, 36, 36);
-        if (e.type == "ExtraLife")
+        else if (e.type == "ExtraLife")
           ctx.drawImageScaled(lifeup, e.x - 20, e.y - 20, 36, 36);
-        if (e.type == "Multiplier")
+        else if (e.type == "Multiplier")
           ctx.drawImageScaled(multiplierup, e.x - 20, e.y - 20, 36, 36);
-        if (e.type == "BulletIncrease")
+        else if (e.type == "BulletIncrease")
           ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
-        if (e.type == "bulletPower")
+        else if (e.type == "bulletPower")
           ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
         ctx.stroke();
     });
@@ -414,16 +414,18 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   void drawCountDown() {
     if (game.state == GalagaGameState.levelEnd) {
-    num temp = 0;
-    ctx.fillStyle = "rgba(255, 255, 255, 1)";
-    ctx.font = "52px cinnamoncake, Verdana";
-    if (game.waiting == 1)
-      temp = 3;
-    if (game.waiting == 2)
-      temp = 2;
-    if (game.waiting == 3)
-      temp = 1;
-    ctx.fillText("Next Level In: ${temp}", -165, 0);
+      num temp = 0;
+      ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      ctx.font = "52px cinnamoncake, Verdana";
+
+      if (game.waiting == 1)
+        temp = 3;
+      else if (game.waiting == 2)
+        temp = 2;
+      else if (game.waiting == 3)
+        temp = 1;
+
+      ctx.fillText("Next Level In: ${temp}", -165, 0);
     }
   }
 

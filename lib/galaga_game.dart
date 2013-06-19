@@ -128,15 +128,8 @@ class GalagaGame extends Game {
 
       if (_waiting == 4) {
         entities.where((e) => e is Stars).toList().forEach((e) => e.removeFromGame());
-        for (int i = 0; i < 50; i++) {
-
-          if (colorCount < 7)
-            colorCount++;
-          else if (colorCount >= 7)
-            colorCount = 1;
-
+        for (int i = 0; i < 50; i++)
           startStars();
-        }
 
         enemyX = -400;
         enemyY = -165;
@@ -254,15 +247,9 @@ class GalagaGame extends Game {
     createLeaderBoardMenu();
     createCheatsMenu();
 
-    for (int i = 0; i < 50; i++) {
-
-      if (colorCount < 7)
-        colorCount++;
-      else if (colorCount >= 7)
-        colorCount = 1;
-
+    for (int i = 0; i < 50; i++)
       startStars();
-    }
+
 
     if (soundEffectsOn)
       menuSong.play(menuSong.Sound, menuSong.Volume, menuSong.Looping);
@@ -343,11 +330,6 @@ class GalagaGame extends Game {
       }
     }
 
-    if (colorCount < 7)
-      colorCount++;
-    else if (colorCount >= 7)
-      colorCount = 1;
-
     entities.where((e) => e is GameButton).forEach((e) {
       if (e.opacity == 1.0 && e.isHighlighted && e.soundReady) {
         if (soundEffectsOn)
@@ -362,6 +344,11 @@ class GalagaGame extends Game {
   }
 
   void startStars() {
+    if (colorCount < 7)
+      colorCount++;
+    else if (colorCount >= 7)
+      colorCount = 1;
+
     num w = random(.5, 3.5);
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
 
@@ -417,18 +404,19 @@ class GalagaGame extends Game {
   void newStar() {
     num rand = random(0, 1);
 
-    if (rand > .1 || state == GalagaGameState.paused)
+    if (rand > .2 || state == GalagaGameState.paused)
       return;
 
     num w = random(.5, 3.5);
 
+    if (colorCount < 7) {
+      colorCount = random(1, 7);
+      colorCount.ceil();
+    }
+    else if (colorCount >= 7)
+      colorCount = 1;
+
     Stars star = new Stars(this, 0, 0, w, w, colorCount);
-
-    do {
-      star.x = random(-rect.halfWidth, rect.halfWidth);
-      star.y = -(rect.halfHeight);
-
-    } while(entities.where((e) => e is Stars).any((e) => star.collidesWith(e)));
 
     lastStar = timer.gameTime;
     addEntity(star);
@@ -1248,7 +1236,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -135,
-        text: "1: ${Highscores[1]}",
+        text: "1st: ${Highscores[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1272,7 +1260,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -95,
-        text: "2: ${Highscores[2]}",
+        text: "2nd: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1296,7 +1284,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -55,
-        text: "3: ${Highscores[3]}",
+        text: "3rd: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1320,7 +1308,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -15,
-        text: "4: ${Highscores[4]}",
+        text: "4th: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1344,7 +1332,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 25,
-        text: "5: ${Highscores[5]}",
+        text: "5th: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1368,7 +1356,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 65,
-        text: "6: ${Highscores[6]}",
+        text: "6th: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1392,7 +1380,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 105,
-        text: "7: ${Highscores[7]}",
+        text: "7th: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1416,7 +1404,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 145,
-        text: "8: ${Highscores[8]}",
+        text: "8th: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1440,7 +1428,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 185,
-        text: "9: ${Highscores[9]}",
+        text: "9th: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1464,7 +1452,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 225,
-        text: "10: ${Highscores[10]}",
+        text: "10th: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2555,13 +2543,18 @@ class GalagaGame extends Game {
   void switchDirection() {
     goingRight = !goingRight;
     entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == "Normal") {
-        e.momentum.xVel *= -1;
+        e.switchAmount++;
+
+        if (e.type == "Normal") {
+          e.momentum.xVel *= -1;
 
         if (e.momentum.xVel >= 0)
           e.x += 3;
         else
           e.x -= 3;
+
+        e.momentum.xVel += e.switchAmount;
+        e.y += 10;
       }
     });
   }
@@ -2607,15 +2600,8 @@ class GalagaGame extends Game {
 
   void newGame() {
     entities.where((e) => e is Stars).forEach((e) => e.removeFromGame());
-    for (int i = 0; i < 50; i++) {
-
-      if (colorCount < 7)
-        colorCount++;
-      else if (colorCount >= 7)
-        colorCount = 1;
-
+    for (int i = 0; i < 50; i++)
       startStars();
-    }
 
     score = 0;
 
@@ -2653,11 +2639,6 @@ class GalagaGame extends Game {
     ship = new Ship(this, 0, (rect.halfHeight - 30));
     addEntity(ship);
     p1Dead = false;
-
-    if (Cheats["spreadshot"] == 1)
-      ship.spiralShot = true;
-    else
-      ship.spiralShot = false;
 
     ship.lives = Options["startLives"];
 
