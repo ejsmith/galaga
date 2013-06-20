@@ -142,17 +142,15 @@ class GalagaGame extends Game {
           bonusStage = true;
           tutorial = false;
           bonusCheck += 3;
-        } else {
+        } else
           bonusStage = false;
-        }
 
-        if (bonusStage == true) {
+        if (bonusStage == true)
           newBoss();
-
-        } else {
+        else
           for (int i = 0; i < 33; i++)
             newEnemy(difficulty);
-        }
+
         state = GalagaGameState.playing;
         timer.timeDecrease = true;
         timer.gameTime = Options["time"];
@@ -256,12 +254,6 @@ class GalagaGame extends Game {
 
     menuSong.remove();
 
-    // update pubsec
-
-//    resetLeaderBoard();
-//    resetOptions();
-//    resetStats();
-
     state = GalagaGameState.welcome;
     super.start();
   }
@@ -272,9 +264,6 @@ class GalagaGame extends Game {
       if (input.isKeyJustPressed(27))
         state = state == GalagaGameState.paused ? GalagaGameState.playing : GalagaGameState.paused;
 
-//      if (state == GalagaGameState.paused) {
-//        timer.paused = true;
-//      }
       if (enemyAmount <= 0) {
         Stats["wins"] += 1;
 
@@ -323,8 +312,7 @@ class GalagaGame extends Game {
 
         waiting = 1;
 
-        //if (tutorial == false)
-          level++;
+        level++;
 
         visualLevel++;
       }
@@ -556,9 +544,8 @@ class GalagaGame extends Game {
 
   num getEnemyX(String type) {
     entities.where((e) => e is Enemy).forEach((Enemy e) {
-      if (e.type == type) {
+      if (e.type == type)
         return e.x;
-      }
     });
 
     return 0;
@@ -566,9 +553,8 @@ class GalagaGame extends Game {
 
   num getEnemyY(String type) {
     entities.where((e) => e is Enemy).toList().forEach((Enemy e) {
-      if (e.type == type) {
+      if (e.type == type)
         return e.y;
-      }
     });
 
     return 0;

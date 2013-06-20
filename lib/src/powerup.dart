@@ -58,9 +58,8 @@ class PowerUp extends GameEntity<GalagaGame> {
     if (collidesWith(game.ship)) {
       switch (type) {
         case 'SpiralShot':
-          if (game.ship.spiralShot) {
+          if (game.ship.spiralShot)
             game.ship.spiralShot = false;
-          }
           if (!game.ship.spiralShot)
             game.ship.spiralShot = true;
 
@@ -85,6 +84,10 @@ class PowerUp extends GameEntity<GalagaGame> {
         case 'bulletPower':
           game.score += 100 * game.pointMultiplier;
           game.ship.chargedLevel++;
+          break;
+        case 'invincible':
+          game.score += 300 * game.pointMultiplier;
+          game.ship.invincible = true;
           break;
       }
 

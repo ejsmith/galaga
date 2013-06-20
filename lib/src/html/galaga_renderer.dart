@@ -4,6 +4,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   num timeLeft = 0;
 
   ImageElement ship = new ImageElement();
+  ImageElement invincibleShip = new ImageElement();
+  ImageElement upgradedShip = new ImageElement();
   ImageElement enemy = new ImageElement();
   ImageElement enemy2 = new ImageElement();
   ImageElement boss = new ImageElement();
@@ -33,6 +35,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   GalagaRenderer(String targetId) : super(targetId) {
     ship.src = '../web/images/Ship.png';
+    invincibleShip.src = '../web/images/InvincibleShip.png';
+    upgradedShip.src = '../web/images/UpgradedShip.png';
     enemy.src = '../web/images/enemy.png';
     enemy2.src = '../web/images/enemy2.png';
     boss.src = '../web/images/boss.png';
@@ -199,7 +203,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.stroke();
       }
     });
-
   }
 
   void drawPowerUps() {
@@ -237,7 +240,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       ctx.lineWidth = 3;
 
       ctx.beginPath();
-      ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
+      if (!game.ship.invincible)
+        ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
+      else if (game.ship.invincible)
+        ctx.drawImageScaled(invincibleShip, game.ship.x - 22, game.ship.y - 25, 42, 42);
       drawChargeBar();
       ctx.stroke();
     }

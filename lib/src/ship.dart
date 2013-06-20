@@ -12,7 +12,9 @@ class Ship extends GameEntity<GalagaGame> {
   num superCharged = 0;
   bool isPoweringUp = false;
   bool spiralShot = false;
+  bool invincible = false;
   num lastShotFired = 0;
+  Timer _invincibleTimer;
 
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
@@ -44,6 +46,20 @@ class Ship extends GameEntity<GalagaGame> {
 
     if (game.Cheats["spreadshot"] == 1)
       spiralShot = true;
+
+    if (spiralShot == true && game.Cheats["spreadshot"] != 1) {
+      _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
+        spiralShot = false;
+
+      });
+    }
+
+    if (invincible == true) {
+      _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
+        invincible = false;
+
+      });
+    }
 
     if (game.Options["controls"] == 1) {
       if (game.input.isKeyDown(37))
@@ -78,10 +94,7 @@ class Ship extends GameEntity<GalagaGame> {
       chargedLevel = 0;
     }
 
-    if (bullet > 0) {
-//      if (game.input.mouseDown)
-//        isPoweringUp = true;
-
+  if (bullet > 0) {
     if (game.input.isKeyJustPressed(32) && game.Options["controls"] == 1)
       fire();
 
@@ -93,9 +106,6 @@ class Ship extends GameEntity<GalagaGame> {
 
     if (game.input.isKeyJustPressed(32) && superCharged > 0 && game.Options["controls"] == 2)
       superFire();
-
-//      if (isPoweringUp)
-//        bulletPower += .25;
     }
 
     super.update();
@@ -113,15 +123,14 @@ class Ship extends GameEntity<GalagaGame> {
       soundLevel = 1;
 
     if (spiralShot) {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower, "normal"));
       bulletsFired += 3;
-
       if (game.soundEffectsOn)
         game.shipFire.play(game.shipFire.Sound, game.shipFire.Volume, game.shipFire.Looping);
     } else {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower));
+      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
       bulletsFired++;
       if (game.soundEffectsOn)
         game.shipFire.play(game.shipFire.Sound, game.shipFire.Volume, game.shipFire.Looping);
