@@ -392,19 +392,17 @@ class GalagaGame extends Game {
   void newStar() {
     num rand = random(0, 1);
 
-    if (rand > .2 || state == GalagaGameState.paused)
+    if (rand > .09 || state == GalagaGameState.paused)
       return;
 
     num w = random(.5, 3.5);
 
-    if (colorCount < 7) {
-      colorCount = random(1, 7);
-      colorCount.ceil();
-    }
-    else if (colorCount >= 7)
+    colorCount++;
+
+    if (colorCount > 7)
       colorCount = 1;
 
-    Stars star = new Stars(this, 0, 0, w, w, colorCount);
+    Stars star = new Stars(this, random(-rect.halfWidth, rect.halfWidth), -(rect.halfHeight) - 20, w, w, colorCount);
 
     lastStar = timer.gameTime;
     addEntity(star);
@@ -633,45 +631,6 @@ class GalagaGame extends Game {
             Cheats["invincibility"] = 1;
           else
             Cheats["invincibility"] += 1;
-
-          _statUpdateEvent.signal();
-
-          state = GalagaGameState.welcome;
-
-          removeEntitiesByGroup("cheats");
-          createCheatsMenu();
-
-          state = GalagaGameState.cheats;
-        },
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered: true,
-        color: "255, 255, 255",
-        opacity: 0.7,
-        id: "",
-        groupId: "cheats"));
-
-    addEntity(new GameText(game: this,
-        x: -38,
-        y: -34,
-        text: "Freeze Enemy:",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.7,
-        id: "",
-        groupId: "cheats"));
-
-    addEntity(new GameButton(game: this,
-        x: 200,
-        y: -34,
-        text: Cheats["freeze"] == 1 ? "True" : "False",
-        buttonAction: () {
-          if (Cheats["freeze"] >= 2)
-            Cheats["freeze"] = 1;
-          else
-            Cheats["freeze"] += 1;
 
           _statUpdateEvent.signal();
 
@@ -2529,8 +2488,6 @@ class GalagaGame extends Game {
   void switchDirection() {
     goingRight = !goingRight;
     entities.where((e) => e is Enemy).forEach((Enemy e) {
-        e.switchAmount++;
-
         if (e.type == "Normal") {
           e.momentum.xVel *= -1;
 
@@ -2538,9 +2495,6 @@ class GalagaGame extends Game {
           e.x += 3;
         else
           e.x -= 3;
-
-        e.momentum.xVel += e.switchAmount;
-        e.y += 10;
       }
     });
   }

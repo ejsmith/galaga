@@ -100,7 +100,7 @@ class Enemy extends GameEntity<GalagaGame> {
       }
 
       // Movement based on distance from the Boss so that they hover/rotate around it
-      if (y > game.rect.halfHeight - 80)
+      if (y > game.rect.halfHeight - 16)
         momentum.yVel *= -1;
 
       if (y < -(game.rect.halfHeight) + 16)
@@ -132,7 +132,7 @@ class Enemy extends GameEntity<GalagaGame> {
           momentum.yVel *= -1;
       }
 
-      if (random() <= .1) {
+      if (random() <= .05) {
         game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16)));
         if (game.soundEffectsOn)
           game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
@@ -451,7 +451,7 @@ class Enemy extends GameEntity<GalagaGame> {
         removeFromGame();
       }
 
-      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth) && game.Cheats["freeze"] != 1)
+      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth))
         game.switchDirection();
 
       if (difficulty == 1) {
