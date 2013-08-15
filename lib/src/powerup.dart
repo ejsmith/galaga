@@ -91,8 +91,6 @@ class PowerUp extends GameEntity<GalagaGame> {
           break;
       }
 
-      if (game.soundEffectsOn)
-        game.powerUp.play(game.powerUp.Sound, game.powerUp.Volume, game.powerUp.Looping);
       removeFromGame();
     }
 

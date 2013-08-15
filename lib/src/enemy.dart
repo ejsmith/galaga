@@ -134,8 +134,6 @@ class Enemy extends GameEntity<GalagaGame> {
 
       if (random() <= .05) {
         game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16)));
-        if (game.soundEffectsOn)
-          game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
       }
     }
 
@@ -147,9 +145,6 @@ class Enemy extends GameEntity<GalagaGame> {
         game.removeEntitiesByFilter((e) => e is PowerUp);
         game.removeEntitiesByFilter((e) => e is Bullet);
         game.removeEntitiesByFilter((e) => e is Enemy);
-
-        if (game.soundEffectsOn)
-          game.cursorSelect2.play(game.cursorSelect2.Sound, game.cursorSelect2.Volume, game.cursorSelect2.Looping);
 
         game.removeEntitiesByGroup("levelEnd");
         game.createLevelEnd();
@@ -216,9 +211,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
-
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 2) {
@@ -226,9 +218,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
-
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 3) {
@@ -241,8 +230,6 @@ class Enemy extends GameEntity<GalagaGame> {
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
             }
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 4) {
@@ -255,8 +242,6 @@ class Enemy extends GameEntity<GalagaGame> {
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
             }
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 5) {
@@ -272,8 +257,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
         }
       } else {
@@ -282,8 +265,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 2) {
@@ -291,8 +272,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 3) {
@@ -308,8 +287,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 4) {
@@ -325,8 +302,6 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           }
 
         } else if (bossDifficulty == 5) {
@@ -342,15 +317,11 @@ class Enemy extends GameEntity<GalagaGame> {
             game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
             game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-            if (game.soundEffectsOn)
-              game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
           } else {
             if (random() <= .01) {
               game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
-              if (game.soundEffectsOn)
-                game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
             }
           }
         }
@@ -384,15 +355,11 @@ class Enemy extends GameEntity<GalagaGame> {
       if (difficulty == 1) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .01) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
-          if (game.soundEffectsOn)
-            game.motherShipFire.play(game.motherShipFire.Sound, game.motherShipFire.Volume, game.motherShipFire.Looping);
         }
 
       } else if (difficulty == 2) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .03) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
-          if (game.soundEffectsOn)
-            game.motherShipFire.play(game.motherShipFire.Sound, game.motherShipFire.Volume, game.motherShipFire.Looping);
         }
 
       } else if (difficulty == 3) {
@@ -403,8 +370,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.motherShipFire.play(game.motherShipFire.Sound, game.motherShipFire.Volume, game.motherShipFire.Looping);
         }
 
       } else if (difficulty == 4) {
@@ -415,8 +380,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.motherShipFire.play(game.motherShipFire.Sound, game.motherShipFire.Volume, game.motherShipFire.Looping);
         }
 
       } else if (difficulty == 5) {
@@ -427,8 +390,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.motherShipFire.play(game.motherShipFire.Sound, game.motherShipFire.Volume, game.motherShipFire.Looping);
         }
       }
     }
@@ -457,16 +418,11 @@ class Enemy extends GameEntity<GalagaGame> {
       if (difficulty == 1) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .01) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
-          if (game.soundEffectsOn)
-
-            game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
 
       } else if (difficulty == 2) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .03) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
-          if (game.soundEffectsOn)
-            game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
 
       } else if (difficulty == 3) {
@@ -477,8 +433,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
 
       } else if (difficulty == 4) {
@@ -489,8 +443,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
 
       } else if (difficulty == 5) {
@@ -501,8 +453,6 @@ class Enemy extends GameEntity<GalagaGame> {
           game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
           game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
         }
-          if (game.soundEffectsOn)
-            game.enemyFire.play(game.enemyFire.Sound, game.enemyFire.Volume, game.enemyFire.Looping);
         }
       }
     }

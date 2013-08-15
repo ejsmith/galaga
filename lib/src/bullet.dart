@@ -96,9 +96,6 @@ class Bullet extends GameEntity<GalagaGame> {
         if (game.ship.bullet < 3)
           game.ship.bullet++;
 
-        if (game.soundEffectsOn)
-          game.enemyHit.play(game.enemyHit.Sound, game.enemyHit.Volume, game.enemyHit.Looping);
-
         if (enemy.type == "MotherShip")
           game._motherShipEvent.signal();
          else if (enemy.type == "Boss")
@@ -121,9 +118,6 @@ class Bullet extends GameEntity<GalagaGame> {
           game.ship.lives -= 1;
 
         game._shipHitEvent.signal();
-
-        if (game.soundEffectsOn)
-          game.shipHit.play(game.shipHit.Sound, game.shipHit.Volume, game.shipHit.Looping);
 
         if (game.Cheats["spreadshot"] == 2)
           game.resetPowerups();
