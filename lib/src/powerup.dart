@@ -2,20 +2,27 @@ part of galaga_game;
 
 class PowerUp extends GameEntity<GalagaGame> {
   String type;
+  Timer _deactivate;
 
   PowerUp(GalagaGame game, num x, num y, [String Type = null]) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
 
-    if (rType < .2) {
+    if (rType < game.spiral) {
       color = "0, 255, 0";
       type = 'SpiralShot';
-    } else if (rType < .4) {
+    } else if (rType < game.multi) {
       color = "255, 0, 0";
       type = 'Multiplier';
-    } else if (rType < .6) {
+    } else if (rType < game.bullet) {
       color = "0, 0, 255";
       type = 'BulletIncrease';
-    } else if (rType < 1) {
+    } else if (rType < game.invincible) {
+      color = "0, 255, 255";
+      type = 'invincible';
+    } else if (rType < game.time) {
+      color = "0, 255, 255";
+      type = 'timeUp';
+    } else if (rType < game.life) {
       color = "255, 255, 0";
       type = 'ExtraLife';
     }
@@ -87,7 +94,17 @@ class PowerUp extends GameEntity<GalagaGame> {
           break;
         case 'invincible':
           game.score += 300 * game.pointMultiplier;
-          game.ship.invincible = true;
+          if (game.Cheats["invincibility"] != 1) {
+            game.Cheats["invincibility"] = 1;
+
+            _deactivate = new Timer(const Duration(milliseconds: 5000), () {
+              game.Cheats["invincibility"] = 0;
+            });
+          }
+
+          break;
+        case 'timeUp':
+            game.timer.gameTime += 15;
           break;
       }
 

@@ -12,7 +12,6 @@ class Ship extends GameEntity<GalagaGame> {
   num superCharged = 0;
   bool isPoweringUp = false;
   bool spiralShot = false;
-  bool invincible = false;
   num lastShotFired = 0;
   Timer _invincibleTimer;
 
@@ -50,13 +49,6 @@ class Ship extends GameEntity<GalagaGame> {
     if (spiralShot == true && game.Cheats["spreadshot"] != 1) {
       _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
         spiralShot = false;
-
-      });
-    }
-
-    if (invincible == true) {
-      _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
-        invincible = false;
 
       });
     }

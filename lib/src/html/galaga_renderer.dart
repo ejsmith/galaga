@@ -15,6 +15,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement lifeup = new ImageElement();
   ImageElement multiplierup = new ImageElement();
   ImageElement bulletup = new ImageElement();
+  ImageElement invincible = new ImageElement();
+  ImageElement timeUp = new ImageElement();
   ImageElement coin = new ImageElement();
   ImageElement shipbullet = new ImageElement();
   ImageElement enemybullet = new ImageElement();
@@ -46,6 +48,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     lifeup.src = '../web/images/powerup2.png';
     multiplierup.src = '../web/images/powerup3.png';
     bulletup.src = '../web/images/powerup4.png';
+    invincible.src = '../web/images/invincible.png';
+    timeUp.src = '../web/images/clock.png';
     coin.src = '../web/images/coin.png';
     shipbullet.src = '../web/images/BulletUp.png';
     enemybullet.src = '../web/images/BulletDown.png';
@@ -220,6 +224,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
           ctx.drawImageScaled(bulletup, e.x - 20, e.y - 20, 36, 36);
         else if (e.type == "bulletPower")
           ctx.drawImageScaled(coin, e.x - 8, e.y - 8, 12, 12);
+        else if (e.type == "invincible")
+          ctx.drawImageScaled(invincible, e.x - 31, e.y - 31, 62, 62);
+        else if (e.type == "timeUp")
+          ctx.drawImageScaled(timeUp, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
     });
   }
@@ -239,10 +247,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       ctx.lineWidth = 3;
 
       ctx.beginPath();
-      if (!game.ship.invincible)
+      if (game.Cheats["invincibility"] != 1)
         ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
-      else if (game.ship.invincible)
-        ctx.drawImageScaled(invincibleShip, game.ship.x - 22, game.ship.y - 25, 42, 42);
+      else if (game.Cheats["invincibility"] == 1)
+        ctx.drawImageScaled(invincibleShip, game.ship.x - 31, game.ship.y - 31, 62, 62);
       drawChargeBar();
       ctx.stroke();
     }
