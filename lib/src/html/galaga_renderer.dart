@@ -67,39 +67,40 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   }
 
   void init() {
-//    game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1']) : 0;
-//    game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2']) : 0;
-//    game.Stats["loses"] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3']) : 0;
-//    game.Stats["totalGames"] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4']) : 0;
-//    game.Stats["highscore"] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5']) : 0;
-//    game.Stats["normalKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13']) : 0;
-//    game.Stats["bossKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14']) : 0;
-//    game.Stats["motherKills"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15']) : 0;
-//    game.Stats["powerups"] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16']) : 0;
-//    game.Stats["percentage"] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17']) : 0;
-//
-//    game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6']) : 3;
-//    game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7']) : 3;
-//    game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8']) : 60;
-//    game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9']) : 1;
-//    game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10']) : 1;
-//    game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11']) : 1;
-//    game.Options["controls"] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12']) : 1;
-//
-//    game.Highscores[1] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18']) : 0;
-//    game.Highscores[2] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19']) : 0;
-//    game.Highscores[3] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20']) : 0;
-//    game.Highscores[4] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21']) : 0;
-//    game.Highscores[5] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22']) : 0;
-//    game.Highscores[6] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23']) : 0;
-//    game.Highscores[7] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24']) : 0;
-//    game.Highscores[8] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25']) : 0;
-//    game.Highscores[9] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26']) : 0;
-//    game.Highscores[10] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27']) : 0;
-//
-//    game.Cheats["spreadshot"] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win25']) : 1;
-//    game.Cheats["invincibility"] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win26']) : 1;
-//    game.Cheats["freeze"] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win27']) : 1;
+    game.Stats["killed"] = window.localStorage.containsKey('win1') ? int.parse(window.localStorage['win1'], onError: (val) => 0) : 0;
+    game.Stats["wins"] = window.localStorage.containsKey('win2') ? int.parse(window.localStorage['win2'], onError: (val) => 0) : 0;
+    game.Stats["loses"] = window.localStorage.containsKey('win3') ? int.parse(window.localStorage['win3'], onError: (val) => 0) : 0;
+    game.Stats["totalGames"] = window.localStorage.containsKey('win4') ? int.parse(window.localStorage['win4'], onError: (val) => 0) : 0;
+    game.Stats["highscore"] = window.localStorage.containsKey('win5') ? int.parse(window.localStorage['win5'], onError: (val) => 0) : 0;
+    game.Stats["normalKills"] = window.localStorage.containsKey('win13') ? int.parse(window.localStorage['win13'], onError: (val) => 0) : 0;
+    game.Stats["bossKills"] = window.localStorage.containsKey('win14') ? int.parse(window.localStorage['win14'], onError: (val) => 0) : 0;
+    game.Stats["motherKills"] = window.localStorage.containsKey('win15') ? int.parse(window.localStorage['win15'], onError: (val) => 0) : 0;
+    game.Stats["powerups"] = window.localStorage.containsKey('win16') ? int.parse(window.localStorage['win16'], onError: (val) => 0) : 0;
+    game.Stats["percentage"] = window.localStorage.containsKey('win17') ? int.parse(window.localStorage['win17'], onError: (val) => 0) : 0;
+
+    game.Options["startLives"] = window.localStorage.containsKey('win6') ? int.parse(window.localStorage['win6'], onError: (val) => 3) : 3;
+    game.Options["bulletCap"] = window.localStorage.containsKey('win7') ? int.parse(window.localStorage['win7'], onError: (val) => 3) : 3;
+    game.Options["time"] = window.localStorage.containsKey('win8') ? int.parse(window.localStorage['win8'], onError: (val) => 60) : 60;
+    game.Options["difficulty"] = window.localStorage.containsKey('win9') ? int.parse(window.localStorage['win9'], onError: (val) => 1) : 1;
+    game.Options["powerups"] = window.localStorage.containsKey('win10') ? int.parse(window.localStorage['win10'], onError: (val) => 1) : 1;
+    game.Options["soundeffects"] = window.localStorage.containsKey('win11') ? int.parse(window.localStorage['win11'], onError: (val) => 1) : 1;
+    game.Options["controls"] = window.localStorage.containsKey('win12') ? int.parse(window.localStorage['win12'], onError: (val) => 1) : 1;
+
+    game.Highscores[1] = window.localStorage.containsKey('win18') ? int.parse(window.localStorage['win18'], onError: (val) => 0) : 0;
+    game.Highscores[2] = window.localStorage.containsKey('win19') ? int.parse(window.localStorage['win19'], onError: (val) => 0) : 0;
+    game.Highscores[3] = window.localStorage.containsKey('win20') ? int.parse(window.localStorage['win20'], onError: (val) => 0) : 0;
+    game.Highscores[4] = window.localStorage.containsKey('win21') ? int.parse(window.localStorage['win21'], onError: (val) => 0) : 0;
+    game.Highscores[5] = window.localStorage.containsKey('win22') ? int.parse(window.localStorage['win22'], onError: (val) => 0) : 0;
+    game.Highscores[6] = window.localStorage.containsKey('win23') ? int.parse(window.localStorage['win23'], onError: (val) => 0) : 0;
+    game.Highscores[7] = window.localStorage.containsKey('win24') ? int.parse(window.localStorage['win24'], onError: (val) => 0) : 0;
+    game.Highscores[8] = window.localStorage.containsKey('win25') ? int.parse(window.localStorage['win25'], onError: (val) => 0) : 0;
+    game.Highscores[9] = window.localStorage.containsKey('win26') ? int.parse(window.localStorage['win26'], onError: (val) => 0) : 0;
+    game.Highscores[10] = window.localStorage.containsKey('win27') ? int.parse(window.localStorage['win27'], onError: (val) => 0) : 0;
+
+    game.Cheats["spreadshot"] = window.localStorage.containsKey('win28') ? int.parse(window.localStorage['win28'], onError: (val) => 0) : 1;
+    game.Cheats["invincibility"] = window.localStorage.containsKey('win29') ? int.parse(window.localStorage['win29'], onError: (val) => 0) : 1;
+    game.Cheats["freeze"] = window.localStorage.containsKey('win30') ? int.parse(window.localStorage['win30'], onError: (val) => 0) : 1;
+    game.Cheats["super"] = window.localStorage.containsKey('win31') ? int.parse(window.localStorage['win31'], onError: (val) => 0) : 1;
 
     game.onGameOver.listen((e) => gameOver());
     game.onShipHit.listen((e) => shipHit());
@@ -113,6 +114,43 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   void gameOver() {
     subtleBgFade();
     updateStats();
+  }
+
+  void updateStats() {
+    window.localStorage['win1'] = game.Stats["killed"].toString();
+    window.localStorage['win2'] = game.Stats["wins"].toString();
+    window.localStorage['win3'] = game.Stats["loses"].toString();
+    window.localStorage['win4'] = game.Stats["totalGames"].toString();
+    window.localStorage['win5'] = game.Stats["highscore"].toString();
+    window.localStorage['win13'] = game.Stats["normalKills"].toString();
+    window.localStorage['win14'] = game.Stats["bossKills"].toString();
+    window.localStorage['win15'] = game.Stats["motherKills"].toString();
+    window.localStorage['win16'] = game.Stats["powerups"].toString();
+    window.localStorage['win17'] = game.Stats["percentage"].toString();
+
+    window.localStorage['win6'] = game.Options["startLives"].toString();
+    window.localStorage['win7'] = game.Options["bulletCap"].toString();
+    window.localStorage['win8'] = game.Options["time"].toString();
+    window.localStorage['win9'] = game.Options["difficulty"].toString();
+    window.localStorage['win10'] = game.Options["powerups"].toString();
+    window.localStorage['win11'] = game.Options["soundeffects"].toString();
+    window.localStorage['win12'] = game.Options["controls"].toString();
+
+    window.localStorage['win18'] = game.Highscores[1].toString();
+    window.localStorage['win19'] = game.Highscores[2].toString();
+    window.localStorage['win20'] = game.Highscores[3].toString();
+    window.localStorage['win21'] = game.Highscores[4].toString();
+    window.localStorage['win22'] = game.Highscores[5].toString();
+    window.localStorage['win23'] = game.Highscores[6].toString();
+    window.localStorage['win24'] = game.Highscores[7].toString();
+    window.localStorage['win25'] = game.Highscores[8].toString();
+    window.localStorage['win26'] = game.Highscores[9].toString();
+    window.localStorage['win27'] = game.Highscores[10].toString();
+
+    window.localStorage['win28'] = game.Options["spreadshot"].toString();
+    window.localStorage['win29'] = game.Options["invincibility"].toString();
+    window.localStorage['win30'] = game.Options["freeze"].toString();
+    window.localStorage['win31'] = game.Options["super"].toString();
   }
 
   void drawStars() {
@@ -169,6 +207,12 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(boss, e.x - (e.width / 2), e.y - (e.height / 2), 72, 72);
       else if(e.Sprite == 11)
         ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+      else if(e.Sprite == 12)
+        ctx.drawImageScaled(invincible, e.x - (e.width / 2), e.y - (e.height / 2), 62, 62);
+      else if(e.Sprite == 13)
+        ctx.drawImageScaled(timeUp, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+      else if(e.Sprite == 14)
+        ctx.drawImageScaled(invincibleShip, e.x - (e.width / 2), e.y - (e.height / 2), 62, 62);
 
       ctx.stroke();
     });
@@ -265,18 +309,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.beginPath();
         ctx.drawImageScaled(enemy, e.x - 22, e.y - 25, 12, 12);
         ctx.stroke();
-      }
-
-      if (e.type == "MotherShip" && e.flicker == false) {
+      } else if (e.type == "MotherShip" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
         ctx.beginPath();
         ctx.drawImageScaled(mothership, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
-      }
-
-      if (e.type == "Boss") {
+      } else if (e.type == "Boss") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
@@ -285,9 +325,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
           ctx.drawImageScaled(boss, e.x - 22, e.y - 25, 72, 72);
         ctx.drawImageScaled(bosshp, -300, -250, e.health * 6, 12);
         ctx.stroke();
-      }
-
-      if (e.type == "Normal" && e.flicker == false) {
+      } else if (e.type == "Normal" && e.flicker == false) {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
         ctx.lineWidth = 3;
 
@@ -314,41 +352,6 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     new Timer(const Duration(milliseconds: 375), () => shipFlicker = false);
 
     subtleBgFade();
-  }
-
-  void updateStats() {
-    window.localStorage['win1'] = game.Stats["killed"].toString();
-    window.localStorage['win2'] = game.Stats["wins"].toString();
-    window.localStorage['win3'] = game.Stats["loses"].toString();
-    window.localStorage['win4'] = game.Stats["totalGames"].toString();
-    window.localStorage['win5'] = game.Stats["highscore"].toString();
-    window.localStorage['win12'] = game.Stats["normalKills"].toString();
-    window.localStorage['win13'] = game.Stats["bossKills"].toString();
-    window.localStorage['win14'] = game.Stats["motherKills"].toString();
-    window.localStorage['win15'] = game.Stats["powerups"].toString();
-    window.localStorage['win16'] = game.Stats["percentage"].toString();
-
-    window.localStorage['win6'] = game.Options["startLives"].toString();
-    window.localStorage['win7'] = game.Options["bulletCap"].toString();
-    window.localStorage['win8'] = game.Options["time"].toString();
-    window.localStorage['win9'] = game.Options["difficulty"].toString();
-    window.localStorage['win10'] = game.Options["powerups"].toString();
-    window.localStorage['win11'] = game.Options["soundeffects"].toString();
-
-    window.localStorage['win17'] = game.Highscores[1].toString();
-    window.localStorage['win18'] = game.Highscores[2].toString();
-    window.localStorage['win19'] = game.Highscores[3].toString();
-    window.localStorage['win20'] = game.Highscores[4].toString();
-    window.localStorage['win21'] = game.Highscores[5].toString();
-    window.localStorage['win22'] = game.Highscores[6].toString();
-    window.localStorage['win23'] = game.Highscores[7].toString();
-    window.localStorage['win24'] = game.Highscores[8].toString();
-    window.localStorage['win25'] = game.Highscores[9].toString();
-    window.localStorage['win26'] = game.Highscores[10].toString();
-
-    window.localStorage['win9'] = game.Options["spreadshot"].toString();
-    window.localStorage['win10'] = game.Options["invincibility"].toString();
-    window.localStorage['win11'] = game.Options["freeze"].toString();
   }
 
   void bossHit() {

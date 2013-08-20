@@ -45,11 +45,13 @@ class Enemy extends GameEntity<GalagaGame> {
 
     if (type == "MotherShip")
       health = 3;
+
     if (type == "Boss") {
       width = 72;
       height = 72;
       health = bossHealth;
     }
+
     if (type == "Drone") {
       width = 16;
       height = 16;
@@ -366,30 +368,30 @@ class Enemy extends GameEntity<GalagaGame> {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .07) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .1) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .1) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
 
       } else if (difficulty == 4) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .1) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .3) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .3) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
 
       } else if (difficulty == 5) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .2) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .5) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .5) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
       }
     }
@@ -429,30 +431,30 @@ class Enemy extends GameEntity<GalagaGame> {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .07) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .1) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .1) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
 
       } else if (difficulty == 4) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .1) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .3) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .3) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
 
       } else if (difficulty == 5) {
         if ((x + 16 >= game.ship.x && x - 16 <= game.ship.x) && random() <= .2) {
           game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(8,16), "normal"));
 
-        if(random() <= .5) {
-          game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
-          game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
-        }
+          if(random() <= .5) {
+            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "normal"));
+            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "normal"));
+          }
         }
       }
     }

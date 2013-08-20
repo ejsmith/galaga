@@ -27,7 +27,7 @@ class GalagaGame extends Game {
   Map<num, num> Highscores = new Map<num, num>();
   Map<num, String> HighscoresRank = new Map<num, String>();
   Map<String, num> Cheats = new Map<String, num>();
-  num rank = 1;
+  String rank = "Jew";
   num pointMultiplier = 1;
   num enemyX = -400;
   num enemyY = -165;
@@ -221,6 +221,8 @@ class GalagaGame extends Game {
       Cheats["spreadshot"] = 0;
     if (!Cheats.containsKey("invincibility"))
       Cheats["invincibility"] = 0;
+    if (!Cheats.containsKey("super"))
+      Cheats["super"] = 0;
 
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -383,6 +385,7 @@ class GalagaGame extends Game {
 
     enemy.idNum = nextId;
     nextId++;
+    enemy.y = -200;
 
     addEntity(enemy);
   }
@@ -393,22 +396,33 @@ class GalagaGame extends Game {
     if (sprite == 1) {
       bouncer.height = 42;
       bouncer.width = 42;
-    }
-    if (sprite == 5) {
+    } else if (sprite == 5) {
       bouncer.height = 12;
       bouncer.width = 12;
-    }
-    if (sprite == 8) {
+    } else if (sprite == 6) {
       bouncer.height = 42;
       bouncer.width = 42;
-    }
-    if (sprite == 10) {
+    } else if (sprite == 7) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 8) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 10) {
       bouncer.height = 72;
       bouncer.width = 72;
-    }
-    if (sprite == 11) {
+    } else if (sprite == 11) {
       bouncer.height = 36;
       bouncer.width = 36;
+    } else if (sprite == 12) {
+      bouncer.height = 62;
+      bouncer.width = 62;
+    } else if (sprite == 13) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 14) {
+      bouncer.height = 62;
+      bouncer.width = 62;
     }
 
     addEntity(bouncer);
@@ -622,6 +636,45 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -38,
         y: -30,
+        text: "SuperShot:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 200,
+        y: -30,
+        text: Cheats["super"] == 1 ? "True" : "False",
+        buttonAction: () {
+          if (Cheats["super"] >= 2)
+            Cheats["super"] = 1;
+          else
+            Cheats["super"] += 1;
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered: true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: 0,
         text: "Powerups:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -633,7 +686,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 200,
-        y: -30,
+        y: 0,
         text: "${powerupChoice}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -645,7 +698,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 325,
-        y: -30,
+        y: 0,
         text: "->",
         buttonAction: () {
          if (powerupChoice == "All") {
@@ -732,7 +785,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 70,
-        y: -30,
+        y: 0,
         text: "<-",
         buttonAction: () {
           if (powerupChoice == "All") {
@@ -859,242 +912,48 @@ class GalagaGame extends Game {
   void createWelcomeMenu() {
     _gameOverEvent.signal();
 
-    if (Highscores[1] <= 5000 && Highscores[1] >= 0)
-      rank = 1;
-    if (Highscores[1] <= 10000 && Highscores[1] >= 5001)
-      rank = 2;
-    if (Highscores[1] <= 15000 && Highscores[1] >= 10001)
-      rank = 3;
-    if (Highscores[1] <= 20000 && Highscores[1] >= 15001)
-      rank = 4;
-    if (Highscores[1] <= 25000 && Highscores[1] >= 20001)
-      rank = 5;
-    if (Highscores[1] <= 30000 && Highscores[1] >= 25001)
-      rank = 6;
-    if (Highscores[1] <= 35000 && Highscores[1] >= 30001)
-      rank = 7;
-    if (Highscores[1] <= 40000 && Highscores[1] >= 35001)
-      rank = 8;
-    if (Highscores[1] <= 45000 && Highscores[1] >= 40001)
-      rank = 9;
-    if (Highscores[1] <= 50000 && Highscores[1] >= 45001)
-      rank = 10;
-    if (Highscores[1] <= 55000 && Highscores[1] >= 50001)
-      rank = 11;
-    if (Highscores[1] <= 60000 && Highscores[1] >= 55001)
-      rank = 12;
-    if (Highscores[1] >= 150000 && Highscores[1] >= 100001)
-      rank = 13;
-    if (Highscores[1] <= 200000 && Highscores[1] >= 150001)
-      rank = 14;
-    if (Highscores[1] <= 250000 && Highscores[1] >= 200001)
-      rank = 15;
-    if (Highscores[1] <= 300000 && Highscores[1] >= 250001)
-      rank = 16;
-    if (Highscores[1] >= 400000)
-      rank = 17;
+    num highscore = Highscores[1];
+
+    if (highscore >= 1000000)
+      rank = "Pablo Manrequez De Montoya De La Qruez The Third";
+    else if (highscore >= 700000)
+      rank = "God of all Dimensions";
+    else if (highscore >= 450000)
+      rank = "Commander of Multi-verse";
+    else if (highscore >= 350000)
+      rank = "Overseer of Multi-verse";
+    else if (highscore >= 250000)
+      rank = "Overlord of the Universe";
+    else if (highscore >= 200000)
+      rank = "Commander of the Universe";
+    else if (highscore >= 150000)
+      rank = "President of the Universe";
+    else if (highscore >= 100000)
+      rank = "Overlord of the Galaxy";
+    else if (highscore >= 90000)
+      rank = "Space Captain";
+    else if (highscore >= 80000)
+      rank = "Space Cadet";
+    else if (highscore >= 65000)
+      rank = "Space Recruit";
+    else if (highscore >= 45000)
+      rank = "Road Warrior";
+    else if (highscore >= 35000)
+      rank = "Amish Mastermind";
+    else if (highscore >= 20000)
+      rank = "Jewish Priest";
+    else if (highscore >= 5000 || highscore <= 5000)
+      rank = "Jew";
 
     addEntity(new GameText(game: this,
         x: 0,
         y: -275,
-        text: "You're: The Jew",
+        text: "You're: ${rank}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: rank == 1 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Jewish Priest",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 2 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Amish Mastermind",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 3 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Road Warrior",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 4 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Space Recruit",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 5 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Space Cadet",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 6 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Space Captain",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 7 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Overlord of the Galaxy",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 8 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The President of the Universe",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 9 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Commander of the Universe",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 10 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Overlord of the Universe",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 11 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Overseer of the Multi-verse",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 12 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Commander of the Multi-verse",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 13 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The Overlord of the Multi-verse",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 14 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The God of this Dimension",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 15 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: The God of all Dimensions",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 16 ? .65 : 0,
-        id: "",
-        groupId: "welcome"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: -275,
-        text: "You're: Pablo Manrequez De Montoya De La Qruez the Third",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: rank == 17 ? .65 : 0,
+        opacity: .65,
         id: "",
         groupId: "welcome"));
 
@@ -1252,42 +1111,40 @@ class GalagaGame extends Game {
 
   void createLeaderBoardMenu() {
     for (int i = 1; i < 11; i++) {
-      if (Highscores[i] <= 0)
-        HighscoresRank[i] = "None";
-      else if (Highscores[i] <= 5000 && Highscores[i] > 0)
-        HighscoresRank[i] = "Jew";
-      else if (Highscores[i] <= 20000 && Highscores[i] >= 5001)
-        HighscoresRank[i] = "Jewish Priest";
-      else if (Highscores[i] <= 35000 && Highscores[i] >= 20001)
-        HighscoresRank[i] = "Amish Mastermind";
-      else if (Highscores[i] <= 45000 && Highscores[i] >= 35001)
-        HighscoresRank[i] = "Road Warrior";
-      else if (Highscores[i] <= 65000 && Highscores[i] >= 45001)
-        HighscoresRank[i] = "Space Recruit";
-      else if (Highscores[i] <= 80000 && Highscores[i] >= 65001)
-        HighscoresRank[i] = "Space Cadet";
-      else if (Highscores[i] <= 90000 && Highscores[i] >= 80001)
-        HighscoresRank[i] = "Space Captain";
-      else if (Highscores[i] <= 100000 && Highscores[i] >= 90001)
-        HighscoresRank[i] = "Overlord of the Galaxy";
-      else if (Highscores[i] <= 150000 && Highscores[i] >= 100001)
-        HighscoresRank[i] = "President of the Universe";
-      else if (Highscores[i] <= 200000 && Highscores[i] >= 150001)
-        HighscoresRank[i] = "Commander of the Universe";
-      else if (Highscores[i] <= 250000 && Highscores[i] >= 200001)
-        HighscoresRank[i] = "Overlord of the Universe";
-      else if (Highscores[i] <= 350000 && Highscores[i] >= 250001)
-        HighscoresRank[i] = "Overseer of Multi-verse";
-      else if (Highscores[i] <= 450000 && Highscores[i] >= 350001)
-        HighscoresRank[i] = "Commander of Multi-verse";
-      else if (Highscores[i] <= 500000 && Highscores[i] >= 450001)
-        HighscoresRank[i] = "Overlord of Multi-verse";
-      else if (Highscores[i] <= 550000 && Highscores[i] >= 500001)
-        HighscoresRank[i] = "God of this Dimension";
-      else if (Highscores[i] <= 700000 && Highscores[i] >= 550001)
+      num iScore = Highscores[i];
+
+      if (iScore >= 1000000)
+        HighscoresRank[i] = "Pablo Manrequez De Montoya De La Qruez The Third";
+      else if (iScore >= 700000)
         HighscoresRank[i] = "God of all Dimensions";
-      else if (Highscores[i] >= 1000000)
-        HighscoresRank[i] = "Pablo Manrequez";
+      else if (iScore >= 450000)
+        HighscoresRank[i] = "Commander of Multi-verse";
+      else if (iScore >= 350000)
+        HighscoresRank[i] = "Overseer of Multi-verse";
+      else if (iScore >= 250000)
+        HighscoresRank[i] = "Overlord of the Universe";
+      else if (iScore >= 200000)
+        HighscoresRank[i] = "Commander of the Universe";
+      else if (iScore >= 150000)
+        HighscoresRank[i] = "President of the Universe";
+      else if (iScore >= 100000)
+        HighscoresRank[i] = "Overlord of the Galaxy";
+      else if (iScore >= 90000)
+        HighscoresRank[i] = "Space Captain";
+      else if (iScore >= 80000)
+        HighscoresRank[i] = "Space Cadet";
+      else if (iScore >= 65000)
+        HighscoresRank[i] = "Space Recruit";
+      else if (iScore >= 45000)
+        HighscoresRank[i] = "Road Warrior";
+      else if (iScore >= 35000)
+        HighscoresRank[i] = "Amish Mastermind";
+      else if (iScore >= 20000)
+        HighscoresRank[i] = "Jewish Priest";
+      else if ((iScore >= 5000 || iScore <= 5000) && iScore != 0)
+        HighscoresRank[i] = "Jew";
+      else if (iScore == 0)
+        HighscoresRank[i] = "";
     }
 
     addEntity(new GameText(game: this,
@@ -1341,7 +1198,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -135,
-        text: "1st: ${Highscores[1]}",
+        text: Highscores[1] <= 0 ? "" : "1: ${Highscores[1]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1365,7 +1222,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -95,
-        text: "2nd: ${Highscores[2]}",
+        text: Highscores[2] <= 0 ? "" : "2: ${Highscores[2]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1389,7 +1246,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -55,
-        text: "3rd: ${Highscores[3]}",
+        text: Highscores[3] <= 0 ? "" : "3: ${Highscores[3]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1413,7 +1270,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: -15,
-        text: "4th: ${Highscores[4]}",
+        text: Highscores[4] <= 0 ? "" : "4: ${Highscores[4]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1437,7 +1294,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 25,
-        text: "5th: ${Highscores[5]}",
+        text: Highscores[5] <= 0 ? "" : "5: ${Highscores[5]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1461,7 +1318,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 65,
-        text: "6th: ${Highscores[6]}",
+        text: Highscores[6] <= 0 ? "" : "6: ${Highscores[6]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1485,7 +1342,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 105,
-        text: "7th: ${Highscores[7]}",
+        text: Highscores[7] <= 0 ? "" : "7: ${Highscores[7]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1509,7 +1366,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 145,
-        text: "8th: ${Highscores[8]}",
+        text: Highscores[8] <= 0 ? "" : "8: ${Highscores[8]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1533,7 +1390,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 185,
-        text: "9th: ${Highscores[9]}",
+        text: Highscores[9] <= 0 ? "" : "9: ${Highscores[9]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1557,7 +1414,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: -160,
         y: 225,
-        text: "10th: ${Highscores[10]}",
+        text: Highscores[10] <= 0 ? "" : "10: ${Highscores[10]}",
         size: 42,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2306,6 +2163,9 @@ class GalagaGame extends Game {
           newBouncer(8);
           newBouncer(9);
           newBouncer(10);
+          newBouncer(12);
+          newBouncer(13);
+          newBouncer(14);
 
           state = GalagaGameState.welcome;
 

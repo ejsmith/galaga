@@ -63,7 +63,7 @@ class Ship extends GameEntity<GalagaGame> {
     }
 
     if (bullet > maxBullet)
-      bullet = 3;
+      bullet = maxBullet;
 
     if (bullet < 0)
       bullet = 0;
@@ -93,10 +93,10 @@ class Ship extends GameEntity<GalagaGame> {
     if (game.input.click != null && game.Options["controls"] == 2)
       fire();
 
-    if (game.input.isKeyJustPressed(16) && superCharged > 0 && game.Options["controls"] == 1)
+    if ((game.Cheats["super"] == 1 && game.input.isKeyJustPressed(16)) || (game.input.isKeyJustPressed(16) && superCharged > 0 && game.Options["controls"] == 1))
       superFire();
 
-    if (game.input.isKeyJustPressed(32) && superCharged > 0 && game.Options["controls"] == 2)
+    if ((game.Cheats["super"] == 1 && game.input.isKeyJustPressed(32)) || (game.input.isKeyJustPressed(32) && superCharged > 0 && game.Options["controls"] == 2))
       superFire();
     }
 
@@ -104,7 +104,7 @@ class Ship extends GameEntity<GalagaGame> {
   }
 
   void superFire() {
-    game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "super"));
+    game.addEntity(new Bullet(game, x - 25, y - 30, "straight", -350, bulletPower, "super"));
     superCharged--;
   }
 
