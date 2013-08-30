@@ -18,7 +18,7 @@ class Ship extends GameEntity<GalagaGame> {
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
     opacity = 0.2;
 
-    maxBullet = this.game.Options["bulletCap"];
+    maxBullet = 3;
     bullet = maxBullet;
   }
 
@@ -36,7 +36,6 @@ class Ship extends GameEntity<GalagaGame> {
     }
 
     if (lives <= 0) {
-      game.Stats["loses"] += 1;
       game.p1Dead = true;
 
       removeFromGame();
@@ -115,13 +114,13 @@ class Ship extends GameEntity<GalagaGame> {
       soundLevel = 1;
 
     if (spiralShot) {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "right", -350, bulletPower, "normal"));
-      game.addEntity(new Bullet(game, x, y, "left", -350, bulletPower, "normal"));
-      bulletsFired += 3;
+      game.addEntity(new Bullet(game, x, y - 30, "straight", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y - 30, "right", -350, bulletPower, "normal"));
+      game.addEntity(new Bullet(game, x, y - 30, "left", -350, bulletPower, "normal"));
+      game.Stats["bulletsHit"] += 3;
     } else {
-      game.addEntity(new Bullet(game, x, y, "straight", -350, bulletPower, "normal"));
-      bulletsFired++;
+      game.addEntity(new Bullet(game, x, y - 30, "straight", -350, bulletPower, "normal"));
+      game.Stats["bulletsHit"]++;
     }
 
     if (bullet > 0)

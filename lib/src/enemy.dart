@@ -11,9 +11,14 @@ class Enemy extends GameEntity<GalagaGame> {
   num bossMaxHp = 100;
   bool belowHalfHp = false;
   bool flicker = false;
+  bool isFalling = false;
+  bool isGoingBack = false;
   num enemyType = 0;
+  num cloneNum = 1;
   num idNum = 1;
   num switchAmount = 0;
+  num targetX = 0;
+  Timer _invincibleTimer;
 
   Enemy(GalagaGame game, num x, num y, num diff, String Type) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
@@ -76,7 +81,7 @@ class Enemy extends GameEntity<GalagaGame> {
 
     if (type == "Drone") {
       if (health <= 0) {
-        game.score += 100 * game.pointMultiplier;
+        game.score += 100 * game.pointMultiplier * difficulty;
         game.Stats["killed"] += 1;
 
         if (random() > .5)
@@ -169,7 +174,7 @@ class Enemy extends GameEntity<GalagaGame> {
           game.bonusStage = false;
         }
 
-        game.score += 10000 * game.pointMultiplier;
+        game.score += 10000 * game.pointMultiplier * bossDifficulty;
         game.Stats["killed"] += 1;
         game.Stats["bossKills"] += 1;
 
@@ -286,9 +291,6 @@ class Enemy extends GameEntity<GalagaGame> {
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
             }
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
           }
 
         } else if (bossDifficulty == 4) {
@@ -301,9 +303,6 @@ class Enemy extends GameEntity<GalagaGame> {
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
             }
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
           }
 
         } else if (bossDifficulty == 5) {
@@ -316,9 +315,6 @@ class Enemy extends GameEntity<GalagaGame> {
               game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(8,16), "super"));
               game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(8,16), "super"));
             }
-            game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "left", random(350,400), random(30,42), "super"));
-            game.addEntity(new Bullet(game, x, y + 16, "right", random(350,400), random(30,42), "super"));
           } else {
             if (random() <= .01) {
               game.addEntity(new Bullet(game, x, y + 16, "straight", random(350,400), random(30,42), "super"));
@@ -342,7 +338,7 @@ class Enemy extends GameEntity<GalagaGame> {
       momentum.xVel = 150;
 
       if (health <= 0) {
-        game.score += 1000 * game.pointMultiplier;
+        game.score += 1000 * game.pointMultiplier * difficulty;
         game.Stats["killed"] += 1;
         game.Stats["motherKills"] += 1;
 
@@ -397,11 +393,74 @@ class Enemy extends GameEntity<GalagaGame> {
     }
 
     if (type == "Normal") {
-      if (random() < .0002 && game.canEnemyFall == true && game.Cheats["freeze"] != 1)
+      if (random() < .0001 && isFalling == false) {
+        num startY = y;
+        isFalling = true;
         momentum.yVel = 140;
+      }
+
+      game.entities.where((e) => e is Ship && collidesWith(e)).toList().forEach((e) {
+        if (game.Cheats["invincibility"] != 1) {
+          game.Stats["deaths"]++;
+          game.ship.lives -= 1;
+        }
+        game._shipHitEvent.signal();
+
+        if (game.Cheats["spreadshot"] == 2)
+          game.resetPowerups();
+
+        game.removeBullets();
+
+        game.ship.bullet = game.ship.maxBullet;
+        game.Cheats["invincibility"] = 1;
+
+        _invincibleTimer = new Timer(const Duration(milliseconds: 3000), () {
+          game.Cheats["invincibility"] = 0;
+        });
+      });
+
+      if (y > (game.rect.halfHeight - 45)) {
+        momentum.yVel = -140;
+        isGoingBack = true;
+      }
+
+      if (isGoingBack == true) {
+        game.matchCloneX();
+
+        if (x < targetX) {
+          momentum.xVel = 100;
+        } else if (x > targetX) {
+          momentum.xVel = -100;
+        } else {
+          momentum.xVel = 0;
+        }
+      }
+
+      if (isFalling == true && isGoingBack == false) {
+        if (random() < .1)
+          momentum.xVel = random(-140,140);
+        if (random() < .2)
+          momentum.yVel = random(0,200);
+        else if (random() < .05)
+          momentum.yVel = random(-140,0);
+
+        if (y < -(game.rect.halfHeight - 60))
+          momentum.yVel *= -1;
+      }
+
+      if (y < startY && isGoingBack == true) {
+        y = startY;
+        momentum.yVel = 0;
+        if (game.goingRight == true)
+          momentum.xVel = 80;
+        else
+          momentum.xVel = -80;
+        isFalling = false;
+        isGoingBack = false;
+      }
 
       if (health <= 0) {
-        game.score += 100 * game.pointMultiplier;
+        game.score += 100 * game.pointMultiplier * difficulty;
         game.enemyAmount--;
         game.Stats["killed"] += 1;
         game.Stats["normalKills"] += 1;
@@ -414,7 +473,7 @@ class Enemy extends GameEntity<GalagaGame> {
         removeFromGame();
       }
 
-      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth))
+      if (x + 16 > game.rect.halfWidth || x - 16 < -(game.rect.halfWidth) && isFalling != true)
         game.switchDirection();
 
       if (difficulty == 1) {

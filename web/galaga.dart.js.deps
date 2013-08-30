@@ -16,6 +16,7 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/isolate_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_array.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_helper.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_names.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_number.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_rti.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_string.dart
@@ -26,6 +27,7 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/string_helper.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/async.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/async_error.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/broadcast_stream_controller.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/deferred_load.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/event_loop.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/async/future.dart
@@ -49,6 +51,18 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/collection
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/collection/maps.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/collection/queue.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/collection/splay_tree.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/ascii.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/byte_conversion.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/chunked_conversion.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/codec.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/convert.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/converter.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/encoding.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/json.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/latin1.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/line_splitter.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/string_conversion.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/convert/utf.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/bool.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/comparable.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/core.dart
@@ -66,6 +80,7 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/itera
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/iterator.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/list.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/map.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/null.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/num.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/object.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/core/pattern.dart
@@ -86,6 +101,7 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/device.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/filtered_element_list.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/html_common_dart2js.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/jenkins_smi_hash.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/lists.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/html/html_common/metadata.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/indexed_db/dart2js/indexed_db_dart2js.dart
@@ -94,14 +110,8 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/isolate/is
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/json/json.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/math/math.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/math/random.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/mdv_observe_impl/mdv_observe_impl.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/svg/dart2js/svg_dart2js.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/typed_data/dart2js/typed_data_dart2js.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/utf/utf.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/utf/utf16.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/utf/utf32.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/utf/utf8.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/utf/utf_stream.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/web_audio/dart2js/web_audio_dart2js.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/web_gl/dart2js/web_gl_dart2js.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/web_sql/dart2js/web_sql_dart2js.dart
@@ -135,6 +145,7 @@ file:///G:/galaga/web/packages/galaga/galaga_game.dart
 file:///G:/galaga/web/packages/galaga/galaga_html.dart
 file:///G:/galaga/web/packages/galaga/src/bouncingBall.dart
 file:///G:/galaga/web/packages/galaga/src/bullet.dart
+file:///G:/galaga/web/packages/galaga/src/clone.dart
 file:///G:/galaga/web/packages/galaga/src/enemy.dart
 file:///G:/galaga/web/packages/galaga/src/html/galaga_renderer.dart
 file:///G:/galaga/web/packages/galaga/src/particles.dart

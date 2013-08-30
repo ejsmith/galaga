@@ -11,6 +11,7 @@ class Bullet extends GameEntity<GalagaGame> {
   bool right = false;
   bool left = false;
   bool straight = false;
+  Timer _invincibleTimer;
 
   Bullet(GalagaGame game, num x, num y, String dir, num yVel, num size, [String type = "normal"]) : super.withPosition(game, x, y, size, size) {
     color = "255, 0, 0";
@@ -91,7 +92,7 @@ class Bullet extends GameEntity<GalagaGame> {
 
         game.targetId = enemy.idNum;
 
-        game.ship.bulletsHit++;
+        game.Stats["bulletsHit"]++;
 
         if (game.ship.bullet < 3)
           game.ship.bullet++;
@@ -114,8 +115,10 @@ class Bullet extends GameEntity<GalagaGame> {
 
     if (momentum.yVel > 0) {
       game.entities.where((e) => e is Ship && collidesWith(e)).toList().forEach((e) {
-        if (game.Cheats["invincibility"] != 1)
+        if (game.Cheats["invincibility"] != 1) {
+          game.Stats["deaths"]++;
           game.ship.lives -= 1;
+        }
 
         game._shipHitEvent.signal();
 
@@ -125,6 +128,12 @@ class Bullet extends GameEntity<GalagaGame> {
         game.removeBullets();
 
         game.ship.bullet = game.ship.maxBullet;
+
+        game.Cheats["invincibility"] = 1;
+
+        _invincibleTimer = new Timer(const Duration(milliseconds: 3000), () {
+          game.Cheats["invincibility"] = 0;
+        });
       });
     }
   }

@@ -13,6 +13,7 @@ part "src/bullet.dart";
 part "src/stars.dart";
 part "src/particles.dart";
 part "src/bouncingBall.dart";
+part "src/clone.dart";
 
 class GalagaGame extends Game {
   num score = 0;
@@ -59,6 +60,7 @@ class GalagaGame extends Game {
   num invincible = .66;
   num time = .83;
   num life = 1;
+  num cloneId = 1;
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(input, renderer, loop);
@@ -140,8 +142,10 @@ class GalagaGame extends Game {
         if (bonusStage == true)
           newBoss();
         else
-          for (int i = 0; i < 33; i++)
+          for (int i = 0; i < 33; i++) {
             newEnemy(difficulty);
+          }
+        cloneId = 1;
 
         state = GalagaGameState.playing;
         timer.timeDecrease = true;
@@ -157,8 +161,8 @@ class GalagaGame extends Game {
       Stats["killed"] = 0;
     if (!Stats.containsKey("wins"))
       Stats["wins"] = 0;
-    if (!Stats.containsKey("loses"))
-      Stats["loses"] = 0;
+    if (!Stats.containsKey("deaths"))
+      Stats["deaths"] = 0;
     if (!Stats.containsKey("totalGames"))
       Stats["totalGames"] = 0;
     if (!Stats.containsKey("highscore"))
@@ -173,6 +177,10 @@ class GalagaGame extends Game {
       Stats["powerups"] = 0;
     if (!Stats.containsKey("percentage"))
       Stats["percentage"] = 0;
+    if (!Stats.containsKey("bulletsHit"))
+      Stats["bulletsHit"] = 0;
+    if (!Stats.containsKey("bulletsFired"))
+      Stats["bulletsFired"] = 0;
 
     if (!Options.containsKey("startLives"))
       Options["startLives"] = 3;
@@ -255,6 +263,7 @@ class GalagaGame extends Game {
 
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
+        removeEntitiesByFilter((e) => e is Clone);
         removeEntitiesByFilter((e) => e is Enemy);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
@@ -285,6 +294,7 @@ class GalagaGame extends Game {
         removeEntitiesByFilter((e) => e is PowerUp);
         removeEntitiesByFilter((e) => e is Bullet);
         removeEntitiesByFilter((e) => e is Enemy);
+        removeEntitiesByFilter((e) => e is Clone);
         removeEntitiesByGroup("levelEnd");
         createLevelEnd();
 
@@ -481,8 +491,13 @@ class GalagaGame extends Game {
   void newEnemy([num difficulty = 1]) {
 
     Enemy enemy = new Enemy(this, enemyX, enemyY, difficulty, "Normal");
+    Clone clone = new Clone(this, enemy.x, enemy.y);
 
     enemy.startY = enemyY;
+
+    enemy.cloneNum = cloneId;
+    clone.Id = cloneId;
+    cloneId++;
 
     enemyX += 70;
     enemyCount++;
@@ -498,6 +513,7 @@ class GalagaGame extends Game {
 
     lastEnemy = timer.gameTime;
     addEntity(enemy);
+    addEntity(clone);
   }
 
   void newBulletPowerUp(num x, num y) {
@@ -546,7 +562,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -240,
-        text: "Hax",
+        text: "ECSTACY!",
         size: 56,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -570,7 +586,7 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -94,
-        text: Cheats["spreadshot"] == 1 ? "True" : "False",
+        text: Cheats["spreadshot"] == 1 ? "On" : "Off",
         buttonAction: () {
           if (Cheats["spreadshot"] >= 2)
             Cheats["spreadshot"] = 1;
@@ -609,7 +625,7 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -64,
-        text: Cheats["invincibility"] == 1 ? "True" : "False",
+        text: Cheats["invincibility"] == 1 ? "On" : "Off",
         buttonAction: () {
           if (Cheats["invincibility"] >= 2)
             Cheats["invincibility"] = 1;
@@ -648,7 +664,7 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -30,
-        text: Cheats["super"] == 1 ? "True" : "False",
+        text: Cheats["super"] == 1 ? "On" : "Off",
         buttonAction: () {
           if (Cheats["super"] >= 2)
             Cheats["super"] = 1;
@@ -915,35 +931,37 @@ class GalagaGame extends Game {
     num highscore = Highscores[1];
 
     if (highscore >= 1000000)
-      rank = "Pablo Manrequez De Montoya De La Qruez The Third";
-    else if (highscore >= 700000)
+      rank = "Pablo Manrequez";
+    else if (highscore >= 500000)
       rank = "God of all Dimensions";
-    else if (highscore >= 450000)
-      rank = "Commander of Multi-verse";
-    else if (highscore >= 350000)
-      rank = "Overseer of Multi-verse";
-    else if (highscore >= 250000)
-      rank = "Overlord of the Universe";
     else if (highscore >= 200000)
-      rank = "Commander of the Universe";
-    else if (highscore >= 150000)
-      rank = "President of the Universe";
+      rank = "Commander of Multi-verse";
     else if (highscore >= 100000)
-      rank = "Overlord of the Galaxy";
-    else if (highscore >= 90000)
-      rank = "Space Captain";
-    else if (highscore >= 80000)
-      rank = "Space Cadet";
+      rank = "Overseer of Multi-verse";
+    else if (highscore >= 95000)
+      rank = "Overlord of the Universe";
+    else if (highscore >= 85000)
+      rank = "Commander of the Universe";
+    else if (highscore >= 75000)
+      rank = "President of the Universe";
     else if (highscore >= 65000)
-      rank = "Space Recruit";
+      rank = "Overlord of the Galaxy";
+    else if (highscore >= 55000)
+      rank = "Space Captain";
     else if (highscore >= 45000)
-      rank = "Road Warrior";
+      rank = "Space Cadet";
     else if (highscore >= 35000)
+      rank = "Space Recruit";
+    else if (highscore >= 25000)
+      rank = "Road Warrior";
+    else if (highscore >= 15000)
       rank = "Amish Mastermind";
-    else if (highscore >= 20000)
+    else if (highscore >= 10000)
       rank = "Jewish Priest";
-    else if (highscore >= 5000 || highscore <= 5000)
+    else if ((highscore >= 5000 || highscore <= 5000) && highscore != 0)
       rank = "Jew";
+    else if (highscore == 0)
+      rank = "";
 
     addEntity(new GameText(game: this,
         x: 0,
@@ -960,7 +978,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -97,
-        text: "Welcome to Galaga!",
+        text: "Welcome to Galaga Ecstacy X!",
         size: 56,
         font: "cinnamoncake, Verdana",
         centered: true,
@@ -1086,6 +1104,7 @@ class GalagaGame extends Game {
             ship.removeFromGame();
 
           removeEntitiesByFilter((e) => e is PowerUp);
+          removeEntitiesByFilter((e) => e is Clone);
           removeEntitiesByFilter((e) => e is Bullet);
           removeEntitiesByFilter((e) => e is Enemy);
 
@@ -1114,32 +1133,32 @@ class GalagaGame extends Game {
       num iScore = Highscores[i];
 
       if (iScore >= 1000000)
-        HighscoresRank[i] = "Pablo Manrequez De Montoya De La Qruez The Third";
-      else if (iScore >= 700000)
+        HighscoresRank[i] = "Pablo Manrequez";
+      else if (iScore >= 500000)
         HighscoresRank[i] = "God of all Dimensions";
-      else if (iScore >= 450000)
-        HighscoresRank[i] = "Commander of Multi-verse";
-      else if (iScore >= 350000)
-        HighscoresRank[i] = "Overseer of Multi-verse";
-      else if (iScore >= 250000)
-        HighscoresRank[i] = "Overlord of the Universe";
       else if (iScore >= 200000)
-        HighscoresRank[i] = "Commander of the Universe";
-      else if (iScore >= 150000)
-        HighscoresRank[i] = "President of the Universe";
+        HighscoresRank[i] = "Commander of Multi-verse";
       else if (iScore >= 100000)
-        HighscoresRank[i] = "Overlord of the Galaxy";
-      else if (iScore >= 90000)
-        HighscoresRank[i] = "Space Captain";
-      else if (iScore >= 80000)
-        HighscoresRank[i] = "Space Cadet";
+        HighscoresRank[i] = "Overseer of Multi-verse";
+      else if (iScore >= 95000)
+        HighscoresRank[i] = "Overlord of the Universe";
+      else if (iScore >= 85000)
+        HighscoresRank[i] = "Commander of the Universe";
+      else if (iScore >= 75000)
+        HighscoresRank[i] = "President of the Universe";
       else if (iScore >= 65000)
-        HighscoresRank[i] = "Space Recruit";
+        HighscoresRank[i] = "Overlord of the Galaxy";
+      else if (iScore >= 55000)
+        HighscoresRank[i] = "Space Captain";
       else if (iScore >= 45000)
-        HighscoresRank[i] = "Road Warrior";
+        HighscoresRank[i] = "Space Cadet";
       else if (iScore >= 35000)
+        HighscoresRank[i] = "Space Recruit";
+      else if (iScore >= 25000)
+        HighscoresRank[i] = "Road Warrior";
+      else if (iScore >= 15000)
         HighscoresRank[i] = "Amish Mastermind";
-      else if (iScore >= 20000)
+      else if (iScore >= 10000)
         HighscoresRank[i] = "Jewish Priest";
       else if ((iScore >= 5000 || iScore <= 5000) && iScore != 0)
         HighscoresRank[i] = "Jew";
@@ -1583,7 +1602,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 115,
-        text: "Total Loses: ${Stats["loses"]}",
+        text: "Total Deaths: ${Stats["deaths"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1777,76 +1796,10 @@ class GalagaGame extends Game {
         groupId: "options"));
 
     addEntity(new GameText(game: this,
-        x: 0,
-        y: 0,
-        text: "Bullet Cap:",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.8,
-        id: "",
-        groupId: "options"));
-
-    addEntity(new GameText(game: this,
-        x: 200,
-        y: 0,
-        text: "${Options["bulletCap"]}",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.8,
-        id: "",
-        groupId: "options"));
-
-    addEntity(new GameButton(game: this,
-        x: 245,
-        y: 0,
-        text: "->",
-        buttonAction: () {
-          if (Options["bulletCap"] >= 10)
-            Options["bulletCap"] = 1;
-          else
-            Options["bulletCap"]++;
-
-          _statUpdateEvent.signal();
-
-          state = GalagaGameState.welcome;
-
-          removeEntitiesByGroup("options");
-          createOptionsMenu();
-
-          state = GalagaGameState.options;
-        },
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.8,
-        id: "",
-        groupId: "options"));
-
-    addEntity(new GameButton(game: this,
-        x: 160,
-        y: 0,
-        text: "<-",
-        buttonAction: () {
-          if (Options["bulletCap"] <= 1)
-            Options["bulletCap"] = 10;
-          else
-            Options["bulletCap"]--;
-
-          _statUpdateEvent.signal();
-
-          state = GalagaGameState.welcome;
-
-          removeEntitiesByGroup("options");
-          createOptionsMenu();
-
-          state = GalagaGameState.options;
-        },
-        size: 36,
+        x: 300,
+        y: -30,
+        text: "x${3 / Options["startLives"]}",
+        size: 26,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -1856,7 +1809,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 30,
+        y: 0,
         text: "Time:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1868,7 +1821,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 200,
-        y: 30,
+        y: 0,
         text: "${Options["time"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1880,7 +1833,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 245,
-        y: 30,
+        y: 0,
         text: "->",
         buttonAction: () {
           if (Options["time"] >= 180)
@@ -1907,7 +1860,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 160,
-        y: 30,
+        y: 0,
         text: "<-",
         buttonAction: () {
           if (Options["time"] <= 0)
@@ -1933,8 +1886,20 @@ class GalagaGame extends Game {
         groupId: "options"));
 
     addEntity(new GameText(game: this,
+        x: 300,
+        y: 0,
+        text: "x${60 / Options["time"]}",
+        size: 26,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameText(game: this,
         x: 0,
-        y: 60,
+        y: 30,
         text: "Difficulty:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1946,7 +1911,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 200,
-        y: 60,
+        y: 30,
         text: "${Options["difficulty"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1958,7 +1923,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 245,
-        y: 60,
+        y: 30,
         text: "->",
         buttonAction: () {
           if (Options["difficulty"] >= 5)
@@ -1985,7 +1950,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 160,
-        y: 60,
+        y: 30,
         text: "<-",
         buttonAction: () {
           if (Options["difficulty"] <= 1)
@@ -2011,6 +1976,18 @@ class GalagaGame extends Game {
         groupId: "options"));
 
     addEntity(new GameText(game: this,
+        x: 300,
+        y: 30,
+        text: "x${Options["difficulty"]}.0",
+        size: 26,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameText(game: this,
         x: -38,
         y: -64,
         text: "Powerups Enabled:",
@@ -2025,7 +2002,7 @@ class GalagaGame extends Game {
     addEntity(new GameButton(game: this,
         x: 200,
         y: -64,
-        text: Options["powerups"] == 1 ? "True" : "False",
+        text: Options["powerups"] == 1 ? "On" : "Off",
         buttonAction: () {
 
           if (Options["powerups"] >= 2)
@@ -2050,6 +2027,18 @@ class GalagaGame extends Game {
         id: "",
         groupId: "options"));
 
+    addEntity(new GameText(game: this,
+        x: 300,
+        y: -64,
+        text: Options["powerups"] == 1 ? "x1.0" : "x2.0",
+        size: 26,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "options"));
+
 //    addEntity(new GameText(game: this,
 //        x: -38,
 //        y: 60,
@@ -2065,7 +2054,7 @@ class GalagaGame extends Game {
 //    addEntity(new GameButton(game: this,
 //        x: 200,
 //        y: 60,
-//        text: Options["soundeffects"] == 1 ? "True" : "False",
+//        text: Options["soundeffects"] == 1 ? "On" : "Off",
 //        buttonAction: () {
 //
 //          if (Options["soundeffects"] >= 2)
@@ -2097,7 +2086,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 90,
+        y: 60,
         text: "Input Type:",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -2109,7 +2098,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameButton(game: this,
         x: 200,
-        y: 90,
+        y: 60,
         text: Options["controls"] == 1 ? "Keyboard" : "Mouse",
         buttonAction: () {
 
@@ -2132,6 +2121,18 @@ class GalagaGame extends Game {
         centered: true,
         color: "255, 255, 255",
         opacity: 0.7,
+        id: "",
+        groupId: "options"));
+
+    addEntity(new GameText(game: this,
+        x: 300,
+        y: 90,
+        text: Options["powerups"] == 2 ? "x${2 * ((60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]))}" : "x${(60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"])}",
+        size: 26,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
         id: "",
         groupId: "options"));
 
@@ -2239,7 +2240,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.7,
+        opacity: 0.8,
         id: "",
         groupId: "instructions"));
 
@@ -2281,8 +2282,20 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 51,
-        text: "Fire Flower: Spread shot upgrade.",
+        y: 40,
+        text: "FIRE FLOWER: Spread shot upgrade.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 70,
+        text: "ENERGY CANISTER: Extra life.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2294,7 +2307,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 100,
-        text: "Energy Canister: Extra life.",
+        text: "APPLE: Multiplier times two.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2305,8 +2318,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 149,
-        text: "Apple: Multiplier times two.",
+        y: 130,
+        text: "ENERGY BALL: Extra bullet",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2317,8 +2330,8 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 198,
-        text: "Energy Ball: Extra bullet",
+        y: 160,
+        text: "COIN: Plus 100 points.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2329,8 +2342,20 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 247,
-        text: "Coin: Plus 100 points.",
+        y: 190,
+        text: "SHIELD: Invincible for 5 seconds.",
+        size: 24,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 220,
+        text: "CLOCK: Extra 15 seconds added.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2487,6 +2512,16 @@ class GalagaGame extends Game {
      ship.bulletPower = 8;
   }
 
+  void matchCloneX() {
+    entities.where((c) => c is Clone).forEach((Clone c) {
+      entities.where((e) => e is Enemy).forEach((Enemy e) {
+        if (c.Id == e.cloneNum) {
+          e.targetX = c.x;
+        }
+      });
+    });
+  }
+
   void switchDirection() {
     goingRight = !goingRight;
     entities.where((e) => e is Enemy).forEach((Enemy e) {
@@ -2499,7 +2534,18 @@ class GalagaGame extends Game {
           e.x -= 3;
       }
     });
+
+    entities.where((e) => e is Clone).forEach((Clone e) {
+        e.momentum.xVel *= -1;
+
+        if (e.momentum.xVel >= 0)
+          e.x += 3;
+        else
+          e.x -= 3;
+    });
   }
+
+
 
   bool canEnemyFall() {
     int x = 0;
@@ -2553,6 +2599,7 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is PowerUp);
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
+    removeEntitiesByFilter((e) => e is Clone);
 
     enemyX = -400;
     enemyY = -165;
@@ -2563,10 +2610,12 @@ class GalagaGame extends Game {
     visualLevel = 1;
     level = 1;
     score = 0;
-    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]) + (3 / Options["bulletCap"]);
+    pointMultiplier = (60 / Options["time"]) + Options["difficulty"] + (3 / Options["startLives"]);
 
     if (Options["powerups"] == 1)
       pointMultiplier *= 2;
+
+    pointMultiplier = pointMultiplier / 2;
 
     if (level >= bonusCheck) {
       bonusStage = true;
@@ -2578,7 +2627,7 @@ class GalagaGame extends Game {
     for (int i = 0; i < 33; i++)
       newEnemy();
 
-    ship = new Ship(this, 0, (rect.halfHeight - 30));
+    ship = new Ship(this, 0, (rect.halfHeight - 45));
     addEntity(ship);
     p1Dead = false;
 
@@ -2594,11 +2643,10 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is PowerUp);
     removeEntitiesByFilter((e) => e is Bullet);
     removeEntitiesByFilter((e) => e is Enemy);
+    removeEntitiesByFilter((e) => e is Clone);
 
     updateLeaderboard();
     updatePercentage();
-
-    Stats["loses"] += 1;
 
     _gameOverEvent.signal();
     _statUpdateEvent.signal();
@@ -2609,8 +2657,8 @@ class GalagaGame extends Game {
   }
 
   void updatePercentage() {
-    if (ship.bulletsHit > 0)
-      Stats["percentage"] = (ship.bulletsHit / ship.bulletsFired) * 100;
+    if (Stats["bulletsHit"] > 0)
+      Stats["percentage"] = (Stats["bulletsHit"] / Stats["bulletsFired"]) * 100;
     else
       Stats["percentage"] = 0;
 
