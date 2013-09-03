@@ -1578,18 +1578,6 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 25,
-        text: "Hit Rate: ${Stats["percentage"]}%",
-        size: 36,
-        font: "cinnamoncake, Verdana",
-        centered:  true,
-        color: "255, 255, 255",
-        opacity: 0.8,
-        id: "",
-        groupId: "stats"));
-
-    addEntity(new GameText(game: this,
-        x: 0,
-        y: 70,
         text: "Total Completed Levels: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1601,7 +1589,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 115,
+        y: 70,
         text: "Total Deaths: ${Stats["deaths"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1613,7 +1601,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 160,
+        y: 115,
         text: "Total Games: ${Stats["totalGames"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1625,7 +1613,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 205,
+        y: 160,
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -2646,7 +2634,6 @@ class GalagaGame extends Game {
     removeEntitiesByFilter((e) => e is Clone);
 
     updateLeaderboard();
-    updatePercentage();
 
     _gameOverEvent.signal();
     _statUpdateEvent.signal();
@@ -2654,18 +2641,6 @@ class GalagaGame extends Game {
     createGameOverMenu();
 
     state = GalagaGameState.gameOver;
-  }
-
-  void updatePercentage() {
-    if (Stats["bulletsHit"] > 0)
-      Stats["percentage"] = (Stats["bulletsHit"] / Stats["bulletsFired"]) * 100;
-    else
-      Stats["percentage"] = 0;
-
-    Stats["percentage"] = Stats["percentage"].round();
-
-    if (Stats["percentage"] >= 100)
-      Stats["percentage"] = 100;
   }
 
   final EventStream _statUpdateEvent = new EventStream();
