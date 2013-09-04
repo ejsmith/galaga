@@ -451,10 +451,13 @@ class Enemy extends GameEntity<GalagaGame> {
       if (y < startY && isGoingBack == true) {
         y = startY;
         momentum.yVel = 0;
-        if (game.goingRight == true)
-          momentum.xVel = 80;
-        else
-          momentum.xVel = -80;
+        game.entities.where((c) => c is Clone).forEach((Clone c) {
+          game.entities.where((e) => e is Enemy).forEach((Enemy e) {
+            if (c.Id == e.cloneNum) {
+              e.momentum.xVel = c.momentum.xVel;
+            }
+          });
+        });
         isFalling = false;
         isGoingBack = false;
       }
@@ -469,6 +472,14 @@ class Enemy extends GameEntity<GalagaGame> {
           game.newBulletPowerUp(x, y);
 
         game.newMiniExplosion(x, y);
+
+        game.entities.where((c) => c is Clone).forEach((Clone c) {
+          game.entities.where((e) => e is Enemy).forEach((Enemy e) {
+            if (c.Id == e.cloneNum) {
+              c.removeFromGame();
+            }
+          });
+        });
 
         removeFromGame();
       }

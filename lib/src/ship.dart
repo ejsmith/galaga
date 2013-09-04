@@ -13,6 +13,7 @@ class Ship extends GameEntity<GalagaGame> {
   bool isPoweringUp = false;
   bool spiralShot = false;
   num lastShotFired = 0;
+  num _spreadWaiting = 0;
   Timer _invincibleTimer;
 
   Ship(Game game, num x, num y) : super.withPosition(game, x, y, 36, 36) {
@@ -21,6 +22,10 @@ class Ship extends GameEntity<GalagaGame> {
     maxBullet = 3;
     bullet = maxBullet;
   }
+
+
+  num get spreadWaiting => _spreadWaiting;
+
 
   void update() {
     if (game.state == GalagaGameState.paused || game.state == GalagaGameState.gameOver || game.state == GalagaGameState.welcome)
@@ -47,8 +52,8 @@ class Ship extends GameEntity<GalagaGame> {
 
     if (spiralShot == true && game.Cheats["spreadshot"] != 1) {
       _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
+        _spreadWaiting++;
         spiralShot = false;
-
       });
     }
 

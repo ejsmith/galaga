@@ -192,33 +192,33 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
       ctx.beginPath();
       if (e.Sprite == 1)
-        ctx.drawImageScaled(spreadup, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+        ctx.drawImageScaled(spreadup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 2)
-        ctx.drawImageScaled(lifeup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+        ctx.drawImageScaled(lifeup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 3)
-        ctx.drawImageScaled(multiplierup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+        ctx.drawImageScaled(multiplierup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 4)
-        ctx.drawImageScaled(bulletup, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+        ctx.drawImageScaled(bulletup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 5)
-        ctx.drawImageScaled(coin, e.x - (e.width / 2), e.y - (e.height / 2), 12, 12);
+        ctx.drawImageScaled(coin, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 6)
-        ctx.drawImageScaled(ship, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+        ctx.drawImageScaled(ship, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 7)
-        ctx.drawImageScaled(enemy, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+        ctx.drawImageScaled(enemy, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 8)
-        ctx.drawImageScaled(mothership, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+        ctx.drawImageScaled(mothership, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 9)
-        ctx.drawImageScaled(enemy2, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+        ctx.drawImageScaled(enemy2, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 10)
-        ctx.drawImageScaled(boss, e.x - (e.width / 2), e.y - (e.height / 2), 72, 72);
+        ctx.drawImageScaled(boss, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 11)
-        ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), 36, 36);
+        ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 12)
-        ctx.drawImageScaled(invincible, e.x - (e.width / 2), e.y - (e.height / 2), 62, 62);
+        ctx.drawImageScaled(invincible, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 13)
-        ctx.drawImageScaled(timeUp, e.x - (e.width / 2), e.y - (e.height / 2), 42, 42);
+        ctx.drawImageScaled(timeUp, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 14)
-        ctx.drawImageScaled(invincibleShip, e.x - (e.width / 2), e.y - (e.height / 2), 62, 62);
+        ctx.drawImageScaled(invincibleShip, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
       ctx.stroke();
     });
@@ -281,13 +281,16 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.stroke();
     });
   }
-
+  //
   void drawChargeBar() {
     ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    ctx.drawImageScaled(chargeBar, -300, -224, game.ship.chargedLevel * 15, 12);
+    if (game.Cheats["super"] == 1)
+      ctx.drawImageScaled(chargeBar, -145, -224, 225, 12);
+    else
+      ctx.drawImageScaled(chargeBar, -145, -224, game.ship.chargedLevel * 15, 12);
     ctx.stroke();
   }
 
@@ -438,6 +441,34 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     ctx.stroke();
   }
 
+  void drawInvincibleCountDown() {
+    if (game.Cheats["invincibility"] == 1) {
+      num temp = 0;
+      ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      ctx.font = "32px cinnamoncake, Verdana";
+
+      Timer _invincibleTimer = new Timer(const Duration(milliseconds: 1000), () {
+        temp++;
+      });
+
+      ctx.fillText("Invincible: ${temp}", -475, -(game.rect.halfHeight - 120));
+    }
+  }
+
+  void drawSpreadCountDown() {
+    if (game.ship.spiralShot == true) {
+      num temp = 0;
+      ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      ctx.font = "32px cinnamoncake, Verdana";
+
+      Timer _spreadTimer = new Timer(const Duration(milliseconds: 1000), () {
+        temp++;
+      });
+
+      ctx.fillText("Spreadshot: ${temp}", -475, -(game.rect.halfHeight - 90));
+    }
+  }
+
   void drawCountDown() {
     if (game.state == GalagaGameState.levelEnd) {
       num temp = 0;
@@ -474,6 +505,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       drawEtc();
       drawShip();
       drawEnemys();
+      drawSpreadCountDown();
     }
     super.drawBeforeCtxRestore();
   }

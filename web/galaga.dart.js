@@ -8051,14 +8051,14 @@ main: function() {
   t7.stream = new $._ControllerStream(t7._controller).asBroadcastStream$0();
   t8 = new $.EventStream($.StreamController_StreamController(null, null, null, null, false), null);
   t8.stream = new $._ControllerStream(t8._controller).asBroadcastStream$0();
-  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.16, 0.33, 0.5, 0.66, 0.83, 1, 1, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.16, 0.33, 0.5, 0.66, 0.83, 1, 1, 0, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   game.Game$withServices$3(input, renderer, loop);
   $.Game_debugMode = false;
   game.start$0(game);
 }},
 1],
 ["galaga_game", "package:galaga/galaga_game.dart", , {
-GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight<,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn,tutorial?,visualLevel<,ship<,nextId,targetId@,powerupChoice@,spiral?,multi?,bullet?,invincible@,time?,life?,cloneId?,_statUpdateEvent<,_gameOverEvent,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn,tutorial?,visualLevel<,ship<,nextId,targetId@,powerupChoice@,spiral?,multi?,bullet?,invincible@,time?,life?,cloneId?,spreadWaiting,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   get$state: function(_) {
     return this._liblib4$_state;
   },
@@ -8900,24 +8900,20 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t2.GameEntity$withPosition$7(this, 0, -20, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Hit Rate: " + $.S(t1.$index(t1, "percentage")) + "%", true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Total Completed Levels: " + $.S(t1.$index(t1, "wins")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 25, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Completed Levels: " + $.S(t1.$index(t1, "wins")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Total Deaths: " + $.S(t1.$index(t1, "deaths")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 70, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Deaths: " + $.S(t1.$index(t1, "deaths")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Total Games: " + $.S(t1.$index(t1, "totalGames")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 115, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Games: " + $.S(t1.$index(t1, "totalGames")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
-    t2.GameEntity$withPosition$7(this, 0, 160, 10, 10, "", "stats");
-    t2.opacity = 0.8;
-    this.entities.push(t2);
     t1 = new $.GameText("High Score: " + $.S(t1.$index(t1, "highscore")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
-    t1.GameEntity$withPosition$7(this, 0, 205, 10, 10, "", "stats");
+    t1.GameEntity$withPosition$7(this, 0, 160, 10, 10, "", "stats");
     t1.opacity = 0.8;
     this.entities.push(t1);
     t1 = $.GameButton$(new $.GalagaGame_createStatsMenu_closure(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.8, 36, "Back", -420, -280);
@@ -9069,7 +9065,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t2.GameEntity$withPosition$7(this, 0, -96, 10, 10, "", "instructions");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t1 = $.$eq(t1.$index(t1, "controls"), 1) ? "Super Bullet: Shift Key. (Needs 20 coins to charge.)" : "Super Bullet: Spacebar. (Needs 20 coins to charge.)";
+    t1 = $.$eq(t1.$index(t1, "controls"), 1) ? "Super Bullet: Shift Key. (Needs 15 coins to charge.)" : "Super Bullet: Spacebar. (Needs 15 coins to charge.)";
     t1 = new $.GameText(t1, true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t1.GameEntity$withPosition$7(this, 0, -47, 10, 10, "", "instructions");
     t1.opacity = 0.8;
@@ -9090,11 +9086,11 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t1.GameEntity$withPosition$7(this, 0, 100, 10, 10, "", "instructions");
     t1.opacity = 0.8;
     this.entities.push(t1);
-    t1 = new $.GameText("ENERGY BALL: Extra bullet", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t1 = new $.GameText("LIGHTNING BALL: Extra bullet", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t1.GameEntity$withPosition$7(this, 0, 130, 10, 10, "", "instructions");
     t1.opacity = 0.8;
     this.entities.push(t1);
-    t1 = new $.GameText("COIN: Plus 100 points.", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t1 = new $.GameText("COIN: Plus 100 points + Super Bullet charge (1/15).", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t1.GameEntity$withPosition$7(this, 0, 160, 10, 10, "", "instructions");
     t1.opacity = 0.8;
     this.entities.push(t1);
@@ -9278,7 +9274,6 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_closure1());
     this.removeEntitiesByFilter$1(new $.GalagaGame_gameOver_closure2());
     this.updateLeaderboard$0();
-    this.updatePercentage$0();
     t1 = this._gameOverEvent._controller;
     t2 = $.get$EventArgs_empty();
     if (t1._state >= 4)
@@ -9292,23 +9287,6 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     this.removeEntitiesByGroup$1("gameOver");
     this.createGameOverMenu$0();
     this.set$state(this, 4);
-  },
-  updatePercentage$0: function() {
-    var t1, t2, t3;
-    t1 = this.Stats;
-    if ($.$gt$n(t1.$index(t1, "bulletsHit"), 0)) {
-      t2 = t1.$index(t1, "bulletsHit");
-      t3 = t1.$index(t1, "bulletsFired");
-      if (typeof t2 !== "number")
-        throw t2.$div();
-      if (typeof t3 !== "number")
-        throw $.iae(t3);
-      t1.$indexSet(t1, "percentage", t2 / t3 * 100);
-    } else
-      t1.$indexSet(t1, "percentage", 0);
-    t1.$indexSet(t1, "percentage", $.round$0$nx(t1.$index(t1, "percentage")));
-    if ($.$ge$n(t1.$index(t1, "percentage"), 100))
-      t1.$indexSet(t1, "percentage", 100);
   },
   get$onStatUpdate: function() {
     return this._statUpdateEvent.stream;
@@ -9846,7 +9824,17 @@ GalagaGame_createPausedMenu_closure: {"": "Closure;this_0",
     if (t2._state >= 4)
       $.throwExpression(t2._badEventState$0());
     t2._liblib1$_add$1(t3);
-    t1.gameOver$0();
+    t1.updateLeaderboard$0();
+    t2 = t1.get$_gameOverEvent()._controller;
+    t3 = $.get$EventArgs_empty();
+    if (t2._state >= 4)
+      $.throwExpression(t2._badEventState$0());
+    t2._liblib1$_add$1(t3);
+    t2 = t1.get$_statUpdateEvent()._controller;
+    t3 = $.get$EventArgs_empty();
+    if (t2._state >= 4)
+      $.throwExpression(t2._badEventState$0());
+    t2._liblib1$_add$1(t3);
     t1.removeEntitiesByGroup$1("welcome");
     t1.createWelcomeMenu$0();
     $.set$state$x(t1, 1);
@@ -11874,12 +11862,8 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         this._y = t2;
         this.updateBox$0();
         this.momentum.yVel = 0;
-        t1 = this.game.get$goingRight();
-        t2 = this.momentum;
-        if (t1)
-          t2.xVel = 80;
-        else
-          t2.xVel = -80;
+        t1 = new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure4());
+        t1.forEach$1(t1, new $.Enemy_update_closure5(this));
         this.isFalling = false;
         this.isGoingBack = false;
       }
@@ -11904,6 +11888,8 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this._x, this._y);
         this.game.newMiniExplosion$2(this._x, this._y);
+        t1 = new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure6());
+        t1.forEach$1(t1, new $.Enemy_update_closure7(this));
         this._removeFromGame = true;
       }
       t1 = this._x;
@@ -13623,12 +13609,8 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                 this._y = t2;
                 this.updateBox$0();
                 this.momentum.yVel = 0;
-                t1 = this.game.get$goingRight();
-                t2 = this.momentum;
-                if (t1)
-                  t2.xVel = 80;
-                else
-                  t2.xVel = -80;
+                t1 = new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure4());
+                t1.forEach$1(t1, new $.Enemy_update_closure5(this));
                 this.isFalling = false;
                 this.isGoingBack = false;
               }
@@ -13658,6 +13640,8 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                     if ($.random(0, 1, false) > 0.5)
                       this.game.newBulletPowerUp$2(this._x, this._y);
                     this.game.newMiniExplosion$2(this._x, this._y);
+                    t1 = new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure6());
+                    t1.forEach$1(t1, new $.Enemy_update_closure7(this));
                     this._removeFromGame = true;
                 }
               t1 = this._x;
@@ -14067,7 +14051,7 @@ Enemy_update_closure3: {"": "Closure;this_1",
     t2.set$bullet(t2.get$maxBullet());
     t2 = t1.get$game().get$Cheats();
     t2.$indexSet(t2, "invincibility", 1);
-    t2 = new $._ZoneTimer($.get$_Zone__current(), new $.Enemy_update__closure(t1), null);
+    t2 = new $._ZoneTimer($.get$_Zone__current(), new $.Enemy_update__closure3(t1), null);
     t3 = t2._zone;
     t3._openCallbacks = t3._openCallbacks + 1;
     t2._timer = $._createTimer(C.Duration_3000000, t2.get$_run());
@@ -14075,10 +14059,64 @@ Enemy_update_closure3: {"": "Closure;this_1",
   }
 },
 
-Enemy_update__closure: {"": "Closure;this_2",
+Enemy_update__closure3: {"": "Closure;this_2",
   call$0: function() {
     var t1 = this.this_2.get$game().get$Cheats();
     t1.$indexSet(t1, "invincibility", 0);
+  }
+},
+
+Enemy_update_closure4: {"": "Closure;",
+  call$1: function(c) {
+    return typeof c === "object" && c !== null && !!$.getInterceptor(c).$isClone;
+  }
+},
+
+Enemy_update_closure5: {"": "Closure;this_3",
+  call$1: function(c) {
+    var t1 = new $.WhereIterable(this.this_3.get$game().get$entities(), new $.Enemy_update__closure1());
+    t1.forEach$1(t1, new $.Enemy_update__closure2(c));
+  }
+},
+
+Enemy_update__closure1: {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+  }
+},
+
+Enemy_update__closure2: {"": "Closure;c_4",
+  call$1: function(e) {
+    var t1 = this.c_4;
+    if (t1.get$Id() === e.get$cloneNum())
+      e.get$momentum().xVel = t1.get$momentum().xVel;
+  }
+},
+
+Enemy_update_closure6: {"": "Closure;",
+  call$1: function(c) {
+    return typeof c === "object" && c !== null && !!$.getInterceptor(c).$isClone;
+  }
+},
+
+Enemy_update_closure7: {"": "Closure;this_5",
+  call$1: function(c) {
+    var t1 = new $.WhereIterable(this.this_5.get$game().get$entities(), new $.Enemy_update__closure());
+    t1.forEach$1(t1, new $.Enemy_update__closure0(c));
+  }
+},
+
+Enemy_update__closure: {"": "Closure;",
+  call$1: function(e) {
+    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+  }
+},
+
+Enemy_update__closure0: {"": "Closure;c_6",
+  call$1: function(e) {
+    var t1 = this.c_6;
+    if (t1.get$Id() === e.get$cloneNum())
+      t1.removeFromGame$0();
   }
 },
 
@@ -14340,7 +14378,7 @@ PowerUp_update_closure: {"": "Closure;this_0",
   }
 },
 
-Ship: {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,lastShotFired,_invincibleTimer?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+Ship: {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit,lives@,soundLevel,chargedLevel@,superCharged,isPoweringUp,spiralShot@,lastShotFired,_spreadWaiting@,_invincibleTimer?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     var t1, t2, milliseconds, t3;
     t1 = $.get$state$x(this.game);
@@ -14877,7 +14915,7 @@ Ship: {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit,li
   $isShip: true,
   static: {
 Ship$: function(game, x, y) {
-  var t1 = new $.Ship(8, 3, 3, 0, 0, 3, 0, 0, 0, false, false, 0, null, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Ship(8, 3, 3, 0, 0, 3, 0, 0, 0, false, false, 0, 0, null, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, 36, 36, null, null);
   t1.Ship$3(game, x, y);
   return t1;
@@ -14887,7 +14925,9 @@ Ship$: function(game, x, y) {
 
 Ship_update_closure: {"": "Closure;this_0",
   call$0: function() {
-    this.this_0.set$spiralShot(false);
+    var t1 = this.this_0;
+    t1.set$_spreadWaiting(t1.get$_spreadWaiting() + 1);
+    t1.set$spiralShot(false);
   }
 },
 
@@ -15468,10 +15508,18 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
     t1.forEach$1(t1, new $.GalagaRenderer_drawPowerUps_closure0(this));
   },
   drawChargeBar$0: function() {
+    var t1, t2, t3;
     this.ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     this.ctx.lineWidth = 3;
     this.ctx.beginPath();
-    this.ctx.drawImage(this.chargeBar, -300, -224, this._game.get$ship().chargedLevel * 15, 12);
+    t1 = this._game.get$Cheats();
+    t1 = $.$eq(t1.$index(t1, "super"), 1);
+    t2 = this.ctx;
+    t3 = this.chargeBar;
+    if (t1)
+      t2.drawImage(t3, -145, -224, 225, 12);
+    else
+      t2.drawImage(t3, -145, -224, this._game.get$ship().chargedLevel * 15, 12);
     this.ctx.stroke();
   },
   drawShip$0: function() {
@@ -15633,6 +15681,24 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
     }
     t3.stroke();
   },
+  drawSpreadCountDown$0: function() {
+    var t1, t2, i, _invincibleTimer, t3, milliseconds;
+    t1 = {};
+    if (this._game.get$ship().spiralShot) {
+      t1.temp_0 = 0;
+      this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      this.ctx.font = "32px cinnamoncake, Verdana";
+      for (t2 = C.Duration_1000000._duration, i = 0; i > 5; ++i) {
+        _invincibleTimer = new $._ZoneTimer($.get$_Zone__current(), new $.GalagaRenderer_drawSpreadCountDown_closure(t1), null);
+        t3 = _invincibleTimer._zone;
+        t3._openCallbacks = t3._openCallbacks + 1;
+        t3 = _invincibleTimer.get$_run();
+        milliseconds = C.JSNumber_methods.$tdiv(t2, 1000);
+        _invincibleTimer._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t3);
+      }
+      this.ctx.fillText("Spreadshot: " + $.S(t1.temp_0), -475, -(this._game.rect.get$halfHeight() - 90));
+    }
+  },
   drawCountDown$0: function() {
     var t1, temp;
     t1 = this._game;
@@ -15671,6 +15737,7 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
       this.drawEtc$0();
       this.drawShip$0();
       this.drawEnemys$0();
+      this.drawSpreadCountDown$0();
     }
     $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
   },
@@ -16262,7 +16329,7 @@ GalagaRenderer_drawBouncer_closure: {"": "Closure;",
 
 GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
   call$1: function(e) {
-    var t1, t2, t3, t4, t5, t6;
+    var t1, t2, t3, t4, t5, t6, t7;
     t1 = this.this_0;
     t1.get$ctx().strokeStyle = "rgba(255, 255, 255, 1.0)";
     t1.get$ctx().lineWidth = 3;
@@ -16278,10 +16345,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 42, 42);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 2) {
       t2 = t1.get$ctx();
       t3 = t1.get$lifeup();
@@ -16292,10 +16359,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 36, 36);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 3) {
       t2 = t1.get$ctx();
       t3 = t1.get$multiplierup();
@@ -16306,10 +16373,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 36, 36);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 4) {
       t2 = t1.get$ctx();
       t3 = t1.get$bulletup();
@@ -16320,10 +16387,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 36, 36);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 5) {
       t2 = t1.get$ctx();
       t3 = t1.get$coin();
@@ -16334,10 +16401,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 12, 12);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 6) {
       t2 = t1.get$ctx();
       t3 = t1.get$ship();
@@ -16348,10 +16415,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 42, 42);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 7) {
       t2 = t1.get$ctx();
       t3 = t1.get$enemy();
@@ -16362,10 +16429,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 42, 42);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 8) {
       t2 = t1.get$ctx();
       t3 = t1.get$mothership();
@@ -16376,10 +16443,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 42, 42);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 9) {
       t2 = t1.get$ctx();
       t3 = t1.get$enemy2();
@@ -16390,10 +16457,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 36, 36);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 10) {
       t2 = t1.get$ctx();
       t3 = t1.get$boss();
@@ -16404,10 +16471,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 72, 72);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 11) {
       t2 = t1.get$ctx();
       t3 = t1.get$skull();
@@ -16418,10 +16485,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 36, 36);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 12) {
       t2 = t1.get$ctx();
       t3 = t1.get$invincible();
@@ -16432,10 +16499,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 62, 62);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 13) {
       t2 = t1.get$ctx();
       t3 = t1.get$timeUp();
@@ -16446,10 +16513,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 42, 42);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 14) {
       t2 = t1.get$ctx();
       t3 = t1.get$invincibleShip();
@@ -16460,10 +16527,10 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
         throw t6.$div();
       t6 = $.$sub$n(t5, t6 / 2);
       t5 = t4.get$y(e);
-      t4 = t4.get$height(e);
-      if (typeof t4 !== "number")
-        throw t4.$div();
-      t2.drawImage(t3, t6, $.$sub$n(t5, t4 / 2), 62, 62);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     }
     t1.get$ctx().stroke();
   }
@@ -16815,6 +16882,13 @@ GalagaRenderer_normalShipHit__closure2: {"": "Closure;e_4",
   call$0: function() {
     this.e_4.set$flicker(false);
     return false;
+  }
+},
+
+GalagaRenderer_drawSpreadCountDown_closure: {"": "Closure;box_0",
+  call$0: function() {
+    var t1 = this.box_0;
+    t1.temp_0 = $.$add$ns(t1.temp_0, 1);
   }
 },
 

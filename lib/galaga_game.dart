@@ -61,6 +61,7 @@ class GalagaGame extends Game {
   num time = .83;
   num life = 1;
   num cloneId = 1;
+  num spreadWaiting = 0;
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(input, renderer, loop);
@@ -1110,7 +1111,10 @@ class GalagaGame extends Game {
 
           _statUpdateEvent.signal();
 
-          gameOver();
+          updateLeaderboard();
+
+          _gameOverEvent.signal();
+          _statUpdateEvent.signal();
 
           removeEntitiesByGroup("welcome");
           createWelcomeMenu();
@@ -2247,7 +2251,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -47,
-        text: Options["controls"] == 1 ? "Super Bullet: Shift Key. (Needs 20 coins to charge.)" : "Super Bullet: Spacebar. (Needs 20 coins to charge.)",
+        text: Options["controls"] == 1 ? "Super Bullet: Shift Key. (Needs 15 coins to charge.)" : "Super Bullet: Spacebar. (Needs 15 coins to charge.)",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2307,7 +2311,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 130,
-        text: "ENERGY BALL: Extra bullet",
+        text: "LIGHTNING BALL: Extra bullet",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2319,7 +2323,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 160,
-        text: "COIN: Plus 100 points.",
+        text: "COIN: Plus 100 points + Super Bullet charge (1/15).",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
