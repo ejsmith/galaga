@@ -2,6 +2,7 @@ part of galaga_html;
 
 class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   num timeLeft = 0;
+  num temp = 5;
 
   ImageElement ship = new ImageElement();
   ImageElement invincibleShip = new ImageElement();
@@ -32,6 +33,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement star7 = new ImageElement();
   ImageElement skull = new ImageElement();
   ImageElement clone = new ImageElement();
+  ImageElement teleporter = new ImageElement();
 
   bool enemyFlicker = false;
   bool shipFlicker = false;
@@ -66,6 +68,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     star7.src = '../web/images/Star7.png';
     skull.src = '../web/images/skull.png';
     clone.src = '../web/images/clone.png';
+    teleporter.src = '../web/images/Teleporter.png';
   }
 
   void init() {
@@ -219,6 +222,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(timeUp, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if(e.Sprite == 14)
         ctx.drawImageScaled(invincibleShip, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if(e.Sprite == 15)
+        ctx.drawImageScaled(teleporter, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
       ctx.stroke();
     });
@@ -278,6 +283,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
           ctx.drawImageScaled(invincible, e.x - 31, e.y - 31, 62, 62);
         else if (e.type == "timeUp")
           ctx.drawImageScaled(timeUp, e.x - 22, e.y - 25, 42, 42);
+        else if (e.type == "teleporter")
+          ctx.drawImageScaled(teleporter, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
     });
   }
@@ -443,30 +450,30 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
   void drawInvincibleCountDown() {
     if (game.Cheats["invincibility"] == 1) {
-      num temp = 0;
       ctx.fillStyle = "rgba(255, 255, 255, 1)";
-      ctx.font = "32px cinnamoncake, Verdana";
+      ctx.font = "24px cinnamoncake, Verdana";
 
-      Timer _invincibleTimer = new Timer(const Duration(milliseconds: 1000), () {
-        temp++;
-      });
-
-      ctx.fillText("Invincible: ${temp}", -475, -(game.rect.halfHeight - 120));
-    }
+      if ((game.ship.spiralShot == true && game.Cheats["invincibility"] == 1) || game.ship.spiralShot == true)
+        ctx.fillText("Invincible: ${game.rendererTemp1}", -475, -(game.rect.halfHeight - 100));
+      else
+        ctx.fillText("Invincible: ${game.rendererTemp1}", -475, -(game.rect.halfHeight - 80));
+    } else
+      game.rendererTemp1 = 5;
   }
 
   void drawSpreadCountDown() {
     if (game.ship.spiralShot == true) {
-      num temp = 0;
       ctx.fillStyle = "rgba(255, 255, 255, 1)";
-      ctx.font = "32px cinnamoncake, Verdana";
+      ctx.font = "24px cinnamoncake, Verdana";
 
-      Timer _spreadTimer = new Timer(const Duration(milliseconds: 1000), () {
-        temp++;
-      });
-
-      ctx.fillText("Spreadshot: ${temp}", -475, -(game.rect.halfHeight - 90));
-    }
+      if (game.ship.spiralShot == true && game.Cheats["invincibility"] == 1)
+        ctx.fillText("Spreadshot: ${game.rendererTemp2}", -475, -(game.rect.halfHeight - 80));
+      else if (game.ship.spiralShot == true)
+        ctx.fillText("Spreadshot: ${game.rendererTemp2}", -475, -(game.rect.halfHeight - 100));
+      else
+        ctx.fillText("Spreadshot: ${game.rendererTemp2}", -475, -(game.rect.halfHeight - 80));
+    } else
+      game.rendererTemp2 = 5;
   }
 
   void drawCountDown() {
@@ -506,6 +513,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       drawShip();
       drawEnemys();
       drawSpreadCountDown();
+      drawInvincibleCountDown();
     }
     super.drawBeforeCtxRestore();
   }

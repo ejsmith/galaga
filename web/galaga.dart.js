@@ -126,6 +126,7 @@ $$.Closure$main = {"": "Closure;call$0,$name"};
         var previousProperty;
         if (firstChar === "+") {
           mangledGlobalNames[previousProperty] = property.substring(1);
+          descriptor[previousProperty].$reflectable = (descriptor[property] == 1);
           if (element && element.length) init.interfaces[previousProperty] = element;
         } else if (firstChar === "@") {
           property = property.substring(1);
@@ -144,6 +145,7 @@ $$.Closure$main = {"": "Closure;call$0,$name"};
               processStatics(init.statics[property] = element[prop]);
             } else if (firstChar === "+") {
               mangledNames[previousProp] = prop.substring(1);
+              element[previousProp].$reflectable = (element[prop] == 1);
             } else if (firstChar === "@" && prop !== "@") {
               newDesc[prop.substring(1)]["@"] = element[prop];
             } else {
@@ -159,17 +161,11 @@ $$.Closure$main = {"": "Closure;call$0,$name"};
     libraries.push([name, uri, classes, functions, metadata, fields, isRoot]);
   }
 })([
+["_foreign_helper", "dart:_foreign_helper", , {
+JS_CONST: {"": "Object;code"}}],
 ["_interceptors", "dart:_interceptors", , {
 getInterceptor: function(object) {
   return void 0;
-},
-
-getDispatchProperty: function(object) {
-  return object[$.dispatchPropertyName];
-},
-
-setDispatchProperty: function(object, value) {
-  Object.defineProperty(object, $.dispatchPropertyName, {value: value, enumerable: false, writable: true, configurable: true});
 },
 
 makeDispatchRecord: function(interceptor, proto, extension, indexability) {
@@ -178,7 +174,7 @@ makeDispatchRecord: function(interceptor, proto, extension, indexability) {
 
 getNativeInterceptor: function(object) {
   var record, proto, objectProto;
-  record = $.getDispatchProperty(object);
+  record = object[init.dispatchPropertyName];
   if (record != null) {
     proto = record.p;
     if (false === proto)
@@ -194,41 +190,8 @@ getNativeInterceptor: function(object) {
   record = $.lookupDispatchRecord(object);
   if (record == null)
     return C.C_UnknownJavaScriptObject;
-  $.setDispatchProperty(Object.getPrototypeOf(object), record);
+  Object.defineProperty(Object.getPrototypeOf(object), init.dispatchPropertyName, {value: record, enumerable: false, writable: true, configurable: true});
   return $.getNativeInterceptor(object);
-},
-
-initializeDispatchProperty: function(setGetDispatchPropertyFn, rootProperty, jsObjectInterceptor) {
-  var objectProto, i, property;
-  if (typeof rootProperty !== "string")
-    return $.initializeDispatchProperty$bailout(1, setGetDispatchPropertyFn, rootProperty, jsObjectInterceptor);
-  objectProto = Object.prototype;
-  for (i = 0; true; ++i) {
-    if (i > 0)
-      property = rootProperty + "_" + i;
-    else
-      property = rootProperty;
-    if (typeof objectProto[property] === "undefined") {
-      $.dispatchPropertyName = property;
-      setGetDispatchPropertyFn(new Function("a", "return a." + property));
-      $.setDispatchProperty(objectProto, $.makeDispatchRecord(jsObjectInterceptor, objectProto, null, null));
-      return;
-    }
-  }
-},
-
-initializeDispatchProperty$bailout: function(state0, setGetDispatchPropertyFn, rootProperty, jsObjectInterceptor) {
-  var objectProto, i, property;
-  objectProto = Object.prototype;
-  for (i = 0; true; ++i) {
-    property = i > 0 ? rootProperty + "_" + i : rootProperty;
-    if (typeof objectProto[property] === "undefined") {
-      $.dispatchPropertyName = property;
-      setGetDispatchPropertyFn(new Function("a", "return a." + property));
-      $.setDispatchProperty(objectProto, $.makeDispatchRecord(jsObjectInterceptor, objectProto, null, null));
-      return;
-    }
-  }
 },
 
 Interceptor: {"": "Object;",
@@ -550,13 +513,24 @@ startRootIsolate: function(entry) {
 },
 
 IsolateNatives_computeThisScript: function() {
-  var currentScript, stack, matches;
-  currentScript = $.$currentScript;
+  var currentScript = init.currentScript;
   if (currentScript != null)
     return String(currentScript.src);
+  if (typeof version == "function" && typeof os == "object" && "system" in os)
+    return $.IsolateNatives_computeThisScriptD8();
+  if (typeof version == "function" && typeof system == "function")
+    return thisFilename();
+  return;
+},
+
+IsolateNatives_computeThisScriptD8: function() {
+  var stack, matches;
   stack = new Error().stack;
-  if (stack == null)
+  if (stack == null) {
     stack = (function() {try { throw new Error() } catch(e) { return e.stack }})();
+    if (stack == null)
+      throw $.wrapException(new $.UnsupportedError("No stack trace"));
+  }
   matches = stack.match(new RegExp("^ *at [^(]*\\((.*):[0-9]*:[0-9]*\\)$", "m"));
   if (matches != null)
     return matches[1];
@@ -701,9 +675,11 @@ JsIsolateSink: {"": "EventSink;_isClosed,_port<",
     this._port.send$1(message);
   },
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
-    return typeof other === "object" && other !== null && !!$.getInterceptor(other).$isIsolateSink && $.$eq(this._port, other.get$_port());
+    t1 = $.getInterceptor(other);
+    return typeof other === "object" && other !== null && !!t1.$isIsolateSink && $.$eq(this._port, other.get$_port());
   },
   get$hashCode: function(_) {
     return $.$add$ns($.get$hashCode$(this._port), 499);
@@ -720,11 +696,7 @@ _Manager: {"": "Object;nextIsolateId,currentManagerId,nextManagerId,currentConte
     t2 = $.get$globalWorker();
     this.isWorker = t1 && $.get$globalPostMessageDefined() === true;
     if (this.isWorker !== true)
-      if (t2 != null) {
-        $.get$IsolateNatives_thisScript();
-        t2 = true;
-      } else
-        t2 = false;
+      t2 = t2 != null && $.get$IsolateNatives_thisScript() != null;
     else
       t2 = true;
     this.supportsWorkers = t2;
@@ -738,8 +710,8 @@ _Manager: {"": "Object;nextIsolateId,currentManagerId,nextManagerId,currentConte
   _Manager$1: function(entry) {
     this._nativeDetectEnvironment$0();
     this.topEventLoop = new $._EventLoop($.ListQueue$(null), 0);
-    this.isolates = new $.HashMap(0, null, null, null, null);
-    this.managers = new $.HashMap(0, null, null, null, null);
+    this.isolates = new $.LinkedHashMap(0, null, null, null, null, null, 0);
+    this.managers = new $.LinkedHashMap(0, null, null, null, null, null, 0);
     if (this.isWorker === true) {
       this.mainManager = new $._MainManagerStub();
       this._nativeInitWorkerMessageHandler$0();
@@ -789,7 +761,7 @@ _IsolateContext: {"": "Object;id,ports,isolateStatics<",
   unregister$1: function(portId) {
     var t1 = this.ports;
     t1.remove$1(t1, portId);
-    if (this.ports._liblib0$_length === 0) {
+    if ($.$eq(this.ports._liblib0$_length, 0)) {
       t1 = $globalState.isolates;
       t1.remove$1(t1, this.id);
     }
@@ -800,7 +772,7 @@ _IsolateContext: {"": "Object;id,ports,isolateStatics<",
     t2 = t1.nextIsolateId;
     t1.nextIsolateId = t2 + 1;
     this.id = t2;
-    this.ports = new $.HashMap(0, null, null, null, null);
+    this.ports = new $.LinkedHashMap(0, null, null, null, null, null, 0);
     this.isolateStatics = new Isolate();
   },
   static: {
@@ -822,7 +794,7 @@ _EventLoop: {"": "Object;events,activeTimerCount",
   checkOpenReceivePortsFromCommandLine$0: function() {
     if ($globalState.rootContext != null) {
       var t1 = $globalState.isolates;
-      t1 = t1.containsKey$1(t1, $globalState.rootContext.id) && $globalState.fromCommandLine === true && $globalState.rootContext.ports._liblib0$_length === 0;
+      t1 = t1.containsKey$1(t1, $globalState.rootContext.id) && $globalState.fromCommandLine === true && $.$eq($globalState.rootContext.ports._liblib0$_length, 0);
     } else
       t1 = false;
     if (t1)
@@ -837,7 +809,10 @@ _EventLoop: {"": "Object;events,activeTimerCount",
       if (t1.isWorker === true) {
         t2 = t1.isolates;
         t2.get$isEmpty;
-        t2 = t2._liblib0$_length === 0 && t1.topEventLoop.activeTimerCount === 0;
+        t2 = t2._liblib0$_length;
+        if (typeof t2 !== "number")
+          return this.runIteration$0$bailout(1, t1, t2);
+        t2 = t2 === 0 && t1.topEventLoop.activeTimerCount === 0;
       } else
         t2 = false;
       if (t2) {
@@ -850,6 +825,42 @@ _EventLoop: {"": "Object;events,activeTimerCount",
     }
     $event.process$0();
     return true;
+  },
+  runIteration$0$bailout: function(state0, t1, t2) {
+    switch (state0) {
+      case 0:
+        $event = this.dequeue$0();
+      case 1:
+        var $event;
+        if (state0 === 1 || state0 === 0 && $event == null)
+          switch (state0) {
+            case 0:
+              this.checkOpenReceivePortsFromCommandLine$0();
+              t1 = $globalState;
+            case 1:
+              if (state0 === 1 || state0 === 0 && t1.isWorker === true)
+                switch (state0) {
+                  case 0:
+                    t2 = t1.isolates;
+                    t2.get$isEmpty;
+                    t2 = t2._liblib0$_length;
+                  case 1:
+                    state0 = 0;
+                    t2 = $.$eq(t2, 0) && t1.topEventLoop.activeTimerCount === 0;
+                }
+              else
+                t2 = false;
+              if (t2) {
+                t1 = t1.mainManager;
+                t2 = $._serializeMessage($.makeLiteralMap(["command", "close"]));
+                t1.postMessage$1;
+                self.postMessage(t2);
+              }
+              return false;
+          }
+        $event.process$0();
+        return true;
+    }
   },
   _runHelper$0: function() {
     if ($.get$globalWindow() != null)
@@ -906,7 +917,13 @@ IsolateNatives__processWorkerMessage_closure: {"": "Closure;entryPoint_0,replyTo
 
 _BaseSendPort: {"": "Object;_isolateId<",
   _checkReplyTo$1: function(replyTo) {
-    if (replyTo != null && (typeof replyTo !== "object" || replyTo === null || !$.getInterceptor(replyTo).$is_NativeJsSendPort) && (typeof replyTo !== "object" || replyTo === null || !$.getInterceptor(replyTo).$is_WorkerSendPort) && true)
+    var t1;
+    if (replyTo != null) {
+      t1 = $.getInterceptor(replyTo);
+      t1 = (typeof replyTo !== "object" || replyTo === null || !t1.$is_NativeJsSendPort) && (typeof replyTo !== "object" || replyTo === null || !t1.$is_WorkerSendPort) && true;
+    } else
+      t1 = false;
+    if (t1)
       throw $.wrapException(new $._ExceptionImplementation("SendPort.send: Illegal replyTo port type"));
   },
   call$1: function(message) {
@@ -923,14 +940,16 @@ _BaseSendPort: {"": "Object;_isolateId<",
 
 _BaseSendPort_call_closure: {"": "Closure;completer_0,port_1",
   call$2: function(value, ignoreReplyTo) {
-    var t1 = this.port_1;
+    var t1, t2;
+    t1 = this.port_1;
     t1._liblib5$_callback = null;
     $globalState.currentContext.unregister$1(t1._id);
-    t1 = this.completer_0;
-    if (typeof value === "object" && value !== null && !!$.getInterceptor(value).$isException)
-      t1.completeError$1(value);
+    t1 = $.getInterceptor(value);
+    t2 = this.completer_0;
+    if (typeof value === "object" && value !== null && !!t1.$isException)
+      t2.completeError$1(value);
     else
-      t1.complete$1(t1, value);
+      t2.complete$1(t2, value);
   }
 },
 
@@ -942,9 +961,11 @@ _NativeJsSendPort: {"": "_BaseSendPort;_receivePort<,_isolateId",
     return this.send$2(message, null);
   },
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
-    return typeof other === "object" && other !== null && !!$.getInterceptor(other).$is_NativeJsSendPort && $.$eq(this._receivePort, other._receivePort);
+    t1 = $.getInterceptor(other);
+    return typeof other === "object" && other !== null && !!t1.$is_NativeJsSendPort && $.$eq(this._receivePort, other._receivePort);
   },
   get$hashCode: function(_) {
     return this._receivePort.get$_id();
@@ -1008,7 +1029,8 @@ _WorkerSendPort: {"": "_BaseSendPort;_workerId<,_receivePortId,_isolateId",
     var t1;
     if (other == null)
       return false;
-    if (typeof other === "object" && other !== null && !!$.getInterceptor(other).$is_WorkerSendPort)
+    t1 = $.getInterceptor(other);
+    if (typeof other === "object" && other !== null && !!t1.$is_WorkerSendPort)
       t1 = $.$eq(this._workerId, other._workerId) && $.$eq(this._isolateId, other._isolateId) && $.$eq(this._receivePortId, other._receivePortId);
     else
       t1 = false;
@@ -1126,9 +1148,10 @@ _PendingSendPortFinder_visitMap_closure: {"": "Closure;this_0",
 
 _JsSerializer: {"": "_Serializer;_nextFreeRefId,_visited",
   visitSendPort$1: function(x) {
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$is_NativeJsSendPort)
+    var t1 = $.getInterceptor(x);
+    if (typeof x === "object" && x !== null && !!t1.$is_NativeJsSendPort)
       return ["sendport", $globalState.currentManagerId, x._isolateId, x._receivePort.get$_id()];
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$is_WorkerSendPort)
+    if (typeof x === "object" && x !== null && !!t1.$is_WorkerSendPort)
       return ["sendport", x._workerId, x._isolateId, x._receivePortId];
     throw $.wrapException("Illegal underlying port " + $.S(x));
   },
@@ -1143,9 +1166,10 @@ _JsSerializer: {"": "_Serializer;_nextFreeRefId,_visited",
 
 _JsCopier: {"": "_Copier;_visited",
   visitSendPort$1: function(x) {
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$is_NativeJsSendPort)
+    var t1 = $.getInterceptor(x);
+    if (typeof x === "object" && x !== null && !!t1.$is_NativeJsSendPort)
       return new $._NativeJsSendPort(x._receivePort, x._isolateId);
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$is_WorkerSendPort)
+    if (typeof x === "object" && x !== null && !!t1.$is_WorkerSendPort)
       return new $._WorkerSendPort(x._workerId, x._receivePortId, x._isolateId);
     throw $.wrapException("Illegal underlying port " + $.S(x));
   },
@@ -1242,17 +1266,19 @@ _MessageTraverser: {"": "Object;",
     return result;
   },
   _dispatch$1: function(x) {
+    var t1;
     if (x == null || typeof x === "string" || typeof x === "number" || typeof x === "boolean")
       return this.visitPrimitive$1(x);
-    if (typeof x === "object" && x !== null && (x.constructor === Array || !!$.getInterceptor(x).$isList))
+    t1 = $.getInterceptor(x);
+    if (typeof x === "object" && x !== null && (x.constructor === Array || !!t1.$isList))
       return this.visitList$1(x);
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$isMap)
+    if (typeof x === "object" && x !== null && !!t1.$isMap)
       return this.visitMap$1(x);
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$isSendPort)
+    if (typeof x === "object" && x !== null && !!t1.$isSendPort)
       return this.visitSendPort$1(x);
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$isJsIsolateSink)
+    if (typeof x === "object" && x !== null && !!t1.$isJsIsolateSink)
       return this.visitIsolateSink$1(x);
-    if (typeof x === "object" && x !== null && !!$.getInterceptor(x).$isCloseToken)
+    if (typeof x === "object" && x !== null && !!t1.$isCloseToken)
       return this.visitCloseToken$1(x);
     return this.visitObject$1(x);
   },
@@ -1292,7 +1318,7 @@ _Copier: {"": "_MessageTraverser;",
     t2 = t1.copy_0;
     if (t2 != null)
       return t2;
-    t1.copy_0 = new $.HashMap(0, null, null, null, null);
+    t1.copy_0 = new $.LinkedHashMap(0, null, null, null, null, null, 0);
     t2 = this._visited;
     t2.$indexSet(t2, map, t1.copy_0);
     $.forEach$1$ax(map, new $._Copier_visitMap_closure(t1, this));
@@ -1417,7 +1443,7 @@ _Deserializer: {"": "Object;",
   },
   _deserializeMap$1: function(x) {
     var result, t1, id, t2, keys, values, len, i;
-    result = new $.HashMap(0, null, null, null, null);
+    result = new $.LinkedHashMap(0, null, null, null, null, null, 0);
     t1 = $.getInterceptor$asx(x);
     id = t1.$index(x, 1);
     t2 = this._deserialized;
@@ -1439,7 +1465,7 @@ _Deserializer: {"": "Object;",
   _deserializeMap$1$bailout: function(state0, values, t1, len, result, keys) {
     switch (state0) {
       case 0:
-        result = new $.HashMap(0, null, null, null, null);
+        result = new $.LinkedHashMap(0, null, null, null, null, null, 0);
         t1 = $.getInterceptor$asx(x);
         id = t1.$index(x, 1);
         t2 = this._deserialized;
@@ -1549,13 +1575,14 @@ TimerImpl$periodic_closure: {"": "Closure;this_0,callback_1",
 }}],
 ["_js_helper", "dart:_js_helper", , {
 isJsIndexable: function(object, record) {
-  var result;
+  var result, t1;
   if (record != null) {
     result = record.x;
     if (result != null)
       return result;
   }
-  return typeof object === "object" && object !== null && !!$.getInterceptor(object).$isJavaScriptIndexingBehavior;
+  t1 = $.getInterceptor(object);
+  return typeof object === "object" && object !== null && !!t1.$isJavaScriptIndexingBehavior;
 },
 
 S: function(value) {
@@ -2314,7 +2341,8 @@ UnknownJsTypeError: {"": "Error;_message",
 
 unwrapException_saveStackTrace: {"": "Closure;ex_0",
   call$1: function(error) {
-    if (typeof error === "object" && error !== null && !!$.getInterceptor(error).$isError)
+    var t1 = $.getInterceptor(error);
+    if (typeof error === "object" && error !== null && !!t1.$isError)
       if (error.$thrownJsError == null)
         error.$thrownJsError = this.ex_0;
     return error;
@@ -2361,11 +2389,13 @@ Closure: {"": "Object;",
 
 BoundClosure: {"": "Closure;_self,_target,_receiver",
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
     if (this === other)
       return true;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isBoundClosure)
+    t1 = $.getInterceptor(other);
+    if (typeof other !== "object" || other === null || !t1.$isBoundClosure)
       return false;
     return this._self === other._self && this._target === other._target && this._receiver === other._receiver;
   },
@@ -3259,8 +3289,9 @@ _FutureImpl: {"": "Object;_state@,_zone<,_resultOrListeners<",
     this._state = cursor != null ? 2 : 6;
   },
   _setOrChainValue$1: function(result) {
-    if (typeof result === "object" && result !== null && !!$.getInterceptor(result).$isFuture)
-      if (!!$.getInterceptor(result).$is_FutureImpl) {
+    var t1 = $.getInterceptor(result);
+    if (typeof result === "object" && result !== null && !!t1.$isFuture)
+      if (!!t1.$is_FutureImpl) {
         result._chain$1(this);
         return;
       } else {
@@ -3771,11 +3802,13 @@ _ControllerStream: {"": "_StreamImpl;_liblib1$_controller",
     return ($.Primitives_objectHashCode(this._liblib1$_controller) ^ 892482866) >>> 0;
   },
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
     if (this === other)
       return true;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$is_ControllerStream)
+    t1 = $.getInterceptor(other);
+    if (typeof other !== "object" || other === null || !t1.$is_ControllerStream)
       return false;
     return other._liblib1$_controller === this._liblib1$_controller;
   },
@@ -4031,11 +4064,11 @@ _StreamImpl: {"": "Stream;",
       onDone = $._nullDoneHandler$closure;
     return this._createSubscription$4(onData, onError, onDone, true === cancelOnError);
   },
-  listen$3$onDone$onError: function(onData, onDone, onError) {
-    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
-  },
   listen$1: function(onData) {
     return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
+  },
+  listen$3$onDone$onError: function(onData, onDone, onError) {
+    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
   },
   _createSubscription$4: function(onData, onError, onDone, cancelOnError) {
     return $._BufferingStreamSubscription$(onData, onError, onDone, cancelOnError);
@@ -4186,11 +4219,11 @@ _AsBroadcastStream: {"": "Stream;_source,_onListenHandler,_onCancelHandler,_zone
       onDone = $._nullDoneHandler$closure;
     return this._liblib1$_controller._subscribe$4(onData, onError, onDone, true === cancelOnError);
   },
-  listen$3$onDone$onError: function(onData, onDone, onError) {
-    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
-  },
   listen$1: function(onData) {
     return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
+  },
+  listen$3$onDone$onError: function(onData, onDone, onError) {
+    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
   },
   _onCancel$0: function() {
     var t1, shutdown;
@@ -4523,7 +4556,7 @@ LinkedHashMap_values_closure: {"": "Closure;this_0",
   }
 },
 
-LinkedHashMapCell: {"": "Object;_key<,_value@,_next@,_previous"},
+LinkedHashMapCell: {"": "Object;_key>,_value@,_next@,_previous<"},
 
 LinkedHashMapKeyIterable: {"": "IterableBase;_map",
   get$length: function(_) {
@@ -4550,7 +4583,7 @@ LinkedHashMapKeyIterable: {"": "IterableBase;_map",
     cell = t1._first;
     modifications = t1._modifications;
     for (t2 = $.getInterceptor(modifications); cell != null;) {
-      f.call$1(cell.get$_key());
+      f.call$1($.get$_key$x(cell));
       if (!t2.$eq(modifications, t1._modifications))
         throw $.wrapException(new $.ConcurrentModificationError(t1));
       cell = cell.get$_next();
@@ -4572,7 +4605,7 @@ LinkedHashMapKeyIterator: {"": "Object;_map,_modifications,_cell,_liblib0$_curre
         this._liblib0$_current = null;
         return false;
       } else {
-        this._liblib0$_current = t1.get$_key();
+        this._liblib0$_current = $.get$_key$x(t1);
         this._cell = this._cell.get$_next();
         return true;
       }
@@ -4614,21 +4647,6 @@ HashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_keys",
   },
   get$values: function(_) {
     return new $.MappedIterable(new $.HashMapKeyIterable(this), new $.HashMap_values_closure(this));
-  },
-  containsKey$1: function(_, key) {
-    var strings, nums, rest;
-    if (typeof key === "string" && key !== "__proto__") {
-      strings = this._strings;
-      return strings == null ? false : strings[key] != null;
-    } else if (typeof key === "number" && (key & 0x3ffffff) === key) {
-      nums = this._nums;
-      return nums == null ? false : nums[key] != null;
-    } else {
-      rest = this._rest;
-      if (rest == null)
-        return false;
-      return $.HashMap__findBucketIndex(rest[$.get$hashCode$(key) & 0x3ffffff], key) >= 0;
-    }
   },
   $index: function(_, key) {
     var strings, t1, entry, nums, rest, bucket, index;
@@ -4735,25 +4753,6 @@ HashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_keys",
       }
     }
   },
-  remove$1: function(_, key) {
-    var rest, bucket, index;
-    if (typeof key === "string" && key !== "__proto__")
-      return this._removeHashTableEntry$2(this._strings, key);
-    else if (typeof key === "number" && (key & 0x3ffffff) === key)
-      return this._removeHashTableEntry$2(this._nums, key);
-    else {
-      rest = this._rest;
-      if (rest == null)
-        return;
-      bucket = rest[$.get$hashCode$(key) & 0x3ffffff];
-      index = $.HashMap__findBucketIndex(bucket, key);
-      if (index < 0)
-        return;
-      this._liblib0$_length = this._liblib0$_length - 1;
-      this._keys = null;
-      return bucket.splice(index, 2)[1];
-    }
-  },
   forEach$1: function(_, action) {
     var keys, $length, i, key;
     keys = this._computeKeys$0();
@@ -4808,25 +4807,9 @@ HashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_keys",
     this._keys = result;
     return result;
   },
-  _removeHashTableEntry$2: function(table, key) {
-    var value;
-    if (table != null && table[key] != null) {
-      value = $.HashMap__getTableEntry(table, key);
-      delete table[key];
-      this._liblib0$_length = this._liblib0$_length - 1;
-      this._keys = null;
-      return value;
-    } else
-      return;
-  },
   $isMap: true,
   $asMap: null,
   static: {
-HashMap__getTableEntry: function(table, key) {
-  var entry = table[key];
-  return entry === table ? null : entry;
-},
-
 HashMap__findBucketIndex: function(bucket, key) {
   var $length, i;
   if (bucket == null)
@@ -5074,6 +5057,25 @@ IterableBase: {"": "Object;",
 },
 
 LinkedHashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_first,_last,_modifications",
+  containsKey$1: function(_, key) {
+    var strings, nums, rest;
+    if (typeof key === "string" && key !== "__proto__") {
+      strings = this._strings;
+      if (strings == null)
+        return false;
+      return strings[key] != null;
+    } else if (typeof key === "number" && (key & 0x3ffffff) === key) {
+      nums = this._nums;
+      if (nums == null)
+        return false;
+      return nums[key] != null;
+    } else {
+      rest = this._rest;
+      if (rest == null)
+        return false;
+      return $.LinkedHashMap__findBucketIndex(rest[$.get$hashCode$(key) & 0x3ffffff], key) >= 0;
+    }
+  },
   $index: function(_, key) {
     var strings, cell, nums, rest, bucket, index;
     if (typeof key === "string" && key !== "__proto__") {
@@ -5151,12 +5153,31 @@ LinkedHashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_first,_last,_
       }
     }
   },
+  remove$1: function(_, key) {
+    var rest, bucket, index, cell;
+    if (typeof key === "string" && key !== "__proto__")
+      return this._removeHashTableEntry$2(this._strings, key);
+    else if (typeof key === "number" && (key & 0x3ffffff) === key)
+      return this._removeHashTableEntry$2(this._nums, key);
+    else {
+      rest = this._rest;
+      if (rest == null)
+        return;
+      bucket = rest[$.get$hashCode$(key) & 0x3ffffff];
+      index = $.LinkedHashMap__findBucketIndex(bucket, key);
+      if (index < 0)
+        return;
+      cell = bucket.splice(index, 1)[0];
+      this._unlinkCell$1(cell);
+      return cell.get$_value();
+    }
+  },
   forEach$1: function(_, action) {
     var cell, modifications, t1;
     cell = this._first;
     modifications = this._modifications;
     for (t1 = $.getInterceptor(modifications); cell != null;) {
-      action.call$2(cell.get$_key(), cell.get$_value());
+      action.call$2($.get$_key$x(cell), cell.get$_value());
       if (!t1.$eq(modifications, this._modifications))
         throw $.wrapException(new $.ConcurrentModificationError(this));
       cell = cell.get$_next();
@@ -5183,6 +5204,17 @@ LinkedHashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_first,_last,_
   toString$0: function(_) {
     return $.Maps_mapToString(this);
   },
+  _removeHashTableEntry$2: function(table, key) {
+    var cell;
+    if (table == null)
+      return;
+    cell = table[key];
+    if (cell == null)
+      return;
+    this._unlinkCell$1(cell);
+    delete table[key];
+    return cell.get$_value();
+  },
   _newLinkedCell$2: function(key, value) {
     var cell, last, t1;
     cell = new $.LinkedHashMapCell(key, value, null, null);
@@ -5202,6 +5234,24 @@ LinkedHashMap: {"": "Object;_liblib0$_length,_strings,_nums,_rest,_first,_last,_
     this._modifications = t1 & 67108863;
     return cell;
   },
+  _unlinkCell$1: function(cell) {
+    var previous, next, t1;
+    previous = cell.get$_previous();
+    next = cell.get$_next();
+    if (previous == null)
+      this._first = next;
+    else
+      previous.set$_next(next);
+    if (next == null)
+      this._last = previous;
+    else
+      next._previous = previous;
+    this._liblib0$_length = $.$sub$n(this._liblib0$_length, 1);
+    t1 = $.$add$ns(this._modifications, 1);
+    if (typeof t1 !== "number")
+      throw t1.$and();
+    this._modifications = t1 & 67108863;
+  },
   $isMap: true,
   $asMap: null,
   static: {
@@ -5211,7 +5261,7 @@ LinkedHashMap__findBucketIndex: function(bucket, key) {
     return -1;
   $length = bucket.length;
   for (i = 0; i < $length; ++i)
-    if ($.$eq(bucket[i].get$_key(), key))
+    if ($.$eq($.get$_key$x(bucket[i]), key))
       return i;
   return -1;
 }}
@@ -5497,7 +5547,7 @@ NoSuchMethodError_toString_closure: {"": "Closure;box_0",
     var t1 = this.box_0;
     if ($.$gt$n(t1.i_1, 0))
       t1.sb_0.write$1(", ");
-    t1.sb_0.write$1(key);
+    t1.sb_0.write$1(key.get$_name());
     t1.sb_0.write$1(": ");
     t1.sb_0.write$1($.Error_safeToString(value));
     t1.i_1 = $.$add$ns(t1.i_1, 1);
@@ -5506,9 +5556,11 @@ NoSuchMethodError_toString_closure: {"": "Closure;box_0",
 
 DateTime: {"": "Object;millisecondsSinceEpoch,isUtc",
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isDateTime)
+    t1 = $.getInterceptor(other);
+    if (typeof other !== "object" || other === null || !t1.$isDateTime)
       return false;
     return $.$eq(this.millisecondsSinceEpoch, other.millisecondsSinceEpoch) && $.$eq(this.isUtc, other.isUtc);
   },
@@ -5642,9 +5694,11 @@ Duration: {"": "Object;_duration<",
     return C.JSNumber_methods.$tdiv(this._duration, 1000);
   },
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isDuration)
+    t1 = $.getInterceptor(other);
+    if (typeof other !== "object" || other === null || !t1.$isDuration)
       return false;
     return this._duration === other._duration;
   },
@@ -5912,11 +5966,11 @@ _EventStream: {"": "Stream;_liblib3$_target,_eventType,_useCapture",
     t1._tryResume$0();
     return t1;
   },
-  listen$3$onDone$onError: function(onData, onDone, onError) {
-    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
-  },
   listen$1: function(onData) {
     return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
+  },
+  listen$3$onDone$onError: function(onData, onDone, onError) {
+    return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
   }
 },
 
@@ -5975,9 +6029,11 @@ Point: {"": "Object;x>,y>",
     return "(" + $.S(this.x) + ", " + $.S(this.y) + ")";
   },
   $eq: function(_, other) {
+    var t1;
     if (other == null)
       return false;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isPoint)
+    t1 = $.getInterceptor(other);
+    if (typeof other !== "object" || other === null || !t1.$isPoint)
       return false;
     return $.$eq(this.x, other.x) && $.$eq(this.y, other.y);
   },
@@ -6089,9 +6145,9 @@ RectBase: {"": "Object;",
     var t1;
     if (other == null)
       return false;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isRect)
-      return false;
     t1 = $.getInterceptor$x(other);
+    if (typeof other !== "object" || other === null || !t1.$isRect)
+      return false;
     return $.$eq(this.get$left(this), t1.get$left(other)) && $.$eq(this.get$top(this), t1.get$top(other)) && $.$eq(this.get$width(this), t1.get$width(other)) && $.$eq(this.get$height(this), t1.get$height(other));
   },
   get$hashCode: function(_) {
@@ -6435,22 +6491,21 @@ _ClientRect: {"": "Interceptor;bottom=,height=,left=,right=,top=,width=",
     var t1, t2, t3;
     if (other == null)
       return false;
-    if (typeof other !== "object" || other === null || !$.getInterceptor(other).$isRect)
+    t1 = $.getInterceptor$x(other);
+    if (typeof other !== "object" || other === null || !t1.$isRect)
       return false;
-    t1 = receiver.left;
-    t2 = $.getInterceptor$x(other);
-    t3 = t2.get$left(other);
-    if (t1 == null ? t3 == null : t1 === t3) {
-      t1 = receiver.top;
-      t3 = t2.get$top(other);
-      if (t1 == null ? t3 == null : t1 === t3) {
-        t1 = receiver.width;
-        t3 = t2.get$width(other);
-        if (t1 == null ? t3 == null : t1 === t3) {
-          t1 = receiver.height;
-          t2 = t2.get$height(other);
-          t2 = t1 == null ? t2 == null : t1 === t2;
-          t1 = t2;
+    t2 = receiver.left;
+    t3 = t1.get$left(other);
+    if (t2 == null ? t3 == null : t2 === t3) {
+      t2 = receiver.top;
+      t3 = t1.get$top(other);
+      if (t2 == null ? t3 == null : t2 === t3) {
+        t2 = receiver.width;
+        t3 = t1.get$width(other);
+        if (t2 == null ? t3 == null : t2 === t3) {
+          t2 = receiver.height;
+          t1 = t1.get$height(other);
+          t1 = t2 == null ? t1 == null : t2 === t1;
         } else
           t1 = false;
       } else
@@ -6640,19 +6695,19 @@ TypedData: {"": "Interceptor;",
 
 Float32List: {"": "TypedData_ListMixin_FixedLengthListMixin;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6661,13 +6716,13 @@ Float32List: {"": "TypedData_ListMixin_FixedLengthListMixin;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6682,19 +6737,19 @@ Float32List: {"": "TypedData_ListMixin_FixedLengthListMixin;",
 
 Float64List: {"": "TypedData_ListMixin_FixedLengthListMixin0;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6703,13 +6758,13 @@ Float64List: {"": "TypedData_ListMixin_FixedLengthListMixin0;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6724,19 +6779,19 @@ Float64List: {"": "TypedData_ListMixin_FixedLengthListMixin0;",
 
 Int16List: {"": "TypedData_ListMixin_FixedLengthListMixin1;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6745,13 +6800,13 @@ Int16List: {"": "TypedData_ListMixin_FixedLengthListMixin1;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6766,19 +6821,19 @@ Int16List: {"": "TypedData_ListMixin_FixedLengthListMixin1;",
 
 Int32List: {"": "TypedData_ListMixin_FixedLengthListMixin2;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6787,13 +6842,13 @@ Int32List: {"": "TypedData_ListMixin_FixedLengthListMixin2;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6808,19 +6863,19 @@ Int32List: {"": "TypedData_ListMixin_FixedLengthListMixin2;",
 
 Int8List: {"": "TypedData_ListMixin_FixedLengthListMixin3;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6829,13 +6884,13 @@ Int8List: {"": "TypedData_ListMixin_FixedLengthListMixin3;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6850,19 +6905,19 @@ Int8List: {"": "TypedData_ListMixin_FixedLengthListMixin3;",
 
 Uint16List: {"": "TypedData_ListMixin_FixedLengthListMixin4;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6871,13 +6926,13 @@ Uint16List: {"": "TypedData_ListMixin_FixedLengthListMixin4;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6892,19 +6947,19 @@ Uint16List: {"": "TypedData_ListMixin_FixedLengthListMixin4;",
 
 Uint32List: {"": "TypedData_ListMixin_FixedLengthListMixin5;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6913,13 +6968,13 @@ Uint32List: {"": "TypedData_ListMixin_FixedLengthListMixin5;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6937,13 +6992,13 @@ Uint8ClampedList: {"": "Uint8List;",
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout1(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout1: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6952,13 +7007,13 @@ Uint8ClampedList: {"": "Uint8List;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout1(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout1: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -6967,19 +7022,19 @@ Uint8ClampedList: {"": "Uint8List;",
 
 Uint8List: {"": "TypedData_ListMixin_FixedLengthListMixin6;",
   get$length: function(receiver) {
-    return receiver.length;
+    return C.JS_CONST_ZYJ(receiver);
   },
   $index: function(receiver, index) {
     var t1;
     if (typeof index !== "number")
       return this.$$index$bailout(1, index, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
   },
   $$index$bailout: function(state0, index, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     return receiver[index];
@@ -6988,13 +7043,13 @@ Uint8List: {"": "TypedData_ListMixin_FixedLengthListMixin6;",
     var t1;
     if (typeof index !== "number")
       return this.$$indexSet$bailout(1, index, value, receiver);
-    t1 = receiver.length;
+    t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || index >= t1)
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
   },
   $$indexSet$bailout: function(state0, index, value, receiver) {
-    var t1 = receiver.length;
+    var t1 = C.JS_CONST_ZYJ(receiver);
     if (index >>> 0 != index || $.$ge$n(index, t1))
       this._invalidIndex$2(receiver, index, t1);
     receiver[index] = value;
@@ -7617,7 +7672,8 @@ Vector: {"": "Object;x*,y>"}}],
 ["dgame_html", "package:dgame/dgame_html.dart", , {
 CanvasGameRenderer: {"": "GameRenderer;targetId?,ctx<",
   getRenderer$1: function(e) {
-    if (typeof e === "object" && e !== null && !!$.getInterceptor(e).$isGameText)
+    var t1 = $.getInterceptor(e);
+    if (typeof e === "object" && e !== null && !!t1.$isGameText)
       return this.textRenderer;
     return this.defaultRenderer;
   },
@@ -8051,14 +8107,14 @@ main: function() {
   t7.stream = new $._ControllerStream(t7._controller).asBroadcastStream$0();
   t8 = new $.EventStream($.StreamController_StreamController(null, null, null, null, false), null);
   t8.stream = new $._ControllerStream(t8._controller).asBroadcastStream$0();
-  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), new $.HashMap(0, null, null, null, null), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.16, 0.33, 0.5, 0.66, 0.83, 1, 1, 0, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.05, 0.06, 0.25, 0.55, 0.7, 0.8, 1, 1, 0, 5, 5, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   game.Game$withServices$3(input, renderer, loop);
   $.Game_debugMode = false;
   game.start$0(game);
 }},
 1],
 ["galaga_game", "package:galaga/galaga_game.dart", , {
-GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn,tutorial?,visualLevel<,ship<,nextId,targetId@,powerupChoice@,spiral?,multi?,bullet?,invincible@,time?,life?,cloneId?,spreadWaiting,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
+GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$_state,Stats<,Options<,Controls,Highscores<,HighscoresRank,Cheats<,rank,pointMultiplier@,enemyX?,enemyY?,bulletCap,shipStartLives,colorCount,enemyCount,enemyAmount@,defaultTimer,level@,p1Dead?,goingRight,_countdownTimer,_waitingTimer,_waiting@,difficulty@,bonusCheck@,bonusStage@,soundEffectsOn,tutorial?,visualLevel<,ship<,nextId,targetId@,powerupChoice@,teleporter@,spiral?,multi?,bullet?,invincible@,time?,life?,cloneId?,spreadWaiting,rendererTemp1@,rendererTemp2@,_statUpdateEvent<,_gameOverEvent<,_shipHitEvent<,_bossHitEvent<,_bossKilledEvent,_motherShipEvent<,_normalHitEvent<,_fadeEvent<,entities,sounds,timer,clockTick,rect,input,renderer,loop,bgStyle,showOutlines",
   get$state: function(_) {
     return this._liblib4$_state;
   },
@@ -8501,6 +8557,11 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
       bouncer._height = 62;
       bouncer.updateBox$0();
       bouncer._width = 62;
+      bouncer.updateBox$0();
+    } else if (sprite === 15) {
+      bouncer._height = 42;
+      bouncer.updateBox$0();
+      bouncer._width = 42;
       bouncer.updateBox$0();
     }
     this.entities.push(bouncer);
@@ -9189,7 +9250,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
   },
   updateLeaderboard$0: function() {
     var tempMap, t1, k, i, t2, t3, j;
-    tempMap = new $.HashMap(0, null, null, null, null);
+    tempMap = new $.LinkedHashMap(0, null, null, null, null, null, 0);
     for (t1 = this.Highscores, k = 1; k < 11; ++k)
       tempMap.$indexSet(tempMap, k, t1.$index(t1, k));
     for (i = 1; i <= 10; ++i) {
@@ -9350,7 +9411,8 @@ GalagaGame_waiting_closure: {"": "Closure;this_0",
 
 GalagaGame_waiting__closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isStars;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isStars;
   }
 },
 
@@ -9362,55 +9424,64 @@ GalagaGame_waiting__closure0: {"": "Closure;",
 
 GalagaGame_update_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_update_closure0: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_update_closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
 GalagaGame_update_closure2: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
 GalagaGame_update_closure3: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_update_closure4: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_update_closure5: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
 GalagaGame_update_closure6: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
 GalagaGame_update_closure7: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isGameButton;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isGameButton;
   }
 },
 
@@ -9426,7 +9497,8 @@ GalagaGame_update_closure8: {"": "Closure;",
 
 GalagaGame_newBossDrone_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -9442,7 +9514,8 @@ GalagaGame_newBossDrone_closure0: {"": "Closure;box_0",
 
 GalagaGame_newMotherShip_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -9458,7 +9531,8 @@ GalagaGame_newMotherShip_closure0: {"": "Closure;box_0",
 
 GalagaGame_newPowerUp_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
@@ -9470,7 +9544,8 @@ GalagaGame_newPowerUp_closure0: {"": "Closure;powerUp_0",
 
 GalagaGame_getEnemyX_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -9484,7 +9559,8 @@ GalagaGame_getEnemyX_closure0: {"": "Closure;type_0",
 
 GalagaGame_getEnemyY_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -9581,6 +9657,7 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "SpiralShot") {
       t1.set$powerupChoice("Multiplier");
       t1.set$spiral(0);
@@ -9589,6 +9666,7 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "Multiplier") {
       t1.set$powerupChoice("BulletIncrease");
       t1.set$spiral(0);
@@ -9597,6 +9675,7 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "BulletIncrease") {
       t1.set$powerupChoice("Invincible");
       t1.set$spiral(0);
@@ -9605,6 +9684,7 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(1);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "Invincible") {
       t1.set$powerupChoice("TimeUp");
       t1.set$spiral(0);
@@ -9613,6 +9693,7 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(0);
       t1.set$time(1);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "TimeUp") {
       t1.set$powerupChoice("ExtraLife");
       t1.set$spiral(0);
@@ -9621,13 +9702,24 @@ GalagaGame_createCheatsMenu_closure2: {"": "Closure;this_3",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(1);
+      t1.set$teleporter(0);
     } else if (t2 === "ExtraLife") {
+      t1.set$powerupChoice("Teleporter");
+      t1.set$spiral(0);
+      t1.set$multi(0);
+      t1.set$bullet(0);
+      t1.set$invincible(0);
+      t1.set$time(0);
+      t1.set$life(0);
+      t1.set$teleporter(1);
+    } else if (t2 === "Teleporter") {
       t1.set$powerupChoice("All");
-      t1.set$spiral(0.16);
-      t1.set$multi(0.33);
-      t1.set$bullet(0.5);
-      t1.set$invincible(0.66);
-      t1.set$time(0.83);
+      t1.set$teleporter(0.05);
+      t1.set$spiral(0.06);
+      t1.set$multi(0.25);
+      t1.set$bullet(0.55);
+      t1.set$invincible(0.7);
+      t1.set$time(0.8);
       t1.set$life(1);
     }
     t2 = t1.get$_statUpdateEvent()._controller;
@@ -9648,7 +9740,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
     var t1, t2, t3;
     t1 = this.this_4;
     t2 = t1.get$powerupChoice();
-    if (t2 === "All") {
+    if (t2 === "Teleporter") {
       t1.set$powerupChoice("ExtraLife");
       t1.set$spiral(0);
       t1.set$multi(0);
@@ -9656,13 +9748,24 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(1);
+      t1.set$teleporter(0);
+    } else if (t2 === "All") {
+      t1.set$powerupChoice("Teleporter");
+      t1.set$spiral(0);
+      t1.set$multi(0);
+      t1.set$bullet(0);
+      t1.set$invincible(0);
+      t1.set$time(0);
+      t1.set$life(0);
+      t1.set$teleporter(1);
     } else if (t2 === "SpiralShot") {
       t1.set$powerupChoice("All");
-      t1.set$spiral(0.16);
-      t1.set$multi(0.33);
-      t1.set$bullet(0.5);
-      t1.set$invincible(0.66);
-      t1.set$time(0.83);
+      t1.set$teleporter(0.05);
+      t1.set$spiral(0.06);
+      t1.set$multi(0.25);
+      t1.set$bullet(0.55);
+      t1.set$invincible(0.7);
+      t1.set$time(0.8);
       t1.set$life(1);
     } else if (t2 === "Multiplier") {
       t1.set$powerupChoice("SpiralShot");
@@ -9672,6 +9775,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "BulletIncrease") {
       t1.set$powerupChoice("Multiplier");
       t1.set$spiral(0);
@@ -9680,6 +9784,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "Invincible") {
       t1.set$powerupChoice("BulletIncrease");
       t1.set$spiral(0);
@@ -9688,6 +9793,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(0);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "TimeUp") {
       t1.set$powerupChoice("Invincible");
       t1.set$spiral(0);
@@ -9696,6 +9802,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(1);
       t1.set$time(0);
       t1.set$life(0);
+      t1.set$teleporter(0);
     } else if (t2 === "ExtraLife") {
       t1.set$powerupChoice("TimeUp");
       t1.set$spiral(0);
@@ -9704,6 +9811,7 @@ GalagaGame_createCheatsMenu_closure3: {"": "Closure;this_4",
       t1.set$invincible(0);
       t1.set$time(1);
       t1.set$life(0);
+      t1.set$teleporter(0);
     }
     t2 = t1.get$_statUpdateEvent()._controller;
     t3 = $.get$EventArgs_empty();
@@ -9843,25 +9951,29 @@ GalagaGame_createPausedMenu_closure: {"": "Closure;this_0",
 
 GalagaGame_createPausedMenu__closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_createPausedMenu__closure0: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
 GalagaGame_createPausedMenu__closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_createPausedMenu__closure2: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -10153,6 +10265,7 @@ GalagaGame_createOptionsMenu_closure9: {"": "Closure;this_10",
     t1.newBouncer$1(12);
     t1.newBouncer$1(13);
     t1.newBouncer$1(14);
+    t1.newBouncer$1(15);
     t2 = $.getInterceptor$x(t1);
     t2.set$state(t1, 1);
     t1.removeEntitiesByGroup$1("instructions");
@@ -10229,19 +10342,22 @@ GalagaGame_createGameOverMenu_closure0: {"": "Closure;this_1",
 
 GalagaGame_createGameOverMenu__closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_createGameOverMenu__closure0: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_matchCloneX_closure: {"": "Closure;",
   call$1: function(c) {
-    return typeof c === "object" && c !== null && !!$.getInterceptor(c).$isClone;
+    var t1 = $.getInterceptor(c);
+    return typeof c === "object" && c !== null && !!t1.$isClone;
   }
 },
 
@@ -10254,7 +10370,8 @@ GalagaGame_matchCloneX_closure0: {"": "Closure;this_0",
 
 GalagaGame_matchCloneX__closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -10268,7 +10385,8 @@ GalagaGame_matchCloneX__closure0: {"": "Closure;c_1",
 
 GalagaGame_switchDirection_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -10289,7 +10407,8 @@ GalagaGame_switchDirection_closure0: {"": "Closure;",
 
 GalagaGame_switchDirection_closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
@@ -10307,13 +10426,15 @@ GalagaGame_switchDirection_closure2: {"": "Closure;",
 
 GalagaGame_removeBullets_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_newGame_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isStars;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isStars;
   }
 },
 
@@ -10325,49 +10446,57 @@ GalagaGame_newGame_closure0: {"": "Closure;",
 
 GalagaGame_newGame_closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_newGame_closure2: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_newGame_closure3: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
 GalagaGame_newGame_closure4: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
 GalagaGame_gameOver_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 GalagaGame_gameOver_closure0: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 GalagaGame_gameOver_closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
 GalagaGame_gameOver_closure2: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isClone;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isClone;
   }
 },
 
@@ -10807,7 +10936,8 @@ Bullet$: function(game, x, y, dir, yVel, size, type) {
 
 Bullet_update_closure: {"": "Closure;this_0",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet && this.this_0.collidesWith$1(e);
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet && this.this_0.collidesWith$1(e);
   }
 },
 
@@ -10830,7 +10960,8 @@ Bullet_update_closure0: {"": "Closure;this_1",
 
 Bullet_update_closure1: {"": "Closure;this_2",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy && this.this_2.collidesWith$1(e);
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy && this.this_2.collidesWith$1(e);
   }
 },
 
@@ -10883,7 +11014,8 @@ Bullet_update_closure2: {"": "Closure;this_3",
 
 Bullet_update_closure3: {"": "Closure;this_4",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isShip && this.this_4.collidesWith$1(e);
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isShip && this.this_4.collidesWith$1(e);
   }
 },
 
@@ -14005,25 +14137,29 @@ Enemy$: function(game, x, y, diff, Type) {
 
 Enemy_update_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
 Enemy_update_closure0: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
 Enemy_update_closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
 Enemy_update_closure2: {"": "Closure;this_0",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isShip && this.this_0.collidesWith$1(e);
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isShip && this.this_0.collidesWith$1(e);
   }
 },
 
@@ -14068,7 +14204,8 @@ Enemy_update__closure3: {"": "Closure;this_2",
 
 Enemy_update_closure4: {"": "Closure;",
   call$1: function(c) {
-    return typeof c === "object" && c !== null && !!$.getInterceptor(c).$isClone;
+    var t1 = $.getInterceptor(c);
+    return typeof c === "object" && c !== null && !!t1.$isClone;
   }
 },
 
@@ -14081,7 +14218,8 @@ Enemy_update_closure5: {"": "Closure;this_3",
 
 Enemy_update__closure1: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -14095,7 +14233,8 @@ Enemy_update__closure2: {"": "Closure;c_4",
 
 Enemy_update_closure6: {"": "Closure;",
   call$1: function(c) {
-    return typeof c === "object" && c !== null && !!$.getInterceptor(c).$isClone;
+    var t1 = $.getInterceptor(c);
+    return typeof c === "object" && c !== null && !!t1.$isClone;
   }
 },
 
@@ -14108,7 +14247,8 @@ Enemy_update_closure7: {"": "Closure;this_5",
 
 Enemy_update__closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -14234,7 +14374,7 @@ Particles_update_closure: {"": "Closure;this_0",
 
 PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
-    var t1, t2, milliseconds;
+    var t1, t2, milliseconds, t3, milliseconds0;
     if ($.$eq($.get$state$x(this.game), 2) || $.$eq($.get$state$x(this.game), 4) || $.$eq($.get$state$x(this.game), 1))
       return;
     if (this.type === "bulletPower") {
@@ -14301,13 +14441,77 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
             milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
-            t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+            t3 = milliseconds < 0;
+            t1._timer = $.TimerImpl$(t3 ? 0 : milliseconds, t2);
             this._deactivate = t1;
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure0(this), null);
+            t2 = t1._zone;
+            t2._openCallbacks = t2._openCallbacks + 1;
+            t2 = t1.get$_run();
+            milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_1000000._duration, 1000);
+            t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure1(this), null);
+            t2 = t1._zone;
+            t2._openCallbacks = t2._openCallbacks + 1;
+            t2 = t1.get$_run();
+            milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_2000000._duration, 1000);
+            t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure2(this), null);
+            t2 = t1._zone;
+            t2._openCallbacks = t2._openCallbacks + 1;
+            t2 = t1.get$_run();
+            milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_3000000._duration, 1000);
+            t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure3(this), null);
+            t2 = t1._zone;
+            t2._openCallbacks = t2._openCallbacks + 1;
+            t2 = t1.get$_run();
+            milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_4000000._duration, 1000);
+            t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure4(this), null);
+            t2 = t1._zone;
+            t2._openCallbacks = t2._openCallbacks + 1;
+            t2 = t1.get$_run();
+            t1._timer = $.TimerImpl$(t3 ? 0 : milliseconds, t2);
           }
           break;
         case "timeUp":
           t1 = this.game.get$timer();
           t1.gameTime = $.$add$ns(t1.gameTime, 15);
+          break;
+        case "teleporter":
+          t1 = new $.WhereIterable(this.game.get$entities(), new $.PowerUp_update_closure5());
+          t1.forEach$1(t1, new $.PowerUp_update_closure6(this));
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure7(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_1000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure8(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_2000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure9(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_3000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure10(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_4000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure11(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
           break;
         default:
       }
@@ -14320,7 +14524,10 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
   PowerUp$4: function(game, x, y, Type) {
     var rType, rColor;
     rType = $.random(0, 1, false);
-    if (rType < game.spiral) {
+    if (rType < game.teleporter) {
+      this.color = "0, 255, 0";
+      this.type = "teleporter";
+    } else if (rType < game.spiral) {
       this.color = "0, 255, 0";
       this.type = "SpiralShot";
     } else if (rType < game.multi) {
@@ -14375,6 +14582,122 @@ PowerUp_update_closure: {"": "Closure;this_0",
   call$0: function() {
     var t1 = this.this_0.get$game().get$Cheats();
     t1.$indexSet(t1, "invincibility", 0);
+  }
+},
+
+PowerUp_update_closure0: {"": "Closure;this_1",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_1.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure1: {"": "Closure;this_2",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_2.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure2: {"": "Closure;this_3",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_3.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure3: {"": "Closure;this_4",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_4.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure4: {"": "Closure;this_5",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_5.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure5: {"": "Closure;",
+  call$1: function(e) {
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
+  }
+},
+
+PowerUp_update_closure6: {"": "Closure;this_6",
+  call$1: function(e) {
+    var t1;
+    e.removeFromGame$0();
+    t1 = this.this_6.get$game();
+    t1.set$enemyAmount(t1.get$enemyAmount() - 1);
+  }
+},
+
+PowerUp_update_closure7: {"": "Closure;this_7",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_7.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure8: {"": "Closure;this_8",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_8.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure9: {"": "Closure;this_9",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_9.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure10: {"": "Closure;this_10",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_10.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure11: {"": "Closure;this_11",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_11.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
   }
 },
 
@@ -14978,7 +15301,7 @@ Stars$: function(game, x, y, h, w, col) {
 
 }}],
 ["galaga_html", "package:galaga/galaga_html.dart", , {
-GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgradedShip,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,invincible@,timeUp<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,clone,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,ownMouse,canvas,_game,rect",
+GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upgradedShip,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,invincible@,timeUp<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,clone,teleporter@,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,ownMouse,canvas,_game,rect",
   init$0: function() {
     var t1, t2;
     t1 = this._game.get$Stats();
@@ -15681,23 +16004,54 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
     }
     t3.stroke();
   },
-  drawSpreadCountDown$0: function() {
-    var t1, t2, i, _invincibleTimer, t3, milliseconds;
-    t1 = {};
-    if (this._game.get$ship().spiralShot) {
-      t1.temp_0 = 0;
+  drawInvincibleCountDown$0: function() {
+    var t1, t2, t3;
+    t1 = this._game.get$Cheats();
+    if ($.$eq(t1.$index(t1, "invincibility"), 1)) {
       this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
-      this.ctx.font = "32px cinnamoncake, Verdana";
-      for (t2 = C.Duration_1000000._duration, i = 0; i > 5; ++i) {
-        _invincibleTimer = new $._ZoneTimer($.get$_Zone__current(), new $.GalagaRenderer_drawSpreadCountDown_closure(t1), null);
-        t3 = _invincibleTimer._zone;
-        t3._openCallbacks = t3._openCallbacks + 1;
-        t3 = _invincibleTimer.get$_run();
-        milliseconds = C.JSNumber_methods.$tdiv(t2, 1000);
-        _invincibleTimer._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t3);
+      this.ctx.font = "24px cinnamoncake, Verdana";
+      t1 = this._game;
+      if (t1.get$ship().spiralShot) {
+        t1 = t1.get$Cheats();
+        t1 = $.$eq(t1.$index(t1, "invincibility"), 1);
+      } else
+        t1 = false;
+      t1 = t1 || this._game.get$ship().spiralShot;
+      t2 = this.ctx;
+      t3 = this._game;
+      if (t1)
+        t2.fillText("Invincible: " + t3.get$rendererTemp1(), -475, -(this._game.rect.get$halfHeight() - 100));
+      else
+        t2.fillText("Invincible: " + t3.get$rendererTemp1(), -475, -(this._game.rect.get$halfHeight() - 80));
+    } else
+      this._game.set$rendererTemp1(5);
+  },
+  drawSpreadCountDown$0: function() {
+    var t1, t2, t3;
+    t1 = this._game;
+    if (t1.get$ship().spiralShot) {
+      this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      this.ctx.font = "24px cinnamoncake, Verdana";
+      t1 = this._game;
+      if (t1.get$ship().spiralShot) {
+        t1 = t1.get$Cheats();
+        t1 = $.$eq(t1.$index(t1, "invincibility"), 1);
+      } else
+        t1 = false;
+      if (t1)
+        this.ctx.fillText("Spreadshot: " + this._game.get$rendererTemp2(), -475, -(this._game.rect.get$halfHeight() - 80));
+      else {
+        t1 = this._game;
+        t2 = t1.get$ship().spiralShot;
+        t1 = t1.get$rendererTemp2();
+        t3 = this.ctx;
+        if (t2)
+          t3.fillText("Spreadshot: " + t1, -475, -(this._game.rect.get$halfHeight() - 100));
+        else
+          t3.fillText("Spreadshot: " + t1, -475, -(this._game.rect.get$halfHeight() - 80));
       }
-      this.ctx.fillText("Spreadshot: " + $.S(t1.temp_0), -475, -(this._game.rect.get$halfHeight() - 90));
-    }
+    } else
+      t1.set$rendererTemp2(5);
   },
   drawCountDown$0: function() {
     var t1, temp;
@@ -15716,8 +16070,8 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
     }
   },
   getRenderer$1: function(e) {
-    var t1;
-    if (typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy) {
+    var t1 = $.getInterceptor(e);
+    if (typeof e === "object" && e !== null && !!t1.$isEnemy) {
       t1 = this._game;
       t1 = t1.get$state(t1) === 4;
     } else
@@ -15738,6 +16092,7 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
       this.drawShip$0();
       this.drawEnemys$0();
       this.drawSpreadCountDown$0();
+      this.drawInvincibleCountDown$0();
     }
     $.CanvasGameRenderer.prototype.drawBeforeCtxRestore$0.call(this);
   },
@@ -15951,10 +16306,11 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,ship<,invincibleShip<,upgraded
     $.set$src$x(this.star7, "../web/images/Star7.png");
     $.set$src$x(this.skull, "../web/images/skull.png");
     $.set$src$x(this.clone, "../web/images/clone.png");
+    $.set$src$x(this.teleporter, "../web/images/Teleporter.png");
   },
   static: {
 GalagaRenderer$: function(targetId) {
-  var t1 = new $.GalagaRenderer(0, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, 5, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
@@ -16207,7 +16563,8 @@ GalagaRenderer_init_closure38: {"": "Closure;this_6",
 
 GalagaRenderer_drawStars_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isStars;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isStars;
   }
 },
 
@@ -16323,7 +16680,8 @@ GalagaRenderer_drawStars_closure0: {"": "Closure;this_0",
 
 GalagaRenderer_drawBouncer_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isbouncingBall;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isbouncingBall;
   }
 },
 
@@ -16531,6 +16889,20 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       if (typeof t7 !== "number")
         throw t7.$div();
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
+    } else if (t2 === 15) {
+      t2 = t1.get$ctx();
+      t3 = t1.get$teleporter();
+      t4 = $.getInterceptor$x(e);
+      t5 = t4.get$x(e);
+      t6 = t4.get$width(e);
+      if (typeof t6 !== "number")
+        throw t6.$div();
+      t6 = $.$sub$n(t5, t6 / 2);
+      t5 = t4.get$y(e);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     }
     t1.get$ctx().stroke();
   }
@@ -16538,7 +16910,8 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
 
 GalagaRenderer_drawBullets_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isBullet;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isBullet;
   }
 },
 
@@ -16585,7 +16958,8 @@ GalagaRenderer_drawBullets_closure0: {"": "Closure;this_0",
 
 GalagaRenderer_drawPowerUps_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isPowerUp;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isPowerUp;
   }
 },
 
@@ -16612,13 +16986,16 @@ GalagaRenderer_drawPowerUps_closure0: {"": "Closure;this_0",
       t1.get$ctx().drawImage(t1.get$invincible(), $.$sub$n(t2.get$x(e), 31), $.$sub$n(t2.get$y(e), 31), 62, 62);
     else if (t3 === "timeUp")
       t1.get$ctx().drawImage(t1.get$timeUp(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 25), 42, 42);
+    else if (t3 === "teleporter")
+      t1.get$ctx().drawImage(t1.get$teleporter(), $.$sub$n(t2.get$x(e), 22), $.$sub$n(t2.get$y(e), 25), 42, 42);
     t1.get$ctx().stroke();
   }
 },
 
 GalagaRenderer_drawEnemys_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -16710,7 +17087,8 @@ GalagaRenderer_shipHit_closure4: {"": "Closure;this_5",
 
 GalagaRenderer_bossHit_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -16747,7 +17125,8 @@ GalagaRenderer_bossHit__closure0: {"": "Closure;e_2",
 
 GalagaRenderer_motherShipHit_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -16828,7 +17207,8 @@ GalagaRenderer_motherShipHit__closure4: {"": "Closure;e_6",
 
 GalagaRenderer_normalShipHit_closure: {"": "Closure;",
   call$1: function(e) {
-    return typeof e === "object" && e !== null && !!$.getInterceptor(e).$isEnemy;
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
   }
 },
 
@@ -16882,13 +17262,6 @@ GalagaRenderer_normalShipHit__closure2: {"": "Closure;e_4",
   call$0: function() {
     this.e_4.set$flicker(false);
     return false;
-  }
-},
-
-GalagaRenderer_drawSpreadCountDown_closure: {"": "Closure;box_0",
-  call$0: function() {
-    var t1 = this.box_0;
-    t1.temp_0 = $.$add$ns(t1.temp_0, 1);
   }
 },
 
@@ -17467,6 +17840,7 @@ C.Duration_125000 = new $.Duration(125000);
 C.Duration_150000 = new $.Duration(150000);
 C.Duration_175000 = new $.Duration(175000);
 C.Duration_200000 = new $.Duration(200000);
+C.Duration_2000000 = new $.Duration(2000000);
 C.Duration_225000 = new $.Duration(225000);
 C.Duration_25000 = new $.Duration(25000);
 C.Duration_250000 = new $.Duration(250000);
@@ -17477,6 +17851,7 @@ C.Duration_325000 = new $.Duration(325000);
 C.Duration_350000 = new $.Duration(350000);
 C.Duration_375000 = new $.Duration(375000);
 C.Duration_400000 = new $.Duration(400000);
+C.Duration_4000000 = new $.Duration(4000000);
 C.Duration_425000 = new $.Duration(425000);
 C.Duration_450000 = new $.Duration(450000);
 C.Duration_475000 = new $.Duration(475000);
@@ -17505,6 +17880,12 @@ C.JSInt_methods = $.JSInt.prototype;
 C.JSNull_methods = $.JSNull.prototype;
 C.JSNumber_methods = $.JSNumber.prototype;
 C.JSString_methods = $.JSString.prototype;
+C.JS_CONST_ZYJ =     ((typeof version == "function" && typeof os == "object" && "system" in os)
+    || (typeof navigator == "object"
+        && navigator.userAgent.indexOf('Chrome') != -1))
+        ? function(x) { return x.$dartCachedLength || x.length; }
+        : function(x) { return x.length; };
+;
 Isolate.makeConstantList = function(list) {
   list.immutable$list = true;
   list.fixed$length = true;
@@ -17552,13 +17933,13 @@ $.$gt$n = function(receiver, a0) {
   return $.getInterceptor$n(receiver).$gt(receiver, a0);
 };
 $.$index$asx = function(receiver, a0) {
-  if (receiver.constructor == Array || typeof receiver == "string")
+  if (receiver.constructor == Array || typeof receiver == "string" || $.isJsIndexable(receiver, receiver[$.dispatchPropertyName]))
     if (a0 >>> 0 === a0 && a0 < receiver.length)
       return receiver[a0];
   return $.getInterceptor$asx(receiver).$index(receiver, a0);
 };
 $.$indexSet$ax = function(receiver, a0, a1) {
-  if (receiver.constructor == Array && !receiver.immutable$list && a0 >>> 0 === a0 && a0 < receiver.length)
+  if ((receiver.constructor == Array || $.isJsIndexable(receiver, receiver[$.dispatchPropertyName])) && !receiver.immutable$list && a0 >>> 0 === a0 && a0 < receiver.length)
     return receiver[a0] = a1;
   return $.getInterceptor$ax(receiver).$indexSet(receiver, a0, a1);
 };
@@ -17596,6 +17977,9 @@ $.complete$0$x = function(receiver) {
 };
 $.forEach$1$ax = function(receiver, a0) {
   return $.getInterceptor$ax(receiver).forEach$1(receiver, a0);
+};
+$.get$_key$x = function(receiver) {
+  return $.getInterceptor$x(receiver).get$_key(receiver);
 };
 $.get$click$x = function(receiver) {
   return $.getInterceptor$x(receiver).get$click(receiver);
@@ -17767,7 +18151,7 @@ $.defineNativeMethodsNonleaf("CanvasRenderingContext", $.CanvasRenderingContext)
 
 $.defineNativeMethods("CanvasRenderingContext2D", $.CanvasRenderingContext2D);
 
-$.defineNativeMethods("CDATASection|CharacterData|Comment|Text", $.CharacterData);
+$.defineNativeMethods("CDATASection|CharacterData|Comment|ProcessingInstruction|Text", $.CharacterData);
 
 $.defineNativeMethods("DOMException", $.DomException);
 
@@ -17805,9 +18189,9 @@ $.defineNativeMethods("HTMLAudioElement", $.MediaElement);
 
 $.defineNativeMethodsNonleaf("HTMLMediaElement", $.MediaElement);
 
-$.defineNativeMethods("DragEvent|MouseEvent|MouseScrollEvent|MouseWheelEvent|WheelEvent", $.MouseEvent);
+$.defineNativeMethods("DragEvent|MSPointerEvent|MouseEvent|MouseScrollEvent|MouseWheelEvent|PointerEvent|WheelEvent", $.MouseEvent);
 
-$.defineNativeMethods("Attr|Document|DocumentFragment|DocumentType|Entity|HTMLDocument|Notation|ProcessingInstruction|SVGDocument|ShadowRoot", $.Node);
+$.defineNativeMethods("Attr|Document|DocumentFragment|DocumentType|Entity|HTMLDocument|Notation|SVGDocument|ShadowRoot", $.Node);
 
 $.defineNativeMethodsNonleaf("Node", $.Node);
 
@@ -17946,12 +18330,19 @@ init.metadata = [];
 $ = null;
 Isolate = Isolate.$finishIsolateConstructor(Isolate);
 $ = new Isolate();
-$.initializeDispatchProperty(function(a) {
-  $.getDispatchProperty = a;
-}, "___dart_dispatch_record_ZxYxX_0_", $.PlainJavaScriptObject.prototype);
+!function() {
+  var objectProto = Object.prototype;
+  for (var i = 0;; i++) {
+    var property = "___dart_dispatch_record_ZxYxX_0_";
+    if (i > 0)
+      property = rootProperty + "_" + i;
+    if (!(property in objectProto))
+      return init.dispatchPropertyName = property;
+  }
+}();
 // BEGIN invoke [main].
 ;(function (callback) {
-  if (typeof document === 'undefined') {
+  if (typeof document === "undefined") {
     callback(null);
     return;
   }
@@ -17963,18 +18354,17 @@ $.initializeDispatchProperty(function(a) {
   var scripts = document.scripts;
   function onLoad(event) {
     for (var i = 0; i < scripts.length; ++i) {
-      scripts[i].removeEventListener('load', onLoad, false);
+      scripts[i].removeEventListener("load", onLoad, false);
     }
     callback(event.target);
   }
   for (var i = 0; i < scripts.length; ++i) {
-    scripts[i].addEventListener('load', onLoad, false);
+    scripts[i].addEventListener("load", onLoad, false);
   }
 })(function(currentScript) {
-  Isolate.$isolateProperties.$currentScript =
-      currentScript;
+  init.currentScript = currentScript;
 
-  if (typeof console !== 'undefined' && typeof document !== 'undefined' &&
+  if (typeof console !== "undefined" && typeof document !== "undefined" &&
       document.readyState == "loading") {
     console.warn("Dart script executed synchronously, use <script src='" +
         currentScript.src + "' defer></scr" + "ipt> to execute after parsing " +
@@ -17992,6 +18382,13 @@ function init() {
   function generateAccessor(field, prototype) {
     var len = field.length;
     var code = field.charCodeAt(len - 1);
+    var reflectable = false;
+    if (code == 45) {
+      len--;
+      code = field.charCodeAt(len - 1);
+      field = field.substring(0, len);
+      reflectable = true;
+    }
     code = code >= 60 && code <= 64 ? code - 59 : code >= 123 && code <= 126 ? code - 117 : code >= 37 && code <= 43 ? code - 27 : 0;
     if (code) {
       var getterCode = code & 3;
@@ -18007,12 +18404,18 @@ function init() {
         var receiver = getterCode & 1 ? "this" : "receiver";
         var body = "return " + receiver + "." + field;
         prototype["get$" + accessorName] = new Function(args, body);
+        if (!reflectable) {
+          prototype["get$" + accessorName].$reflectable = false;
+        }
       }
       if (setterCode) {
         var args = setterCode & 2 ? "receiver, value" : "value";
         var receiver = setterCode & 1 ? "this" : "receiver";
         var body = receiver + "." + field + " = value";
         prototype["set$" + accessorName] = new Function(args, body);
+        if (!reflectable) {
+          prototype["set$" + accessorName].$reflectable = false;
+        }
       }
     }
     return field;
@@ -18153,7 +18556,6 @@ function init() {
   };
   Isolate.$finishIsolateConstructor = function(oldIsolate) {
     var isolateProperties = oldIsolate.$isolateProperties;
-    isolateProperties.$currentScript = null;
     var isolatePrototype = oldIsolate.prototype;
     var str = "{\n";
     str += "var properties = arguments.callee.$isolateProperties;\n";

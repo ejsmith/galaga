@@ -7,7 +7,10 @@ class PowerUp extends GameEntity<GalagaGame> {
   PowerUp(GalagaGame game, num x, num y, [String Type = null]) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
 
-    if (rType < game.spiral) {
+    if (rType < game.teleporter) {
+      color = "0, 255, 0";
+      type = 'teleporter';
+    } else if (rType < game.spiral) {
       color = "0, 255, 0";
       type = 'SpiralShot';
     } else if (rType < game.multi) {
@@ -100,11 +103,30 @@ class PowerUp extends GameEntity<GalagaGame> {
             _deactivate = new Timer(const Duration(milliseconds: 5000), () {
               game.Cheats["invincibility"] = 0;
             });
+
+            new Timer(const Duration(milliseconds: 1000), () => game.rendererTemp1--);
+            new Timer(const Duration(milliseconds: 2000), () => game.rendererTemp1--);
+            new Timer(const Duration(milliseconds: 3000), () => game.rendererTemp1--);
+            new Timer(const Duration(milliseconds: 4000), () => game.rendererTemp1--);
+            new Timer(const Duration(milliseconds: 5000), () => game.rendererTemp1--);
           }
 
           break;
         case 'timeUp':
             game.timer.gameTime += 15;
+          break;
+        case 'teleporter':
+          game.entities.where((e) => e is Enemy).forEach((Enemy e) {
+            e.removeFromGame();
+            game.enemyAmount--;
+          });
+
+          new Timer(const Duration(milliseconds: 1000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 2000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 3000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 4000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 5000), () => game.rendererTemp2--);
+
           break;
       }
 

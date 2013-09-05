@@ -54,14 +54,17 @@ class GalagaGame extends Game {
   num nextId = 1;
   num targetId = 0;
   String powerupChoice = "All";
-  num spiral = .16;
-  num multi = .33;
-  num bullet = .50;
-  num invincible = .66;
-  num time = .83;
+  num teleporter = .05;
+  num spiral = .06;
+  num multi = .25;
+  num bullet = .55;
+  num invincible = .70;
+  num time = .80;
   num life = 1;
   num cloneId = 1;
   num spreadWaiting = 0;
+  num rendererTemp1 = 5;
+  num rendererTemp2 = 5;
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(input, renderer, loop);
@@ -434,6 +437,9 @@ class GalagaGame extends Game {
     } else if (sprite == 14) {
       bouncer.height = 62;
       bouncer.width = 62;
+    }  else if (sprite == 15) {
+      bouncer.height = 42;
+      bouncer.width = 42;
     }
 
     addEntity(bouncer);
@@ -726,6 +732,7 @@ class GalagaGame extends Game {
            invincible = 0;
            time = 0;
            life = 0;
+           teleporter = 0;
 
          } else if (powerupChoice == "SpiralShot") {
            powerupChoice = "Multiplier";
@@ -735,6 +742,7 @@ class GalagaGame extends Game {
            invincible = 0;
            time = 0;
            life = 0;
+           teleporter = 0;
 
          } else if (powerupChoice == "Multiplier") {
            powerupChoice = "BulletIncrease";
@@ -744,6 +752,7 @@ class GalagaGame extends Game {
            invincible = 0;
            time = 0;
            life = 0;
+           teleporter = 0;
 
          } else if (powerupChoice == "BulletIncrease") {
            powerupChoice = "Invincible";
@@ -753,6 +762,7 @@ class GalagaGame extends Game {
            invincible = 1;
            time = 0;
            life = 0;
+           teleporter = 0;
 
          } else if (powerupChoice == "Invincible") {
            powerupChoice = "TimeUp";
@@ -762,6 +772,7 @@ class GalagaGame extends Game {
            invincible = 0;
            time = 1;
            life = 0;
+           teleporter = 0;
 
          } else if (powerupChoice == "TimeUp") {
            powerupChoice = "ExtraLife";
@@ -771,14 +782,26 @@ class GalagaGame extends Game {
            invincible = 0;
            time = 0;
            life = 1;
+           teleporter = 0;
 
-         } else if (powerupChoice == "ExtraLife") {
+         }  else if (powerupChoice == "ExtraLife") {
+           powerupChoice = "Teleporter";
+           spiral = 0;
+           multi = 0;
+           bullet = 0;
+           invincible = 0;
+           time = 0;
+           life = 0;
+           teleporter = 1;
+
+         }else if (powerupChoice == "Teleporter") {
            powerupChoice = "All";
-           spiral = .16;
-           multi = .33;
-           bullet = .50;
-           invincible = .66;
-           time = .83;
+           teleporter = .05;
+           spiral = .06;
+           multi = .25;
+           bullet = .55;
+           invincible = .70;
+           time = .80;
            life = 1;
 
          }
@@ -805,7 +828,7 @@ class GalagaGame extends Game {
         y: 0,
         text: "<-",
         buttonAction: () {
-          if (powerupChoice == "All") {
+          if (powerupChoice == "Teleporter") {
             powerupChoice = "ExtraLife";
             spiral = 0;
             multi = 0;
@@ -813,14 +836,26 @@ class GalagaGame extends Game {
             invincible = 0;
             time = 0;
             life = 1;
+            teleporter = 0;
 
-          } else if (powerupChoice == "SpiralShot") {
+          } else if (powerupChoice == "All") {
+            powerupChoice = "Teleporter";
+            spiral = 0;
+            multi = 0;
+            bullet = 0;
+            invincible = 0;
+            time = 0;
+            life = 0;
+            teleporter = 1;
+
+          }else if (powerupChoice == "SpiralShot") {
             powerupChoice = "All";
-            spiral = .16;
-            multi = .33;
-            bullet = .50;
-            invincible = .66;
-            time = .83;
+            teleporter = .05;
+            spiral = .06;
+            multi = .25;
+            bullet = .55;
+            invincible = .70;
+            time = .80;
             life = 1;
 
           } else if (powerupChoice == "Multiplier") {
@@ -831,6 +866,7 @@ class GalagaGame extends Game {
             invincible = 0;
             time = 0;
             life = 0;
+            teleporter = 0;
 
           } else if (powerupChoice == "BulletIncrease") {
             powerupChoice = "Multiplier";
@@ -840,6 +876,7 @@ class GalagaGame extends Game {
             invincible = 0;
             time = 0;
             life = 0;
+            teleporter = 0;
 
           } else if (powerupChoice == "Invincible") {
             powerupChoice = "BulletIncrease";
@@ -849,6 +886,7 @@ class GalagaGame extends Game {
             invincible = 0;
             time = 0;
             life = 0;
+            teleporter = 0;
 
           } else if (powerupChoice == "TimeUp") {
             powerupChoice = "Invincible";
@@ -858,6 +896,7 @@ class GalagaGame extends Game {
             invincible = 1;
             time = 0;
             life = 0;
+            teleporter = 0;
 
           } else if (powerupChoice == "ExtraLife") {
             powerupChoice = "TimeUp";
@@ -867,6 +906,7 @@ class GalagaGame extends Game {
             invincible = 0;
             time = 1;
             life = 0;
+            teleporter = 0;
 
           }
 
@@ -2159,6 +2199,7 @@ class GalagaGame extends Game {
           newBouncer(12);
           newBouncer(13);
           newBouncer(14);
+          newBouncer(15);
 
           state = GalagaGameState.welcome;
 
@@ -2275,7 +2316,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 40,
-        text: "FIRE FLOWER: Spread shot upgrade.",
+        text: "FIRE FLOWER: Spread shot upgrade for 5 seconds.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -2536,8 +2577,6 @@ class GalagaGame extends Game {
           e.x -= 3;
     });
   }
-
-
 
   bool canEnemyFall() {
     int x = 0;

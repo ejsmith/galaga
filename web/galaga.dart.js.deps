@@ -9,6 +9,7 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/collection_dev_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/collection_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/constant_map.dart
+file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/convert_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/core_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/foreign_helper.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/interceptors.dart
@@ -20,7 +21,6 @@ file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_number.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_rti.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/js_string.dart
-file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/json_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/math_patch.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/native_helper.dart
 file:///C:/Users/jack/Downloads/darteditor-win32-64/dart/dart-sdk/lib/_internal/lib/regexp_helper.dart
