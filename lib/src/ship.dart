@@ -51,7 +51,7 @@ class Ship extends GameEntity<GalagaGame> {
       spiralShot = true;
 
     if (spiralShot == true && game.Cheats["spreadshot"] != 1) {
-      _invincibleTimer = new Timer(const Duration(milliseconds: 5000), () {
+      _invincibleTimer = new Timer(const Duration(milliseconds: 15000), () {
         _spreadWaiting++;
         spiralShot = false;
       });

@@ -64,7 +64,7 @@ class GalagaGame extends Game {
   num cloneId = 1;
   num spreadWaiting = 0;
   num rendererTemp1 = 5;
-  num rendererTemp2 = 5;
+  num rendererTemp2 = 15;
 
   GalagaGame(Rectangle rect) : super(rect);
   GalagaGame.withServices(GameInput input, GameRenderer renderer, GameLoop loop) : super.withServices(input, renderer, loop);
@@ -175,6 +175,8 @@ class GalagaGame extends Game {
       Stats["normalKills"] = 0;
     if (!Stats.containsKey("bossKills"))
       Stats["bossKills"] = 0;
+    if (!Stats.containsKey("droneKills"))
+      Stats["droneKills"] = 0;
     if (!Stats.containsKey("motherKills"))
       Stats["motherKills"] = 0;
     if (!Stats.containsKey("powerups"))
@@ -245,7 +247,7 @@ class GalagaGame extends Game {
     createGameOverMenu();
     createStatsMenu();
     createPausedMenu();
-    createControlsMenu();
+    createInstructionsMenu();
     createLeaderBoardMenu();
     createCheatsMenu();
 
@@ -422,22 +424,34 @@ class GalagaGame extends Game {
     } else if (sprite == 8) {
       bouncer.height = 42;
       bouncer.width = 42;
-    } else if (sprite == 10) {
+    } else if (sprite == 9) {
       bouncer.height = 72;
       bouncer.width = 72;
-    } else if (sprite == 11) {
+    } else if (sprite == 10) {
       bouncer.height = 36;
       bouncer.width = 36;
-    } else if (sprite == 12) {
+    } else if (sprite == 11) {
       bouncer.height = 62;
       bouncer.width = 62;
-    } else if (sprite == 13) {
+    } else if (sprite == 12) {
       bouncer.height = 42;
       bouncer.width = 42;
-    } else if (sprite == 14) {
+    } else if (sprite == 13) {
       bouncer.height = 62;
       bouncer.width = 62;
-    }  else if (sprite == 15) {
+    }  else if (sprite == 14) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 15) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 16) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    } else if (sprite == 17) {
+      bouncer.height = 42;
+      bouncer.width = 42;
+    }  else if (sprite == 18) {
       bouncer.height = 42;
       bouncer.width = 42;
     }
@@ -1586,7 +1600,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -110,
-        text: "Big Bosses Denominated: ${Stats["bossKills"]}",
+        text: "Motherships Deflowered: ${Stats["bossKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1598,7 +1612,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -65,
-        text: "Mother Ships Deflowered: ${Stats["motherKills"]}",
+        text: "Mothership Drones Overkilled: ${Stats["droneKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1610,7 +1624,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: -20,
-        text: "Powerups Absorbed: ${Stats["powerups"]}",
+        text: "UFO's Eviscerated: ${Stats["motherKills"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1622,7 +1636,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 25,
-        text: "Total Completed Levels: ${Stats["wins"]}",
+        text: "Powerups Absorbed: ${Stats["powerups"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1634,7 +1648,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 70,
-        text: "Total Deaths: ${Stats["deaths"]}",
+        text: "Total Completed Levels: ${Stats["wins"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1646,7 +1660,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 115,
-        text: "Total Games: ${Stats["totalGames"]}",
+        text: "Total Deaths: ${Stats["deaths"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
         centered:  true,
@@ -1658,6 +1672,18 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 160,
+        text: "Total Games: ${Stats["totalGames"]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "stats"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 205,
         text: "High Score: ${Stats["highscore"]}",
         size: 36,
         font: "cinnamoncake, Verdana",
@@ -1728,12 +1754,12 @@ class GalagaGame extends Game {
 
           state = GalagaGameState.cheats;
 
-          newBouncer(11);
-          newBouncer(11);
-          newBouncer(11);
-          newBouncer(11);
-          newBouncer(11);
-          newBouncer(11);
+          newBouncer(10);
+          newBouncer(10);
+          newBouncer(10);
+          newBouncer(10);
+          newBouncer(10);
+          newBouncer(10);
 
           _fadeEvent.signal();
         },
@@ -2200,11 +2226,14 @@ class GalagaGame extends Game {
           newBouncer(13);
           newBouncer(14);
           newBouncer(15);
+          newBouncer(16);
+          newBouncer(17);
+          newBouncer(18);
 
           state = GalagaGameState.welcome;
 
           removeEntitiesByGroup("instructions");
-          createControlsMenu();
+          createInstructionsMenu();
 
           state = GalagaGameState.instructions;
           _statUpdateEvent.signal();
@@ -2240,7 +2269,7 @@ class GalagaGame extends Game {
     disableEntitiesByGroup("options");
   }
 
-  void createControlsMenu() {
+  void createInstructionsMenu() {
     addEntity(new GameText(game: this,
         x: 0,
         y: -225,
@@ -2316,7 +2345,7 @@ class GalagaGame extends Game {
     addEntity(new GameText(game: this,
         x: 0,
         y: 40,
-        text: "FIRE FLOWER: Spread shot upgrade for 5 seconds.",
+        text: "FIRE FLOWER: Spread shot upgrade for 15 seconds.",
         size: 24,
         font: "cinnamoncake, Verdana",
         centered:  true,

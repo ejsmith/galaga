@@ -75,6 +75,22 @@ class PowerUp extends GameEntity<GalagaGame> {
 
           game.Stats["powerups"] += 1;
           game.score += 300 * game.pointMultiplier;
+
+          new Timer(const Duration(milliseconds: 1000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 2000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 3000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 4000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 5000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 6000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 7000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 8000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 9000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 10000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 11000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 12000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 13000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 14000), () => game.rendererTemp2--);
+          new Timer(const Duration(milliseconds: 15000), () => game.rendererTemp2--);
           break;
         case 'Multiplier':
           game.pointMultiplier *= 2;
@@ -120,12 +136,6 @@ class PowerUp extends GameEntity<GalagaGame> {
             e.removeFromGame();
             game.enemyAmount--;
           });
-
-          new Timer(const Duration(milliseconds: 1000), () => game.rendererTemp2--);
-          new Timer(const Duration(milliseconds: 2000), () => game.rendererTemp2--);
-          new Timer(const Duration(milliseconds: 3000), () => game.rendererTemp2--);
-          new Timer(const Duration(milliseconds: 4000), () => game.rendererTemp2--);
-          new Timer(const Duration(milliseconds: 5000), () => game.rendererTemp2--);
 
           break;
       }

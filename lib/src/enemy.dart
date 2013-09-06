@@ -18,6 +18,7 @@ class Enemy extends GameEntity<GalagaGame> {
   num idNum = 1;
   num switchAmount = 0;
   num targetX = 0;
+  num motherShipType = 1;
   Timer _invincibleTimer;
 
   Enemy(GalagaGame game, num x, num y, num diff, String Type) : super.withPosition(game, x, y, 36, 36) {
@@ -29,35 +30,42 @@ class Enemy extends GameEntity<GalagaGame> {
 
     enemyType = random(0, 1);
 
-    if (type == "Normal")
-      color = "255, 0, 255";
-    if (type == "MotherShip")
-      color = "0, 0, 255";
-
-    if (type == "Normal")
-      momentum.xVel = 80;
-    if (type == "MotherShip")
-      momentum.xVel = 40;
-    if (type == "Boss")
-      momentum.xVel = 0;
-    if (type == "Drone")
-      momentum.xVel = 80;
-
     if (type == "Normal") {
+      color = "255, 0, 255";
+      momentum.xVel = 80;
+
       if (difficulty <= 2)
         health = difficulty;
     }
 
-    if (type == "MotherShip")
+    if (type == "MotherShip") {
+      color = "0, 0, 255";
+      momentum.xVel = 40;
       health = 3;
 
+      if (rType < .25) {
+        motherShipType = 1;
+      } else if (rType < .50) {
+        motherShipType = 2;
+      } else if (rType < .75) {
+        motherShipType = 3;
+      } else if (rType < 1) {
+        motherShipType = 4;
+      }
+
+      width = 42;
+      height = 42;
+    }
+
     if (type == "Boss") {
+      momentum.xVel = 0;
       width = 72;
       height = 72;
       health = bossHealth;
     }
 
     if (type == "Drone") {
+      momentum.xVel = 80;
       width = 16;
       height = 16;
       health = bossDifficulty;
@@ -82,12 +90,14 @@ class Enemy extends GameEntity<GalagaGame> {
     if (type == "Drone") {
       if (health <= 0) {
         game.score += 100 * game.pointMultiplier * difficulty;
-        game.Stats["killed"] += 1;
+        game.Stats["killed"]++;
+        game.Stats["droneKills"]++;
 
         if (random() > .5)
           game.newBulletPowerUp(x, y);
 
         game.newMiniExplosion(x, y);
+
 
         removeFromGame();
       }
@@ -446,6 +456,9 @@ class Enemy extends GameEntity<GalagaGame> {
 
         if (y < -(game.rect.halfHeight - 60))
           momentum.yVel *= -1;
+
+        if (x + 16 > game.rect.halfWidth - 60 || x - 16 < -(game.rect.halfWidth) + 60)
+          momentum.xVel *= -1;
       }
 
       if (y < startY && isGoingBack == true) {

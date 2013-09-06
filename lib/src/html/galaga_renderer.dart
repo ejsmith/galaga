@@ -10,7 +10,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
   ImageElement enemy = new ImageElement();
   ImageElement enemy2 = new ImageElement();
   ImageElement boss = new ImageElement();
-  ImageElement mothership = new ImageElement();
+  ImageElement mothership1 = new ImageElement();
+  ImageElement mothership2 = new ImageElement();
+  ImageElement mothership3 = new ImageElement();
+  ImageElement mothership4 = new ImageElement();
   ImageElement bosshp = new ImageElement();
   ImageElement spreadup = new ImageElement();
   ImageElement lifeup = new ImageElement();
@@ -45,7 +48,10 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     enemy.src = '../web/images/enemy.png';
     enemy2.src = '../web/images/enemy2.png';
     boss.src = '../web/images/boss.png';
-    mothership.src = '../web/images/mothership.png';
+    mothership1.src = '../web/images/mothership1.png';
+    mothership2.src = '../web/images/mothership2.png';
+    mothership3.src = '../web/images/mothership3.png';
+    mothership4.src = '../web/images/mothership4.png';
     bosshp.src = '../web/images/bosshp.png';
     spreadup.src = '../web/images/powerup1.png';
     lifeup.src = '../web/images/powerup2.png';
@@ -196,34 +202,40 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
       ctx.beginPath();
       if (e.Sprite == 1)
         ctx.drawImageScaled(spreadup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 2)
+      else if (e.Sprite == 2)
         ctx.drawImageScaled(lifeup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 3)
+      else if (e.Sprite == 3)
         ctx.drawImageScaled(multiplierup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 4)
+      else if (e.Sprite == 4)
         ctx.drawImageScaled(bulletup, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 5)
+      else if (e.Sprite == 5)
         ctx.drawImageScaled(coin, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 6)
+      else if (e.Sprite == 6)
         ctx.drawImageScaled(ship, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 7)
+      else if (e.Sprite == 7)
         ctx.drawImageScaled(enemy, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 8)
-        ctx.drawImageScaled(mothership, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 9)
+      else if (e.Sprite == 8)
         ctx.drawImageScaled(enemy2, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 10)
+      else if (e.Sprite == 9)
         ctx.drawImageScaled(boss, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 11)
+      else if (e.Sprite == 10)
         ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 12)
+      else if (e.Sprite == 11)
         ctx.drawImageScaled(invincible, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 13)
+      else if (e.Sprite == 12)
         ctx.drawImageScaled(timeUp, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 14)
+      else if (e.Sprite == 13)
         ctx.drawImageScaled(invincibleShip, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
-      else if(e.Sprite == 15)
+      else if (e.Sprite == 14)
         ctx.drawImageScaled(teleporter, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if (e.Sprite == 15)
+        ctx.drawImageScaled(mothership1, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if (e.Sprite == 16)
+        ctx.drawImageScaled(mothership2, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if (e.Sprite == 17)
+        ctx.drawImageScaled(mothership3, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if (e.Sprite == 18)
+        ctx.drawImageScaled(mothership4, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
       ctx.stroke();
     });
@@ -288,7 +300,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.stroke();
     });
   }
-  //
+
   void drawChargeBar() {
     ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";
     ctx.lineWidth = 3;
@@ -296,8 +308,14 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
     ctx.beginPath();
     if (game.Cheats["super"] == 1)
       ctx.drawImageScaled(chargeBar, -145, -224, 225, 12);
-    else
+    else {
       ctx.drawImageScaled(chargeBar, -145, -224, game.ship.chargedLevel * 15, 12);
+      if (game.ship.superCharged != 0) {
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.font = "16px cinnamoncake, Verdana";
+        ctx.fillText("${game.ship.superCharged}", -170, -215);
+      }
+    }
     ctx.stroke();
   }
 
@@ -308,7 +326,7 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
 
       ctx.beginPath();
       if (game.Cheats["invincibility"] != 1)
-        ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42);
+        ctx.drawImageScaled(ship, game.ship.x - 22, game.ship.y - 25, 42, 42 );
       else if (game.Cheats["invincibility"] == 1)
         ctx.drawImageScaled(invincibleShip, game.ship.x - 31, game.ship.y - 31, 62, 62);
       drawChargeBar();
@@ -330,7 +348,15 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.lineWidth = 3;
 
         ctx.beginPath();
-        ctx.drawImageScaled(mothership, e.x - 22, e.y - 25, 42, 42);
+        if (e.motherShipType == 1)
+          ctx.drawImageScaled(mothership1, e.x - 22, e.y - 22, 42, 42);
+        else if (e.motherShipType == 2)
+          ctx.drawImageScaled(mothership2, e.x - 22, e.y - 22, 42, 42);
+        else if (e.motherShipType == 3)
+          ctx.drawImageScaled(mothership3, e.x - 22, e.y - 22, 42, 42);
+        else if (e.motherShipType == 4)
+          ctx.drawImageScaled(mothership4, e.x - 22, e.y - 22, 42, 42);
+
         ctx.stroke();
       } else if (e.type == "Boss") {
         ctx.strokeStyle = "rgba(255, 255, 255, 1.0)";

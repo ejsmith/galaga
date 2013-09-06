@@ -73,8 +73,6 @@ class Bullet extends GameEntity<GalagaGame> {
     if (momentum.yVel != 0) {
       game.entities.where((e) => e is Bullet && collidesWith(e)).toList().forEach((e) {
         if (width > e.width && height > e.height && (e.x != x && e.y != y)) {
-          width -= e.width;
-          height -= e.height;
           game.ship.bullet++;
           e.removeFromGame();
         }

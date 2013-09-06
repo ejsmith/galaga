@@ -8107,7 +8107,7 @@ main: function() {
   t7.stream = new $._ControllerStream(t7._controller).asBroadcastStream$0();
   t8 = new $.EventStream($.StreamController_StreamController(null, null, null, null, false), null);
   t8.stream = new $._ControllerStream(t8._controller).asBroadcastStream$0();
-  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.05, 0.06, 0.25, 0.55, 0.7, 0.8, 1, 1, 0, 5, 5, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
+  game = new $.GalagaGame(0, 0, 5, 5, 0, null, new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), new $.LinkedHashMap(0, null, null, null, null, null, 0), "Jew", 1, -400, -165, 3, 3, 1, 0, 33, 60, 1, null, true, null, null, 0, 1, 3, false, true, true, 1, null, 1, 0, "All", 0.05, 0.06, 0.25, 0.55, 0.7, 0.8, 1, 1, 0, 5, 15, t2, t1, t3, t4, t5, t6, t7, t8, null, null, null, null, null, input, renderer, loop, "rgba(0, 0, 0, .85)", false);
   game.Game$withServices$3(input, renderer, loop);
   $.Game_debugMode = false;
   game.start$0(game);
@@ -8192,6 +8192,8 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
       t1.$indexSet(t1, "normalKills", 0);
     if (!t1.containsKey$1(t1, "bossKills"))
       t1.$indexSet(t1, "bossKills", 0);
+    if (!t1.containsKey$1(t1, "droneKills"))
+      t1.$indexSet(t1, "droneKills", 0);
     if (!t1.containsKey$1(t1, "motherKills"))
       t1.$indexSet(t1, "motherKills", 0);
     if (!t1.containsKey$1(t1, "powerups"))
@@ -8260,7 +8262,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     this.createGameOverMenu$0();
     this.createStatsMenu$0();
     this.createPausedMenu$0();
-    this.createControlsMenu$0();
+    this.createInstructionsMenu$0();
     this.createLeaderBoardMenu$0();
     this.createCheatsMenu$0();
     for (i = 0; i < 50; ++i)
@@ -8533,32 +8535,52 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
       bouncer.updateBox$0();
       bouncer._width = 42;
       bouncer.updateBox$0();
-    } else if (sprite === 10) {
+    } else if (sprite === 9) {
       bouncer._height = 72;
       bouncer.updateBox$0();
       bouncer._width = 72;
       bouncer.updateBox$0();
-    } else if (sprite === 11) {
+    } else if (sprite === 10) {
       bouncer._height = 36;
       bouncer.updateBox$0();
       bouncer._width = 36;
       bouncer.updateBox$0();
-    } else if (sprite === 12) {
+    } else if (sprite === 11) {
       bouncer._height = 62;
       bouncer.updateBox$0();
       bouncer._width = 62;
       bouncer.updateBox$0();
-    } else if (sprite === 13) {
+    } else if (sprite === 12) {
       bouncer._height = 42;
       bouncer.updateBox$0();
       bouncer._width = 42;
       bouncer.updateBox$0();
-    } else if (sprite === 14) {
+    } else if (sprite === 13) {
       bouncer._height = 62;
       bouncer.updateBox$0();
       bouncer._width = 62;
       bouncer.updateBox$0();
+    } else if (sprite === 14) {
+      bouncer._height = 42;
+      bouncer.updateBox$0();
+      bouncer._width = 42;
+      bouncer.updateBox$0();
     } else if (sprite === 15) {
+      bouncer._height = 42;
+      bouncer.updateBox$0();
+      bouncer._width = 42;
+      bouncer.updateBox$0();
+    } else if (sprite === 16) {
+      bouncer._height = 42;
+      bouncer.updateBox$0();
+      bouncer._width = 42;
+      bouncer.updateBox$0();
+    } else if (sprite === 17) {
+      bouncer._height = 42;
+      bouncer.updateBox$0();
+      bouncer._width = 42;
+      bouncer.updateBox$0();
+    } else if (sprite === 18) {
       bouncer._height = 42;
       bouncer.updateBox$0();
       bouncer._width = 42;
@@ -8949,32 +8971,36 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t2.GameEntity$withPosition$7(this, 0, -155, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Big Bosses Denominated: " + $.S(t1.$index(t1, "bossKills")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Motherships Deflowered: " + $.S(t1.$index(t1, "bossKills")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, -110, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Mother Ships Deflowered: " + $.S(t1.$index(t1, "motherKills")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Mothership Drones Overkilled: " + $.S(t1.$index(t1, "droneKills")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, -65, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Powerups Absorbed: " + $.S(t1.$index(t1, "powerups")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("UFO's Eviscerated: " + $.S(t1.$index(t1, "motherKills")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, -20, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Completed Levels: " + $.S(t1.$index(t1, "wins")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Powerups Absorbed: " + $.S(t1.$index(t1, "powerups")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 25, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Deaths: " + $.S(t1.$index(t1, "deaths")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Total Completed Levels: " + $.S(t1.$index(t1, "wins")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 70, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
-    t2 = new $.GameText("Total Games: " + $.S(t1.$index(t1, "totalGames")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2 = new $.GameText("Total Deaths: " + $.S(t1.$index(t1, "deaths")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t2.GameEntity$withPosition$7(this, 0, 115, 10, 10, "", "stats");
     t2.opacity = 0.8;
     this.entities.push(t2);
+    t2 = new $.GameText("Total Games: " + $.S(t1.$index(t1, "totalGames")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t2.GameEntity$withPosition$7(this, 0, 160, 10, 10, "", "stats");
+    t2.opacity = 0.8;
+    this.entities.push(t2);
     t1 = new $.GameText("High Score: " + $.S(t1.$index(t1, "highscore")), true, "cinnamoncake, Verdana", 36, this, 0, 0, 1, 1, false, false, "", "stats", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
-    t1.GameEntity$withPosition$7(this, 0, 160, 10, 10, "", "stats");
+    t1.GameEntity$withPosition$7(this, 0, 205, 10, 10, "", "stats");
     t1.opacity = 0.8;
     this.entities.push(t1);
     t1 = $.GameButton$(new $.GalagaGame_createStatsMenu_closure(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "stats", "", 0.8, 36, "Back", -420, -280);
@@ -9105,7 +9131,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("options");
   },
-  createControlsMenu$0: function() {
+  createInstructionsMenu$0: function() {
     var t1, t2;
     t1 = new $.GameText("Instructions", true, "cinnamoncake, Verdana", 56, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t1.GameEntity$withPosition$7(this, 0, -225, 10, 10, "", "instructions");
@@ -9135,7 +9161,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t1.GameEntity$withPosition$7(this, 0, 2, 10, 10, "", "instructions");
     t1.opacity = 0.9;
     this.entities.push(t1);
-    t1 = new $.GameText("FIRE FLOWER: Spread shot upgrade.", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+    t1 = new $.GameText("FIRE FLOWER: Spread shot upgrade for 15 seconds.", true, "cinnamoncake, Verdana", 24, this, 0, 0, 1, 1, false, false, "", "instructions", null, null, false, null, null, true, 1, "255, 255, 255", true, null);
     t1.GameEntity$withPosition$7(this, 0, 40, 10, 10, "", "instructions");
     t1.opacity = 0.8;
     this.entities.push(t1);
@@ -9163,7 +9189,7 @@ GalagaGame: {"": "Game;score@,highScore,lastPowerUp,lastEnemy,lastStar,_liblib4$
     t1.GameEntity$withPosition$7(this, 0, 220, 10, 10, "", "instructions");
     t1.opacity = 0.8;
     this.entities.push(t1);
-    t1 = $.GameButton$(new $.GalagaGame_createControlsMenu_closure(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.7, 36, "Back", -420, -280);
+    t1 = $.GameButton$(new $.GalagaGame_createInstructionsMenu_closure(this), true, "255, 255, 255", "cinnamoncake, Verdana", this, "instructions", "", 0.7, 36, "Back", -420, -280);
     this.entities.push(t1);
     this.disableEntitiesByGroup$1("instructions");
   },
@@ -10036,12 +10062,12 @@ GalagaGame_createOptionsMenu_closure: {"": "Closure;this_0",
     t1.removeEntitiesByGroup$1("cheats");
     t1.createCheatsMenu$0();
     $.set$state$x(t1, 10);
-    t1.newBouncer$1(11);
-    t1.newBouncer$1(11);
-    t1.newBouncer$1(11);
-    t1.newBouncer$1(11);
-    t1.newBouncer$1(11);
-    t1.newBouncer$1(11);
+    t1.newBouncer$1(10);
+    t1.newBouncer$1(10);
+    t1.newBouncer$1(10);
+    t1.newBouncer$1(10);
+    t1.newBouncer$1(10);
+    t1.newBouncer$1(10);
     t1 = t1.get$_fadeEvent()._controller;
     t2 = $.get$EventArgs_empty();
     if (t1._state >= 4)
@@ -10266,10 +10292,13 @@ GalagaGame_createOptionsMenu_closure9: {"": "Closure;this_10",
     t1.newBouncer$1(13);
     t1.newBouncer$1(14);
     t1.newBouncer$1(15);
+    t1.newBouncer$1(16);
+    t1.newBouncer$1(17);
+    t1.newBouncer$1(18);
     t2 = $.getInterceptor$x(t1);
     t2.set$state(t1, 1);
     t1.removeEntitiesByGroup$1("instructions");
-    t1.createControlsMenu$0();
+    t1.createInstructionsMenu$0();
     t2.set$state(t1, 7);
     t1 = t1.get$_statUpdateEvent()._controller;
     t2 = $.get$EventArgs_empty();
@@ -10299,7 +10328,7 @@ GalagaGame_createOptionsMenu_closure10: {"": "Closure;this_11",
   }
 },
 
-GalagaGame_createControlsMenu_closure: {"": "Closure;this_0",
+GalagaGame_createInstructionsMenu_closure: {"": "Closure;this_0",
   call$0: function() {
     var t1, t2, t3;
     t1 = this.this_0;
@@ -10947,10 +10976,6 @@ Bullet_update_closure0: {"": "Closure;this_1",
     t1 = this.this_1;
     t2 = $.getInterceptor$x(e);
     if ($.$gt$n(t1.get$_width(), t2.get$width(e)) && $.$gt$n(t1.get$_height(), t2.get$height(e)) && !$.$eq(t2.get$x(e), t1.get$_x()) && !$.$eq(t2.get$y(e), t1.get$_y())) {
-      t1.set$_width($.$sub$n(t1.get$_width(), t2.get$width(e)));
-      t1.updateBox$0();
-      t1.set$_height($.$sub$n(t1.get$_height(), t2.get$height(e)));
-      t1.updateBox$0();
       t1 = t1.get$game().get$ship();
       t1.set$bullet(t1.get$bullet() + 1);
       e.removeFromGame$0();
@@ -11109,7 +11134,7 @@ Clone: {"": "GameEntity;Id<,game,_x,_y,_width,_height,isHighlighted,soundReady,i
   $isClone: true
 },
 
-Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHealth,maxHp,bossMaxHp,belowHalfHp,flicker@,isFalling,isGoingBack,enemyType<,cloneNum<,idNum<,switchAmount,targetX',_invincibleTimer?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
+Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHealth,maxHp,bossMaxHp,belowHalfHp,flicker@,isFalling,isGoingBack,enemyType<,cloneNum<,idNum<,switchAmount,targetX',motherShipType<,_invincibleTimer?,game,_x,_y,_width,_height,isHighlighted,soundReady,id,groupId,box,previousBox,_removeFromGame,radius,momentum,enabled,opacity,color,fill,sprite",
   update$0: function() {
     var t1, t2, t3, t4;
     t1 = $.get$state$x(this.game);
@@ -11144,6 +11169,11 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         if (typeof t2 !== "number")
           return this.update$0$bailout1(5, t1, t2);
         t1.$indexSet(t1, "killed", t2 + 1);
+        t2 = this.game.get$Stats();
+        t1 = t2.$index(t2, "droneKills");
+        if (typeof t1 !== "number")
+          return this.update$0$bailout1(6, t1, t2);
+        t2.$indexSet(t2, "droneKills", t1 + 1);
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this._x, this._y);
         this.game.newMiniExplosion$2(this._x, this._y);
@@ -11153,7 +11183,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(6, t2);
+          return this.update$0$bailout1(7, t2);
         if (t2 !== 0)
           t1.yVel = t2 * -1;
         else
@@ -11163,7 +11193,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(8, t2);
+          return this.update$0$bailout1(9, t2);
         if (t2 !== 0)
           t1.xVel = t2 * -1;
         else
@@ -11171,86 +11201,86 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(10, t1);
+        return this.update$0$bailout1(11, t1);
       if (t1 > $.get$rect$x(this.game).get$halfHeight() - 16) {
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(11, t1, t2);
+          return this.update$0$bailout1(12, t1, t2);
         t1.yVel = t2 * -1;
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(12, t1);
+        return this.update$0$bailout1(13, t1);
       if (t1 < -$.get$rect$x(this.game).get$halfHeight() + 16) {
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(13, t1, t2);
+          return this.update$0$bailout1(14, t1, t2);
         t1.yVel = t2 * -1;
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(14, t1);
+        return this.update$0$bailout1(15, t1);
       if (t1 > $.get$rect$x(this.game).get$halfWidth() - 16) {
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(15, t1, t2);
+          return this.update$0$bailout1(16, t1, t2);
         t1.xVel = t2 * -1;
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(16, t1);
+        return this.update$0$bailout1(17, t1);
       if (t1 < -$.get$rect$x(this.game).get$halfWidth() + 16) {
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(17, t1, t2);
+          return this.update$0$bailout1(18, t1, t2);
         t1.xVel = t2 * -1;
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(18, t1);
+        return this.update$0$bailout1(19, t1);
       if (t1 > this.game.getEnemyX$1("Boss"))
         if ($.random(0, 1, false) <= 0.05) {
           t1 = this.momentum;
           t2 = t1.xVel;
           if (typeof t2 !== "number")
-            return this.update$0$bailout1(19, t1, t2);
+            return this.update$0$bailout1(20, t1, t2);
           t1.xVel = t2 * -1;
         }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(20, t1);
+        return this.update$0$bailout1(21, t1);
       if (t1 < this.game.getEnemyX$1("Boss"))
         if ($.random(0, 1, false) <= 0.05) {
           t1 = this.momentum;
           t2 = t1.xVel;
           if (typeof t2 !== "number")
-            return this.update$0$bailout1(21, t1, t2);
+            return this.update$0$bailout1(22, t1, t2);
           t1.xVel = t2 * -1;
         }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(22, t1);
+        return this.update$0$bailout1(23, t1);
       if (t1 > this.game.getEnemyY$1("Boss"))
         if ($.random(0, 1, false) <= 0.05) {
           t1 = this.momentum;
           t2 = t1.yVel;
           if (typeof t2 !== "number")
-            return this.update$0$bailout1(23, t1, t2);
+            return this.update$0$bailout1(24, t1, t2);
           t1.yVel = t2 * -1;
         }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(24, t1);
+        return this.update$0$bailout1(25, t1);
       if (t1 < this.game.getEnemyY$1("Boss"))
         if ($.random(0, 1, false) <= 0.05) {
           t1 = this.momentum;
           t2 = t1.yVel;
           if (typeof t2 !== "number")
-            return this.update$0$bailout1(25, t1, t2);
+            return this.update$0$bailout1(26, t1, t2);
           t1.yVel = t2 * -1;
         }
       if ($.random(0, 1, false) <= 0.05) {
@@ -11258,7 +11288,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t2 = this._x;
         t3 = this._y;
         if (typeof t3 !== "number")
-          return this.update$0$bailout1(26, t1, t2, t3);
+          return this.update$0$bailout1(27, t1, t2, t3);
         t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
       }
     }
@@ -11267,7 +11297,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.game.get$Stats();
         t2 = t1.$index(t1, "wins");
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(27, t1, t2);
+          return this.update$0$bailout1(28, t1, t2);
         t1.$indexSet(t1, "wins", t2 + 1);
         this.game.newExplosion$2(this._x, this._y);
         this.game.removeEntitiesByFilter$1(new $.Enemy_update_closure());
@@ -11292,17 +11322,17 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.game;
         t2 = t1.get$score();
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(28, t1, t2);
+          return this.update$0$bailout1(29, t1, t2);
         t1.set$score(t2 + 10000 * t1.get$pointMultiplier() * this.bossDifficulty);
         t1 = this.game.get$Stats();
         t2 = t1.$index(t1, "killed");
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(29, t1, t2);
+          return this.update$0$bailout1(30, t1, t2);
         t1.$indexSet(t1, "killed", t2 + 1);
         t2 = this.game.get$Stats();
         t1 = t2.$index(t2, "bossKills");
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(30, t1, t2);
+          return this.update$0$bailout1(31, t1, t2);
         t2.$indexSet(t2, "bossKills", t1 + 1);
         this.game.set$bonusStage(false);
         this._removeFromGame = true;
@@ -11311,7 +11341,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(31, t2);
+          return this.update$0$bailout1(32, t2);
         if (t2 !== 0)
           t1.yVel = t2 * -1;
         else
@@ -11321,7 +11351,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(33, t2);
+          return this.update$0$bailout1(34, t2);
         if (t2 !== 0)
           t1.xVel = t2 * -1;
         else
@@ -11329,52 +11359,52 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(35, t1);
+        return this.update$0$bailout1(36, t1);
       if (t1 > $.get$rect$x(this.game).get$halfHeight() - 250 && $.random(0, 1, false) <= 0.07) {
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(36, t1, t2);
+          return this.update$0$bailout1(37, t1, t2);
         t1.yVel = t2 * -1;
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(37, t1);
+        return this.update$0$bailout1(38, t1);
       if (t1 > $.get$rect$x(this.game).get$halfHeight() - 115) {
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(38, t1, t2);
+          return this.update$0$bailout1(39, t1, t2);
         t1.yVel = t2 * -1;
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(39, t1);
+        return this.update$0$bailout1(40, t1);
       if (t1 < -$.get$rect$x(this.game).get$halfHeight() + 72) {
         t1 = this.momentum;
         t2 = t1.yVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(40, t1, t2);
+          return this.update$0$bailout1(41, t1, t2);
         t1.yVel = t2 * -1;
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(41, t1);
+        return this.update$0$bailout1(42, t1);
       if (t1 > $.get$rect$x(this.game).get$halfWidth() - 72) {
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(42, t1, t2);
+          return this.update$0$bailout1(43, t1, t2);
         t1.xVel = t2 * -1;
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(43, t1);
+        return this.update$0$bailout1(44, t1);
       if (t1 < -$.get$rect$x(this.game).get$halfWidth() + 72) {
         t1 = this.momentum;
         t2 = t1.xVel;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(44, t1, t2);
+          return this.update$0$bailout1(45, t1, t2);
         t1.xVel = t2 * -1;
       }
       if (this.belowHalfHp) {
@@ -11385,19 +11415,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(45, t1, t2, t3);
+              return this.update$0$bailout1(46, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(46, t1, t2, t3);
+              return this.update$0$bailout1(47, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(47, t1, t2, t3);
+              return this.update$0$bailout1(48, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
           }
         } else if (t1 === 2) {
@@ -11406,19 +11436,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(48, t1, t2, t3);
+              return this.update$0$bailout1(49, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(49, t1, t2, t3);
+              return this.update$0$bailout1(50, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(50, t1, t2, t3);
+              return this.update$0$bailout1(51, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
           }
         } else if (t1 === 3) {
@@ -11428,32 +11458,32 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(51, t1, t2, t3);
+                return this.update$0$bailout1(52, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(52, t1, t2, t3);
+                return this.update$0$bailout1(53, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(53, t1, t2, t3);
+                return this.update$0$bailout1(54, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             } else if ($.random(0, 1, false) <= 0.1) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(54, t1, t2, t3);
+                return this.update$0$bailout1(55, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(55, t1, t2, t3);
+                return this.update$0$bailout1(56, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
         } else if (t1 === 4) {
@@ -11463,32 +11493,32 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(56, t1, t2, t3);
+                return this.update$0$bailout1(57, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(57, t1, t2, t3);
+                return this.update$0$bailout1(58, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(58, t1, t2, t3);
+                return this.update$0$bailout1(59, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             } else if ($.random(0, 1, false) <= 0.3) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(59, t1, t2, t3);
+                return this.update$0$bailout1(60, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(60, t1, t2, t3);
+                return this.update$0$bailout1(61, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
         } else if (t1 === 5)
@@ -11498,51 +11528,51 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(61, t1, t2, t3);
+                return this.update$0$bailout1(62, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(62, t1, t2, t3);
+                return this.update$0$bailout1(63, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(63, t1, t2, t3);
+                return this.update$0$bailout1(64, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             } else if ($.random(0, 1, false) <= 0.5) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(64, t1, t2, t3);
+                return this.update$0$bailout1(65, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(65, t1, t2, t3);
+                return this.update$0$bailout1(66, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(66, t1, t2, t3);
+              return this.update$0$bailout1(67, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(67, t1, t2, t3);
+              return this.update$0$bailout1(68, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(68, t1, t2, t3);
+              return this.update$0$bailout1(69, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
           }
       } else {
@@ -11553,19 +11583,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(69, t1, t2, t3);
+              return this.update$0$bailout1(70, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(70, t1, t2, t3);
+              return this.update$0$bailout1(71, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(71, t1, t2, t3);
+              return this.update$0$bailout1(72, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
           }
         } else if (t1 === 2) {
@@ -11574,19 +11604,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(72, t1, t2, t3);
+              return this.update$0$bailout1(73, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(73, t1, t2, t3);
+              return this.update$0$bailout1(74, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(74, t1, t2, t3);
+              return this.update$0$bailout1(75, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
           }
         } else if (t1 === 3) {
@@ -11596,32 +11626,32 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(75, t1, t2, t3);
+                return this.update$0$bailout1(76, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(76, t1, t2, t3);
+                return this.update$0$bailout1(77, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(77, t1, t2, t3);
+                return this.update$0$bailout1(78, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
             } else if ($.random(0, 1, false) <= 0.1) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(78, t1, t2, t3);
+                return this.update$0$bailout1(79, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(79, t1, t2, t3);
+                return this.update$0$bailout1(80, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
         } else if (t1 === 4) {
@@ -11631,32 +11661,32 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(80, t1, t2, t3);
+                return this.update$0$bailout1(81, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(81, t1, t2, t3);
+                return this.update$0$bailout1(82, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(82, t1, t2, t3);
+                return this.update$0$bailout1(83, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
             } else if ($.random(0, 1, false) <= 0.3) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(83, t1, t2, t3);
+                return this.update$0$bailout1(84, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(84, t1, t2, t3);
+                return this.update$0$bailout1(85, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
         } else if (t1 === 5)
@@ -11666,32 +11696,32 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(85, t1, t2, t3);
+                return this.update$0$bailout1(86, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(86, t1, t2, t3);
+                return this.update$0$bailout1(87, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(87, t1, t2, t3);
+                return this.update$0$bailout1(88, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
             } else if ($.random(0, 1, false) <= 0.5) {
               t1 = this.game;
               t2 = this._x;
               t3 = this._y;
               if (typeof t3 !== "number")
-                return this.update$0$bailout1(88, t1, t2, t3);
+                return this.update$0$bailout1(89, t1, t2, t3);
               t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
               t3 = this.game;
               t2 = this._x;
               t1 = this._y;
               if (typeof t1 !== "number")
-                return this.update$0$bailout1(89, t1, t2, t3);
+                return this.update$0$bailout1(90, t1, t2, t3);
               t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
             }
           } else if ($.random(0, 1, false) <= 0.01) {
@@ -11699,19 +11729,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(90, t1, t2, t3);
+              return this.update$0$bailout1(91, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(91, t1, t2, t3);
+              return this.update$0$bailout1(92, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(92, t1, t2, t3);
+              return this.update$0$bailout1(93, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
           }
       }
@@ -11719,23 +11749,23 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       t2 = this.game;
       t3 = this._x;
       if (typeof t3 !== "number")
-        return this.update$0$bailout1(93, t1, t2, t3);
+        return this.update$0$bailout1(94, t1, t2, t3);
       t4 = this._y;
       if (t1) {
         if (typeof t4 !== "number")
-          return this.update$0$bailout1(94, t4, t2, t3);
+          return this.update$0$bailout1(95, t4, t2, t3);
         t2.newBossDrone$2(t3, t4 - 50);
       } else {
         t1 = t3 + 72;
         if (typeof t4 !== "number")
-          return this.update$0$bailout1(95, t1, t2, t4);
+          return this.update$0$bailout1(96, t1, t2, t4);
         t2.newBossDrone$2(t1, t4 - 50);
       }
     }
     if (this.type === "MotherShip") {
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(96, t1);
+        return this.update$0$bailout1(97, t1);
       if (t1 > $.get$rect$x(this.game).get$halfWidth())
         this._removeFromGame = true;
       this.momentum.xVel = 150;
@@ -11743,17 +11773,17 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.game;
         t2 = t1.get$score();
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(97, t1, t2);
+          return this.update$0$bailout1(98, t1, t2);
         t1.set$score(t2 + 1000 * t1.get$pointMultiplier() * this.difficulty);
         t1 = this.game.get$Stats();
         t2 = t1.$index(t1, "killed");
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(98, t1, t2);
+          return this.update$0$bailout1(99, t1, t2);
         t1.$indexSet(t1, "killed", t2 + 1);
         t2 = this.game.get$Stats();
         t1 = t2.$index(t2, "motherKills");
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(99, t1, t2);
+          return this.update$0$bailout1(100, t1, t2);
         t2.$indexSet(t2, "motherKills", t1 + 1);
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this._x, this._y);
@@ -11764,14 +11794,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       if (t1 === 1) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(100, t1);
+          return this.update$0$bailout1(101, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(101, t1);
+            return this.update$0$bailout1(102, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -11784,20 +11814,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(102, t1, t2, t3);
+            return this.update$0$bailout1(103, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
         }
       } else if (t1 === 2) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(103, t1);
+          return this.update$0$bailout1(104, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(104, t1);
+            return this.update$0$bailout1(105, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -11810,20 +11840,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(105, t1, t2, t3);
+            return this.update$0$bailout1(106, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
         }
       } else if (t1 === 3) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(106, t1);
+          return this.update$0$bailout1(107, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(107, t1);
+            return this.update$0$bailout1(108, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -11836,34 +11866,34 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(108, t1, t2, t3);
+            return this.update$0$bailout1(109, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.1) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(109, t1, t2, t3);
+              return this.update$0$bailout1(110, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(110, t1, t2, t3);
+              return this.update$0$bailout1(111, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
       } else if (t1 === 4) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(111, t1);
+          return this.update$0$bailout1(112, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(112, t1);
+            return this.update$0$bailout1(113, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -11876,34 +11906,34 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(113, t1, t2, t3);
+            return this.update$0$bailout1(114, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.3) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(114, t1, t2, t3);
+              return this.update$0$bailout1(115, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(115, t1, t2, t3);
+              return this.update$0$bailout1(116, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
       } else if (t1 === 5) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(116, t1);
+          return this.update$0$bailout1(117, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(117, t1);
+            return this.update$0$bailout1(118, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -11916,20 +11946,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(118, t1, t2, t3);
+            return this.update$0$bailout1(119, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.5) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(119, t1, t2, t3);
+              return this.update$0$bailout1(120, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(120, t1, t2, t3);
+              return this.update$0$bailout1(121, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
@@ -11943,7 +11973,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       $.IterableMixinWorkaround_forEach($.List_List$from(new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure2(this)), true), new $.Enemy_update_closure3(this));
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(121, t1);
+        return this.update$0$bailout1(122, t1);
       if (t1 > $.get$rect$x(this.game).get$halfHeight() - 45) {
         this.momentum.yVel = -140;
         this.isGoingBack = true;
@@ -11952,10 +11982,10 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         this.game.matchCloneX$0();
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(122, t1);
+          return this.update$0$bailout1(123, t1);
         t2 = this.targetX;
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(123, t1, t2);
+          return this.update$0$bailout1(124, t1, t2);
         if (t1 < t2)
           this.momentum.xVel = 100;
         else {
@@ -11975,21 +12005,38 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           this.momentum.yVel = $.random(-140, 0, false);
         t1 = this._y;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(124, t1);
+          return this.update$0$bailout1(125, t1);
         if (t1 < -($.get$rect$x(this.game).get$halfHeight() - 60)) {
           t1 = this.momentum;
           t2 = t1.yVel;
           if (typeof t2 !== "number")
-            return this.update$0$bailout1(125, t1, t2);
+            return this.update$0$bailout1(126, t1, t2);
           t1.yVel = t2 * -1;
+        }
+        t1 = this._x;
+        if (typeof t1 !== "number")
+          return this.update$0$bailout1(127, t1);
+        if (!(t1 + 16 > $.get$rect$x(this.game).get$halfWidth() - 60)) {
+          t1 = this._x;
+          if (typeof t1 !== "number")
+            return this.update$0$bailout1(128, t1);
+          t1 = t1 - 16 < -$.get$rect$x(this.game).get$halfWidth() + 60;
+        } else
+          t1 = true;
+        if (t1) {
+          t1 = this.momentum;
+          t2 = t1.xVel;
+          if (typeof t2 !== "number")
+            return this.update$0$bailout1(129, t1, t2);
+          t1.xVel = t2 * -1;
         }
       }
       t1 = this._y;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(126, t1);
+        return this.update$0$bailout1(130, t1);
       t2 = this.startY;
       if (typeof t2 !== "number")
-        return this.update$0$bailout1(127, t1, t2);
+        return this.update$0$bailout1(131, t1, t2);
       if (t1 < t2 && this.isGoingBack) {
         this._y = t2;
         this.updateBox$0();
@@ -12003,19 +12050,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
         t1 = this.game;
         t2 = t1.get$score();
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(128, t1, t2);
+          return this.update$0$bailout1(132, t1, t2);
         t1.set$score(t2 + 100 * t1.get$pointMultiplier() * this.difficulty);
         t1 = this.game;
         t1.set$enemyAmount(t1.get$enemyAmount() - 1);
         t1 = this.game.get$Stats();
         t2 = t1.$index(t1, "killed");
         if (typeof t2 !== "number")
-          return this.update$0$bailout1(129, t1, t2);
+          return this.update$0$bailout1(133, t1, t2);
         t1.$indexSet(t1, "killed", t2 + 1);
         t2 = this.game.get$Stats();
         t1 = t2.$index(t2, "normalKills");
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(130, t1, t2);
+          return this.update$0$bailout1(134, t1, t2);
         t2.$indexSet(t2, "normalKills", t1 + 1);
         if ($.random(0, 1, false) > 0.5)
           this.game.newBulletPowerUp$2(this._x, this._y);
@@ -12026,11 +12073,11 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       }
       t1 = this._x;
       if (typeof t1 !== "number")
-        return this.update$0$bailout1(131, t1);
+        return this.update$0$bailout1(135, t1);
       if (!(t1 + 16 > $.get$rect$x(this.game).get$halfWidth())) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(132, t1);
+          return this.update$0$bailout1(136, t1);
         t1 = t1 - 16 < -$.get$rect$x(this.game).get$halfWidth() && !this.isFalling;
       } else
         t1 = true;
@@ -12040,14 +12087,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       if (t1 === 1) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(133, t1);
+          return this.update$0$bailout1(137, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(134, t1);
+            return this.update$0$bailout1(138, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -12060,20 +12107,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(135, t1, t2, t3);
+            return this.update$0$bailout1(139, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
         }
       } else if (t1 === 2) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(136, t1);
+          return this.update$0$bailout1(140, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(137, t1);
+            return this.update$0$bailout1(141, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -12086,20 +12133,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(138, t1, t2, t3);
+            return this.update$0$bailout1(142, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
         }
       } else if (t1 === 3) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(139, t1);
+          return this.update$0$bailout1(143, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(140, t1);
+            return this.update$0$bailout1(144, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -12112,34 +12159,34 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(141, t1, t2, t3);
+            return this.update$0$bailout1(145, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.1) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(142, t1, t2, t3);
+              return this.update$0$bailout1(146, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(143, t1, t2, t3);
+              return this.update$0$bailout1(147, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
       } else if (t1 === 4) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(144, t1);
+          return this.update$0$bailout1(148, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(145, t1);
+            return this.update$0$bailout1(149, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -12152,34 +12199,34 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(146, t1, t2, t3);
+            return this.update$0$bailout1(150, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.3) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(147, t1, t2, t3);
+              return this.update$0$bailout1(151, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(148, t1, t2, t3);
+              return this.update$0$bailout1(152, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
       } else if (t1 === 5) {
         t1 = this._x;
         if (typeof t1 !== "number")
-          return this.update$0$bailout1(149, t1);
+          return this.update$0$bailout1(153, t1);
         t2 = $.get$x$x(this.game.get$ship());
         if (typeof t2 !== "number")
           throw $.iae(t2);
         if (t1 + 16 >= t2) {
           t1 = this._x;
           if (typeof t1 !== "number")
-            return this.update$0$bailout1(150, t1);
+            return this.update$0$bailout1(154, t1);
           t2 = $.get$x$x(this.game.get$ship());
           if (typeof t2 !== "number")
             throw $.iae(t2);
@@ -12192,20 +12239,20 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
           t2 = this._x;
           t3 = this._y;
           if (typeof t3 !== "number")
-            return this.update$0$bailout1(151, t1, t2, t3);
+            return this.update$0$bailout1(155, t1, t2, t3);
           t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           if ($.random(0, 1, false) <= 0.5) {
             t1 = this.game;
             t2 = this._x;
             t3 = this._y;
             if (typeof t3 !== "number")
-              return this.update$0$bailout1(152, t1, t2, t3);
+              return this.update$0$bailout1(156, t1, t2, t3);
             t1.addEntity$1($.Bullet$(t1, t2, t3 + 16, "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
             t3 = this.game;
             t2 = this._x;
             t1 = this._y;
             if (typeof t1 !== "number")
-              return this.update$0$bailout1(153, t1, t2, t3);
+              return this.update$0$bailout1(157, t1, t2, t3);
             t3.addEntity$1($.Bullet$(t3, t2, t1 + 16, "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
           }
         }
@@ -12267,11 +12314,12 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       case 24:
       case 25:
       case 26:
-        if (state0 === 26 || state0 === 25 || state0 === 24 || state0 === 23 || state0 === 22 || state0 === 21 || state0 === 20 || state0 === 19 || state0 === 18 || state0 === 17 || state0 === 16 || state0 === 15 || state0 === 14 || state0 === 13 || state0 === 12 || state0 === 11 || state0 === 10 || state0 === 9 || state0 === 8 || state0 === 7 || state0 === 6 || state0 === 5 || state0 === 4 || state0 === 0 && this.type === "Drone")
+      case 27:
+        if (state0 === 27 || state0 === 26 || state0 === 25 || state0 === 24 || state0 === 23 || state0 === 22 || state0 === 21 || state0 === 20 || state0 === 19 || state0 === 18 || state0 === 17 || state0 === 16 || state0 === 15 || state0 === 14 || state0 === 13 || state0 === 12 || state0 === 11 || state0 === 10 || state0 === 9 || state0 === 8 || state0 === 7 || state0 === 6 || state0 === 5 || state0 === 4 || state0 === 0 && this.type === "Drone")
           switch (state0) {
             case 0:
             default:
-              if (state0 === 5 || state0 === 4 || state0 === 0 && this.health <= 0)
+              if (state0 === 6 || state0 === 5 || state0 === 4 || state0 === 0 && this.health <= 0)
                 switch (state0) {
                   case 0:
                     t1 = this.game;
@@ -12284,49 +12332,54 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                   case 5:
                     state0 = 0;
                     t1.$indexSet(t1, "killed", $.$add$ns(t2, 1));
+                    t2 = this.game.get$Stats();
+                    t1 = t2.$index(t2, "droneKills");
+                  case 6:
+                    state0 = 0;
+                    t2.$indexSet(t2, "droneKills", $.$add$ns(t1, 1));
                     if ($.random(0, 1, false) > 0.5)
                       this.game.newBulletPowerUp$2(this._x, this._y);
                     this.game.newMiniExplosion$2(this._x, this._y);
                     this._removeFromGame = true;
                 }
-            case 6:
             case 7:
-              if (state0 === 7 || state0 === 6 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+            case 8:
+              if (state0 === 8 || state0 === 7 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                 switch (state0) {
                   case 0:
                     t1 = this.momentum.yVel;
-                  case 6:
+                  case 7:
                     state0 = 0;
                     t1 = $.$eq(t1, 0);
                     t2 = this.momentum;
-                  case 7:
-                    if (state0 === 7 || state0 === 0 && !t1)
+                  case 8:
+                    if (state0 === 8 || state0 === 0 && !t1)
                       switch (state0) {
                         case 0:
                           t1 = t2.yVel;
-                        case 7:
+                        case 8:
                           state0 = 0;
                           t2.yVel = $.$mul$n(t1, -1);
                       }
                     else
                       t2.yVel = 60;
                 }
-            case 8:
             case 9:
-              if (state0 === 9 || state0 === 8 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+            case 10:
+              if (state0 === 10 || state0 === 9 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                 switch (state0) {
                   case 0:
                     t1 = this.momentum.xVel;
-                  case 8:
+                  case 9:
                     state0 = 0;
                     t1 = $.$eq(t1, 0);
                     t2 = this.momentum;
-                  case 9:
-                    if (state0 === 9 || state0 === 0 && !t1)
+                  case 10:
+                    if (state0 === 10 || state0 === 0 && !t1)
                       switch (state0) {
                         case 0:
                           t1 = t2.xVel;
-                        case 9:
+                        case 10:
                           state0 = 0;
                           t2.xVel = $.$mul$n(t1, -1);
                       }
@@ -12334,142 +12387,141 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       t2.xVel = 60;
                 }
               t1 = this._y;
-            case 10:
-              state0 = 0;
             case 11:
-              if (state0 === 11 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 16))
-                switch (state0) {
-                  case 0:
-                    t1 = this.momentum;
-                    t2 = t1.yVel;
-                  case 11:
-                    state0 = 0;
-                    t1.yVel = $.$mul$n(t2, -1);
-                }
-              t1 = this._y;
+              state0 = 0;
             case 12:
-              state0 = 0;
-            case 13:
-              if (state0 === 13 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfHeight() + 16))
+              if (state0 === 12 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 16))
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.yVel;
-                  case 13:
+                  case 12:
+                    state0 = 0;
+                    t1.yVel = $.$mul$n(t2, -1);
+                }
+              t1 = this._y;
+            case 13:
+              state0 = 0;
+            case 14:
+              if (state0 === 14 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfHeight() + 16))
+                switch (state0) {
+                  case 0:
+                    t1 = this.momentum;
+                    t2 = t1.yVel;
+                  case 14:
                     state0 = 0;
                     t1.yVel = $.$mul$n(t2, -1);
                 }
               t1 = this._x;
-            case 14:
-              state0 = 0;
             case 15:
-              if (state0 === 15 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfWidth() - 16))
-                switch (state0) {
-                  case 0:
-                    t1 = this.momentum;
-                    t2 = t1.xVel;
-                  case 15:
-                    state0 = 0;
-                    t1.xVel = $.$mul$n(t2, -1);
-                }
-              t1 = this._x;
+              state0 = 0;
             case 16:
-              state0 = 0;
-            case 17:
-              if (state0 === 17 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfWidth() + 16))
+              if (state0 === 16 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfWidth() - 16))
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.xVel;
-                  case 17:
+                  case 16:
                     state0 = 0;
                     t1.xVel = $.$mul$n(t2, -1);
                 }
               t1 = this._x;
-            case 18:
+            case 17:
               state0 = 0;
-            case 19:
-              if (state0 === 19 || state0 === 0 && $.$gt$n(t1, this.game.getEnemyX$1("Boss")))
+            case 18:
+              if (state0 === 18 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfWidth() + 16))
                 switch (state0) {
                   case 0:
-                  case 19:
-                    if (state0 === 19 || state0 === 0 && $.random(0, 1, false) <= 0.05)
+                    t1 = this.momentum;
+                    t2 = t1.xVel;
+                  case 18:
+                    state0 = 0;
+                    t1.xVel = $.$mul$n(t2, -1);
+                }
+              t1 = this._x;
+            case 19:
+              state0 = 0;
+            case 20:
+              if (state0 === 20 || state0 === 0 && $.$gt$n(t1, this.game.getEnemyX$1("Boss")))
+                switch (state0) {
+                  case 0:
+                  case 20:
+                    if (state0 === 20 || state0 === 0 && $.random(0, 1, false) <= 0.05)
                       switch (state0) {
                         case 0:
                           t1 = this.momentum;
                           t2 = t1.xVel;
-                        case 19:
+                        case 20:
                           state0 = 0;
                           t1.xVel = $.$mul$n(t2, -1);
                       }
                 }
               t1 = this._x;
-            case 20:
-              state0 = 0;
             case 21:
-              if (state0 === 21 || state0 === 0 && $.$lt$n(t1, this.game.getEnemyX$1("Boss")))
+              state0 = 0;
+            case 22:
+              if (state0 === 22 || state0 === 0 && $.$lt$n(t1, this.game.getEnemyX$1("Boss")))
                 switch (state0) {
                   case 0:
-                  case 21:
-                    if (state0 === 21 || state0 === 0 && $.random(0, 1, false) <= 0.05)
+                  case 22:
+                    if (state0 === 22 || state0 === 0 && $.random(0, 1, false) <= 0.05)
                       switch (state0) {
                         case 0:
                           t1 = this.momentum;
                           t2 = t1.xVel;
-                        case 21:
+                        case 22:
                           state0 = 0;
                           t1.xVel = $.$mul$n(t2, -1);
                       }
                 }
               t1 = this._y;
-            case 22:
-              state0 = 0;
             case 23:
-              if (state0 === 23 || state0 === 0 && $.$gt$n(t1, this.game.getEnemyY$1("Boss")))
+              state0 = 0;
+            case 24:
+              if (state0 === 24 || state0 === 0 && $.$gt$n(t1, this.game.getEnemyY$1("Boss")))
                 switch (state0) {
                   case 0:
-                  case 23:
-                    if (state0 === 23 || state0 === 0 && $.random(0, 1, false) <= 0.05)
+                  case 24:
+                    if (state0 === 24 || state0 === 0 && $.random(0, 1, false) <= 0.05)
                       switch (state0) {
                         case 0:
                           t1 = this.momentum;
                           t2 = t1.yVel;
-                        case 23:
+                        case 24:
                           state0 = 0;
                           t1.yVel = $.$mul$n(t2, -1);
                       }
                 }
               t1 = this._y;
-            case 24:
-              state0 = 0;
             case 25:
-              if (state0 === 25 || state0 === 0 && $.$lt$n(t1, this.game.getEnemyY$1("Boss")))
+              state0 = 0;
+            case 26:
+              if (state0 === 26 || state0 === 0 && $.$lt$n(t1, this.game.getEnemyY$1("Boss")))
                 switch (state0) {
                   case 0:
-                  case 25:
-                    if (state0 === 25 || state0 === 0 && $.random(0, 1, false) <= 0.05)
+                  case 26:
+                    if (state0 === 26 || state0 === 0 && $.random(0, 1, false) <= 0.05)
                       switch (state0) {
                         case 0:
                           t1 = this.momentum;
                           t2 = t1.yVel;
-                        case 25:
+                        case 26:
                           state0 = 0;
                           t1.yVel = $.$mul$n(t2, -1);
                       }
                 }
-            case 26:
-              if (state0 === 26 || state0 === 0 && $.random(0, 1, false) <= 0.05)
+            case 27:
+              if (state0 === 27 || state0 === 0 && $.random(0, 1, false) <= 0.05)
                 switch (state0) {
                   case 0:
                     t1 = this.game;
                     t2 = this._x;
                     t3 = this._y;
-                  case 26:
+                  case 27:
                     state0 = 0;
                     t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                 }
           }
-      case 27:
       case 28:
       case 29:
       case 30:
@@ -12538,16 +12590,17 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       case 93:
       case 94:
       case 95:
-        if (state0 === 95 || state0 === 94 || state0 === 93 || state0 === 92 || state0 === 91 || state0 === 90 || state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 85 || state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 80 || state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 75 || state0 === 74 || state0 === 73 || state0 === 72 || state0 === 71 || state0 === 70 || state0 === 69 || state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 50 || state0 === 49 || state0 === 48 || state0 === 47 || state0 === 46 || state0 === 45 || state0 === 44 || state0 === 43 || state0 === 42 || state0 === 41 || state0 === 40 || state0 === 39 || state0 === 38 || state0 === 37 || state0 === 36 || state0 === 35 || state0 === 34 || state0 === 33 || state0 === 32 || state0 === 31 || state0 === 30 || state0 === 29 || state0 === 28 || state0 === 27 || state0 === 0 && this.type === "Boss")
+      case 96:
+        if (state0 === 96 || state0 === 95 || state0 === 94 || state0 === 93 || state0 === 92 || state0 === 91 || state0 === 90 || state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 85 || state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 80 || state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 75 || state0 === 74 || state0 === 73 || state0 === 72 || state0 === 71 || state0 === 70 || state0 === 69 || state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 50 || state0 === 49 || state0 === 48 || state0 === 47 || state0 === 46 || state0 === 45 || state0 === 44 || state0 === 43 || state0 === 42 || state0 === 41 || state0 === 40 || state0 === 39 || state0 === 38 || state0 === 37 || state0 === 36 || state0 === 35 || state0 === 34 || state0 === 33 || state0 === 32 || state0 === 31 || state0 === 30 || state0 === 29 || state0 === 28 || state0 === 0 && this.type === "Boss")
           switch (state0) {
             case 0:
             default:
-              if (state0 === 30 || state0 === 29 || state0 === 28 || state0 === 27 || state0 === 0 && this.health <= 0)
+              if (state0 === 31 || state0 === 30 || state0 === 29 || state0 === 28 || state0 === 0 && this.health <= 0)
                 switch (state0) {
                   case 0:
                     t1 = this.game.get$Stats();
                     t2 = t1.$index(t1, "wins");
-                  case 27:
+                  case 28:
                     state0 = 0;
                     t1.$indexSet(t1, "wins", $.$add$ns(t2, 1));
                     this.game.newExplosion$2(this._x, this._y);
@@ -12572,60 +12625,60 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       t1.set$bonusStage(false);
                     t1 = this.game;
                     t2 = t1.get$score();
-                  case 28:
+                  case 29:
                     state0 = 0;
                     t1.set$score($.$add$ns(t2, 10000 * t1.get$pointMultiplier() * this.bossDifficulty));
                     t1 = this.game.get$Stats();
                     t2 = t1.$index(t1, "killed");
-                  case 29:
+                  case 30:
                     state0 = 0;
                     t1.$indexSet(t1, "killed", $.$add$ns(t2, 1));
                     t2 = this.game.get$Stats();
                     t1 = t2.$index(t2, "bossKills");
-                  case 30:
+                  case 31:
                     state0 = 0;
                     t2.$indexSet(t2, "bossKills", $.$add$ns(t1, 1));
                     this.game.set$bonusStage(false);
                     this._removeFromGame = true;
                 }
-            case 31:
             case 32:
-              if (state0 === 32 || state0 === 31 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+            case 33:
+              if (state0 === 33 || state0 === 32 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                 switch (state0) {
                   case 0:
                     t1 = this.momentum.yVel;
-                  case 31:
+                  case 32:
                     state0 = 0;
                     t1 = $.$eq(t1, 0);
                     t2 = this.momentum;
-                  case 32:
-                    if (state0 === 32 || state0 === 0 && !t1)
+                  case 33:
+                    if (state0 === 33 || state0 === 0 && !t1)
                       switch (state0) {
                         case 0:
                           t1 = t2.yVel;
-                        case 32:
+                        case 33:
                           state0 = 0;
                           t2.yVel = $.$mul$n(t1, -1);
                       }
                     else
                       t2.yVel = 60;
                 }
-            case 33:
             case 34:
-              if (state0 === 34 || state0 === 33 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+            case 35:
+              if (state0 === 35 || state0 === 34 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                 switch (state0) {
                   case 0:
                     t1 = this.momentum.xVel;
-                  case 33:
+                  case 34:
                     state0 = 0;
                     t1 = $.$eq(t1, 0);
                     t2 = this.momentum;
-                  case 34:
-                    if (state0 === 34 || state0 === 0 && !t1)
+                  case 35:
+                    if (state0 === 35 || state0 === 0 && !t1)
                       switch (state0) {
                         case 0:
                           t1 = t2.xVel;
-                        case 34:
+                        case 35:
                           state0 = 0;
                           t2.xVel = $.$mul$n(t1, -1);
                       }
@@ -12633,71 +12686,70 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       t2.xVel = 60;
                 }
               t1 = this._y;
-            case 35:
-              state0 = 0;
             case 36:
-              if (state0 === 36 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 250) && $.random(0, 1, false) <= 0.07)
-                switch (state0) {
-                  case 0:
-                    t1 = this.momentum;
-                    t2 = t1.yVel;
-                  case 36:
-                    state0 = 0;
-                    t1.yVel = $.$mul$n(t2, -1);
-                }
-              t1 = this._y;
+              state0 = 0;
             case 37:
-              state0 = 0;
-            case 38:
-              if (state0 === 38 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 115))
+              if (state0 === 37 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 250) && $.random(0, 1, false) <= 0.07)
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.yVel;
-                  case 38:
+                  case 37:
                     state0 = 0;
                     t1.yVel = $.$mul$n(t2, -1);
                 }
               t1 = this._y;
-            case 39:
+            case 38:
               state0 = 0;
-            case 40:
-              if (state0 === 40 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfHeight() + 72))
+            case 39:
+              if (state0 === 39 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 115))
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.yVel;
-                  case 40:
+                  case 39:
+                    state0 = 0;
+                    t1.yVel = $.$mul$n(t2, -1);
+                }
+              t1 = this._y;
+            case 40:
+              state0 = 0;
+            case 41:
+              if (state0 === 41 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfHeight() + 72))
+                switch (state0) {
+                  case 0:
+                    t1 = this.momentum;
+                    t2 = t1.yVel;
+                  case 41:
                     state0 = 0;
                     t1.yVel = $.$mul$n(t2, -1);
                 }
               t1 = this._x;
-            case 41:
-              state0 = 0;
             case 42:
-              if (state0 === 42 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfWidth() - 72))
+              state0 = 0;
+            case 43:
+              if (state0 === 43 || state0 === 0 && $.$gt$n(t1, $.get$rect$x(this.game).get$halfWidth() - 72))
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.xVel;
-                  case 42:
+                  case 43:
                     state0 = 0;
                     t1.xVel = $.$mul$n(t2, -1);
                 }
               t1 = this._x;
-            case 43:
-              state0 = 0;
             case 44:
-              if (state0 === 44 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfWidth() + 72))
+              state0 = 0;
+            case 45:
+              if (state0 === 45 || state0 === 0 && $.$lt$n(t1, -$.get$rect$x(this.game).get$halfWidth() + 72))
                 switch (state0) {
                   case 0:
                     t1 = this.momentum;
                     t2 = t1.xVel;
-                  case 44:
+                  case 45:
                     state0 = 0;
                     t1.xVel = $.$mul$n(t2, -1);
                 }
-            case 45:
             case 46:
             case 47:
             case 48:
@@ -12745,34 +12797,35 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             case 90:
             case 91:
             case 92:
-              if (state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 50 || state0 === 49 || state0 === 48 || state0 === 47 || state0 === 46 || state0 === 45 || state0 === 0 && this.belowHalfHp)
+            case 93:
+              if (state0 === 69 || state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 50 || state0 === 49 || state0 === 48 || state0 === 47 || state0 === 46 || state0 === 0 && this.belowHalfHp)
                 switch (state0) {
                   case 0:
                     t1 = this.bossDifficulty;
                   default:
-                    if (state0 === 47 || state0 === 46 || state0 === 45 || state0 === 0 && t1 === 1)
+                    if (state0 === 48 || state0 === 47 || state0 === 46 || state0 === 0 && t1 === 1)
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 47 || state0 === 46 || state0 === 45 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                          if (state0 === 48 || state0 === 47 || state0 === 46 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                             switch (state0) {
                               case 0:
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 45:
+                              case 46:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                 t3 = this.game;
                                 t2 = this._x;
                                 t1 = this._y;
-                              case 46:
+                              case 47:
                                 state0 = 0;
                                 t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 47:
+                              case 48:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                             }
@@ -12781,29 +12834,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 50 || state0 === 49 || state0 === 48 || state0 === 0 && t1 === 2)
+                          if (state0 === 51 || state0 === 50 || state0 === 49 || state0 === 0 && t1 === 2)
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 50 || state0 === 49 || state0 === 48 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                if (state0 === 51 || state0 === 50 || state0 === 49 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                   switch (state0) {
                                     case 0:
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 48:
+                                    case 49:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                       t3 = this.game;
                                       t2 = this._x;
                                       t1 = this._y;
-                                    case 49:
+                                    case 50:
                                       state0 = 0;
                                       t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 50:
+                                    case 51:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                   }
@@ -12812,33 +12865,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 0 && t1 === 3)
+                                if (state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 0 && t1 === 3)
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 51 || state0 === 0 && $.random(0, 1, false) <= 0.07)
+                                      if (state0 === 56 || state0 === 55 || state0 === 54 || state0 === 53 || state0 === 52 || state0 === 0 && $.random(0, 1, false) <= 0.07)
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 53 || state0 === 52 || state0 === 51 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                            if (state0 === 54 || state0 === 53 || state0 === 52 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 51:
+                                                case 52:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                   t3 = this.game;
                                                   t2 = this._x;
                                                   t1 = this._y;
-                                                case 52:
+                                                case 53:
                                                   state0 = 0;
                                                   t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 53:
+                                                case 54:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                               }
@@ -12846,19 +12899,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 55 || state0 === 54 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                                  if (state0 === 56 || state0 === 55 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 54:
+                                                      case 55:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 55:
+                                                      case 56:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                     }
@@ -12869,33 +12922,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 0 && t1 === 4)
+                                      if (state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 0 && t1 === 4)
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 56 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                            if (state0 === 61 || state0 === 60 || state0 === 59 || state0 === 58 || state0 === 57 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 58 || state0 === 57 || state0 === 56 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                                  if (state0 === 59 || state0 === 58 || state0 === 57 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 56:
+                                                      case 57:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 57:
+                                                      case 58:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 58:
+                                                      case 59:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                     }
@@ -12903,19 +12956,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                     switch (state0) {
                                                       case 0:
                                                       default:
-                                                        if (state0 === 60 || state0 === 59 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                                        if (state0 === 61 || state0 === 60 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                                           switch (state0) {
                                                             case 0:
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 59:
+                                                            case 60:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                               t3 = this.game;
                                                               t2 = this._x;
                                                               t1 = this._y;
-                                                            case 60:
+                                                            case 61:
                                                               state0 = 0;
                                                               t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                           }
@@ -12926,33 +12979,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 0 && t1 === 5)
+                                            if (state0 === 69 || state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 0 && t1 === 5)
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 61 || state0 === 0 && $.random(0, 1, false) <= 0.2)
+                                                  if (state0 === 69 || state0 === 68 || state0 === 67 || state0 === 66 || state0 === 65 || state0 === 64 || state0 === 63 || state0 === 62 || state0 === 0 && $.random(0, 1, false) <= 0.2)
                                                     switch (state0) {
                                                       case 0:
                                                       default:
-                                                        if (state0 === 63 || state0 === 62 || state0 === 61 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                        if (state0 === 64 || state0 === 63 || state0 === 62 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                           switch (state0) {
                                                             case 0:
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 61:
+                                                            case 62:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                               t3 = this.game;
                                                               t2 = this._x;
                                                               t1 = this._y;
-                                                            case 62:
+                                                            case 63:
                                                               state0 = 0;
                                                               t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 63:
+                                                            case 64:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                           }
@@ -12960,19 +13013,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                           switch (state0) {
                                                             case 0:
                                                             default:
-                                                              if (state0 === 65 || state0 === 64 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                              if (state0 === 66 || state0 === 65 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                                 switch (state0) {
                                                                   case 0:
                                                                     t1 = this.game;
                                                                     t2 = this._x;
                                                                     t3 = this._y;
-                                                                  case 64:
+                                                                  case 65:
                                                                     state0 = 0;
                                                                     t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                                     t3 = this.game;
                                                                     t2 = this._x;
                                                                     t1 = this._y;
-                                                                  case 65:
+                                                                  case 66:
                                                                     state0 = 0;
                                                                     t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                                 }
@@ -12980,19 +13033,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 66:
+                                                      case 67:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 67:
+                                                      case 68:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 68:
+                                                      case 69:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                     }
@@ -13007,29 +13060,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                   case 0:
                     t1 = this.bossDifficulty;
                   default:
-                    if (state0 === 71 || state0 === 70 || state0 === 69 || state0 === 0 && t1 === 1)
+                    if (state0 === 72 || state0 === 71 || state0 === 70 || state0 === 0 && t1 === 1)
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 71 || state0 === 70 || state0 === 69 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+                          if (state0 === 72 || state0 === 71 || state0 === 70 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                             switch (state0) {
                               case 0:
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 69:
+                              case 70:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                 t3 = this.game;
                                 t2 = this._x;
                                 t1 = this._y;
-                              case 70:
+                              case 71:
                                 state0 = 0;
                                 t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 71:
+                              case 72:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
                             }
@@ -13038,29 +13091,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 74 || state0 === 73 || state0 === 72 || state0 === 0 && t1 === 2)
+                          if (state0 === 75 || state0 === 74 || state0 === 73 || state0 === 0 && t1 === 2)
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 74 || state0 === 73 || state0 === 72 || state0 === 0 && $.random(0, 1, false) <= 0.03)
+                                if (state0 === 75 || state0 === 74 || state0 === 73 || state0 === 0 && $.random(0, 1, false) <= 0.03)
                                   switch (state0) {
                                     case 0:
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 72:
+                                    case 73:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                       t3 = this.game;
                                       t2 = this._x;
                                       t1 = this._y;
-                                    case 73:
+                                    case 74:
                                       state0 = 0;
                                       t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 74:
+                                    case 75:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                   }
@@ -13069,33 +13122,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 75 || state0 === 0 && t1 === 3)
+                                if (state0 === 80 || state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 0 && t1 === 3)
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 75 || state0 === 0 && $.random(0, 1, false) <= 0.07)
+                                      if (state0 === 80 || state0 === 79 || state0 === 78 || state0 === 77 || state0 === 76 || state0 === 0 && $.random(0, 1, false) <= 0.07)
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 77 || state0 === 76 || state0 === 75 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                            if (state0 === 78 || state0 === 77 || state0 === 76 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 75:
+                                                case 76:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                   t3 = this.game;
                                                   t2 = this._x;
                                                   t1 = this._y;
-                                                case 76:
+                                                case 77:
                                                   state0 = 0;
                                                   t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 77:
+                                                case 78:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                               }
@@ -13103,19 +13156,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 79 || state0 === 78 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                                  if (state0 === 80 || state0 === 79 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 78:
+                                                      case 79:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 79:
+                                                      case 80:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                     }
@@ -13126,33 +13179,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 80 || state0 === 0 && t1 === 4)
+                                      if (state0 === 85 || state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 0 && t1 === 4)
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 80 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                            if (state0 === 85 || state0 === 84 || state0 === 83 || state0 === 82 || state0 === 81 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 82 || state0 === 81 || state0 === 80 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                                  if (state0 === 83 || state0 === 82 || state0 === 81 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 80:
+                                                      case 81:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 81:
+                                                      case 82:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 82:
+                                                      case 83:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                     }
@@ -13160,19 +13213,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                     switch (state0) {
                                                       case 0:
                                                       default:
-                                                        if (state0 === 84 || state0 === 83 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                                        if (state0 === 85 || state0 === 84 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                                           switch (state0) {
                                                             case 0:
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 83:
+                                                            case 84:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                               t3 = this.game;
                                                               t2 = this._x;
                                                               t1 = this._y;
-                                                            case 84:
+                                                            case 85:
                                                               state0 = 0;
                                                               t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                           }
@@ -13183,33 +13236,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                         switch (state0) {
                                           case 0:
                                           default:
-                                            if (state0 === 92 || state0 === 91 || state0 === 90 || state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 85 || state0 === 0 && t1 === 5)
+                                            if (state0 === 93 || state0 === 92 || state0 === 91 || state0 === 90 || state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 0 && t1 === 5)
                                               switch (state0) {
                                                 case 0:
                                                 default:
-                                                  if (state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 85 || state0 === 0 && $.random(0, 1, false) <= 0.2)
+                                                  if (state0 === 90 || state0 === 89 || state0 === 88 || state0 === 87 || state0 === 86 || state0 === 0 && $.random(0, 1, false) <= 0.2)
                                                     switch (state0) {
                                                       case 0:
                                                       default:
-                                                        if (state0 === 87 || state0 === 86 || state0 === 85 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                        if (state0 === 88 || state0 === 87 || state0 === 86 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                           switch (state0) {
                                                             case 0:
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 85:
+                                                            case 86:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                               t3 = this.game;
                                                               t2 = this._x;
                                                               t1 = this._y;
-                                                            case 86:
+                                                            case 87:
                                                               state0 = 0;
                                                               t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 87:
+                                                            case 88:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(42, 54, false), "super"));
                                                           }
@@ -13217,19 +13270,19 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                           switch (state0) {
                                                             case 0:
                                                             default:
-                                                              if (state0 === 89 || state0 === 88 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                              if (state0 === 90 || state0 === 89 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                                 switch (state0) {
                                                                   case 0:
                                                                     t1 = this.game;
                                                                     t2 = this._x;
                                                                     t3 = this._y;
-                                                                  case 88:
+                                                                  case 89:
                                                                     state0 = 0;
                                                                     t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                                     t3 = this.game;
                                                                     t2 = this._x;
                                                                     t1 = this._y;
-                                                                  case 89:
+                                                                  case 90:
                                                                     state0 = 0;
                                                                     t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "super"));
                                                                 }
@@ -13239,25 +13292,25 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                                     switch (state0) {
                                                       case 0:
                                                       default:
-                                                        if (state0 === 92 || state0 === 91 || state0 === 90 || state0 === 0 && $.random(0, 1, false) <= 0.01)
+                                                        if (state0 === 93 || state0 === 92 || state0 === 91 || state0 === 0 && $.random(0, 1, false) <= 0.01)
                                                           switch (state0) {
                                                             case 0:
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 90:
+                                                            case 91:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                               t3 = this.game;
                                                               t2 = this._x;
                                                               t1 = this._y;
-                                                            case 91:
+                                                            case 92:
                                                               state0 = 0;
                                                               t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "left", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                               t1 = this.game;
                                                               t2 = this._x;
                                                               t3 = this._y;
-                                                            case 92:
+                                                            case 93:
                                                               state0 = 0;
                                                               t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "right", $.random(350, 400, false), $.random(30, 42, false), "super"));
                                                           }
@@ -13271,15 +13324,15 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               t1 = $.random(0, 1, false) <= 0.5;
               t2 = this.game;
               t3 = this._x;
-            case 93:
-              state0 = 0;
             case 94:
+              state0 = 0;
             case 95:
-              if (state0 === 94 || state0 === 0 && t1)
+            case 96:
+              if (state0 === 95 || state0 === 0 && t1)
                 switch (state0) {
                   case 0:
                     t1 = this._y;
-                  case 94:
+                  case 95:
                     state0 = 0;
                     t2.newBossDrone$2(t3, $.$sub$n(t1, 50));
                 }
@@ -13288,12 +13341,11 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                   case 0:
                     t1 = $.$add$ns(t3, 72);
                     t3 = this._y;
-                  case 95:
+                  case 96:
                     state0 = 0;
                     t2.newBossDrone$2(t1, $.$sub$n(t3, 50));
                 }
           }
-      case 96:
       case 97:
       case 98:
       case 99:
@@ -13318,32 +13370,33 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       case 118:
       case 119:
       case 120:
-        if (state0 === 120 || state0 === 119 || state0 === 118 || state0 === 117 || state0 === 116 || state0 === 115 || state0 === 114 || state0 === 113 || state0 === 112 || state0 === 111 || state0 === 110 || state0 === 109 || state0 === 108 || state0 === 107 || state0 === 106 || state0 === 105 || state0 === 104 || state0 === 103 || state0 === 102 || state0 === 101 || state0 === 100 || state0 === 99 || state0 === 98 || state0 === 97 || state0 === 96 || state0 === 0 && this.type === "MotherShip")
+      case 121:
+        if (state0 === 121 || state0 === 120 || state0 === 119 || state0 === 118 || state0 === 117 || state0 === 116 || state0 === 115 || state0 === 114 || state0 === 113 || state0 === 112 || state0 === 111 || state0 === 110 || state0 === 109 || state0 === 108 || state0 === 107 || state0 === 106 || state0 === 105 || state0 === 104 || state0 === 103 || state0 === 102 || state0 === 101 || state0 === 100 || state0 === 99 || state0 === 98 || state0 === 97 || state0 === 0 && this.type === "MotherShip")
           switch (state0) {
             case 0:
               t1 = this._x;
-            case 96:
+            case 97:
               state0 = 0;
               if ($.$gt$n(t1, $.get$rect$x(this.game).get$halfWidth()))
                 this._removeFromGame = true;
               this.momentum.xVel = 150;
             default:
-              if (state0 === 99 || state0 === 98 || state0 === 97 || state0 === 0 && this.health <= 0)
+              if (state0 === 100 || state0 === 99 || state0 === 98 || state0 === 0 && this.health <= 0)
                 switch (state0) {
                   case 0:
                     t1 = this.game;
                     t2 = t1.get$score();
-                  case 97:
+                  case 98:
                     state0 = 0;
                     t1.set$score($.$add$ns(t2, 1000 * t1.get$pointMultiplier() * this.difficulty));
                     t1 = this.game.get$Stats();
                     t2 = t1.$index(t1, "killed");
-                  case 98:
+                  case 99:
                     state0 = 0;
                     t1.$indexSet(t1, "killed", $.$add$ns(t2, 1));
                     t2 = this.game.get$Stats();
                     t1 = t2.$index(t2, "motherKills");
-                  case 99:
+                  case 100:
                     state0 = 0;
                     t2.$indexSet(t2, "motherKills", $.$add$ns(t1, 1));
                     if ($.random(0, 1, false) > 0.5)
@@ -13352,7 +13405,6 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                     this._removeFromGame = true;
                 }
               t1 = this.difficulty;
-            case 100:
             case 101:
             case 102:
             case 103:
@@ -13373,22 +13425,23 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             case 118:
             case 119:
             case 120:
-              if (state0 === 102 || state0 === 101 || state0 === 100 || state0 === 0 && t1 === 1)
+            case 121:
+              if (state0 === 103 || state0 === 102 || state0 === 101 || state0 === 0 && t1 === 1)
                 switch (state0) {
                   case 0:
                     t1 = this._x;
-                  case 100:
+                  case 101:
                     state0 = 0;
                     t1 = $.$add$ns(t1, 16);
                     t2 = $.get$x$x(this.game.get$ship());
                     if (typeof t2 !== "number")
                       throw $.iae(t2);
-                  case 101:
-                    if (state0 === 101 || state0 === 0 && $.$ge$n(t1, t2))
+                  case 102:
+                    if (state0 === 102 || state0 === 0 && $.$ge$n(t1, t2))
                       switch (state0) {
                         case 0:
                           t1 = this._x;
-                        case 101:
+                        case 102:
                           state0 = 0;
                           t1 = $.$sub$n(t1, 16);
                           t2 = $.get$x$x(this.game.get$ship());
@@ -13399,14 +13452,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       }
                     else
                       t1 = false;
-                  case 102:
-                    if (state0 === 102 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.01)
+                  case 103:
+                    if (state0 === 103 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.01)
                       switch (state0) {
                         case 0:
                           t1 = this.game;
                           t2 = this._x;
                           t3 = this._y;
-                        case 102:
+                        case 103:
                           state0 = 0;
                           t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                       }
@@ -13415,22 +13468,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                 switch (state0) {
                   case 0:
                   default:
-                    if (state0 === 105 || state0 === 104 || state0 === 103 || state0 === 0 && t1 === 2)
+                    if (state0 === 106 || state0 === 105 || state0 === 104 || state0 === 0 && t1 === 2)
                       switch (state0) {
                         case 0:
                           t1 = this._x;
-                        case 103:
+                        case 104:
                           state0 = 0;
                           t1 = $.$add$ns(t1, 16);
                           t2 = $.get$x$x(this.game.get$ship());
                           if (typeof t2 !== "number")
                             throw $.iae(t2);
-                        case 104:
-                          if (state0 === 104 || state0 === 0 && $.$ge$n(t1, t2))
+                        case 105:
+                          if (state0 === 105 || state0 === 0 && $.$ge$n(t1, t2))
                             switch (state0) {
                               case 0:
                                 t1 = this._x;
-                              case 104:
+                              case 105:
                                 state0 = 0;
                                 t1 = $.$sub$n(t1, 16);
                                 t2 = $.get$x$x(this.game.get$ship());
@@ -13441,14 +13494,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             }
                           else
                             t1 = false;
-                        case 105:
-                          if (state0 === 105 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.03)
+                        case 106:
+                          if (state0 === 106 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.03)
                             switch (state0) {
                               case 0:
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 105:
+                              case 106:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                             }
@@ -13457,22 +13510,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 110 || state0 === 109 || state0 === 108 || state0 === 107 || state0 === 106 || state0 === 0 && t1 === 3)
+                          if (state0 === 111 || state0 === 110 || state0 === 109 || state0 === 108 || state0 === 107 || state0 === 0 && t1 === 3)
                             switch (state0) {
                               case 0:
                                 t1 = this._x;
-                              case 106:
+                              case 107:
                                 state0 = 0;
                                 t1 = $.$add$ns(t1, 16);
                                 t2 = $.get$x$x(this.game.get$ship());
                                 if (typeof t2 !== "number")
                                   throw $.iae(t2);
-                              case 107:
-                                if (state0 === 107 || state0 === 0 && $.$ge$n(t1, t2))
+                              case 108:
+                                if (state0 === 108 || state0 === 0 && $.$ge$n(t1, t2))
                                   switch (state0) {
                                     case 0:
                                       t1 = this._x;
-                                    case 107:
+                                    case 108:
                                       state0 = 0;
                                       t1 = $.$sub$n(t1, 16);
                                       t2 = $.get$x$x(this.game.get$ship());
@@ -13484,29 +13537,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                 else
                                   t1 = false;
                               default:
-                                if (state0 === 110 || state0 === 109 || state0 === 108 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.07)
+                                if (state0 === 111 || state0 === 110 || state0 === 109 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.07)
                                   switch (state0) {
                                     case 0:
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 108:
+                                    case 109:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                     default:
-                                      if (state0 === 110 || state0 === 109 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                      if (state0 === 111 || state0 === 110 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                         switch (state0) {
                                           case 0:
                                             t1 = this.game;
                                             t2 = this._x;
                                             t3 = this._y;
-                                          case 109:
+                                          case 110:
                                             state0 = 0;
                                             t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                             t3 = this.game;
                                             t2 = this._x;
                                             t1 = this._y;
-                                          case 110:
+                                          case 111:
                                             state0 = 0;
                                             t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                         }
@@ -13516,22 +13569,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 115 || state0 === 114 || state0 === 113 || state0 === 112 || state0 === 111 || state0 === 0 && t1 === 4)
+                                if (state0 === 116 || state0 === 115 || state0 === 114 || state0 === 113 || state0 === 112 || state0 === 0 && t1 === 4)
                                   switch (state0) {
                                     case 0:
                                       t1 = this._x;
-                                    case 111:
+                                    case 112:
                                       state0 = 0;
                                       t1 = $.$add$ns(t1, 16);
                                       t2 = $.get$x$x(this.game.get$ship());
                                       if (typeof t2 !== "number")
                                         throw $.iae(t2);
-                                    case 112:
-                                      if (state0 === 112 || state0 === 0 && $.$ge$n(t1, t2))
+                                    case 113:
+                                      if (state0 === 113 || state0 === 0 && $.$ge$n(t1, t2))
                                         switch (state0) {
                                           case 0:
                                             t1 = this._x;
-                                          case 112:
+                                          case 113:
                                             state0 = 0;
                                             t1 = $.$sub$n(t1, 16);
                                             t2 = $.get$x$x(this.game.get$ship());
@@ -13543,29 +13596,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                       else
                                         t1 = false;
                                     default:
-                                      if (state0 === 115 || state0 === 114 || state0 === 113 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.1)
+                                      if (state0 === 116 || state0 === 115 || state0 === 114 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.1)
                                         switch (state0) {
                                           case 0:
                                             t1 = this.game;
                                             t2 = this._x;
                                             t3 = this._y;
-                                          case 113:
+                                          case 114:
                                             state0 = 0;
                                             t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                           default:
-                                            if (state0 === 115 || state0 === 114 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                            if (state0 === 116 || state0 === 115 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 114:
+                                                case 115:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                   t3 = this.game;
                                                   t2 = this._x;
                                                   t1 = this._y;
-                                                case 115:
+                                                case 116:
                                                   state0 = 0;
                                                   t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                               }
@@ -13575,22 +13628,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 120 || state0 === 119 || state0 === 118 || state0 === 117 || state0 === 116 || state0 === 0 && t1 === 5)
+                                      if (state0 === 121 || state0 === 120 || state0 === 119 || state0 === 118 || state0 === 117 || state0 === 0 && t1 === 5)
                                         switch (state0) {
                                           case 0:
                                             t1 = this._x;
-                                          case 116:
+                                          case 117:
                                             state0 = 0;
                                             t1 = $.$add$ns(t1, 16);
                                             t2 = $.get$x$x(this.game.get$ship());
                                             if (typeof t2 !== "number")
                                               throw $.iae(t2);
-                                          case 117:
-                                            if (state0 === 117 || state0 === 0 && $.$ge$n(t1, t2))
+                                          case 118:
+                                            if (state0 === 118 || state0 === 0 && $.$ge$n(t1, t2))
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this._x;
-                                                case 117:
+                                                case 118:
                                                   state0 = 0;
                                                   t1 = $.$sub$n(t1, 16);
                                                   t2 = $.get$x$x(this.game.get$ship());
@@ -13602,29 +13655,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                             else
                                               t1 = false;
                                           default:
-                                            if (state0 === 120 || state0 === 119 || state0 === 118 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.2)
+                                            if (state0 === 121 || state0 === 120 || state0 === 119 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.2)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 118:
+                                                case 119:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                 default:
-                                                  if (state0 === 120 || state0 === 119 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                  if (state0 === 121 || state0 === 120 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 119:
+                                                      case 120:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 120:
+                                                      case 121:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                     }
@@ -13635,7 +13688,6 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       }
                 }
           }
-      case 121:
       case 122:
       case 123:
       case 124:
@@ -13668,7 +13720,11 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       case 151:
       case 152:
       case 153:
-        if (state0 === 153 || state0 === 152 || state0 === 151 || state0 === 150 || state0 === 149 || state0 === 148 || state0 === 147 || state0 === 146 || state0 === 145 || state0 === 144 || state0 === 143 || state0 === 142 || state0 === 141 || state0 === 140 || state0 === 139 || state0 === 138 || state0 === 137 || state0 === 136 || state0 === 135 || state0 === 134 || state0 === 133 || state0 === 132 || state0 === 131 || state0 === 130 || state0 === 129 || state0 === 128 || state0 === 127 || state0 === 126 || state0 === 125 || state0 === 124 || state0 === 123 || state0 === 122 || state0 === 121 || state0 === 0 && this.type === "Normal")
+      case 154:
+      case 155:
+      case 156:
+      case 157:
+        if (state0 === 157 || state0 === 156 || state0 === 155 || state0 === 154 || state0 === 153 || state0 === 152 || state0 === 151 || state0 === 150 || state0 === 149 || state0 === 148 || state0 === 147 || state0 === 146 || state0 === 145 || state0 === 144 || state0 === 143 || state0 === 142 || state0 === 141 || state0 === 140 || state0 === 139 || state0 === 138 || state0 === 137 || state0 === 136 || state0 === 135 || state0 === 134 || state0 === 133 || state0 === 132 || state0 === 131 || state0 === 130 || state0 === 129 || state0 === 128 || state0 === 127 || state0 === 126 || state0 === 125 || state0 === 124 || state0 === 123 || state0 === 122 || state0 === 0 && this.type === "Normal")
           switch (state0) {
             case 0:
               if ($.random(0, 1, false) < 0.0001 && !this.isFalling) {
@@ -13677,22 +13733,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               }
               $.IterableMixinWorkaround_forEach($.List_List$from(new $.WhereIterable(this.game.get$entities(), new $.Enemy_update_closure2(this)), true), new $.Enemy_update_closure3(this));
               t1 = this._y;
-            case 121:
+            case 122:
               state0 = 0;
               if ($.$gt$n(t1, $.get$rect$x(this.game).get$halfHeight() - 45)) {
                 this.momentum.yVel = -140;
                 this.isGoingBack = true;
               }
             default:
-              if (state0 === 123 || state0 === 122 || state0 === 0 && this.isGoingBack)
+              if (state0 === 124 || state0 === 123 || state0 === 0 && this.isGoingBack)
                 switch (state0) {
                   case 0:
                     this.game.matchCloneX$0();
                     t1 = this._x;
-                  case 122:
+                  case 123:
                     state0 = 0;
                     t2 = this.targetX;
-                  case 123:
+                  case 124:
                     state0 = 0;
                     t3 = $.getInterceptor$n(t1);
                     if (t3.$lt(t1, t2))
@@ -13706,9 +13762,12 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                         t2.xVel = 0;
                     }
                 }
-            case 124:
             case 125:
-              if (state0 === 125 || state0 === 124 || state0 === 0 && this.isFalling && !this.isGoingBack)
+            case 126:
+            case 127:
+            case 128:
+            case 129:
+              if (state0 === 129 || state0 === 128 || state0 === 127 || state0 === 126 || state0 === 125 || state0 === 0 && this.isFalling && !this.isGoingBack)
                 switch (state0) {
                   case 0:
                     if ($.random(0, 1, false) < 0.1)
@@ -13718,24 +13777,48 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                     else if ($.random(0, 1, false) < 0.05)
                       this.momentum.yVel = $.random(-140, 0, false);
                     t1 = this._y;
-                  case 124:
-                    state0 = 0;
                   case 125:
-                    if (state0 === 125 || state0 === 0 && $.$lt$n(t1, -($.get$rect$x(this.game).get$halfHeight() - 60)))
+                    state0 = 0;
+                  case 126:
+                    if (state0 === 126 || state0 === 0 && $.$lt$n(t1, -($.get$rect$x(this.game).get$halfHeight() - 60)))
                       switch (state0) {
                         case 0:
                           t1 = this.momentum;
                           t2 = t1.yVel;
-                        case 125:
+                        case 126:
                           state0 = 0;
                           t1.yVel = $.$mul$n(t2, -1);
                       }
+                    t1 = this._x;
+                  case 127:
+                    state0 = 0;
+                  case 128:
+                    if (state0 === 128 || state0 === 0 && !$.$gt$n($.$add$ns(t1, 16), $.get$rect$x(this.game).get$halfWidth() - 60))
+                      switch (state0) {
+                        case 0:
+                          t1 = this._x;
+                        case 128:
+                          state0 = 0;
+                          t1 = $.$lt$n($.$sub$n(t1, 16), -$.get$rect$x(this.game).get$halfWidth() + 60);
+                      }
+                    else
+                      t1 = true;
+                  case 129:
+                    if (state0 === 129 || state0 === 0 && t1)
+                      switch (state0) {
+                        case 0:
+                          t1 = this.momentum;
+                          t2 = t1.xVel;
+                        case 129:
+                          state0 = 0;
+                          t1.xVel = $.$mul$n(t2, -1);
+                      }
                 }
               t1 = this._y;
-            case 126:
+            case 130:
               state0 = 0;
               t2 = this.startY;
-            case 127:
+            case 131:
               state0 = 0;
               if ($.$lt$n(t1, t2) && this.isGoingBack) {
                 this._y = t2;
@@ -13746,27 +13829,27 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                 this.isFalling = false;
                 this.isGoingBack = false;
               }
-            case 128:
-            case 129:
-            case 130:
-              if (state0 === 130 || state0 === 129 || state0 === 128 || state0 === 0 && this.health <= 0)
+            case 132:
+            case 133:
+            case 134:
+              if (state0 === 134 || state0 === 133 || state0 === 132 || state0 === 0 && this.health <= 0)
                 switch (state0) {
                   case 0:
                     t1 = this.game;
                     t2 = t1.get$score();
-                  case 128:
+                  case 132:
                     state0 = 0;
                     t1.set$score($.$add$ns(t2, 100 * t1.get$pointMultiplier() * this.difficulty));
                     t1 = this.game;
                     t1.set$enemyAmount(t1.get$enemyAmount() - 1);
                     t1 = this.game.get$Stats();
                     t2 = t1.$index(t1, "killed");
-                  case 129:
+                  case 133:
                     state0 = 0;
                     t1.$indexSet(t1, "killed", $.$add$ns(t2, 1));
                     t2 = this.game.get$Stats();
                     t1 = t2.$index(t2, "normalKills");
-                  case 130:
+                  case 134:
                     state0 = 0;
                     t2.$indexSet(t2, "normalKills", $.$add$ns(t1, 1));
                     if ($.random(0, 1, false) > 0.5)
@@ -13777,14 +13860,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                     this._removeFromGame = true;
                 }
               t1 = this._x;
-            case 131:
+            case 135:
               state0 = 0;
-            case 132:
-              if (state0 === 132 || state0 === 0 && !$.$gt$n($.$add$ns(t1, 16), $.get$rect$x(this.game).get$halfWidth()))
+            case 136:
+              if (state0 === 136 || state0 === 0 && !$.$gt$n($.$add$ns(t1, 16), $.get$rect$x(this.game).get$halfWidth()))
                 switch (state0) {
                   case 0:
                     t1 = this._x;
-                  case 132:
+                  case 136:
                     state0 = 0;
                     t1 = $.$lt$n($.$sub$n(t1, 16), -$.get$rect$x(this.game).get$halfWidth()) && !this.isFalling;
                 }
@@ -13793,10 +13876,6 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
               if (t1)
                 this.game.switchDirection$0();
               t1 = this.difficulty;
-            case 133:
-            case 134:
-            case 135:
-            case 136:
             case 137:
             case 138:
             case 139:
@@ -13814,22 +13893,26 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
             case 151:
             case 152:
             case 153:
-              if (state0 === 135 || state0 === 134 || state0 === 133 || state0 === 0 && t1 === 1)
+            case 154:
+            case 155:
+            case 156:
+            case 157:
+              if (state0 === 139 || state0 === 138 || state0 === 137 || state0 === 0 && t1 === 1)
                 switch (state0) {
                   case 0:
                     t1 = this._x;
-                  case 133:
+                  case 137:
                     state0 = 0;
                     t1 = $.$add$ns(t1, 16);
                     t2 = $.get$x$x(this.game.get$ship());
                     if (typeof t2 !== "number")
                       throw $.iae(t2);
-                  case 134:
-                    if (state0 === 134 || state0 === 0 && $.$ge$n(t1, t2))
+                  case 138:
+                    if (state0 === 138 || state0 === 0 && $.$ge$n(t1, t2))
                       switch (state0) {
                         case 0:
                           t1 = this._x;
-                        case 134:
+                        case 138:
                           state0 = 0;
                           t1 = $.$sub$n(t1, 16);
                           t2 = $.get$x$x(this.game.get$ship());
@@ -13840,14 +13923,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       }
                     else
                       t1 = false;
-                  case 135:
-                    if (state0 === 135 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.01)
+                  case 139:
+                    if (state0 === 139 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.01)
                       switch (state0) {
                         case 0:
                           t1 = this.game;
                           t2 = this._x;
                           t3 = this._y;
-                        case 135:
+                        case 139:
                           state0 = 0;
                           t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                       }
@@ -13856,22 +13939,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                 switch (state0) {
                   case 0:
                   default:
-                    if (state0 === 138 || state0 === 137 || state0 === 136 || state0 === 0 && t1 === 2)
+                    if (state0 === 142 || state0 === 141 || state0 === 140 || state0 === 0 && t1 === 2)
                       switch (state0) {
                         case 0:
                           t1 = this._x;
-                        case 136:
+                        case 140:
                           state0 = 0;
                           t1 = $.$add$ns(t1, 16);
                           t2 = $.get$x$x(this.game.get$ship());
                           if (typeof t2 !== "number")
                             throw $.iae(t2);
-                        case 137:
-                          if (state0 === 137 || state0 === 0 && $.$ge$n(t1, t2))
+                        case 141:
+                          if (state0 === 141 || state0 === 0 && $.$ge$n(t1, t2))
                             switch (state0) {
                               case 0:
                                 t1 = this._x;
-                              case 137:
+                              case 141:
                                 state0 = 0;
                                 t1 = $.$sub$n(t1, 16);
                                 t2 = $.get$x$x(this.game.get$ship());
@@ -13882,14 +13965,14 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             }
                           else
                             t1 = false;
-                        case 138:
-                          if (state0 === 138 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.03)
+                        case 142:
+                          if (state0 === 142 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.03)
                             switch (state0) {
                               case 0:
                                 t1 = this.game;
                                 t2 = this._x;
                                 t3 = this._y;
-                              case 138:
+                              case 142:
                                 state0 = 0;
                                 t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                             }
@@ -13898,22 +13981,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                       switch (state0) {
                         case 0:
                         default:
-                          if (state0 === 143 || state0 === 142 || state0 === 141 || state0 === 140 || state0 === 139 || state0 === 0 && t1 === 3)
+                          if (state0 === 147 || state0 === 146 || state0 === 145 || state0 === 144 || state0 === 143 || state0 === 0 && t1 === 3)
                             switch (state0) {
                               case 0:
                                 t1 = this._x;
-                              case 139:
+                              case 143:
                                 state0 = 0;
                                 t1 = $.$add$ns(t1, 16);
                                 t2 = $.get$x$x(this.game.get$ship());
                                 if (typeof t2 !== "number")
                                   throw $.iae(t2);
-                              case 140:
-                                if (state0 === 140 || state0 === 0 && $.$ge$n(t1, t2))
+                              case 144:
+                                if (state0 === 144 || state0 === 0 && $.$ge$n(t1, t2))
                                   switch (state0) {
                                     case 0:
                                       t1 = this._x;
-                                    case 140:
+                                    case 144:
                                       state0 = 0;
                                       t1 = $.$sub$n(t1, 16);
                                       t2 = $.get$x$x(this.game.get$ship());
@@ -13925,29 +14008,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                 else
                                   t1 = false;
                               default:
-                                if (state0 === 143 || state0 === 142 || state0 === 141 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.07)
+                                if (state0 === 147 || state0 === 146 || state0 === 145 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.07)
                                   switch (state0) {
                                     case 0:
                                       t1 = this.game;
                                       t2 = this._x;
                                       t3 = this._y;
-                                    case 141:
+                                    case 145:
                                       state0 = 0;
                                       t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                     default:
-                                      if (state0 === 143 || state0 === 142 || state0 === 0 && $.random(0, 1, false) <= 0.1)
+                                      if (state0 === 147 || state0 === 146 || state0 === 0 && $.random(0, 1, false) <= 0.1)
                                         switch (state0) {
                                           case 0:
                                             t1 = this.game;
                                             t2 = this._x;
                                             t3 = this._y;
-                                          case 142:
+                                          case 146:
                                             state0 = 0;
                                             t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                             t3 = this.game;
                                             t2 = this._x;
                                             t1 = this._y;
-                                          case 143:
+                                          case 147:
                                             state0 = 0;
                                             t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                         }
@@ -13957,22 +14040,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                             switch (state0) {
                               case 0:
                               default:
-                                if (state0 === 148 || state0 === 147 || state0 === 146 || state0 === 145 || state0 === 144 || state0 === 0 && t1 === 4)
+                                if (state0 === 152 || state0 === 151 || state0 === 150 || state0 === 149 || state0 === 148 || state0 === 0 && t1 === 4)
                                   switch (state0) {
                                     case 0:
                                       t1 = this._x;
-                                    case 144:
+                                    case 148:
                                       state0 = 0;
                                       t1 = $.$add$ns(t1, 16);
                                       t2 = $.get$x$x(this.game.get$ship());
                                       if (typeof t2 !== "number")
                                         throw $.iae(t2);
-                                    case 145:
-                                      if (state0 === 145 || state0 === 0 && $.$ge$n(t1, t2))
+                                    case 149:
+                                      if (state0 === 149 || state0 === 0 && $.$ge$n(t1, t2))
                                         switch (state0) {
                                           case 0:
                                             t1 = this._x;
-                                          case 145:
+                                          case 149:
                                             state0 = 0;
                                             t1 = $.$sub$n(t1, 16);
                                             t2 = $.get$x$x(this.game.get$ship());
@@ -13984,29 +14067,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                       else
                                         t1 = false;
                                     default:
-                                      if (state0 === 148 || state0 === 147 || state0 === 146 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.1)
+                                      if (state0 === 152 || state0 === 151 || state0 === 150 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.1)
                                         switch (state0) {
                                           case 0:
                                             t1 = this.game;
                                             t2 = this._x;
                                             t3 = this._y;
-                                          case 146:
+                                          case 150:
                                             state0 = 0;
                                             t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                           default:
-                                            if (state0 === 148 || state0 === 147 || state0 === 0 && $.random(0, 1, false) <= 0.3)
+                                            if (state0 === 152 || state0 === 151 || state0 === 0 && $.random(0, 1, false) <= 0.3)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 147:
+                                                case 151:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                   t3 = this.game;
                                                   t2 = this._x;
                                                   t1 = this._y;
-                                                case 148:
+                                                case 152:
                                                   state0 = 0;
                                                   t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                               }
@@ -14016,22 +14099,22 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                   switch (state0) {
                                     case 0:
                                     default:
-                                      if (state0 === 153 || state0 === 152 || state0 === 151 || state0 === 150 || state0 === 149 || state0 === 0 && t1 === 5)
+                                      if (state0 === 157 || state0 === 156 || state0 === 155 || state0 === 154 || state0 === 153 || state0 === 0 && t1 === 5)
                                         switch (state0) {
                                           case 0:
                                             t1 = this._x;
-                                          case 149:
+                                          case 153:
                                             state0 = 0;
                                             t1 = $.$add$ns(t1, 16);
                                             t2 = $.get$x$x(this.game.get$ship());
                                             if (typeof t2 !== "number")
                                               throw $.iae(t2);
-                                          case 150:
-                                            if (state0 === 150 || state0 === 0 && $.$ge$n(t1, t2))
+                                          case 154:
+                                            if (state0 === 154 || state0 === 0 && $.$ge$n(t1, t2))
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this._x;
-                                                case 150:
+                                                case 154:
                                                   state0 = 0;
                                                   t1 = $.$sub$n(t1, 16);
                                                   t2 = $.get$x$x(this.game.get$ship());
@@ -14043,29 +14126,29 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
                                             else
                                               t1 = false;
                                           default:
-                                            if (state0 === 153 || state0 === 152 || state0 === 151 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.2)
+                                            if (state0 === 157 || state0 === 156 || state0 === 155 || state0 === 0 && t1 && $.random(0, 1, false) <= 0.2)
                                               switch (state0) {
                                                 case 0:
                                                   t1 = this.game;
                                                   t2 = this._x;
                                                   t3 = this._y;
-                                                case 151:
+                                                case 155:
                                                   state0 = 0;
                                                   t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "straight", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                 default:
-                                                  if (state0 === 153 || state0 === 152 || state0 === 0 && $.random(0, 1, false) <= 0.5)
+                                                  if (state0 === 157 || state0 === 156 || state0 === 0 && $.random(0, 1, false) <= 0.5)
                                                     switch (state0) {
                                                       case 0:
                                                         t1 = this.game;
                                                         t2 = this._x;
                                                         t3 = this._y;
-                                                      case 152:
+                                                      case 156:
                                                         state0 = 0;
                                                         t1.addEntity$1($.Bullet$(t1, t2, $.$add$ns(t3, 16), "left", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                         t3 = this.game;
                                                         t2 = this._x;
                                                         t1 = this._y;
-                                                      case 153:
+                                                      case 157:
                                                         state0 = 0;
                                                         t3.addEntity$1($.Bullet$(t3, t2, $.$add$ns(t1, 16), "right", $.random(350, 400, false), $.random(8, 16, false), "normal"));
                                                     }
@@ -14080,32 +14163,38 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
     }
   },
   Enemy$5: function(game, x, y, diff, Type) {
-    var t1;
-    $.random(0, 1, false);
+    var rType, t1;
+    rType = $.random(0, 1, false);
     this.type = Type;
     this.difficulty = diff;
     this.opacity = 0;
     this.enemyType = $.random(0, 1, false);
-    if (this.type === "Normal")
-      this.color = "255, 0, 255";
-    if (this.type === "MotherShip")
-      this.color = "0, 0, 255";
-    if (this.type === "Normal")
-      this.momentum.xVel = 80;
-    if (this.type === "MotherShip")
-      this.momentum.xVel = 40;
-    if (this.type === "Boss")
-      this.momentum.xVel = 0;
-    if (this.type === "Drone")
-      this.momentum.xVel = 80;
     if (this.type === "Normal") {
+      this.color = "255, 0, 255";
+      this.momentum.xVel = 80;
       t1 = this.difficulty;
       if (t1 <= 2)
         this.health = t1;
     }
-    if (this.type === "MotherShip")
+    if (this.type === "MotherShip") {
+      this.color = "0, 0, 255";
+      this.momentum.xVel = 40;
       this.health = 3;
+      if (rType < 0.25)
+        this.motherShipType = 1;
+      else if (rType < 0.5)
+        this.motherShipType = 2;
+      else if (rType < 0.75)
+        this.motherShipType = 3;
+      else if (rType < 1)
+        this.motherShipType = 4;
+      this._width = 42;
+      this.updateBox$0();
+      this._height = 42;
+      this.updateBox$0();
+    }
     if (this.type === "Boss") {
+      this.momentum.xVel = 0;
       this._width = 72;
       this.updateBox$0();
       this._height = 72;
@@ -14113,6 +14202,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
       this.health = this.bossHealth;
     }
     if (this.type === "Drone") {
+      this.momentum.xVel = 80;
       this._width = 16;
       this.updateBox$0();
       this._height = 16;
@@ -14127,7 +14217,7 @@ Enemy: {"": "GameEntity;type>,startY,difficulty@,bossDifficulty,health@,bossHeal
   $isEnemy: true,
   static: {
 Enemy$: function(game, x, y, diff, Type) {
-  var t1 = new $.Enemy(null, 0, 1, 1, 1, 100, 1, 100, false, false, false, false, 0, 1, 1, 0, 0, null, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
+  var t1 = new $.Enemy(null, 0, 1, 1, 1, 100, 1, 100, false, false, false, false, 0, 1, 1, 0, 0, 1, null, game, 0, 0, 1, 1, false, false, null, null, null, null, false, null, null, true, 1, "255, 255, 255", true, null);
   t1.GameEntity$withPosition$7(game, x, y, 36, 36, null, null);
   t1.Enemy$5(game, x, y, diff, Type);
   return t1;
@@ -14398,6 +14488,96 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
           t1.$indexSet(t1, "powerups", $.$add$ns(t1.$index(t1, "powerups"), 1));
           t1 = this.game;
           t1.set$score($.$add$ns(t1.get$score(), 300 * t1.get$pointMultiplier()));
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_1000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure0(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_2000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure1(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_3000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure2(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_4000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure3(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure4(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_6000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure5(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_7000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure6(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_8000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure7(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_9000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure8(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_10000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure9(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_11000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure10(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_12000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure11(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_13000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure12(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_14000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure13(this), null);
+          t2 = t1._zone;
+          t2._openCallbacks = t2._openCallbacks + 1;
+          t2 = t1.get$_run();
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_15000000._duration, 1000);
+          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
           break;
         case "Multiplier":
           t1 = this.game;
@@ -14436,7 +14616,7 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
           if (!$.$eq(t1.$index(t1, "invincibility"), 1)) {
             t1 = this.game.get$Cheats();
             t1.$indexSet(t1, "invincibility", 1);
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure14(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
@@ -14444,31 +14624,31 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
             t3 = milliseconds < 0;
             t1._timer = $.TimerImpl$(t3 ? 0 : milliseconds, t2);
             this._deactivate = t1;
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure0(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure15(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
             milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_1000000._duration, 1000);
             t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure1(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure16(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
             milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_2000000._duration, 1000);
             t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure2(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure17(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
             milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_3000000._duration, 1000);
             t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure3(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure18(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
             milliseconds0 = C.JSNumber_methods.$tdiv(C.Duration_4000000._duration, 1000);
             t1._timer = $.TimerImpl$(milliseconds0 < 0 ? 0 : milliseconds0, t2);
-            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure4(this), null);
+            t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure19(this), null);
             t2 = t1._zone;
             t2._openCallbacks = t2._openCallbacks + 1;
             t2 = t1.get$_run();
@@ -14480,38 +14660,8 @@ PowerUp: {"": "GameEntity;type>,_deactivate,game,_x,_y,_width,_height,isHighligh
           t1.gameTime = $.$add$ns(t1.gameTime, 15);
           break;
         case "teleporter":
-          t1 = new $.WhereIterable(this.game.get$entities(), new $.PowerUp_update_closure5());
-          t1.forEach$1(t1, new $.PowerUp_update_closure6(this));
-          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure7(this), null);
-          t2 = t1._zone;
-          t2._openCallbacks = t2._openCallbacks + 1;
-          t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_1000000._duration, 1000);
-          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
-          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure8(this), null);
-          t2 = t1._zone;
-          t2._openCallbacks = t2._openCallbacks + 1;
-          t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_2000000._duration, 1000);
-          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
-          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure9(this), null);
-          t2 = t1._zone;
-          t2._openCallbacks = t2._openCallbacks + 1;
-          t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_3000000._duration, 1000);
-          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
-          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure10(this), null);
-          t2 = t1._zone;
-          t2._openCallbacks = t2._openCallbacks + 1;
-          t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_4000000._duration, 1000);
-          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
-          t1 = new $._ZoneTimer($.get$_Zone__current(), new $.PowerUp_update_closure11(this), null);
-          t2 = t1._zone;
-          t2._openCallbacks = t2._openCallbacks + 1;
-          t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
-          t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
+          t1 = new $.WhereIterable(this.game.get$entities(), new $.PowerUp_update_closure20());
+          t1.forEach$1(t1, new $.PowerUp_update_closure21(this));
           break;
         default:
       }
@@ -14580,8 +14730,11 @@ PowerUp$: function(game, x, y, Type) {
 
 PowerUp_update_closure: {"": "Closure;this_0",
   call$0: function() {
-    var t1 = this.this_0.get$game().get$Cheats();
-    t1.$indexSet(t1, "invincibility", 0);
+    var t1, t2;
+    t1 = this.this_0.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
   }
 },
 
@@ -14589,8 +14742,8 @@ PowerUp_update_closure0: {"": "Closure;this_1",
   call$0: function() {
     var t1, t2;
     t1 = this.this_1.get$game();
-    t2 = t1.get$rendererTemp1();
-    t1.set$rendererTemp1(t2 - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
     return t2;
   }
 },
@@ -14599,8 +14752,8 @@ PowerUp_update_closure1: {"": "Closure;this_2",
   call$0: function() {
     var t1, t2;
     t1 = this.this_2.get$game();
-    t2 = t1.get$rendererTemp1();
-    t1.set$rendererTemp1(t2 - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
     return t2;
   }
 },
@@ -14609,8 +14762,8 @@ PowerUp_update_closure2: {"": "Closure;this_3",
   call$0: function() {
     var t1, t2;
     t1 = this.this_3.get$game();
-    t2 = t1.get$rendererTemp1();
-    t1.set$rendererTemp1(t2 - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
     return t2;
   }
 },
@@ -14619,8 +14772,8 @@ PowerUp_update_closure3: {"": "Closure;this_4",
   call$0: function() {
     var t1, t2;
     t1 = this.this_4.get$game();
-    t2 = t1.get$rendererTemp1();
-    t1.set$rendererTemp1(t2 - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
     return t2;
   }
 },
@@ -14629,29 +14782,23 @@ PowerUp_update_closure4: {"": "Closure;this_5",
   call$0: function() {
     var t1, t2;
     t1 = this.this_5.get$game();
-    t2 = t1.get$rendererTemp1();
-    t1.set$rendererTemp1(t2 - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
     return t2;
   }
 },
 
-PowerUp_update_closure5: {"": "Closure;",
-  call$1: function(e) {
-    var t1 = $.getInterceptor(e);
-    return typeof e === "object" && e !== null && !!t1.$isEnemy;
-  }
-},
-
-PowerUp_update_closure6: {"": "Closure;this_6",
-  call$1: function(e) {
-    var t1;
-    e.removeFromGame$0();
+PowerUp_update_closure5: {"": "Closure;this_6",
+  call$0: function() {
+    var t1, t2;
     t1 = this.this_6.get$game();
-    t1.set$enemyAmount(t1.get$enemyAmount() - 1);
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
   }
 },
 
-PowerUp_update_closure7: {"": "Closure;this_7",
+PowerUp_update_closure6: {"": "Closure;this_7",
   call$0: function() {
     var t1, t2;
     t1 = this.this_7.get$game();
@@ -14661,7 +14808,7 @@ PowerUp_update_closure7: {"": "Closure;this_7",
   }
 },
 
-PowerUp_update_closure8: {"": "Closure;this_8",
+PowerUp_update_closure7: {"": "Closure;this_8",
   call$0: function() {
     var t1, t2;
     t1 = this.this_8.get$game();
@@ -14671,7 +14818,7 @@ PowerUp_update_closure8: {"": "Closure;this_8",
   }
 },
 
-PowerUp_update_closure9: {"": "Closure;this_9",
+PowerUp_update_closure8: {"": "Closure;this_9",
   call$0: function() {
     var t1, t2;
     t1 = this.this_9.get$game();
@@ -14681,7 +14828,7 @@ PowerUp_update_closure9: {"": "Closure;this_9",
   }
 },
 
-PowerUp_update_closure10: {"": "Closure;this_10",
+PowerUp_update_closure9: {"": "Closure;this_10",
   call$0: function() {
     var t1, t2;
     t1 = this.this_10.get$game();
@@ -14691,13 +14838,116 @@ PowerUp_update_closure10: {"": "Closure;this_10",
   }
 },
 
-PowerUp_update_closure11: {"": "Closure;this_11",
+PowerUp_update_closure10: {"": "Closure;this_11",
   call$0: function() {
     var t1, t2;
     t1 = this.this_11.get$game();
     t2 = t1.get$rendererTemp2();
     t1.set$rendererTemp2(t2 - 1);
     return t2;
+  }
+},
+
+PowerUp_update_closure11: {"": "Closure;this_12",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_12.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure12: {"": "Closure;this_13",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_13.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure13: {"": "Closure;this_14",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_14.get$game();
+    t2 = t1.get$rendererTemp2();
+    t1.set$rendererTemp2(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure14: {"": "Closure;this_15",
+  call$0: function() {
+    var t1 = this.this_15.get$game().get$Cheats();
+    t1.$indexSet(t1, "invincibility", 0);
+  }
+},
+
+PowerUp_update_closure15: {"": "Closure;this_16",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_16.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure16: {"": "Closure;this_17",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_17.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure17: {"": "Closure;this_18",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_18.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure18: {"": "Closure;this_19",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_19.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure19: {"": "Closure;this_20",
+  call$0: function() {
+    var t1, t2;
+    t1 = this.this_20.get$game();
+    t2 = t1.get$rendererTemp1();
+    t1.set$rendererTemp1(t2 - 1);
+    return t2;
+  }
+},
+
+PowerUp_update_closure20: {"": "Closure;",
+  call$1: function(e) {
+    var t1 = $.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isEnemy;
+  }
+},
+
+PowerUp_update_closure21: {"": "Closure;this_21",
+  call$1: function(e) {
+    var t1;
+    e.removeFromGame$0();
+    t1 = this.this_21.get$game();
+    t1.set$enemyAmount(t1.get$enemyAmount() - 1);
   }
 },
 
@@ -14770,7 +15020,7 @@ Ship: {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit,li
       t2 = t1._zone;
       t2._openCallbacks = t2._openCallbacks + 1;
       t2 = t1.get$_run();
-      milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
+      milliseconds = C.JSNumber_methods.$tdiv(C.Duration_15000000._duration, 1000);
       t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
       this._invincibleTimer = t1;
     }
@@ -15001,7 +15251,7 @@ Ship: {"": "GameEntity;bulletPower,bullet@,maxBullet@,bulletsFired,bulletsHit,li
           t2 = t1._zone;
           t2._openCallbacks = t2._openCallbacks + 1;
           t2 = t1.get$_run();
-          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_5000000._duration, 1000);
+          milliseconds = C.JSNumber_methods.$tdiv(C.Duration_15000000._duration, 1000);
           t1._timer = $.TimerImpl$(milliseconds < 0 ? 0 : milliseconds, t2);
           this._invincibleTimer = t1;
         }
@@ -15301,7 +15551,7 @@ Stars$: function(game, x, y, h, w, col) {
 
 }}],
 ["galaga_html", "package:galaga/galaga_html.dart", , {
-GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upgradedShip,enemy<,enemy2<,boss<,mothership<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,invincible@,timeUp<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,clone,teleporter@,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,ownMouse,canvas,_game,rect",
+GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upgradedShip,enemy<,enemy2<,boss<,mothership1<,mothership2<,mothership3<,mothership4<,bosshp<,spreadup<,lifeup<,multiplierup<,bulletup<,invincible@,timeUp<,coin<,shipbullet<,enemybullet<,superBullet<,bossSuperBullet<,chargeBar,star1<,star2<,star3<,star4<,star5<,star6<,star7<,skull<,clone,teleporter@,enemyFlicker,shipFlicker?,targetId,ctx,defaultRenderer,assetManager,textRenderer,ownMouse,canvas,_game,rect",
   init$0: function() {
     var t1, t2;
     t1 = this._game.get$Stats();
@@ -15841,8 +16091,12 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upg
     t3 = this.chargeBar;
     if (t1)
       t2.drawImage(t3, -145, -224, 225, 12);
-    else
+    else {
       t2.drawImage(t3, -145, -224, this._game.get$ship().chargedLevel * 15, 12);
+      this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
+      this.ctx.font = "16px cinnamoncake, Verdana";
+      this.ctx.fillText("" + this._game.get$ship().superCharged, -170, -215);
+    }
     this.ctx.stroke();
   },
   drawShip$0: function() {
@@ -16283,7 +16537,10 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upg
     $.set$src$x(this.enemy, "../web/images/enemy.png");
     $.set$src$x(this.enemy2, "../web/images/enemy2.png");
     $.set$src$x(this.boss, "../web/images/boss.png");
-    $.set$src$x(this.mothership, "../web/images/mothership.png");
+    $.set$src$x(this.mothership1, "../web/images/mothership1.png");
+    $.set$src$x(this.mothership2, "../web/images/mothership2.png");
+    $.set$src$x(this.mothership3, "../web/images/mothership3.png");
+    $.set$src$x(this.mothership4, "../web/images/mothership4.png");
     $.set$src$x(this.bosshp, "../web/images/bosshp.png");
     $.set$src$x(this.spreadup, "../web/images/powerup1.png");
     $.set$src$x(this.lifeup, "../web/images/powerup2.png");
@@ -16310,7 +16567,7 @@ GalagaRenderer: {"": "CanvasGameRenderer;timeLeft,temp,ship<,invincibleShip<,upg
   },
   static: {
 GalagaRenderer$: function(targetId) {
-  var t1 = new $.GalagaRenderer(0, 5, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null, null);
+  var t1 = new $.GalagaRenderer(0, 5, $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), $.ImageElement_ImageElement(null, null, null), false, false, targetId, null, null, null, null, null, null, null, null);
   t1.CanvasGameRenderer$1(targetId);
   t1.GalagaRenderer$1(targetId);
   return t1;
@@ -16793,7 +17050,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 8) {
       t2 = t1.get$ctx();
-      t3 = t1.get$mothership();
+      t3 = t1.get$enemy2();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16807,7 +17064,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 9) {
       t2 = t1.get$ctx();
-      t3 = t1.get$enemy2();
+      t3 = t1.get$boss();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16821,7 +17078,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 10) {
       t2 = t1.get$ctx();
-      t3 = t1.get$boss();
+      t3 = t1.get$skull();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16835,7 +17092,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 11) {
       t2 = t1.get$ctx();
-      t3 = t1.get$skull();
+      t3 = t1.get$invincible();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16849,7 +17106,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 12) {
       t2 = t1.get$ctx();
-      t3 = t1.get$invincible();
+      t3 = t1.get$timeUp();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16863,7 +17120,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 13) {
       t2 = t1.get$ctx();
-      t3 = t1.get$timeUp();
+      t3 = t1.get$invincibleShip();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16877,7 +17134,7 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 14) {
       t2 = t1.get$ctx();
-      t3 = t1.get$invincibleShip();
+      t3 = t1.get$teleporter();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -16891,7 +17148,49 @@ GalagaRenderer_drawBouncer_closure0: {"": "Closure;this_0",
       t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
     } else if (t2 === 15) {
       t2 = t1.get$ctx();
-      t3 = t1.get$teleporter();
+      t3 = t1.get$mothership1();
+      t4 = $.getInterceptor$x(e);
+      t5 = t4.get$x(e);
+      t6 = t4.get$width(e);
+      if (typeof t6 !== "number")
+        throw t6.$div();
+      t6 = $.$sub$n(t5, t6 / 2);
+      t5 = t4.get$y(e);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
+    } else if (t2 === 16) {
+      t2 = t1.get$ctx();
+      t3 = t1.get$mothership2();
+      t4 = $.getInterceptor$x(e);
+      t5 = t4.get$x(e);
+      t6 = t4.get$width(e);
+      if (typeof t6 !== "number")
+        throw t6.$div();
+      t6 = $.$sub$n(t5, t6 / 2);
+      t5 = t4.get$y(e);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
+    } else if (t2 === 17) {
+      t2 = t1.get$ctx();
+      t3 = t1.get$mothership3();
+      t4 = $.getInterceptor$x(e);
+      t5 = t4.get$x(e);
+      t6 = t4.get$width(e);
+      if (typeof t6 !== "number")
+        throw t6.$div();
+      t6 = $.$sub$n(t5, t6 / 2);
+      t5 = t4.get$y(e);
+      t7 = t4.get$height(e);
+      if (typeof t7 !== "number")
+        throw t7.$div();
+      t2.drawImage(t3, t6, $.$sub$n(t5, t7 / 2), t4.get$width(e), t4.get$height(e));
+    } else if (t2 === 18) {
+      t2 = t1.get$ctx();
+      t3 = t1.get$mothership4();
       t4 = $.getInterceptor$x(e);
       t5 = t4.get$x(e);
       t6 = t4.get$width(e);
@@ -17016,7 +17315,15 @@ GalagaRenderer_drawEnemys_closure0: {"": "Closure;this_0",
       t2.get$ctx().strokeStyle = "rgba(255, 255, 255, 1.0)";
       t2.get$ctx().lineWidth = 3;
       t2.get$ctx().beginPath();
-      t2.get$ctx().drawImage(t2.get$mothership(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      t3 = e.get$motherShipType();
+      if (t3 === 1)
+        t2.get$ctx().drawImage(t2.get$mothership1(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      else if (t3 === 2)
+        t2.get$ctx().drawImage(t2.get$mothership2(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      else if (t3 === 3)
+        t2.get$ctx().drawImage(t2.get$mothership3(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
+      else if (t3 === 4)
+        t2.get$ctx().drawImage(t2.get$mothership4(), $.$sub$n(t1.get$x(e), 22), $.$sub$n(t1.get$y(e), 25), 42, 42);
       t2.get$ctx().stroke();
     } else if (t2 === "Boss") {
       t2 = this.this_0;
@@ -17836,8 +18143,14 @@ C.C__Random = new $._Random();
 C.Duration_0 = new $.Duration(0);
 C.Duration_100000 = new $.Duration(100000);
 C.Duration_1000000 = new $.Duration(1000000);
+C.Duration_10000000 = new $.Duration(10000000);
+C.Duration_11000000 = new $.Duration(11000000);
+C.Duration_12000000 = new $.Duration(12000000);
 C.Duration_125000 = new $.Duration(125000);
+C.Duration_13000000 = new $.Duration(13000000);
+C.Duration_14000000 = new $.Duration(14000000);
 C.Duration_150000 = new $.Duration(150000);
+C.Duration_15000000 = new $.Duration(15000000);
 C.Duration_175000 = new $.Duration(175000);
 C.Duration_200000 = new $.Duration(200000);
 C.Duration_2000000 = new $.Duration(2000000);
@@ -17862,9 +18175,13 @@ C.Duration_525000 = new $.Duration(525000);
 C.Duration_550000 = new $.Duration(550000);
 C.Duration_575000 = new $.Duration(575000);
 C.Duration_600000 = new $.Duration(600000);
+C.Duration_6000000 = new $.Duration(6000000);
 C.Duration_625000 = new $.Duration(625000);
 C.Duration_650000 = new $.Duration(650000);
+C.Duration_7000000 = new $.Duration(7000000);
 C.Duration_75000 = new $.Duration(75000);
+C.Duration_8000000 = new $.Duration(8000000);
+C.Duration_9000000 = new $.Duration(9000000);
 C.EventStreamProvider_click = new $.EventStreamProvider("click");
 C.EventStreamProvider_keydown = new $.EventStreamProvider("keydown");
 C.EventStreamProvider_keyup = new $.EventStreamProvider("keyup");
