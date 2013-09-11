@@ -7,7 +7,10 @@ class PowerUp extends GameEntity<GalagaGame> {
   PowerUp(GalagaGame game, num x, num y, [String Type = null]) : super.withPosition(game, x, y, 36, 36) {
     num rType = random();
 
-    if (rType < game.teleporter) {
+    if (rType < game.magnet) {
+      color = "0, 255, 0";
+      type = 'magnet';
+    } else if (rType < game.teleporter) {
       color = "0, 255, 0";
       type = 'teleporter';
     } else if (rType < game.spiral) {
@@ -59,11 +62,32 @@ class PowerUp extends GameEntity<GalagaGame> {
     if (game.state == GalagaGameState.paused || game.state == GalagaGameState.gameOver || game.state == GalagaGameState.welcome)
       return;
 
-    if (type == "bulletPower")
+    if (game.Cheats["magnet"] == 1) {
       if (game.ship.x > x)
         momentum.xVel = 40;
       else
         momentum.xVel = -40;
+    } else if (game.Cheats["magnet"] == 2) {
+      if (game.ship.x > x)
+        momentum.xVel = 60;
+      else
+        momentum.xVel = -60;
+    } else if (game.Cheats["magnet"] == 3) {
+      if (game.ship.x > x)
+        momentum.xVel = 80;
+      else
+        momentum.xVel = -80;
+    } else if (game.Cheats["magnet"] == 4) {
+      if (game.ship.x > x)
+        momentum.xVel = 100;
+      else
+        momentum.xVel = -100;
+    } else if (game.Cheats["magnet"] >= 5) {
+      if (game.ship.x > x)
+        momentum.xVel = 120;
+      else
+        momentum.xVel = -120;
+    }
 
     if (collidesWith(game.ship)) {
       switch (type) {
@@ -137,6 +161,9 @@ class PowerUp extends GameEntity<GalagaGame> {
             game.enemyAmount--;
           });
 
+          break;
+        case 'magnet':
+          game.Cheats["magnet"]++;
           break;
       }
 

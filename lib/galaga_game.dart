@@ -54,12 +54,13 @@ class GalagaGame extends Game {
   num nextId = 1;
   num targetId = 0;
   String powerupChoice = "All";
-  num teleporter = .05;
-  num spiral = .06;
-  num multi = .25;
-  num bullet = .55;
-  num invincible = .70;
-  num time = .80;
+  num teleporter = .125;
+  num magnet = .25;
+  num spiral = .375;
+  num multi = .5;
+  num bullet = .625;
+  num invincible = .75;
+  num time = .875;
   num life = 1;
   num cloneId = 1;
   num spreadWaiting = 0;
@@ -237,6 +238,8 @@ class GalagaGame extends Game {
       Cheats["invincibility"] = 0;
     if (!Cheats.containsKey("super"))
       Cheats["super"] = 0;
+    if (!Cheats.containsKey("magnet"))
+      Cheats["magnet"] = 0;
 
     if (Options["soundeffects"] == 1)
       soundEffectsOn = true;
@@ -717,7 +720,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.8,
+        opacity: 0.7,
         id: "",
         groupId: "cheats"));
 
@@ -729,7 +732,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.8,
+        opacity: 0.7,
         id: "",
         groupId: "cheats"));
 
@@ -810,13 +813,14 @@ class GalagaGame extends Game {
 
          }else if (powerupChoice == "Teleporter") {
            powerupChoice = "All";
-           teleporter = .05;
-           spiral = .06;
-           multi = .25;
-           bullet = .55;
-           invincible = .70;
-           time = .80;
-           life = 1;
+           num teleporter = .125;
+           num magnet = .25;
+           num spiral = .375;
+           num multi = .5;
+           num bullet = .625;
+           num invincible = .75;
+           num time = .875;
+           num life = 1;
 
          }
 
@@ -833,7 +837,7 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.8,
+        opacity: 0.7,
         id: "",
         groupId: "cheats"));
 
@@ -864,13 +868,14 @@ class GalagaGame extends Game {
 
           }else if (powerupChoice == "SpiralShot") {
             powerupChoice = "All";
-            teleporter = .05;
-            spiral = .06;
-            multi = .25;
-            bullet = .55;
-            invincible = .70;
-            time = .80;
-            life = 1;
+            num teleporter = .125;
+            num magnet = .25;
+            num spiral = .375;
+            num multi = .5;
+            num bullet = .625;
+            num invincible = .75;
+            num time = .875;
+            num life = 1;
 
           } else if (powerupChoice == "Multiplier") {
             powerupChoice = "SpiralShot";
@@ -937,7 +942,89 @@ class GalagaGame extends Game {
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
-        opacity: 0.8,
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameText(game: this,
+        x: -38,
+        y: 30,
+        text: "Magnet:",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameText(game: this,
+        x: 200,
+        y: 30,
+        text: "${Cheats["magnet"]}",
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 245,
+        y: 30,
+        text: "->",
+        buttonAction: () {
+          if (Cheats["magnet"] >= 5) {
+            Cheats["magnet"] = 0;
+          }
+          else {
+            Cheats["magnet"]++;
+          }
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
+        id: "",
+        groupId: "cheats"));
+
+    addEntity(new GameButton(game: this,
+        x: 160,
+        y: 30,
+        text: "<-",
+        buttonAction: () {
+          if (Cheats["magnet"] <= 0) {
+            Cheats["magnet"] = 5;
+          }
+          else {
+            Cheats["magnet"]--;
+          }
+
+          _statUpdateEvent.signal();
+
+          state = GalagaGameState.welcome;
+
+          removeEntitiesByGroup("cheats");
+          createCheatsMenu();
+
+          state = GalagaGameState.cheats;
+        },
+        size: 36,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.7,
         id: "",
         groupId: "cheats"));
 
@@ -2229,6 +2316,7 @@ class GalagaGame extends Game {
           newBouncer(16);
           newBouncer(17);
           newBouncer(18);
+          newBouncer(19);
 
           state = GalagaGameState.welcome;
 
@@ -2298,7 +2386,7 @@ class GalagaGame extends Game {
         x: 0,
         y: -145,
         text: Options["controls"] == 1 ? "Move left/right: Left and Right arrow keys." : "Move left/right: Mouse movement.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2310,7 +2398,7 @@ class GalagaGame extends Game {
         x: 0,
         y: -96,
         text: Options["controls"] == 1 ? "Fire: Spacebar." : "Fire: Left mouse click.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2322,7 +2410,7 @@ class GalagaGame extends Game {
         x: 0,
         y: -47,
         text: Options["controls"] == 1 ? "Super Bullet: Shift Key. (Needs 15 coins to charge.)" : "Super Bullet: Spacebar. (Needs 15 coins to charge.)",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2332,7 +2420,7 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 2,
+        y: -10,
         text: "Powerups:",
         size: 24,
         font: "cinnamoncake, Verdana",
@@ -2344,9 +2432,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 40,
+        y: 20,
         text: "FIRE FLOWER: Spread shot upgrade for 15 seconds.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2356,9 +2444,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 70,
+        y: 50,
         text: "ENERGY CANISTER: Extra life.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2368,9 +2456,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 100,
+        y: 80,
         text: "APPLE: Multiplier times two.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2380,9 +2468,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 130,
+        y: 110,
         text: "LIGHTNING BALL: Extra bullet",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2392,9 +2480,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 160,
+        y: 140,
         text: "COIN: Plus 100 points + Super Bullet charge (1/15).",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2404,9 +2492,9 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 190,
+        y: 170,
         text: "SHIELD: Invincible for 5 seconds.",
-        size: 24,
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2416,9 +2504,33 @@ class GalagaGame extends Game {
 
     addEntity(new GameText(game: this,
         x: 0,
-        y: 220,
+        y: 200,
         text: "CLOCK: Extra 15 seconds added.",
-        size: 24,
+        size: 20,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 230,
+        text: "MAGNET: All powerups move to you.",
+        size: 20,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 260,
+        text: "BLACK TELEPORTER: Instantly completes the current level.",
+        size: 20,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
