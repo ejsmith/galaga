@@ -31,6 +31,9 @@ class PowerUp extends GameEntity<GalagaGame> {
     } else if (rType < game.life) {
       color = "255, 255, 0";
       type = 'ExtraLife';
+    } else if (rType < game.death) {
+      color = "255, 255, 0";
+      type = 'Death';
     }
 
     if (Type != null) {
@@ -154,16 +157,27 @@ class PowerUp extends GameEntity<GalagaGame> {
           break;
         case 'timeUp':
             game.timer.gameTime += 15;
+            game.Stats["powerups"] += 1;
+            game.score += 300 * game.pointMultiplier;
           break;
         case 'teleporter':
           game.entities.where((e) => e is Enemy).forEach((Enemy e) {
             e.removeFromGame();
             game.enemyAmount--;
           });
-
+          game.Stats["powerups"] += 1;
+          game.score += 300 * game.pointMultiplier;
           break;
         case 'magnet':
           game.Cheats["magnet"]++;
+          game.Stats["powerups"] += 1;
+          game.score += 300 * game.pointMultiplier;
+          break;
+        case 'Death':
+          game.ship.lives--;
+
+          game.Stats["powerups"] += 1;
+          game.score -= 300 * game.pointMultiplier;
           break;
       }
 

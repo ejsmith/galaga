@@ -54,14 +54,15 @@ class GalagaGame extends Game {
   num nextId = 1;
   num targetId = 0;
   String powerupChoice = "All";
-  num teleporter = .125;
-  num magnet = .25;
-  num spiral = .375;
-  num multi = .5;
-  num bullet = .625;
-  num invincible = .75;
-  num time = .875;
-  num life = 1;
+  num teleporter = .11;
+  num magnet = .22;
+  num spiral = .33;
+  num multi = .44;
+  num bullet = .55;
+  num invincible = .66;
+  num time = .77;
+  num life = .88;
+  num death = 1;
   num cloneId = 1;
   num spreadWaiting = 0;
   num rendererTemp1 = 5;
@@ -750,6 +751,7 @@ class GalagaGame extends Game {
            time = 0;
            life = 0;
            teleporter = 0;
+           death = 0;
 
          } else if (powerupChoice == "SpiralShot") {
            powerupChoice = "Multiplier";
@@ -760,6 +762,7 @@ class GalagaGame extends Game {
            time = 0;
            life = 0;
            teleporter = 0;
+           death = 0;
 
          } else if (powerupChoice == "Multiplier") {
            powerupChoice = "BulletIncrease";
@@ -770,6 +773,7 @@ class GalagaGame extends Game {
            time = 0;
            life = 0;
            teleporter = 0;
+           death = 0;
 
          } else if (powerupChoice == "BulletIncrease") {
            powerupChoice = "Invincible";
@@ -780,6 +784,7 @@ class GalagaGame extends Game {
            time = 0;
            life = 0;
            teleporter = 0;
+           death = 0;
 
          } else if (powerupChoice == "Invincible") {
            powerupChoice = "TimeUp";
@@ -790,6 +795,7 @@ class GalagaGame extends Game {
            time = 1;
            life = 0;
            teleporter = 0;
+           death = 0;
 
          } else if (powerupChoice == "TimeUp") {
            powerupChoice = "ExtraLife";
@@ -800,6 +806,7 @@ class GalagaGame extends Game {
            time = 0;
            life = 1;
            teleporter = 0;
+           death = 0;
 
          }  else if (powerupChoice == "ExtraLife") {
            powerupChoice = "Teleporter";
@@ -810,17 +817,30 @@ class GalagaGame extends Game {
            time = 0;
            life = 0;
            teleporter = 1;
+           death = 0;
 
-         }else if (powerupChoice == "Teleporter") {
+         } else if (powerupChoice == "Teleporter") {
+           powerupChoice = "Death";
+           spiral = 0;
+           multi = 0;
+           bullet = 0;
+           invincible = 0;
+           time = 0;
+           life = 0;
+           teleporter = 0;
+           death = 1;
+
+         } else if (powerupChoice == "Death") {
            powerupChoice = "All";
-           num teleporter = .125;
-           num magnet = .25;
-           num spiral = .375;
-           num multi = .5;
-           num bullet = .625;
-           num invincible = .75;
-           num time = .875;
-           num life = 1;
+           teleporter = .11;
+           magnet = .22;
+           spiral = .33;
+           multi = .44;
+           bullet = .55;
+           invincible = .66;
+           time = .77;
+           life = .88;
+           death = 1;
 
          }
 
@@ -855,8 +875,9 @@ class GalagaGame extends Game {
             time = 0;
             life = 1;
             teleporter = 0;
+            death = 0;
 
-          } else if (powerupChoice == "All") {
+          } else if (powerupChoice == "Death") {
             powerupChoice = "Teleporter";
             spiral = 0;
             multi = 0;
@@ -865,17 +886,30 @@ class GalagaGame extends Game {
             time = 0;
             life = 0;
             teleporter = 1;
+            death = 0;
 
-          }else if (powerupChoice == "SpiralShot") {
+          } else if (powerupChoice == "All") {
+            powerupChoice = "Death";
+            spiral = 0;
+            multi = 0;
+            bullet = 0;
+            invincible = 0;
+            time = 0;
+            life = 0;
+            teleporter = 0;
+            death = 1;
+
+          } else if (powerupChoice == "SpiralShot") {
             powerupChoice = "All";
-            num teleporter = .125;
-            num magnet = .25;
-            num spiral = .375;
-            num multi = .5;
-            num bullet = .625;
-            num invincible = .75;
-            num time = .875;
-            num life = 1;
+            teleporter = .11;
+            magnet = .22;
+            spiral = .33;
+            multi = .44;
+            bullet = .55;
+            invincible = .66;
+            time = .77;
+            life = .88;
+            death = 1;
 
           } else if (powerupChoice == "Multiplier") {
             powerupChoice = "SpiralShot";
@@ -886,6 +920,7 @@ class GalagaGame extends Game {
             time = 0;
             life = 0;
             teleporter = 0;
+            death = 0;
 
           } else if (powerupChoice == "BulletIncrease") {
             powerupChoice = "Multiplier";
@@ -896,6 +931,7 @@ class GalagaGame extends Game {
             time = 0;
             life = 0;
             teleporter = 0;
+            death = 0;
 
           } else if (powerupChoice == "Invincible") {
             powerupChoice = "BulletIncrease";
@@ -906,6 +942,7 @@ class GalagaGame extends Game {
             time = 0;
             life = 0;
             teleporter = 0;
+            death = 0;
 
           } else if (powerupChoice == "TimeUp") {
             powerupChoice = "Invincible";
@@ -916,6 +953,7 @@ class GalagaGame extends Game {
             time = 0;
             life = 0;
             teleporter = 0;
+            death = 0;
 
           } else if (powerupChoice == "ExtraLife") {
             powerupChoice = "TimeUp";
@@ -926,6 +964,7 @@ class GalagaGame extends Game {
             time = 1;
             life = 0;
             teleporter = 0;
+            death = 0;
 
           }
 
@@ -2317,6 +2356,7 @@ class GalagaGame extends Game {
           newBouncer(17);
           newBouncer(18);
           newBouncer(19);
+          newBouncer(20);
 
           state = GalagaGameState.welcome;
 
@@ -2434,7 +2474,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 20,
         text: "FIRE FLOWER: Spread shot upgrade for 15 seconds.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2446,7 +2486,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 50,
         text: "ENERGY CANISTER: Extra life.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2458,7 +2498,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 80,
         text: "APPLE: Multiplier times two.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2470,7 +2510,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 110,
         text: "LIGHTNING BALL: Extra bullet",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2482,7 +2522,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 140,
         text: "COIN: Plus 100 points + Super Bullet charge (1/15).",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2494,7 +2534,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 170,
         text: "SHIELD: Invincible for 5 seconds.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2506,7 +2546,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 200,
         text: "CLOCK: Extra 15 seconds added.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2518,7 +2558,7 @@ class GalagaGame extends Game {
         x: 0,
         y: 230,
         text: "MAGNET: All powerups move to you.",
-        size: 20,
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",
@@ -2530,7 +2570,19 @@ class GalagaGame extends Game {
         x: 0,
         y: 260,
         text: "BLACK TELEPORTER: Instantly completes the current level.",
-        size: 20,
+        size: 16,
+        font: "cinnamoncake, Verdana",
+        centered:  true,
+        color: "255, 255, 255",
+        opacity: 0.8,
+        id: "",
+        groupId: "instructions"));
+
+    addEntity(new GameText(game: this,
+        x: 0,
+        y: 290,
+        text: "SKULL: Lose a life.",
+        size: 16,
         font: "cinnamoncake, Verdana",
         centered:  true,
         color: "255, 255, 255",

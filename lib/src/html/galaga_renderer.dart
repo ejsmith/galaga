@@ -241,6 +241,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
         ctx.drawImageScaled(mothership4, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
       else if (e.Sprite == 19)
         ctx.drawImageScaled(magnet, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
+      else if (e.Sprite == 20)
+        ctx.drawImageScaled(skull, e.x - (e.width / 2), e.y - (e.height / 2), e.width, e.height);
 
       ctx.stroke();
     });
@@ -304,6 +306,8 @@ class GalagaRenderer extends CanvasGameRenderer<GalagaGame> {
           ctx.drawImageScaled(teleporter, e.x - 22, e.y - 25, 42, 42);
         else if (e.type == "magnet")
           ctx.drawImageScaled(magnet, e.x - 22, e.y - 25, 42, 42);
+        else if (e.type == "Death")
+          ctx.drawImageScaled(skull, e.x - 22, e.y - 25, 42, 42);
         ctx.stroke();
     });
   }
